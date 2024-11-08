@@ -1,16 +1,4 @@
-# for y in range (len(itlist)):
-#   print (itlist[y])
-#  tmp.append({"lower": itlist[y]  })
-# if y+1 < len(itlist): tmp+=','
-# {"lower":"root"},{"lower":"mean"},{"lower":"squared"},{"lower":"error"}
-# print(tmp)
-# patterns.append({'label': 'Syntactic', 'pattern':[tmp]})
-#patterns = [{"label":"Metrics","pattern":[{"text":"MAE"}]} , {"label":"Metrics","pattern":[{"text":"MSE"}]}]
-       # patterns = [{"label": "Syntactic", "pattern": [{"text": "3d printers"}]}]
 
-
-
-   # patterns = "["
 
 import spacy
 from spacy.pipeline import EntityRuler
