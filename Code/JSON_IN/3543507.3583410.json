@@ -1,0 +1,2693 @@
+{
+  "paper_id" : "3543507",
+  "header" : {
+    "generated_with" : "S2ORC 1.0.0",
+    "date_generated" : "2024-03-20T17:52:47.451845Z"
+  },
+  "title" : "Analyzing the Communication Clusters in Datacenters *",
+  "authors" : [
+    {
+      "first" : "Klaus-Tycho",
+      "middle" : [],
+      "last" : "Foerster",
+      "suffix" : "",
+      "affiliation" : {},
+      "email" : "klaus-tycho.foerster@tu-marette@kth.seneum@kth.sedortmund.de"
+    },
+    {
+      "first" : "Thibault",
+      "middle" : [],
+      "last" : "Marette",
+      "suffix" : "",
+      "affiliation" : {},
+      "email" : ""
+    },
+    {
+      "first" : "Stefan",
+      "middle" : [],
+      "last" : "Neumann",
+      "suffix" : "",
+      "affiliation" : {},
+      "email" : ""
+    },
+    {
+      "first" : "Claudia",
+      "middle" : [],
+      "last" : "Plant",
+      "suffix" : "",
+      "affiliation" : {},
+      "email" : "claudia.plant@univie.ac.atylli.sadikaj@univie.ac.atstefan.schmid@tu-berlin.de"
+    },
+    {
+      "first" : "Ylli",
+      "middle" : [],
+      "last" : "Sadikaj",
+      "suffix" : "",
+      "affiliation" : {},
+      "email" : ""
+    },
+    {
+      "first" : "Stefan",
+      "middle" : [],
+      "last" : "Schmid",
+      "suffix" : "",
+      "affiliation" : {},
+      "email" : ""
+    }
+  ],
+  "year" : "",
+  "venue" : null,
+  "identifiers" : {},
+  "abstract" : "Datacenter networks have become a critical infrastructure of our digital society and over the last years, great eforts have been made to better understand the communication patterns inside datacenters. In particular, existing empirical studies showed that datacenter trafc typically features much temporal and spatial structure, and that at any given time, some communication pairs interact much more frequently than others. This paper generalizes this study to communication groups and analyzes how clustered the datacenter trafc is, and how stable these clusters are over time. To this end, we propose a methodology which revolves around a biclustering approach, allowing us to identify groups of racks and servers which communicate frequently over the network. In particular, we consider communication patterns occurring in three diferent Facebook datacenters: a Web cluster consisting of web servers serving web trafc, a Database cluster which mainly consists of MySQL servers, and a Hadoop cluster. Interestingly, we fnd that in all three clusters, small groups of racks and servers can produce a large fraction of the network trafc, and we can determine these groups even when considering short snapshots of network trafc. We also show empirically that these clusters are fairly stable across time. Our insights on the size and stability of communication clusters hence uncover an interesting potential for resource optimizations in datacenter infrastructures.",
+  "pdf_parse" : {
+    "abstract" : [
+      {
+        "text" : "Datacenter networks have become a critical infrastructure of our digital society and over the last years, great eforts have been made to better understand the communication patterns inside datacenters. In particular, existing empirical studies showed that datacenter trafc typically features much temporal and spatial structure, and that at any given time, some communication pairs interact much more frequently than others. This paper generalizes this study to communication groups and analyzes how clustered the datacenter trafc is, and how stable these clusters are over time. To this end, we propose a methodology which revolves around a biclustering approach, allowing us to identify groups of racks and servers which communicate frequently over the network. In particular, we consider communication patterns occurring in three diferent Facebook datacenters: a Web cluster consisting of web servers serving web trafc, a Database cluster which mainly consists of MySQL servers, and a Hadoop cluster. Interestingly, we fnd that in all three IEC 23232232  clusters, small groups of racks and servers can produce a large fraction of the network trafc, and we can determine these groups even when considering short snapshots of network trafc. We also show empirically that these clusters are fairly stable across time. Our insights on the size and stability of communication clusters hence uncover an interesting potential for resource optimizations in datacenter infrastructures.",
+        "cite_spans" : [],
+        "section" : "Abstract",
+        "sec_num" : null
+      }
+    ],
+    "body_text" : [
+      {
+        "text" : "With the popularity of data-centric and distributed applications, for example in the context of artifcial intelligence, datacenter networks have become a critical infrastructure of our digital society. Indeed, these applications led to an explosive growth of communication trafc over the last years, especially inside datacenters, pushing datacenter networks to their capacity limits [32, 33] .",
+        "cite_spans" : [
+          {
+            "start" : 384,
+            "end" : 388,
+            "text" : "[32,",
+            "ref_id" : "BIBREF31"
+          },
+          {
+            "start" : 389,
+            "end" : 392,
+            "text" : "33]",
+            "ref_id" : "BIBREF32"
+          }
+        ],
+        "section" : "INTRODUCTION",
+        "sec_num" : "1"
+      },
+      {
+        "text" : "Interestingly, however, datacenter trafc is not only growing quickly, but also features much structure. Studying packet traces collected from networking applications, researchers have found that datacenter trafc matrices are often sparse and skewed [1, 6] , and exhibit locality [9] , also over time [38, 39] . In other words, packet traces from real world applications are generally far from arbitrary or random, but are of fairly low entropy [2, 16, 20, 32] .",
+        "cite_spans" : [
+          {
+            "start" : 249,
+            "end" : 252,
+            "text" : "[1,",
+            "ref_id" : "BIBREF0"
+          },
+          {
+            "start" : 253,
+            "end" : 255,
+            "text" : "6]",
+            "ref_id" : "BIBREF5"
+          },
+          {
+            "start" : 279,
+            "end" : 282,
+            "text" : "[9]",
+            "ref_id" : "BIBREF8"
+          },
+          {
+            "start" : 300,
+            "end" : 304,
+            "text" : "[38,",
+            "ref_id" : "BIBREF37"
+          },
+          {
+            "start" : 305,
+            "end" : 308,
+            "text" : "39]",
+            "ref_id" : "BIBREF38"
+          },
+          {
+            "start" : 444,
+            "end" : 447,
+            "text" : "[2,",
+            "ref_id" : "BIBREF1"
+          },
+          {
+            "start" : 448,
+            "end" : 451,
+            "text" : "16,",
+            "ref_id" : "BIBREF15"
+          },
+          {
+            "start" : 452,
+            "end" : 455,
+            "text" : "20,",
+            "ref_id" : "BIBREF19"
+          },
+          {
+            "start" : 456,
+            "end" : 459,
+            "text" : "32]",
+            "ref_id" : "BIBREF31"
+          }
+        ],
+        "section" : "INTRODUCTION",
+        "sec_num" : "1"
+      },
+      {
+        "text" : "The existence of such structure in communication trafc is attractive, and may be exploited for network provisioning and infrastructure optimizations [23] . Indeed, the networking community is currently putting great efort into designing protocols and algorithms to optimize diferent layers of the networking stack to leverage the trafc structure. These eforts include, e.g., learning-based trafc engineering [35] and video streaming [26] , self-adjusting optical networks [5, 15] , or self-driving networks [21] . For instance, many network optimizations exploit the presence of elephant fows [3] .",
+        "cite_spans" : [
+          {
+            "start" : 149,
+            "end" : 153,
+            "text" : "[23]",
+            "ref_id" : "BIBREF22"
+          },
+          {
+            "start" : 408,
+            "end" : 412,
+            "text" : "[35]",
+            "ref_id" : "BIBREF34"
+          },
+          {
+            "start" : 433,
+            "end" : 437,
+            "text" : "[26]",
+            "ref_id" : "BIBREF25"
+          },
+          {
+            "start" : 472,
+            "end" : 475,
+            "text" : "[5,",
+            "ref_id" : "BIBREF4"
+          },
+          {
+            "start" : 476,
+            "end" : 479,
+            "text" : "15]",
+            "ref_id" : "BIBREF14"
+          },
+          {
+            "start" : 507,
+            "end" : 511,
+            "text" : "[21]",
+            "ref_id" : "BIBREF20"
+          },
+          {
+            "start" : 593,
+            "end" : 596,
+            "text" : "[3]",
+            "ref_id" : "BIBREF2"
+          }
+        ],
+        "section" : "INTRODUCTION",
+        "sec_num" : "1"
+      },
+      {
+        "text" : "This paper aims at an understanding of the clustered nature of the communication trafc, going beyond the typically considered pairwise interactions [7, 16, 22, 32] and looking into communications among groups. In particular, we wonder whether the communication trafc matrices typically observed in empirical studies feature clusters of dense communication. We ask:",
+        "cite_spans" : [
+          {
+            "start" : 148,
+            "end" : 151,
+            "text" : "[7,",
+            "ref_id" : "BIBREF6"
+          },
+          {
+            "start" : 152,
+            "end" : 155,
+            "text" : "16,",
+            "ref_id" : "BIBREF15"
+          },
+          {
+            "start" : 156,
+            "end" : 159,
+            "text" : "22,",
+            "ref_id" : "BIBREF21"
+          },
+          {
+            "start" : 160,
+            "end" : 163,
+            "text" : "32]",
+            "ref_id" : "BIBREF31"
+          }
+        ],
+        "section" : "INTRODUCTION",
+        "sec_num" : "1"
+      },
+      {
+        "text" : "• How can communication clusters be efciently found algorithmically? • How large are communication clusters in datacenters, and how is their size distributed? • How stable are these communication clusters over time?",
+        "cite_spans" : [],
+        "section" : "INTRODUCTION",
+        "sec_num" : "1"
+      },
+      {
+        "text" : "The answers to these questions have important implications on the optimizability of resource allocations in datacenters [19] : dense communication clusters may be allocated locally in the datacenter (e.g., in the same rack or pod), which can signifcantly reduce communication overheads and improve throughput. Furthermore, stable clusters over time are attractive as frequent reoptimizations (i.e., reconfgurations such as, migrations or topological adaptions [17] ) can be avoided.",
+        "cite_spans" : [
+          {
+            "start" : 120,
+            "end" : 124,
+            "text" : "[19]",
+            "ref_id" : "BIBREF18"
+          },
+          {
+            "start" : 460,
+            "end" : 464,
+            "text" : "[17]",
+            "ref_id" : "BIBREF16"
+          }
+        ],
+        "section" : "INTRODUCTION",
+        "sec_num" : "1"
+      },
+      {
+        "text" : "The communication clusters we identify consist of groups of senders and receivers that transmit a lot of data between each other. As the groups of senders and receivers may be diferent, this introduces an asymmetry in the clustering that we will have to take into account in our methods. Additionally, it is highly likely that some nodes appear in multiple clusters, e.g., some nodes may be included in multiple receiver clusters because they require more information than other nodes in the network.",
+        "cite_spans" : [],
+        "section" : "INTRODUCTION",
+        "sec_num" : "1"
+      },
+      {
+        "text" : "We propose a methodology based on a biclustering approach, allowing us to fnd the communication clusters described above and allowing us to efciently identify groups of racks and servers which communicate frequently over the datacenter network. Our approach is optimized toward the standard precision and recall metrics, whose defnitions we adapt to ft the network application scenario, allowing us to study the cluster similarity over time.",
+        "cite_spans" : [],
+        "section" : "INTRODUCTION",
+        "sec_num" : "1"
+      },
+      {
+        "text" : "A merit of our approach is that it only requires very little data: we only require access to the Top % of endpoint pairs that create the most trafc. In particular, we do not require the exact amount of trafc sent between these endpoints, which is difcult to obtain in practice [10] . Additionally, our method does not require any additional knowledge about the application running in the datacenter.",
+        "cite_spans" : [
+          {
+            "start" : 277,
+            "end" : 281,
+            "text" : "[10]",
+            "ref_id" : "BIBREF9"
+          }
+        ],
+        "section" : "INTRODUCTION",
+        "sec_num" : "1"
+      },
+      {
+        "text" : "We evaluate our method in an extensive case study. Since it is known that the amount of structure available in a communication trafc depends on the application [4, 32] , we consider three diferent trafc traces: one from a Web cluster, one from a Database cluster, and one from a Hadoop cluster. The Web cluster consists of web servers serving web trafc, the Database cluster mainly consists of MySQL servers, and the Hadoop cluster is used for batch processing. These traces have been made available to the research community by Facebook [37] , and are currently the largest datacenter data sets available to the research community. We believe that our insights generalize to many other datacenters as well, since the applications we consider are widely deployed in practice.",
+        "cite_spans" : [
+          {
+            "start" : 160,
+            "end" : 163,
+            "text" : "[4,",
+            "ref_id" : "BIBREF3"
+          },
+          {
+            "start" : 164,
+            "end" : 167,
+            "text" : "32]",
+            "ref_id" : "BIBREF31"
+          },
+          {
+            "start" : 538,
+            "end" : 542,
+            "text" : "[37]",
+            "ref_id" : "BIBREF36"
+          }
+        ],
+        "section" : "INTRODUCTION",
+        "sec_num" : "1"
+      },
+      {
+        "text" : "We fnd that our approach can indeed efciently identify highquality trafc clusters, and we make several interesting observations. In particular, we fnd that small groups of racks and servers often produce large fractions of the network trafc, and our approach can determine these groups even when considering short snapshots of network trafc. We also show empirically that these clusters are very stable across many time steps.",
+        "cite_spans" : [],
+        "section" : "INTRODUCTION",
+        "sec_num" : "1"
+      },
+      {
+        "text" : "In summary, our contributions are: • We present a systematic and efcient approach to identify possible dense clusters in communication trafc. • We propose a methodology for employing precision and recall metrics in the context of network trafc clustering. To the best of our knowledge, this is the frst study of these metrics in this context. • We report on an extensive evaluation based on actual datacenter packet traces (Web, Database, and Hadoop), showing that our approach is efcient and can fnd high-quality clusters. • We uncover that small clusters are responsible for a signifcant amount of network trafc, and that these clusters are stable over time. This suggests that an optimized allocation of communication endpoints in datacenters may have a signifcant impact on the overall communication cost. • Our methodology only requires a list of endpoint pairs which cause a lot of trafc. We show empirically that this gives good clusterings even when taking into account the absolute amounts of trafc. • As a contribution to the research community, and to ensure reproducibility and facilitate follow-up work, our implementations are available as open-source software. 1 Our experimental datasets and artifacts are available upon request.",
+        "cite_spans" : [],
+        "section" : "INTRODUCTION",
+        "sec_num" : "1"
+      },
+      {
+        "text" : "Now we describe our methodology. We start with a high-level overview and then present the full details and parameter settings.",
+        "cite_spans" : [],
+        "section" : "FINDING HI-QUALITY TRAFFIC CLUSTERS",
+        "sec_num" : "2"
+      },
+      {
+        "text" : "We start by giving an overview of our methodology and present an illustration of our approach in Figure 1 . The details and formal defnitions follow in Section 2.2. We assume that our input is a trafc trace, i.e., we obtain a sequence of tuples (, , , ) indicating that node sent bytes to receiver at a timepoint .",
+        "cite_spans" : [],
+        "section" : "High-Level Overview",
+        "sec_num" : "2.1"
+      },
+      {
+        "text" : "Based on the trafc trace, we create a sequence of contiguous and disjoint time steps [ , +1 ). For each time step, we generate a real-valued trafc matrix, where each entry (, ) corresponds to the total amount of trafc that was sent from node to in the entire timeframe [ , +1 ).",
+        "cite_spans" : [],
+        "section" : "High-Level Overview",
+        "sec_num" : "2.1"
+      },
+      {
+        "text" : "For each real-valued trafc matrix, we create a binary matrix by thresholding, i.e., we set the Top % largest entries in the trafc matrix to 1 and we set all other entries to 0. Note that this corresponds to having a list of sender-receiver pairs that cause the highest amounts of trafc during the time step.",
+        "cite_spans" : [],
+        "section" : "High-Level Overview",
+        "sec_num" : "2.1"
+      },
+      {
+        "text" : "Next, for each time step we apply a biclustering algorithm on the time step's binary matrix to obtain a biclustering. Informally (see below for a formal defnition), the biclusterings reveal the groups traffic trace containing all communications <sender, receiver, #bytes, time> <rack1, rack2, 50, > <rack3, rack21, 3, > <rack31, rack22, 201, > <rack7, rack91, 109, > <rack1, rack3, 73, > <rack15, rack3, 393, >",
+        "cite_spans" : [],
+        "section" : "High-Level Overview",
+        "sec_num" : "2.1"
+      },
+      {
+        "text" : "T 1 T 2 T 3 T 4 T 4 T 4",
+        "cite_spans" : [],
+        "section" : "High-Level Overview",
+        "sec_num" : "2.1"
+      },
+      {
+        "text" : "Step 1: Partition timesteps",
+        "cite_spans" : [],
+        "section" : "High-Level Overview",
+        "sec_num" : "2.1"
+      },
+      {
+        "text" : "Step 2: Thresholding An overview of our approach. Given a trafc trace, we partition it into contiguous time steps for which we create real-valued trafc matrices, where entries (, ) correspond to the amount of trafc sent from node to . For each trafc matrix, we create a binary matrix indicating the Top % of sender-receiver pairs that created the most trafc. We apply our biclustering algorithms on each of these binary matrices. We subsequently evaluate the resulting clusterings over time, also taking into account the true amount of trafc that was sent.",
+        "cite_spans" : [],
+        "section" : "real-valued traffic matrices",
+        "sec_num" : null
+      },
+      {
+        "text" : "of senders and receivers that communicate a lot during the time step and they correspond to the communication clusters that we are looking for. See Section 2.2 for a description of the biclustering algorithms that we used.",
+        "cite_spans" : [],
+        "section" : "real-valued traffic matrices",
+        "sec_num" : null
+      },
+      {
+        "text" : "Clearly, the above approach has merits, as well as drawbacks. The main drawback is that we obtain our communication clusters based on the binary matrices and not on the original trafc matrices; indeed it is not clear whether the binary (rounded) trafc reveals anything about weighted trafc. Hence, in our evaluation we need to ensure that this approach allows us to draw conclusions about the patterns in the weighted trafc. However, if we can show that this is the case, this is also a merit of our method: in practice, it often creates signifcant overhead to store the entire trafc trace and therefore people only subsample it [10, 32] . Our approach, on the other hand, can be used even when we only obtain the binary matrices as input. In other words, for our approach it sufces to know the Top % communication partners which can be obtained more efciently, for instance, using heavy hitters data structures [12, 29, 36] . This might make our methodology more applicable in settings in which one aims to understand communication clusters without creating too much overhead for the network.",
+        "cite_spans" : [
+          {
+            "start" : 629,
+            "end" : 633,
+            "text" : "[10,",
+            "ref_id" : "BIBREF9"
+          },
+          {
+            "start" : 634,
+            "end" : 637,
+            "text" : "32]",
+            "ref_id" : "BIBREF31"
+          },
+          {
+            "start" : 912,
+            "end" : 916,
+            "text" : "[12,",
+            "ref_id" : "BIBREF11"
+          },
+          {
+            "start" : 917,
+            "end" : 920,
+            "text" : "29,",
+            "ref_id" : "BIBREF28"
+          },
+          {
+            "start" : 921,
+            "end" : 924,
+            "text" : "36]",
+            "ref_id" : "BIBREF35"
+          }
+        ],
+        "section" : "real-valued traffic matrices",
+        "sec_num" : null
+      },
+      {
+        "text" : "We introduce three diferent measures to study the quality of our clusters. First, we defne versions of precision and recall to understand how well our communication clusters capture the information in the binary matrices. Second, we study the trafc inside the biclustering to understand how well our biclusters, that were derived on the binary matrices, represent the actual trafc from the real-valued trafc matrices. This measure compares the trafc sent between sender-receiver pairs from the biclusters with the total trafc. Our experiments show that we typically obtain high values for all three measures, indicating that we fnd high-quality clusters for the binary matrices which also capture the real-valued trafc information.",
+        "cite_spans" : [],
+        "section" : "real-valued traffic matrices",
+        "sec_num" : null
+      },
+      {
+        "text" : "Furthermore, we introduce a similarity measure to study the similarity of diferent biclusterings. This allows us to compare the communication clusters that we obtain at diferent time steps. Our experiments will show that these communication clusters are typically highly stable over time.",
+        "cite_spans" : [],
+        "section" : "real-valued traffic matrices",
+        "sec_num" : null
+      },
+      {
+        "text" : "Next, we describe the implementation of our approach in full detail. It will be convenient for us to consider unweighted/weighted graphs rather than binary/real-valued matrices, as this allows us to streamline our exposition. This is equivalent to using matrices by identifying graphs with their adjacency matrices.",
+        "cite_spans" : [],
+        "section" : "Detailed Approach",
+        "sec_num" : "2.2"
+      },
+      {
+        "text" : "From trafc traces to weighted graphs. We assume we are given a packet trace, or more specifcally, a sequence of packet headers containing a timestamp and the amount of trafc that server/rack sent to server/rack at a certain time. To study how the trafc patterns develop over time, we partition the trafc into time intervals of a certain duration, and we will refer to each of these time intervals as time steps. For the following discussion we assume that the duration of a time step is fxed. This simplifes our notation.",
+        "cite_spans" : [],
+        "section" : "Detailed Approach",
+        "sec_num" : "2.2"
+      },
+      {
+        "text" : "We represent the trafc during each time step as a weighted bipartite communication graph = ( ∪ , , ). Here, is the set of all racks/servers that send data over the network during the entire time duration; similarly, is the set of all racks/servers that receive data during the entire time. We stress that if a rack/server sends and receives data, it has two nodes in the graph: one in , and one in . Furthermore, is the set of edges at time step . The weight function : × → R + assigns to each pair (, ) the total amount of trafc that rack/server sent to rack/server during time step . We chose to represent the trafc as a bipartite graph as fnding clusters in bipartite graphs is a well-studied problem [14, 28] and it allows us to fnd non-trivial patterns of datacenter trafc.",
+        "cite_spans" : [
+          {
+            "start" : 704,
+            "end" : 708,
+            "text" : "[14,",
+            "ref_id" : "BIBREF13"
+          },
+          {
+            "start" : 709,
+            "end" : 712,
+            "text" : "28]",
+            "ref_id" : "BIBREF27"
+          }
+        ],
+        "section" : "Detailed Approach",
+        "sec_num" : "2.2"
+      },
+      {
+        "text" : "From weighted graphs to unweighted graphs. As some of our algorithms expect unweighted graphs, we also consider the following thresholded unweighted graphs = ( ∪ ,",
+        "cite_spans" : [],
+        "section" : "Detailed Approach",
+        "sec_num" : "2.2"
+      },
+      {
+        "text" : "). Here, ∈ R is a threshold such that only contains edges of weight at least , i.e., = {(, ) ∈ : (, ) ≥ }. This can be interpreted as keeping all edges (, ) for which sent \"a lot\" of trafc to .",
+        "cite_spans" : [],
+        "section" : "Detailed Approach",
+        "sec_num" : "2.2"
+      },
+      {
+        "text" : "Typically, we set the threshold such that a desired fraction of edges from remain. For example, if we set to the 70%-percentile of the non-zero edge weights in , then contains the largest 30% of non-zero weight edges from . When setting to one of these percentiles, we write to denote the -percentile for nonzero weight edges in for ∈ (0, 1). Note that if we pick large values for (e.g., = 70%), this results in sparser graphs , and smaller values for (e.g., = 30%) result in denser graphs . For = 0%, we keep all non-zero weight edges in .",
+        "cite_spans" : [],
+        "section" : "Detailed Approach",
+        "sec_num" : "2.2"
+      },
+      {
+        "text" : "We discuss the choices for that we use in our case study in Section 2.3.",
+        "cite_spans" : [],
+        "section" : "Detailed Approach",
+        "sec_num" : "2.2"
+      },
+      {
+        "text" : "Clustering bipartite graphs. To fnd trafc patterns inside our unweighted graphs, we propose a biclustering approach. More concretely, given an unweighted bipartite graph = ( ∪ , ), our algorithms compute a biclustering of , i.e., they return sets of biclusters ( 1 , 1 ), . . . , ( , ) such that ⊆ and ⊆ for all = 1, . . . , .",
+        "cite_spans" : [],
+        "section" : "Detailed Approach",
+        "sec_num" : "2.2"
+      },
+      {
+        "text" : "Our algorithms (more details follow) pick the biclusters in such a way that the induced subgraphs [ , ] are dense; this corresponds to sets of senders and receivers that communicate a lot of data in the network. In other words, the nodes in a cluster receive \"a lot\" of trafc from vertices in .",
+        "cite_spans" : [],
+        "section" : "Detailed Approach",
+        "sec_num" : "2.2"
+      },
+      {
+        "text" : "In our experiments, we compute a biclustering for each time step . More concretely, we apply our biclustering algorithms on each graph for = 1, . . . , , where is the total number of time steps. This yields biclusterings ( 1 , 1 ), . . . , ( , ) for each time step = 1, . . . , . See Section 2.3 for the concrete algorithms that we use.",
+        "cite_spans" : [],
+        "section" : "Detailed Approach",
+        "sec_num" : "2.2"
+      },
+      {
+        "text" : "Measuring the quality of trafc clusters. Next, we introduce the measures that we use to obtain insights into our data and to assess the quality of the clusterings that we obtain.",
+        "cite_spans" : [],
+        "section" : "Detailed Approach",
+        "sec_num" : "2.2"
+      },
+      {
+        "text" : "Comparing graph snapshots. To compare two (unweighted) graph snapshots and +1 , we consider three diferent measures:",
+        "cite_spans" : [],
+        "section" : "Detailed Approach",
+        "sec_num" : "2.2"
+      },
+      {
+        "text" : "(1) common= | ∩ +1 |/| ∪ +1 | • 100, (2) appear= | +1 \\ |/| ∪ +1 | • 100, (3) disappear= | \\ +1 |/| ∪ +1 | • 100.",
+        "cite_spans" : [],
+        "section" : "Detailed Approach",
+        "sec_num" : "2.2"
+      },
+      {
+        "text" : "These measures represent the percentage of edges that appear in two consecutive graph snapshots, the percentage of edges that are new, and the percentage of edges that disappear, resp.",
+        "cite_spans" : [],
+        "section" : "Detailed Approach",
+        "sec_num" : "2.2"
+      },
+      {
+        "text" : "Evaluating the quality of biclusterings. To evaluate the quality of our biclusterings, we consider three diferent measures which, taken together, give us a diferentiated picture on the quality of the trafc clusters. While biclustering approaches have been applied successfully in many applications in computer science, evaluating these approaches typically requires an external validation which is not available in our problem setting. An interesting measure for the validity of a biclustering under variations of the input data set is the stability index by Lee et al. [24] , which is relevant for fnding biclusters in data with numerical attributes. With the following defnitions of trafc inside the biclustering, recall and precision, we introduce a methodology to measure the quality of trafc clusters that originate from thresholded communication graphs.",
+        "cite_spans" : [
+          {
+            "start" : 570,
+            "end" : 574,
+            "text" : "[24]",
+            "ref_id" : "BIBREF23"
+          }
+        ],
+        "section" : "Detailed Approach",
+        "sec_num" : "2.2"
+      },
+      {
+        "text" : "First, for a biclustering ( 1 , 1 ), . . . , ( , ) we say that its induced bicliques are given by the set",
+        "cite_spans" : [],
+        "section" : "Detailed Approach",
+        "sec_num" : "2.2"
+      },
+      {
+        "text" : "EQUATION",
+        "cite_spans" : [],
+        "section" : "Detailed Approach",
+        "sec_num" : "2.2"
+      },
+      {
+        "text" : "i.e., bicl(( 1 , 1 ), . . . , ( , )) ⊆ × contains all edges (, ) with ∈ and ∈ for some . Intuitively, the induced bicliques are \"idealized\" versions of the the original biclusters, in which all missing edges were added.",
+        "cite_spans" : [],
+        "section" : "=1",
+        "sec_num" : null
+      },
+      {
+        "text" : "The trafc inside the biclustering ( 1 , 1 ), . . . , ( , ) is the fraction of trafc sent between vertices that are contained in one of the biclusters ( , ). More formally, it is given by ∑ 1 (, ), (,) ∈bicl( ( 1 , 1 ),...,( , ) ) where = Í (,) ∈ (, ) is the total sum of edge weights (corresponding to the total amount of network trafc at time step ).",
+        "cite_spans" : [],
+        "section" : "=1",
+        "sec_num" : null
+      },
+      {
+        "text" : "Note that here we are summing over the weights from the original weighted graph. Hence, if the trafc inside the biclustering is large, this indicates that the biclustering captures the trafc inside well.",
+        "cite_spans" : [],
+        "section" : "=1",
+        "sec_num" : null
+      },
+      {
+        "text" : "However, the trafc inside a biclustering has some limitations. For example, consider a biclustering ( 1 , 1 ) with 1 = and 1 = . Then the trafc inside this biclustering is equal to the total sum of weights but the biclustering is not very informative, as it considers the whole graph as a single bicluster. Therefore, we also consider recall and precision, which are defned for unweighted graphs = ( ∪ , ). The recall measures the fraction of edges (, ) of that are \"covered\" by the induced bicliques of the biclustering ( 1 , 1 ), . . . , ( , ). More formally, the recall is given by",
+        "cite_spans" : [],
+        "section" : "=1",
+        "sec_num" : null
+      },
+      {
+        "text" : "recall = | ∩ bicl(( 1 , 1 ), . . . , ( , ))|/| |.",
+        "cite_spans" : [],
+        "section" : "=1",
+        "sec_num" : null
+      },
+      {
+        "text" : "On the other hand, the precision measures the fraction of edges in the induced bicliques which also have corresponding edges in . More formally, the precision is given by",
+        "cite_spans" : [],
+        "section" : "=1",
+        "sec_num" : null
+      },
+      {
+        "text" : "| ∩ bicl(( 1 , 1 ), . . . , ( , ))| precision = . |bicl(( 1 , 1 ), . . . , ( , ))|",
+        "cite_spans" : [],
+        "section" : "=1",
+        "sec_num" : null
+      },
+      {
+        "text" : "Intuitively, the precision is high if the biclusters are \"not too large\" and the recall is high if the biclusters \"cover\" the edges well. Hence, if we fnd biclusters that simultaneously have high recall, high precision and a lot of trafc inside the biclusters, this indicates that the biclusters capture the trafc structure inside our communication graph well.",
+        "cite_spans" : [],
+        "section" : "=1",
+        "sec_num" : null
+      },
+      {
+        "text" : "Comparing biclusterings across time steps. Next, recall that the biclusterings we computed depended on the time step . As we are interested in comparing biclusterings from diferent time steps, we need to measure their similarity.",
+        "cite_spans" : [],
+        "section" : "=1",
+        "sec_num" : null
+      },
+      {
+        "text" : "For two time steps 1 and 2 with biclusterings ( 1 1 , 1 1 ), . . . ,",
+        "cite_spans" : [],
+        "section" : "=1",
+        "sec_num" : null
+      },
+      {
+        "text" : "( 1 , 1 ) and ( 1 2 , 1 2 ), . . . , ( 2 , 2 ), we say that their similar- their similarity is given by",
+        "cite_spans" : [],
+        "section" : "=1",
+        "sec_num" : null
+      },
+      {
+        "text" : "|bicl 1 ∩ bicl 2 | sim( 1 , 2 ) = . |bicl 1 ∪ bicl 2 |",
+        "cite_spans" : [],
+        "section" : "=1",
+        "sec_num" : null
+      },
+      {
+        "text" : "Intuitively, two biclusterings are similar if their idealized bicliques are similar. While this defnition might look a bit artifcial at frst glance, it is quite handy because it allows us to deal with overlapping biclusters and also with biclusterings that have diferent numbers of biclusters.",
+        "cite_spans" : [],
+        "section" : "=1",
+        "sec_num" : null
+      },
+      {
+        "text" : "To compare > 2 diferent biclusterings, we turn to similarity matrices (see, e.g., Fig. 3(d) ). Given multiple biclusterings ( 1 , 1 ), . . . , ( , ) for = 1, . . . , , the similarity matrix ∈ [0, 1] × has entries 1 , 2 = sim( 1 , 2 ). Thus, 1 , 2 measures how similar the biclusterings 1 and 2 are. As is symmetric, we only report the entries for 2 ≥ 1 .",
+        "cite_spans" : [],
+        "section" : "=1",
+        "sec_num" : null
+      },
+      {
+        "text" : "Visualization. Sometimes we visualize the biclustering we obtain. Given a bipartite graph = ( ∪ , ) with biadjacency matrix ∈ {0, 1} | | × | | and a biclustering ( 1 , 1 ), . . . , ( , ), we reorder the rows and columns of using the ADVISER algorithm [11] . In our plots (see, e.g., Fig. 2 ), yellow dots correspond to 1-entries in and purple dots correspond to 0-entries in . We follow the convention that vertices from correspond to rows of and vertices from correspond to columns of ; in other words, the rows of correspond to nodes that send data and the columns of correspond to nodes that receive data.",
+        "cite_spans" : [
+          {
+            "start" : 251,
+            "end" : 255,
+            "text" : "[11]",
+            "ref_id" : "BIBREF10"
+          }
+        ],
+        "section" : "=1",
+        "sec_num" : null
+      },
+      {
+        "text" : "We conclude this section by justifying our choices for the parameter and the biclustering algorithms we use in the case study.",
+        "cite_spans" : [],
+        "section" : "Choice of Parameters and Algorithms",
+        "sec_num" : "2.3"
+      },
+      {
+        "text" : "Choice of parameter . Recall that determines the sparsity of the graph , where larger (smaller) values for correspond to sparser (denser) graphs. Furthermore, when running biclustering algorithms on sparser graphs, this typically results in smaller biclusters (i.e., the biclusters contain fewer vertices and the induced bicliques are smaller). Intuitively, if we pick too small (corresponding to dense graphs and large biclusters), our biclusterings have high recall and high trafc inside the biclusters but small precision. Similarly, when is too large (the biclusters are too small), we have high precision but small recall and small trafc inside the matrices.",
+        "cite_spans" : [],
+        "section" : "Choice of Parameters and Algorithms",
+        "sec_num" : "2.3"
+      },
+      {
+        "text" : "As we argued before, we are interested in fnding biclusterings which simultaneously have high recall, high precision and high trafc inside the biclustering. Therefore, in our experiments we pick the value of ∈ {0%, 30%, 50%, 70%} such that all of these three objectives are satisfed (if possible). If multiple values in {0%, 30%, 50%, 70%} satisfy all three criteria, we report the largest possible value for , since this corresponds to biclusters with fewer vertices which might be easier to optimize in application settings.",
+        "cite_spans" : [],
+        "section" : "Choice of Parameters and Algorithms",
+        "sec_num" : "2.3"
+      },
+      {
+        "text" : "In preliminary experiments we also used other options with ∉ {0%, 30%, 50%, 70%} but they did not reveal any new insights beyond what we report. Hence, we focus on ∈ {0%, 30%, 50%, 70%}.",
+        "cite_spans" : [],
+        "section" : "Choice of Parameters and Algorithms",
+        "sec_num" : "2.3"
+      },
+      {
+        "text" : "Biclustering algorithm. The frst biclustering algorithm we use is the pcv algorithm [30] . This algorithm takes as input an unweighted bipartite graph and a parameter , and returns a biclustering ( 1 , 1 ), . . . , ( , ). The biclustering is such that the clusters 1 , . . . , partition , but the clusters 1 , . . . , might overlap and their union does not have to equal . In a nutshell, the algorithm computes the biadjacency matrix of and denoises via a truncated rank -SVD and then applies -Means on the rows of the low-rank matrix to obtain the clusters 1 , . . . , . Then it fnds the clusters by looking at the submatrices [ , :] and setting to the set of columns in [ , :] with \"many\" non-zero entries.",
+        "cite_spans" : [
+          {
+            "start" : 84,
+            "end" : 88,
+            "text" : "[30]",
+            "ref_id" : "BIBREF29"
+          }
+        ],
+        "section" : "Choice of Parameters and Algorithms",
+        "sec_num" : "2.3"
+      },
+      {
+        "text" : "We used pcv because it processes graphs with tens of thousands of nodes highly efciently and, even though it is a randomized algorithm, its outputs are very consistent over diferent runs (see App. A.2). Furthermore, it allows overlapping columnclusters which is necessary given the structure of our dataset. However, other methods that fnd overlapping clusters could have been used as well, for instance, algorithms for Boolean Matrix Factorization [27, 28] . In our experiments, we set = 7 for pcv.",
+        "cite_spans" : [
+          {
+            "start" : 449,
+            "end" : 453,
+            "text" : "[27,",
+            "ref_id" : "BIBREF26"
+          },
+          {
+            "start" : 454,
+            "end" : 457,
+            "text" : "28]",
+            "ref_id" : "BIBREF27"
+          }
+        ],
+        "section" : "Choice of Parameters and Algorithms",
+        "sec_num" : "2.3"
+      },
+      {
+        "text" : "In addition to pcv, we also use GraphScope [34] . Unlike pcv which only considers a single time step, GraphScope is an adaptive mining scheme on time-evolving graphs, i.e., it takes as input all unweighted graphs Those change-points often detect drastic discontinuities in time.",
+        "cite_spans" : [
+          {
+            "start" : 43,
+            "end" : 47,
+            "text" : "[34]",
+            "ref_id" : "BIBREF33"
+          }
+        ],
+        "section" : "Choice of Parameters and Algorithms",
+        "sec_num" : "2.3"
+      },
+      {
+        "text" : "The advantage of applying GraphScope is that it requires no parameters, i.e., it determines the number of row and column groups automatically. However, it is less scalable than pcv; in particular, it is too inefcient to process rack-server or server-server communications in our case study, and does not allow for overlapping column clusters . We apply these two diferent algorithms on all unweighted graphs for rack-rack communication. We empirically show that they fnd similar clusters, indicating that the clusters we fnd are true positives.",
+        "cite_spans" : [],
+        "section" : "Choice of Parameters and Algorithms",
+        "sec_num" : "2.3"
+      },
+      {
+        "text" : "As a case study, we consider the traces obtained from three diferent clusters in the Altoona datacenter, which were shared with the research community by Facebook [32, 37] . The clusters correspond to a Web cluster, a Database cluster and a Hadoop cluster. We consider the trafc over a 150 minutes (2.5 hours) time frame, plus some additional time period in the beginning to avoid possible artifacts from the \"warm-up phase\" and to focus on the steady-state behavior. To understand how the trafc patterns develop over time, we partition the 150 minutes of trafc into disjoint time intervals of 1, 5, and 15 minutes, the time steps; there are hence 150, 30, and 15 time steps, resp.",
+        "cite_spans" : [
+          {
+            "start" : 163,
+            "end" : 167,
+            "text" : "[32,",
+            "ref_id" : "BIBREF31"
+          },
+          {
+            "start" : 168,
+            "end" : 171,
+            "text" : "37]",
+            "ref_id" : "BIBREF36"
+          }
+        ],
+        "section" : "A CASE STUDY",
+        "sec_num" : "3"
+      },
+      {
+        "text" : "This cluster contains Web servers serving Web trafc.",
+        "cite_spans" : [],
+        "section" : "Web Cluster",
+        "sec_num" : "3.1"
+      },
+      {
+        "text" : "Properties of datasets. To analyze how similar two consecutive graphs and +1 are, we compute the percentages of edges that appear, disappear, and do not change between and +1 in the rack-rack communication over a 15 minutes interval for 0 , 0.3 , 0.5 , and 0.7 . The graphs exhibit a strong similarity over time, and the percentage of edges that and +1 share is very high, i.e., greater than 70%. The results for the 5 and 1 minutes interval are similar.",
+        "cite_spans" : [],
+        "section" : "Web Cluster",
+        "sec_num" : "3.1"
+      },
+      {
+        "text" : "For the rack-server communication, we notice that the results are similar to those for the rack-rack communication. The only exception is represented by the sparsest graphs, i.e., = 70%, for the 15 minutes time interval where the percentage of common edges is lower than the percentage of appearing and disappearing edges. For the server-rack communication the similarity over time is analogous to that of the rack-rack communication for 15 and 5 minutes time interval, i.e., the percentage of common edges is higher than the percentage of appearing and disappearing edges, except for = 70% in the 5 minute time interval. For the 1 minute time interval with 0.5 and 0.7 , instead, the similarity changes and we notice that 40% of the edges are appearing or disappearing and only a small number of edges remain in two consecutive graph snapshots. (We present additional Figures in the appendix.)",
+        "cite_spans" : [],
+        "section" : "Web Cluster",
+        "sec_num" : "3.1"
+      },
+      {
+        "text" : "Discussion of results. We start by discussing our results that we obtained using pcv. In Fig. 2 we present the visualization of the rack-rack communication over a typical 1 minute interval. We used 0.7 , i.e., we kept the 30% largest non-zero weight edges in . The plot clearly allows us to identify the cache servers, the Web servers and the multifeed servers. Next, we need to ensure that the nice visual clusters from Fig. 2 indeed correspond to actual trafc patterns. We analyze this in Fig. 3 . First, we need to ensure that the biclusterings returned by pcv have high recall, precision, and trafc inside the biclusters. show that indeed all of these measures are very high, for time steps of lengths 15, 5, and 1 minutes, resp. For each time step, the clusters contained more than 80% of the total trafc, while having recall and precision values of at least 90%. Hence, the biclusters seem to correspond to real trafc patterns. Second, we try to understand how stable the biclustering results are over time. In Table 1 we report the results of GraphScope for the Web cluster. In the Web cluster the graphs are more similar and few change-points are identifed by GraphScope, i.e., the number of segments is equal to 1 in most of the cases, for all the time intervals. The results of GraphScope, for some aspects, are in line with our analysis of the graph similarity in terms of common, appearing, and disappearing edges. The Web cluster is characterized by a well defned structure that remains persistent over time.",
+        "cite_spans" : [],
+        "section" : "Web Cluster",
+        "sec_num" : "3.1"
+      },
+      {
+        "text" : "It is important to underline that the results obtained with Graph-Scope difer from those obtained with the pcv in terms of number of clusters and segments detected. This diference is due to the diferent solutions provided by the algorithm: GraphScope does not identify overlapping communities and, unlike pcv, the nodes are partitioned and belong to only one cluster.",
+        "cite_spans" : [],
+        "section" : "Web Cluster",
+        "sec_num" : "3.1"
+      },
+      {
+        "text" : "Next, we consider rack-server communication over 5 minute time frames and = 0%. In Fig. 9 (a) we visualize a typical biclustering. We see that the resulting biclusters are extremely dense, which is why our biclusterings have a precision of almost 100%. The recall is around 85% and the trafc inside the biclustering is about 90%. This suggests that we found high-quality trafc biclusters. Furthermore, the biclusterings are very stable over time and all entries in the similarity matrix are over 94%. For shorter time frames of length 1 minute, the data becomes sparser and pcv does not fnd the full clusters anymore, which is why the trafc inside the clusters drops to around 60% in this case. For server-rack communication the situation is almost identical.",
+        "cite_spans" : [],
+        "section" : "Web Cluster",
+        "sec_num" : "3.1"
+      },
+      {
+        "text" : "For the server-server communication, we consider 15 minute time frames and = 0%. These are the densest graphs that we obtain among all clusters, containing around 10% of all possible edges; for shorter time frames or larger values for , the graphs become much sparser (e.g., for 5 minute intervals and = 0.5%, they contain less than 2.1% of all possible edges). The typical biclustering we fnd clearly reveal the structure of the cache and the Web servers (see Fig. 6 in the appendix). The similarities of our biclusterings are very high (typically above 99%); their recall is constantly above 95%, and their precision and trafc inside the clusters is around 50%. We explain the low fraction of trafc by the fact that pcv seems to miss some servers in the clustering (see also Fig. 6 ).",
+        "cite_spans" : [],
+        "section" : "Web Cluster",
+        "sec_num" : "3.1"
+      },
+      {
+        "text" : "The Database cluster mainly consists of MySQL servers which store user data and serve SQL queries.",
+        "cite_spans" : [],
+        "section" : "Database Cluster",
+        "sec_num" : "3.2"
+      },
+      {
+        "text" : "Properties of datasets. We evaluate the similarity of graphs in the Database cluster and we notice that for the rack-rack communication, and the rack-server communication, the percentage of common edges is high, i.e., greater than 70% for the 15 and 5 minutes interval, for any . The sparser graphs with = 70% exhibit a less strong similarity over time and the percentage of common edges decreases to 50% for the 1 minute interval. In the server-rack communication, the graphs characterized by a lower similarity are those obtained with 0.7 for the 15 and 5 minutes time interval. While for the 1 minute time interval the results are similar to those in the other communication cases with an exception for the sparsest graphs with = 70% where the number of common edges, about 20%, is lower that that of the new edges, about 40%. (We present additional fgures in the appendix.)",
+        "cite_spans" : [],
+        "section" : "Database Cluster",
+        "sec_num" : "3.2"
+      },
+      {
+        "text" : "Discussion of results. We present our fndings that we obtained from pcv and 1-minute time intervals in Fig. 4 . We present a typical plot for the rack-rack communication over a 1-minute interval with = 0% in Fig. 4(a) . In Fig. 4 (b), we present recall, precision and trafc inside the biclusters. Recall and precision are very high (almost 100%) but the precision is lower (around 80%). Indeed, when increasing to 30% and 50%, the precision drops quite signifcantly to 70% and 60%, resp., but for both the recall and the trafc inside the clusters stay above 90%. However, when setting = 70%, the trafc inside the clusters drops quite signifcantly to around 70% and precision and recall drop to 50% and 80%, resp. In Fig. 4(c ) we see that the clusterings have very high similarities of at least 85%.",
+        "cite_spans" : [],
+        "section" : "Database Cluster",
+        "sec_num" : "3.2"
+      },
+      {
+        "text" : "We note that when considering longer time steps, consisting of 5 or 15 minutes, the precision for larger values of increases. For example, when considering 15 minute intervals, the precision for = 30% is above 80% and for = 50% it is above 75%. Applying GraphScope to the Database cluster we notice that the similarity of the graphs decreases, and the algorithm detects more change-points and segments, in particular for the 1 minute time interval, as shown in Table 1 . As the Web cluster, also the Database cluster is characterized by a well-defned structure that remains persistent over time. The reason for the high number of change-points in the 1 minute time interval in Table 1 is related to the size of the graphs, these are the smallest in terms of number of edges compared to the other graphs.",
+        "cite_spans" : [],
+        "section" : "Database Cluster",
+        "sec_num" : "3.2"
+      },
+      {
+        "text" : "Next, we consider rack-server and the server-rack communications over 15 minute time frames and for = 0%. We visualize typical communication patterns in Fig.s 9(b) and 9(c), resp. We considered the 10,000 servers that received/sent the most data over the whole 150 minutes. In both cases, there exists one bicluster that is relatively dense, even though sparser than what we have seen for the Web cluster; the rest of the graph is extremely sparse. For both, rack-server and server-rack communication, the precision and recall are around 50% across all time steps; we explain this by the sparsity of the obtained biclusters and the long \"unclusterable\" tail of servers that do not receive/send a lot of data. The bicluster similarity is very high (over 80%) in both cases. Intriguingly, for rack-server communication the biclusters contain 85% of the trafc, while for server-rack it contains just 15% of the trafc.",
+        "cite_spans" : [],
+        "section" : "Database Cluster",
+        "sec_num" : "3.2"
+      },
+      {
+        "text" : "For server-server communication, we considered the 10,000 servers which sent and received the most data. We did not fnd any meaningful biclusters; even for 15 minute time frames and = 0%, the graphs are extremely sparse and have less than 0.12% of all possible edges.",
+        "cite_spans" : [],
+        "section" : "Database Cluster",
+        "sec_num" : "3.2"
+      },
+      {
+        "text" : "This cluster is for batch processing and runs Hadoop applications.",
+        "cite_spans" : [],
+        "section" : "Hadoop Cluster",
+        "sec_num" : "3.3"
+      },
+      {
+        "text" : "Properties of datasets. In the Hadoop cluster, we notice a different structure compared to the previous two clusters. In particular for the rack-rack communication, in the 15 and 5 minutes time interval for 0.7 , the percentage of common edges is low while there is a high number of edges that appear and disappear. We show the percentages in Fig. 5 (a), Fig. 5 (b), and 5(c), The same happens for the rack-server communication for 0.7 and 5 minutes time interval. This low similarity over time is exhibited also for the 1 minute time interval with 0.5 , 0.7 in the rack-rack communication, and for the 5 minute time interval with 0.7 in the rack-server communication. In the server-rack communication, the percentage of common edges is low while there is a high number of edges that appear and disappear, the only graphs exhibiting a strong similarity over time are those obtained with 0 for the 15 minutes time interval.",
+        "cite_spans" : [],
+        "section" : "Hadoop Cluster",
+        "sec_num" : "3.3"
+      },
+      {
+        "text" : "Discussion of results. We again start by discussing our results from pcv. We present the biclustering from rack-rack communication over 5-minute intervals and = 30% in Fig. 8 in the appendix. Fig. 8 (a) shows a typical plot of a graph ; we see that this graph is very dense, containing almost 70% of all possible edges. As the biclustering essentially forms one single large cluster for the graph, the precision is also around 70%, and the recall and trafc inside the cluster are very high (Fig. 8(b) ). Not surprisingly, the similarities across diferent time steps are extremely high (Fig. 8(c) ).",
+        "cite_spans" : [],
+        "section" : "Hadoop Cluster",
+        "sec_num" : "3.3"
+      },
+      {
+        "text" : "In Table 2 in the appendix we report the results obtained with GraphScope for the Hadoop cluster. Comparing the results for the Hadoop cluster with the other clusters, it is easy to see that in this Hadoop cluster the similarity of the graphs decreases, and the algorithm detects many more change-points and segments, in particular for the 1 minute time interval. The Hadoop Cluster is the one with the lowest percentage of common edges and highest percentage of edges that appear and disappear for the 1 minute time interval and, as shown in Table 2 , GraphScope detects a high number of change-points. Moreover, it is the cluster with the highest average number of edges.",
+        "cite_spans" : [],
+        "section" : "Hadoop Cluster",
+        "sec_num" : "3.3"
+      },
+      {
+        "text" : "Next, we consider rack-server communication over 15 minute time intervals and = 30%. We visualize a typical biclustering in Fig. 9(d) , where we considered the 10,000 servers that received the most data over the whole 150 minutes. When considering = 0%, the only change in the plots is that the dense areas become even more dense. Fig. 9(d) shows that the racks send a lot of data to a very large fraction of the servers. Our biclusterings had recall and trafc inside the biclusters almost 100%; the precision is around 50%, due to the sparsity of the graph. The smallest entry in our similarity matrices is over 85%, suggesting that the set of active servers is very stable over the entire time frame. For server-rack communication results are essentially identical.",
+        "cite_spans" : [],
+        "section" : "Hadoop Cluster",
+        "sec_num" : "3.3"
+      },
+      {
+        "text" : "For the server-server communication of the 10,000 most active sending and receiving servers, the matrices are relatively sparse (even over 15 minutes and for = 0%, they typically contain less than 5% of all possible edges). It seems like the data does not contain clear bicluster structures, as the recall and the trafc inside the biclusterings are almost 0%.",
+        "cite_spans" : [],
+        "section" : "Hadoop Cluster",
+        "sec_num" : "3.3"
+      },
+      {
+        "text" : "The study of communication trafc and its patterns is a topic of high relevance in the networking community, and has received much attention in the literature, at least from the 1990s when it was observed that enterprise and Internet trafc can signifcantly difer from other communication trafc, such as phone calls [25] . There also already exist several important studies on the trafc in datacenter networks specifcally. Empirical studies found that much datacenter trafc is rack-local [6, 13] , that there is typically only a small fraction of large fows [2] , and that demand is generally bursty [6] [7] [8] 13] and of low entropy [4] and features ON/OFF behavior [6] . Some of these properties have recently been revisited in the context of a large empirical study in Facebook's datacenters [32] , which showed that the specifc properties also depend on the datacenter type. However, these works do not go in-depth for our research question on communication clustering, even though many further aspects are considered: e.g., the seminal work by Benson et al. [6] studies trafc from the viewpoints of application type, fow-and packet-arrival times, link utilization, and extra-rack vs. intra-rack trafc, but not the communication cluster structure itself. Similarly, Roy et al. [32] consider, e.g., rack locality, demand-distribution, and communication between co-located server clusters-but do not study clustering in the observed trafc. Lastly, while Ghobadi et al. [16] showed that small groups of servers can be talkative, they also did not further investigate communication clusters.",
+        "cite_spans" : [
+          {
+            "start" : 314,
+            "end" : 318,
+            "text" : "[25]",
+            "ref_id" : "BIBREF24"
+          },
+          {
+            "start" : 486,
+            "end" : 489,
+            "text" : "[6,",
+            "ref_id" : "BIBREF5"
+          },
+          {
+            "start" : 490,
+            "end" : 493,
+            "text" : "13]",
+            "ref_id" : "BIBREF12"
+          },
+          {
+            "start" : 556,
+            "end" : 559,
+            "text" : "[2]",
+            "ref_id" : "BIBREF1"
+          },
+          {
+            "start" : 598,
+            "end" : 601,
+            "text" : "[6]",
+            "ref_id" : "BIBREF5"
+          },
+          {
+            "start" : 602,
+            "end" : 605,
+            "text" : "[7]",
+            "ref_id" : "BIBREF6"
+          },
+          {
+            "start" : 606,
+            "end" : 609,
+            "text" : "[8]",
+            "ref_id" : "BIBREF7"
+          },
+          {
+            "start" : 610,
+            "end" : 613,
+            "text" : "13]",
+            "ref_id" : "BIBREF12"
+          },
+          {
+            "start" : 633,
+            "end" : 636,
+            "text" : "[4]",
+            "ref_id" : "BIBREF3"
+          },
+          {
+            "start" : 666,
+            "end" : 669,
+            "text" : "[6]",
+            "ref_id" : "BIBREF5"
+          },
+          {
+            "start" : 794,
+            "end" : 798,
+            "text" : "[32]",
+            "ref_id" : "BIBREF31"
+          },
+          {
+            "start" : 1062,
+            "end" : 1065,
+            "text" : "[6]",
+            "ref_id" : "BIBREF5"
+          },
+          {
+            "start" : 1280,
+            "end" : 1284,
+            "text" : "[32]",
+            "ref_id" : "BIBREF31"
+          },
+          {
+            "start" : 1470,
+            "end" : 1474,
+            "text" : "[16]",
+            "ref_id" : "BIBREF15"
+          }
+        ],
+        "section" : "ADDITIONAL RELATED WORK",
+        "sec_num" : "4"
+      },
+      {
+        "text" : "Hence, to the best of our knowledge, our work is the frst to propose a systematic approach to determine communication clusters in datacenter trafc, based on biclustering, showing that a significant amount of trafc lies in small and stable clusters. Despite the practical relevance of biclustering in many applications, e.g., in text mining and bioinformatics, only few publications focus on the evaluation of biclustering results. Existing approaches based on external validation [18] require information on an ideal biclustering solution and are not applicable to our problem setting. Lee et al. [24] introduced a stability index to measure the validity of a biclustering under variations of the input data set. This measure focuses on fnding biclusters in data with numerical attributes, as it is the case for gene expression.",
+        "cite_spans" : [
+          {
+            "start" : 480,
+            "end" : 484,
+            "text" : "[18]",
+            "ref_id" : "BIBREF17"
+          },
+          {
+            "start" : 597,
+            "end" : 601,
+            "text" : "[24]",
+            "ref_id" : "BIBREF23"
+          }
+        ],
+        "section" : "ADDITIONAL RELATED WORK",
+        "sec_num" : "4"
+      },
+      {
+        "text" : "We understand our work as a frst step, and believe that it opens several interesting avenues for future research. In particular, it would be interesting to improve the scalability of our algorithms further, in order to be able to conduct even more fne-grained analyses. Another interesting direction is to fnd patterns of fow patterns (involving a sequence of senders and receivers), rather than patterns of sender-receiver that we considered. Next, the dataset we considered provides trafc information over a single day (24 hours) and is widely studied by the research community. As a consequence, we are limited in the trafc window, and hence studied a 150 minutes sample. Future studies could consider larger datasets to study shorter and larger time frames: seconds, days, weeks and months. More generally, while our work shows that small, dense, and stable clusters exist in the communication trafc, it remains to investigate the resulting possible opportunities for improving the resource efciency in datacenters. In particular, it would be interesting to study under which circumstances a collocation of such clusters can be meaningful, possibly even dynamically over time, using cost-efcient migrations or reconfgurations.",
+        "cite_spans" : [],
+        "section" : "FUTURE RESEARCH",
+        "sec_num" : "5"
+      },
+      {
+        "text" : "In this section, we present additional plots of Fig.s 6, 8 and 9, as well as Table 2 .",
+        "cite_spans" : [],
+        "section" : "A APPENDIX A.1 Additional Plots and Tables",
+        "sec_num" : null
+      },
+      {
+        "text" : "Since pcv is a randomized algorithm and requires the number of clusters as input, we also study how stable its biclustering solutions are over diferent runs and across diferent choices of .",
+        "cite_spans" : [],
+        "section" : "A.2 Stability of pcv Solutions",
+        "sec_num" : null
+      },
+      {
+        "text" : "More concretely, given an unweighted bipartite graph , we created fve initial biclusterings of for = 7 (as in our experiments above). Then we vary = 5, . . . , 10 and each time we create another fve biclusterings of . For each new biclustering and and each initial biclustering, we compute the normalized mutual information (NMI) of their induced bicliques (see Eq. ( 1)); we report the averages and standard deviations of these NMIs. Note that we use the induced bicliques for computing the NMI because they relate to the edges \"covered\" by the biclustering and they are independent of and can handle overlapping clusters (as produced by pcv).",
+        "cite_spans" : [],
+        "section" : "A.2 Stability of pcv Solutions",
+        "sec_num" : null
+      },
+      {
+        "text" : "We report our results in Fig. 7 . The NMI values we obtain are always above 75% and the standard deviations are low. Indeed, here we report some of the \"worse\" results; on many other datasets the NMIs are well above 90% and have extremely small standard deviations.",
+        "cite_spans" : [],
+        "section" : "A.2 Stability of pcv Solutions",
+        "sec_num" : null
+      },
+      {
+        "text" : "To analyze how similar two consecutive graphs and +1 are, we compute the percentages of edges that appear, disappear, and do not change between and +1 . We present additional plots for the Web cluster in ",
+        "cite_spans" : [],
+        "section" : "A.3 Graph Similarity over Time",
+        "sec_num" : null
+      },
+      {
+        "text" : "In this section we report the size of the clusters in Table 3 . ",
+        "cite_spans" : [],
+        "section" : "A.4 Graph Statistics",
+        "sec_num" : null
+      },
+      {
+        "text" : "https://github.com/tmarette/datacenterClusterAnalysis",
+        "cite_spans" : [],
+        "section" : "",
+        "sec_num" : null
+      }
+    ],
+    "bib_entries" : {
+      "BIBREF0" : {
+        "ref_id" : "b0",
+        "title" : "ProjecToR Dataset",
+        "authors" : [],
+        "dblp_id" : null,
+        "year" : 2016,
+        "venue" : "",
+        "volume" : "",
+        "issue" : "",
+        "pages" : "",
+        "other_ids" : {},
+        "num" : null,
+        "urls" : [],
+        "raw_text" : "2016. ProjecToR Dataset. www.microsoft.com/en-us/research/project/projector- agile-reconfgurable-data-center-interconnect.",
+        "links" : null
+      },
+      "BIBREF1" : {
+        "ref_id" : "b1",
+        "title" : "Data center TCP (DCTCP)",
+        "authors" : [
+          {
+            "first" : "Mohammad",
+            "middle" : [],
+            "last" : "Alizadeh",
+            "suffix" : ""
+          },
+          {
+            "first" : "Albert",
+            "middle" : [
+              "G"
+            ],
+            "last" : "Greenberg",
+            "suffix" : ""
+          },
+          {
+            "first" : "David",
+            "middle" : [
+              "A"
+            ],
+            "last" : "Maltz",
+            "suffix" : ""
+          },
+          {
+            "first" : "Jitendra",
+            "middle" : [],
+            "last" : "Padhye",
+            "suffix" : ""
+          },
+          {
+            "first" : "Parveen",
+            "middle" : [],
+            "last" : "Patel",
+            "suffix" : ""
+          },
+          {
+            "first" : "Balaji",
+            "middle" : [],
+            "last" : "Prabhakar",
+            "suffix" : ""
+          },
+          {
+            "first" : "Sudipta",
+            "middle" : [],
+            "last" : "Sengupta",
+            "suffix" : ""
+          },
+          {
+            "first" : "Murari",
+            "middle" : [],
+            "last" : "Sridharan",
+            "suffix" : ""
+          }
+        ],
+        "dblp_id" : "conf/sigcomm/AlizadehGMPPPSS10",
+        "year" : 2010,
+        "venue" : "SIGCOMM. ACM",
+        "volume" : "",
+        "issue" : "",
+        "pages" : "63--74",
+        "other_ids" : {},
+        "num" : null,
+        "urls" : [],
+        "raw_text" : "Mohammad Alizadeh, Albert G. Greenberg, David A. Maltz, Jitendra Padhye, Parveen Patel, Balaji Prabhakar, Sudipta Sengupta, and Murari Sridharan. 2010. Data center TCP (DCTCP). In SIGCOMM. ACM, 63-74.",
+        "links" : null
+      },
+      "BIBREF2" : {
+        "ref_id" : "b2",
+        "title" : "pFabric: minimal near-optimal datacenter transport",
+        "authors" : [
+          {
+            "first" : "Mohammad",
+            "middle" : [],
+            "last" : "Alizadeh",
+            "suffix" : ""
+          },
+          {
+            "first" : "Shuang",
+            "middle" : [],
+            "last" : "Yang",
+            "suffix" : ""
+          },
+          {
+            "first" : "Milad",
+            "middle" : [],
+            "last" : "Sharif",
+            "suffix" : ""
+          },
+          {
+            "first" : "Sachin",
+            "middle" : [],
+            "last" : "Katti",
+            "suffix" : ""
+          },
+          {
+            "first" : "Nick",
+            "middle" : [],
+            "last" : "Mckeown",
+            "suffix" : ""
+          },
+          {
+            "first" : "Balaji",
+            "middle" : [],
+            "last" : "Prabhakar",
+            "suffix" : ""
+          },
+          {
+            "first" : "Scott",
+            "middle" : [],
+            "last" : "Shenker",
+            "suffix" : ""
+          }
+        ],
+        "dblp_id" : "conf/sigcomm/AlizadehYSKMPS13",
+        "year" : 2013,
+        "venue" : "SIGCOMM. ACM",
+        "volume" : "",
+        "issue" : "",
+        "pages" : "435--446",
+        "other_ids" : {},
+        "num" : null,
+        "urls" : [],
+        "raw_text" : "Mohammad Alizadeh, Shuang Yang, Milad Sharif, Sachin Katti, Nick McKeown, Balaji Prabhakar, and Scott Shenker. 2013. pFabric: minimal near-optimal data- center transport. In SIGCOMM. ACM, 435-446.",
+        "links" : null
+      },
+      "BIBREF3" : {
+        "ref_id" : "b3",
+        "title" : "On the Complexity of Trafc Traces and Implications",
+        "authors" : [
+          {
+            "first" : "Chen",
+            "middle" : [],
+            "last" : "Avin",
+            "suffix" : ""
+          },
+          {
+            "first" : "Manya",
+            "middle" : [],
+            "last" : "Ghobadi",
+            "suffix" : ""
+          },
+          {
+            "first" : "Chen",
+            "middle" : [],
+            "last" : "Griner",
+            "suffix" : ""
+          },
+          {
+            "first" : "Stefan",
+            "middle" : [],
+            "last" : "Schmid",
+            "suffix" : ""
+          }
+        ],
+        "dblp_id" : null,
+        "year" : 2020,
+        "venue" : "Proc. ACM Meas. Anal. Comput. Syst",
+        "volume" : "4",
+        "issue" : "1",
+        "pages" : "1--20",
+        "other_ids" : {},
+        "num" : null,
+        "urls" : [],
+        "raw_text" : "Chen Avin, Manya Ghobadi, Chen Griner, and Stefan Schmid. 2020. On the Complexity of Trafc Traces and Implications. Proc. ACM Meas. Anal. Comput. Syst. 4, 1 (2020), 20:1-20:29.",
+        "links" : null
+      },
+      "BIBREF4" : {
+        "ref_id" : "b4",
+        "title" : "Toward demand-aware networking: a theory for self-adjusting networks",
+        "authors" : [
+          {
+            "first" : "Chen",
+            "middle" : [],
+            "last" : "Avin",
+            "suffix" : ""
+          },
+          {
+            "first" : "Stefan",
+            "middle" : [],
+            "last" : "Schmid",
+            "suffix" : ""
+          }
+        ],
+        "dblp_id" : null,
+        "year" : 2018,
+        "venue" : "Comput. Commun. Rev",
+        "volume" : "48",
+        "issue" : "5",
+        "pages" : "31--40",
+        "other_ids" : {},
+        "num" : null,
+        "urls" : [],
+        "raw_text" : "Chen Avin and Stefan Schmid. 2018. Toward demand-aware networking: a theory for self-adjusting networks. Comput. Commun. Rev. 48, 5 (2018), 31-40.",
+        "links" : null
+      },
+      "BIBREF5" : {
+        "ref_id" : "b5",
+        "title" : "Network trafc characteristics of data centers in the wild",
+        "authors" : [
+          {
+            "first" : "Theophilus",
+            "middle" : [],
+            "last" : "Benson",
+            "suffix" : ""
+          },
+          {
+            "first" : "Aditya",
+            "middle" : [],
+            "last" : "Akella",
+            "suffix" : ""
+          },
+          {
+            "first" : "David",
+            "middle" : [
+              "A"
+            ],
+            "last" : "Maltz",
+            "suffix" : ""
+          }
+        ],
+        "dblp_id" : null,
+        "year" : 2010,
+        "venue" : "Internet Measurement Conference",
+        "volume" : "",
+        "issue" : "",
+        "pages" : "267--280",
+        "other_ids" : {},
+        "num" : null,
+        "urls" : [],
+        "raw_text" : "Theophilus Benson, Aditya Akella, and David A. Maltz. 2010. Network trafc characteristics of data centers in the wild. In Internet Measurement Conference. ACM, 267-280.",
+        "links" : null
+      },
+      "BIBREF6" : {
+        "ref_id" : "b6",
+        "title" : "Understanding data center trafc characteristics",
+        "authors" : [
+          {
+            "first" : "Theophilus",
+            "middle" : [],
+            "last" : "Benson",
+            "suffix" : ""
+          },
+          {
+            "first" : "Ashok",
+            "middle" : [],
+            "last" : "Anand",
+            "suffix" : ""
+          },
+          {
+            "first" : "Aditya",
+            "middle" : [],
+            "last" : "Akella",
+            "suffix" : ""
+          },
+          {
+            "first" : "Ming",
+            "middle" : [],
+            "last" : "Zhang",
+            "suffix" : ""
+          }
+        ],
+        "dblp_id" : null,
+        "year" : 2010,
+        "venue" : "Comput. Commun. Rev",
+        "volume" : "40",
+        "issue" : "1",
+        "pages" : "92--99",
+        "other_ids" : {},
+        "num" : null,
+        "urls" : [],
+        "raw_text" : "Theophilus Benson, Ashok Anand, Aditya Akella, and Ming Zhang. 2010. Under- standing data center trafc characteristics. Comput. Commun. Rev. 40, 1 (2010), 92-99.",
+        "links" : null
+      },
+      "BIBREF7" : {
+        "ref_id" : "b7",
+        "title" : "Mi-croTE: fne grained trafc engineering for data centers",
+        "authors" : [
+          {
+            "first" : "Theophilus",
+            "middle" : [],
+            "last" : "Benson",
+            "suffix" : ""
+          },
+          {
+            "first" : "Ashok",
+            "middle" : [],
+            "last" : "Anand",
+            "suffix" : ""
+          },
+          {
+            "first" : "Aditya",
+            "middle" : [],
+            "last" : "Akella",
+            "suffix" : ""
+          },
+          {
+            "first" : "Ming",
+            "middle" : [],
+            "last" : "Zhang",
+            "suffix" : ""
+          }
+        ],
+        "dblp_id" : null,
+        "year" : 2011,
+        "venue" : "CoNEXT. ACM",
+        "volume" : "8",
+        "issue" : "",
+        "pages" : "",
+        "other_ids" : {},
+        "num" : null,
+        "urls" : [],
+        "raw_text" : "Theophilus Benson, Ashok Anand, Aditya Akella, and Ming Zhang. 2011. Mi- croTE: fne grained trafc engineering for data centers. In CoNEXT. ACM, 8.",
+        "links" : null
+      },
+      "BIBREF8" : {
+        "ref_id" : "b8",
+        "title" : "OSA: An Optical Switching Architecture for Data Center Networks With Unprecedented Flexibility",
+        "authors" : [
+          {
+            "first" : "Kai",
+            "middle" : [],
+            "last" : "Chen",
+            "suffix" : ""
+          },
+          {
+            "first" : "Ankit",
+            "middle" : [],
+            "last" : "Singla",
+            "suffix" : ""
+          },
+          {
+            "first" : "Atul",
+            "middle" : [],
+            "last" : "Singh",
+            "suffix" : ""
+          },
+          {
+            "first" : "Kishore",
+            "middle" : [],
+            "last" : "Ramachandran",
+            "suffix" : ""
+          },
+          {
+            "first" : "Lei",
+            "middle" : [],
+            "last" : "Xu",
+            "suffix" : ""
+          },
+          {
+            "first" : "Yueping",
+            "middle" : [],
+            "last" : "Zhang",
+            "suffix" : ""
+          },
+          {
+            "first" : "Xitao",
+            "middle" : [],
+            "last" : "Wen",
+            "suffix" : ""
+          },
+          {
+            "first" : "Yan",
+            "middle" : [],
+            "last" : "Chen",
+            "suffix" : ""
+          }
+        ],
+        "dblp_id" : "conf/nsdi/SinglaSC12",
+        "year" : 2014,
+        "venue" : "IEEE/ACM Trans. Netw",
+        "volume" : "22",
+        "issue" : "2",
+        "pages" : "498--511",
+        "other_ids" : {},
+        "num" : null,
+        "urls" : [],
+        "raw_text" : "Kai Chen, Ankit Singla, Atul Singh, Kishore Ramachandran, Lei Xu, Yueping Zhang, Xitao Wen, and Yan Chen. 2014. OSA: An Optical Switching Architecture for Data Center Networks With Unprecedented Flexibility. IEEE/ACM Trans. Netw. 22, 2 (2014), 498-511.",
+        "links" : null
+      },
+      "BIBREF9" : {
+        "ref_id" : "b9",
+        "title" : "Application of Sampling Methodologies to Network Trafc Characterization",
+        "authors" : [
+          {
+            "first" : "Kimberly",
+            "middle" : [
+              "C"
+            ],
+            "last" : "Clafy",
+            "suffix" : ""
+          },
+          {
+            "first" : "George",
+            "middle" : [
+              "C"
+            ],
+            "last" : "Polyzos",
+            "suffix" : ""
+          },
+          {
+            "first" : "Hans-Werner",
+            "middle" : [],
+            "last" : "Braun",
+            "suffix" : ""
+          }
+        ],
+        "dblp_id" : null,
+        "year" : 1993,
+        "venue" : "SIGCOMM",
+        "volume" : "",
+        "issue" : "",
+        "pages" : "194--203",
+        "other_ids" : {},
+        "num" : null,
+        "urls" : [],
+        "raw_text" : "Kimberly C. Clafy, George C. Polyzos, and Hans-Werner Braun. 1993. Application of Sampling Methodologies to Network Trafc Characterization. In SIGCOMM. 194-203.",
+        "links" : null
+      },
+      "BIBREF10" : {
+        "ref_id" : "b10",
+        "title" : "Visual Role Mining: A Picture Is Worth a Thousand Roles",
+        "authors" : [
+          {
+            "first" : "Alessandro",
+            "middle" : [],
+            "last" : "Colantonio",
+            "suffix" : ""
+          },
+          {
+            "first" : "Roberto",
+            "middle" : [],
+            "last" : "Di Pietro",
+            "suffix" : ""
+          },
+          {
+            "first" : "Alberto",
+            "middle" : [],
+            "last" : "Ocello",
+            "suffix" : ""
+          },
+          {
+            "first" : "Nino",
+            "middle" : [],
+            "last" : "Vincenzo",
+            "suffix" : ""
+          },
+          {
+            "first" : "",
+            "middle" : [],
+            "last" : "Verde",
+            "suffix" : ""
+          }
+        ],
+        "dblp_id" : null,
+        "year" : 2012,
+        "venue" : "IEEE Trans. Knowl. Data Eng",
+        "volume" : "24",
+        "issue" : "6",
+        "pages" : "1120--1133",
+        "other_ids" : {},
+        "num" : null,
+        "urls" : [],
+        "raw_text" : "Alessandro Colantonio, Roberto Di Pietro, Alberto Ocello, and Nino Vincenzo Verde. 2012. Visual Role Mining: A Picture Is Worth a Thousand Roles. IEEE Trans. Knowl. Data Eng. 24, 6 (2012), 1120-1133.",
+        "links" : null
+      },
+      "BIBREF11" : {
+        "ref_id" : "b11",
+        "title" : "An improved data stream summary: the count-min sketch and its applications",
+        "authors" : [
+          {
+            "first" : "Graham",
+            "middle" : [],
+            "last" : "Cormode",
+            "suffix" : ""
+          },
+          {
+            "first" : "S",
+            "middle" : [],
+            "last" : "Muthukrishnan",
+            "suffix" : ""
+          }
+        ],
+        "dblp_id" : "conf/latin/CormodeM04",
+        "year" : 2005,
+        "venue" : "J. Algorithms",
+        "volume" : "55",
+        "issue" : "1",
+        "pages" : "58--75",
+        "other_ids" : {},
+        "num" : null,
+        "urls" : [],
+        "raw_text" : "Graham Cormode and S. Muthukrishnan. 2005. An improved data stream sum- mary: the count-min sketch and its applications. J. Algorithms 55, 1 (2005), 58-75.",
+        "links" : null
+      },
+      "BIBREF12" : {
+        "ref_id" : "b12",
+        "title" : "ECHO: Recreating network trafc maps for datacenters with tens of thousands of servers",
+        "authors" : [
+          {
+            "first" : "Christina",
+            "middle" : [],
+            "last" : "Delimitrou",
+            "suffix" : ""
+          },
+          {
+            "first" : "Sriram",
+            "middle" : [],
+            "last" : "Sankar",
+            "suffix" : ""
+          },
+          {
+            "first" : "Aman",
+            "middle" : [],
+            "last" : "Kansal",
+            "suffix" : ""
+          },
+          {
+            "first" : "Christos",
+            "middle" : [],
+            "last" : "Kozyrakis",
+            "suffix" : ""
+          }
+        ],
+        "dblp_id" : null,
+        "year" : 2012,
+        "venue" : "IISWC. IEEE",
+        "volume" : "",
+        "issue" : "",
+        "pages" : "14--24",
+        "other_ids" : {},
+        "num" : null,
+        "urls" : [],
+        "raw_text" : "Christina Delimitrou, Sriram Sankar, Aman Kansal, and Christos Kozyrakis. 2012. ECHO: Recreating network trafc maps for datacenters with tens of thousands of servers. In IISWC. IEEE, 14-24.",
+        "links" : null
+      },
+      "BIBREF13" : {
+        "ref_id" : "b13",
+        "title" : "Co-clustering documents and words using bipartite spectral graph partitioning",
+        "authors" : [
+          {
+            "first" : "S",
+            "middle" : [],
+            "last" : "Inderjit",
+            "suffix" : ""
+          },
+          {
+            "first" : "",
+            "middle" : [],
+            "last" : "Dhillon",
+            "suffix" : ""
+          }
+        ],
+        "dblp_id" : "conf/kdd/Dhillon01",
+        "year" : 2001,
+        "venue" : "SIGKDD",
+        "volume" : "",
+        "issue" : "",
+        "pages" : "269--274",
+        "other_ids" : {},
+        "num" : null,
+        "urls" : [],
+        "raw_text" : "Inderjit S. Dhillon. 2001. Co-clustering documents and words using bipartite spectral graph partitioning. In SIGKDD. 269-274.",
+        "links" : null
+      },
+      "BIBREF14" : {
+        "ref_id" : "b14",
+        "title" : "Survey of Reconfgurable Data Center Networks: Enablers, Algorithms, Complexity",
+        "authors" : [
+          {
+            "first" : "Klaus-Tycho",
+            "middle" : [],
+            "last" : "Foerster",
+            "suffix" : ""
+          },
+          {
+            "first" : "Stefan",
+            "middle" : [],
+            "last" : "Schmid",
+            "suffix" : ""
+          }
+        ],
+        "dblp_id" : null,
+        "year" : 2019,
+        "venue" : "SIGACT News",
+        "volume" : "50",
+        "issue" : "2",
+        "pages" : "62--79",
+        "other_ids" : {},
+        "num" : null,
+        "urls" : [],
+        "raw_text" : "Klaus-Tycho Foerster and Stefan Schmid. 2019. Survey of Reconfgurable Data Center Networks: Enablers, Algorithms, Complexity. SIGACT News 50, 2 (2019), 62-79.",
+        "links" : null
+      },
+      "BIBREF15" : {
+        "ref_id" : "b15",
+        "title" : "ProjecToR: Agile Reconfgurable Data Center Interconnect",
+        "authors" : [
+          {
+            "first" : "Monia",
+            "middle" : [],
+            "last" : "Ghobadi",
+            "suffix" : ""
+          },
+          {
+            "first" : "Ratul",
+            "middle" : [],
+            "last" : "Mahajan",
+            "suffix" : ""
+          },
+          {
+            "first" : "Amar",
+            "middle" : [],
+            "last" : "Phanishayee",
+            "suffix" : ""
+          },
+          {
+            "first" : "R",
+            "middle" : [],
+            "last" : "Nikhil",
+            "suffix" : ""
+          },
+          {
+            "first" : "Janardhan",
+            "middle" : [],
+            "last" : "Devanur",
+            "suffix" : ""
+          },
+          {
+            "first" : "Gireeja",
+            "middle" : [],
+            "last" : "Kulkarni",
+            "suffix" : ""
+          },
+          {
+            "first" : "Pierre-Alexandre",
+            "middle" : [],
+            "last" : "Ranade",
+            "suffix" : ""
+          },
+          {
+            "first" : "Houman",
+            "middle" : [],
+            "last" : "Blanche",
+            "suffix" : ""
+          },
+          {
+            "first" : "Madeleine",
+            "middle" : [],
+            "last" : "Rastegarfar",
+            "suffix" : ""
+          },
+          {
+            "first" : "Daniel",
+            "middle" : [
+              "C"
+            ],
+            "last" : "Glick",
+            "suffix" : ""
+          },
+          {
+            "first" : "",
+            "middle" : [],
+            "last" : "Kilper",
+            "suffix" : ""
+          }
+        ],
+        "dblp_id" : null,
+        "year" : 2016,
+        "venue" : "SIGCOMM. ACM",
+        "volume" : "",
+        "issue" : "",
+        "pages" : "216--229",
+        "other_ids" : {},
+        "num" : null,
+        "urls" : [],
+        "raw_text" : "Monia Ghobadi, Ratul Mahajan, Amar Phanishayee, Nikhil R. Devanur, Janard- han Kulkarni, Gireeja Ranade, Pierre-Alexandre Blanche, Houman Rastegarfar, Madeleine Glick, and Daniel C. Kilper. 2016. ProjecToR: Agile Reconfgurable Data Center Interconnect. In SIGCOMM. ACM, 216-229.",
+        "links" : null
+      },
+      "BIBREF16" : {
+        "ref_id" : "b16",
+        "title" : "Cerberus: The Power of Choices in Datacenter Topology Design -A Throughput Perspective",
+        "authors" : [
+          {
+            "first" : "Chen",
+            "middle" : [],
+            "last" : "Griner",
+            "suffix" : ""
+          },
+          {
+            "first" : "Johannes",
+            "middle" : [],
+            "last" : "Zerwas",
+            "suffix" : ""
+          },
+          {
+            "first" : "Andreas",
+            "middle" : [],
+            "last" : "Blenk",
+            "suffix" : ""
+          },
+          {
+            "first" : "Manya",
+            "middle" : [],
+            "last" : "Ghobadi",
+            "suffix" : ""
+          },
+          {
+            "first" : "Stefan",
+            "middle" : [],
+            "last" : "Schmid",
+            "suffix" : ""
+          },
+          {
+            "first" : "Chen",
+            "middle" : [],
+            "last" : "Avin",
+            "suffix" : ""
+          }
+        ],
+        "dblp_id" : "conf/sigmetrics/GrinerZBG0A22",
+        "year" : 2021,
+        "venue" : "Proc. ACM Meas. Anal. Comput. Syst",
+        "volume" : "5",
+        "issue" : "3",
+        "pages" : "1--38",
+        "other_ids" : {},
+        "num" : null,
+        "urls" : [],
+        "raw_text" : "Chen Griner, Johannes Zerwas, Andreas Blenk, Manya Ghobadi, Stefan Schmid, and Chen Avin. 2021. Cerberus: The Power of Choices in Datacenter Topology Design -A Throughput Perspective. Proc. ACM Meas. Anal. Comput. Syst. 5, 3 (2021), 38:1-38:33.",
+        "links" : null
+      },
+      "BIBREF17" : {
+        "ref_id" : "b17",
+        "title" : "Precision-recall space to correct external indices for biclustering",
+        "authors" : [
+          {
+            "first" : "Blaise",
+            "middle" : [],
+            "last" : "Hanczar",
+            "suffix" : ""
+          },
+          {
+            "first" : "Mohamed",
+            "middle" : [],
+            "last" : "Nadif",
+            "suffix" : ""
+          }
+        ],
+        "dblp_id" : "conf/icml/HanczarN13",
+        "year" : 2013,
+        "venue" : "ICML (2) (JMLR Workshop and Conference Proceedings",
+        "volume" : "28",
+        "issue" : "",
+        "pages" : "136--144",
+        "other_ids" : {},
+        "num" : null,
+        "urls" : [],
+        "raw_text" : "Blaise Hanczar and Mohamed Nadif. 2013. Precision-recall space to correct external indices for biclustering. In ICML (2) (JMLR Workshop and Conference Proceedings, Vol. 28). JMLR.org, 136-144.",
+        "links" : null
+      },
+      "BIBREF18" : {
+        "ref_id" : "b18",
+        "title" : "Efcient distributed workload (re-) embedding",
+        "authors" : [
+          {
+            "first" : "Monika",
+            "middle" : [],
+            "last" : "Henzinger",
+            "suffix" : ""
+          },
+          {
+            "first" : "Stefan",
+            "middle" : [],
+            "last" : "Neumann",
+            "suffix" : ""
+          },
+          {
+            "first" : "Stefan",
+            "middle" : [],
+            "last" : "Schmid",
+            "suffix" : ""
+          }
+        ],
+        "dblp_id" : null,
+        "year" : 2019,
+        "venue" : "Proceedings of the ACM on Measurement and Analysis of Computing Systems",
+        "volume" : "3",
+        "issue" : "",
+        "pages" : "1--38",
+        "other_ids" : {},
+        "num" : null,
+        "urls" : [],
+        "raw_text" : "Monika Henzinger, Stefan Neumann, and Stefan Schmid. 2019. Efcient dis- tributed workload (re-) embedding. Proceedings of the ACM on Measurement and Analysis of Computing Systems 3, 1 (2019), 1-38.",
+        "links" : null
+      },
+      "BIBREF19" : {
+        "ref_id" : "b19",
+        "title" : "Attaining the Promise and Avoiding the Pitfalls of TCP in the Datacenter",
+        "authors" : [
+          {
+            "first" : "Glenn",
+            "middle" : [],
+            "last" : "Judd",
+            "suffix" : ""
+          }
+        ],
+        "dblp_id" : "conf/nsdi/Judd15",
+        "year" : 2015,
+        "venue" : "NSDI. USENIX Association",
+        "volume" : "",
+        "issue" : "",
+        "pages" : "145--157",
+        "other_ids" : {},
+        "num" : null,
+        "urls" : [],
+        "raw_text" : "Glenn Judd. 2015. Attaining the Promise and Avoiding the Pitfalls of TCP in the Datacenter. In NSDI. USENIX Association, 145-157.",
+        "links" : null
+      },
+      "BIBREF20" : {
+        "ref_id" : "b20",
+        "title" : "Empowering Self-Driving Networks",
+        "authors" : [
+          {
+            "first" : "Patrick",
+            "middle" : [],
+            "last" : "Kalmbach",
+            "suffix" : ""
+          },
+          {
+            "first" : "Johannes",
+            "middle" : [],
+            "last" : "Zerwas",
+            "suffix" : ""
+          },
+          {
+            "first" : "Péter",
+            "middle" : [],
+            "last" : "Babarczi",
+            "suffix" : ""
+          },
+          {
+            "first" : "Andreas",
+            "middle" : [],
+            "last" : "Blenk",
+            "suffix" : ""
+          },
+          {
+            "first" : "Wolfgang",
+            "middle" : [],
+            "last" : "Kellerer",
+            "suffix" : ""
+          },
+          {
+            "first" : "Stefan",
+            "middle" : [],
+            "last" : "Schmid",
+            "suffix" : ""
+          }
+        ],
+        "dblp_id" : "conf/sigcomm/KalmbachZBBKS18",
+        "year" : 2018,
+        "venue" : "SelfDN@SIGCOMM. ACM",
+        "volume" : "",
+        "issue" : "",
+        "pages" : "8--14",
+        "other_ids" : {},
+        "num" : null,
+        "urls" : [],
+        "raw_text" : "Patrick Kalmbach, Johannes Zerwas, Péter Babarczi, Andreas Blenk, Wolfgang Kellerer, and Stefan Schmid. 2018. Empowering Self-Driving Networks. In SelfDN@SIGCOMM. ACM, 8-14.",
+        "links" : null
+      },
+      "BIBREF21" : {
+        "ref_id" : "b21",
+        "title" : "The nature of data center trafc: measurements & analysis",
+        "authors" : [
+          {
+            "first" : "Srikanth",
+            "middle" : [],
+            "last" : "Kandula",
+            "suffix" : ""
+          },
+          {
+            "first" : "Sudipta",
+            "middle" : [],
+            "last" : "Sengupta",
+            "suffix" : ""
+          },
+          {
+            "first" : "Albert",
+            "middle" : [],
+            "last" : "Greenberg",
+            "suffix" : ""
+          },
+          {
+            "first" : "Parveen",
+            "middle" : [],
+            "last" : "Patel",
+            "suffix" : ""
+          },
+          {
+            "first" : "Ronnie",
+            "middle" : [],
+            "last" : "Chaiken",
+            "suffix" : ""
+          }
+        ],
+        "dblp_id" : null,
+        "year" : 2009,
+        "venue" : "Proc. 9th ACM SIGCOMM Conference on Internet Measurement (IMC)",
+        "volume" : "",
+        "issue" : "",
+        "pages" : "202--208",
+        "other_ids" : {},
+        "num" : null,
+        "urls" : [],
+        "raw_text" : "Srikanth Kandula, Sudipta Sengupta, Albert Greenberg, Parveen Patel, and Ronnie Chaiken. 2009. The nature of data center trafc: measurements & analysis. In Proc. 9th ACM SIGCOMM Conference on Internet Measurement (IMC). ACM, 202-208.",
+        "links" : null
+      },
+      "BIBREF22" : {
+        "ref_id" : "b22",
+        "title" : "Adaptable and data-driven softwarized networks: Review, opportunities, and challenges",
+        "authors" : [
+          {
+            "first" : "Wolfgang",
+            "middle" : [],
+            "last" : "Kellerer",
+            "suffix" : ""
+          },
+          {
+            "first" : "Patrick",
+            "middle" : [],
+            "last" : "Kalmbach",
+            "suffix" : ""
+          },
+          {
+            "first" : "Andreas",
+            "middle" : [],
+            "last" : "Blenk",
+            "suffix" : ""
+          },
+          {
+            "first" : "Arsany",
+            "middle" : [],
+            "last" : "Basta",
+            "suffix" : ""
+          },
+          {
+            "first" : "Martin",
+            "middle" : [],
+            "last" : "Reisslein",
+            "suffix" : ""
+          },
+          {
+            "first" : "Stefan",
+            "middle" : [],
+            "last" : "Schmid",
+            "suffix" : ""
+          }
+        ],
+        "dblp_id" : null,
+        "year" : 2019,
+        "venue" : "Proc. IEEE",
+        "volume" : "107",
+        "issue" : "4",
+        "pages" : "711--731",
+        "other_ids" : {},
+        "num" : null,
+        "urls" : [],
+        "raw_text" : "Wolfgang Kellerer, Patrick Kalmbach, Andreas Blenk, Arsany Basta, Martin Reisslein, and Stefan Schmid. 2019. Adaptable and data-driven softwarized networks: Review, opportunities, and challenges. Proc. IEEE 107, 4 (2019), 711- 731.",
+        "links" : null
+      },
+      "BIBREF23" : {
+        "ref_id" : "b23",
+        "title" : "Stability-based validation of bicluster solutions",
+        "authors" : [
+          {
+            "first" : "Youngrok",
+            "middle" : [],
+            "last" : "Lee",
+            "suffix" : ""
+          },
+          {
+            "first" : "Jeonghwa",
+            "middle" : [],
+            "last" : "Lee",
+            "suffix" : ""
+          },
+          {
+            "first" : "Chi-Hyuck",
+            "middle" : [],
+            "last" : "Jun",
+            "suffix" : ""
+          }
+        ],
+        "dblp_id" : null,
+        "year" : 2011,
+        "venue" : "Pattern Recognit",
+        "volume" : "44",
+        "issue" : "2",
+        "pages" : "252--264",
+        "other_ids" : {},
+        "num" : null,
+        "urls" : [],
+        "raw_text" : "Youngrok Lee, Jeonghwa Lee, and Chi-Hyuck Jun. 2011. Stability-based validation of bicluster solutions. Pattern Recognit. 44, 2 (2011), 252-264.",
+        "links" : null
+      },
+      "BIBREF24" : {
+        "ref_id" : "b24",
+        "title" : "On the self-similar nature of Ethernet trafc (extended version)",
+        "authors" : [
+          {
+            "first" : "Will",
+            "middle" : [
+              "E"
+            ],
+            "last" : "Leland",
+            "suffix" : ""
+          },
+          {
+            "first" : "Murad",
+            "middle" : [
+              "S"
+            ],
+            "last" : "Taqqu",
+            "suffix" : ""
+          },
+          {
+            "first" : "Walter",
+            "middle" : [],
+            "last" : "Willinger",
+            "suffix" : ""
+          },
+          {
+            "first" : "Daniel",
+            "middle" : [
+              "V"
+            ],
+            "last" : "Wilson",
+            "suffix" : ""
+          }
+        ],
+        "dblp_id" : null,
+        "year" : 1994,
+        "venue" : "IEEE/ACM Trans. Netw",
+        "volume" : "2",
+        "issue" : "1",
+        "pages" : "1--15",
+        "other_ids" : {},
+        "num" : null,
+        "urls" : [],
+        "raw_text" : "Will E. Leland, Murad S. Taqqu, Walter Willinger, and Daniel V. Wilson. 1994. On the self-similar nature of Ethernet trafc (extended version). IEEE/ACM Trans. Netw. 2, 1 (1994), 1-15.",
+        "links" : null
+      },
+      "BIBREF25" : {
+        "ref_id" : "b25",
+        "title" : "Neural Adaptive Video Streaming with Pensieve",
+        "authors" : [
+          {
+            "first" : "Hongzi",
+            "middle" : [],
+            "last" : "Mao",
+            "suffix" : ""
+          },
+          {
+            "first" : "Ravi",
+            "middle" : [],
+            "last" : "Netravali",
+            "suffix" : ""
+          },
+          {
+            "first" : "Mohammad",
+            "middle" : [],
+            "last" : "Alizadeh",
+            "suffix" : ""
+          }
+        ],
+        "dblp_id" : "conf/sigcomm/MaoNA17",
+        "year" : 2017,
+        "venue" : "SIGCOMM. ACM",
+        "volume" : "",
+        "issue" : "",
+        "pages" : "197--210",
+        "other_ids" : {},
+        "num" : null,
+        "urls" : [],
+        "raw_text" : "Hongzi Mao, Ravi Netravali, and Mohammad Alizadeh. 2017. Neural Adaptive Video Streaming with Pensieve. In SIGCOMM. ACM, 197-210.",
+        "links" : null
+      },
+      "BIBREF26" : {
+        "ref_id" : "b26",
+        "title" : "The Discrete Basis Problem",
+        "authors" : [
+          {
+            "first" : "Pauli",
+            "middle" : [],
+            "last" : "Miettinen",
+            "suffix" : ""
+          },
+          {
+            "first" : "Taneli",
+            "middle" : [],
+            "last" : "Mielikäinen",
+            "suffix" : ""
+          },
+          {
+            "first" : "Aristides",
+            "middle" : [],
+            "last" : "Gionis",
+            "suffix" : ""
+          },
+          {
+            "first" : "Gautam",
+            "middle" : [],
+            "last" : "Das",
+            "suffix" : ""
+          },
+          {
+            "first" : "Heikki",
+            "middle" : [],
+            "last" : "Mannila",
+            "suffix" : ""
+          }
+        ],
+        "dblp_id" : "conf/pkdd/MiettinenMGDM06",
+        "year" : 2008,
+        "venue" : "IEEE Trans. Knowl. Data Eng",
+        "volume" : "20",
+        "issue" : "",
+        "pages" : "1348--1362",
+        "other_ids" : {},
+        "num" : null,
+        "urls" : [],
+        "raw_text" : "Pauli Miettinen, Taneli Mielikäinen, Aristides Gionis, Gautam Das, and Heikki Mannila. 2008. The Discrete Basis Problem. IEEE Trans. Knowl. Data Eng. 20, 10 (2008), 1348-1362.",
+        "links" : null
+      },
+      "BIBREF27" : {
+        "ref_id" : "b27",
+        "title" : "Recent Developments in Boolean Matrix Factorization",
+        "authors" : [
+          {
+            "first" : "Pauli",
+            "middle" : [],
+            "last" : "Miettinen",
+            "suffix" : ""
+          },
+          {
+            "first" : "Stefan",
+            "middle" : [],
+            "last" : "Neumann",
+            "suffix" : ""
+          }
+        ],
+        "dblp_id" : "conf/ijcai/Miettinen020",
+        "year" : 2020,
+        "venue" : "IJCAI, Christian Bessiere",
+        "volume" : "",
+        "issue" : "",
+        "pages" : "4922--4928",
+        "other_ids" : {},
+        "num" : null,
+        "urls" : [],
+        "raw_text" : "Pauli Miettinen and Stefan Neumann. 2020. Recent Developments in Boolean Matrix Factorization. In IJCAI, Christian Bessiere (Ed.). 4922-4928.",
+        "links" : null
+      },
+      "BIBREF28" : {
+        "ref_id" : "b28",
+        "title" : "Finding Repeated Elements",
+        "authors" : [
+          {
+            "first" : "Jayadev",
+            "middle" : [],
+            "last" : "Misra",
+            "suffix" : ""
+          },
+          {
+            "first" : "David",
+            "middle" : [],
+            "last" : "Gries",
+            "suffix" : ""
+          }
+        ],
+        "dblp_id" : null,
+        "year" : 1982,
+        "venue" : "Sci. Comput. Program",
+        "volume" : "2",
+        "issue" : "2",
+        "pages" : "143--152",
+        "other_ids" : {},
+        "num" : null,
+        "urls" : [],
+        "raw_text" : "Jayadev Misra and David Gries. 1982. Finding Repeated Elements. Sci. Comput. Program. 2, 2 (1982), 143-152.",
+        "links" : null
+      },
+      "BIBREF29" : {
+        "ref_id" : "b29",
+        "title" : "Bipartite Stochastic Block Models with Tiny Clusters",
+        "authors" : [
+          {
+            "first" : "Stefan",
+            "middle" : [],
+            "last" : "Neumann",
+            "suffix" : ""
+          }
+        ],
+        "dblp_id" : "conf/nips/Neumann18",
+        "year" : 2018,
+        "venue" : "NeurIPS",
+        "volume" : "",
+        "issue" : "",
+        "pages" : "",
+        "other_ids" : {},
+        "num" : null,
+        "urls" : [],
+        "raw_text" : "Stefan Neumann. 2018. Bipartite Stochastic Block Models with Tiny Clusters. In NeurIPS. 3871-3881.",
+        "links" : null
+      },
+      "BIBREF30" : {
+        "ref_id" : "b30",
+        "title" : "Modeling by shortest data description",
+        "authors" : [
+          {
+            "first" : "Jorma",
+            "middle" : [],
+            "last" : "Rissanen",
+            "suffix" : ""
+          }
+        ],
+        "dblp_id" : null,
+        "year" : 1978,
+        "venue" : "Autom",
+        "volume" : "14",
+        "issue" : "5",
+        "pages" : "465--471",
+        "other_ids" : {},
+        "num" : null,
+        "urls" : [],
+        "raw_text" : "Jorma Rissanen. 1978. Modeling by shortest data description. Autom. 14, 5 (1978), 465-471.",
+        "links" : null
+      },
+      "BIBREF31" : {
+        "ref_id" : "b31",
+        "title" : "Inside the Social Network's (Datacenter) Network",
+        "authors" : [
+          {
+            "first" : "Arjun",
+            "middle" : [],
+            "last" : "Roy",
+            "suffix" : ""
+          },
+          {
+            "first" : "Hongyi",
+            "middle" : [],
+            "last" : "Zeng",
+            "suffix" : ""
+          },
+          {
+            "first" : "Jasmeet",
+            "middle" : [],
+            "last" : "Bagga",
+            "suffix" : ""
+          },
+          {
+            "first" : "George",
+            "middle" : [],
+            "last" : "Porter",
+            "suffix" : ""
+          },
+          {
+            "first" : "Alex",
+            "middle" : [
+              "C"
+            ],
+            "last" : "Snoeren",
+            "suffix" : ""
+          }
+        ],
+        "dblp_id" : "conf/sigcomm/RoyZBPS15",
+        "year" : 2015,
+        "venue" : "SIGCOMM. ACM",
+        "volume" : "",
+        "issue" : "",
+        "pages" : "123--137",
+        "other_ids" : {},
+        "num" : null,
+        "urls" : [],
+        "raw_text" : "Arjun Roy, Hongyi Zeng, Jasmeet Bagga, George Porter, and Alex C. Snoeren. 2015. Inside the Social Network's (Datacenter) Network. In SIGCOMM. ACM, 123-137.",
+        "links" : null
+      },
+      "BIBREF32" : {
+        "ref_id" : "b32",
+        "title" : "Jupiter rising: a decade of clos topologies and centralized control in Google's datacenter network",
+        "authors" : [
+          {
+            "first" : "Arjun",
+            "middle" : [],
+            "last" : "Singh",
+            "suffix" : ""
+          },
+          {
+            "first" : "Joon",
+            "middle" : [],
+            "last" : "Ong",
+            "suffix" : ""
+          },
+          {
+            "first" : "Amit",
+            "middle" : [],
+            "last" : "Agarwal",
+            "suffix" : ""
+          },
+          {
+            "first" : "Glen",
+            "middle" : [],
+            "last" : "Anderson",
+            "suffix" : ""
+          },
+          {
+            "first" : "Ashby",
+            "middle" : [],
+            "last" : "Armistead",
+            "suffix" : ""
+          },
+          {
+            "first" : "Roy",
+            "middle" : [],
+            "last" : "Bannon",
+            "suffix" : ""
+          },
+          {
+            "first" : "Seb",
+            "middle" : [],
+            "last" : "Boving",
+            "suffix" : ""
+          },
+          {
+            "first" : "Gaurav",
+            "middle" : [],
+            "last" : "Desai",
+            "suffix" : ""
+          },
+          {
+            "first" : "Bob",
+            "middle" : [],
+            "last" : "Felderman",
+            "suffix" : ""
+          },
+          {
+            "first" : "Paulie",
+            "middle" : [],
+            "last" : "Germano",
+            "suffix" : ""
+          },
+          {
+            "first" : "Anand",
+            "middle" : [],
+            "last" : "Kanagala",
+            "suffix" : ""
+          },
+          {
+            "first" : "Hong",
+            "middle" : [],
+            "last" : "Liu",
+            "suffix" : ""
+          },
+          {
+            "first" : "Jef",
+            "middle" : [],
+            "last" : "Provost",
+            "suffix" : ""
+          },
+          {
+            "first" : "Jason",
+            "middle" : [],
+            "last" : "Simmons",
+            "suffix" : ""
+          },
+          {
+            "first" : "Eiichi",
+            "middle" : [],
+            "last" : "Tanda",
+            "suffix" : ""
+          },
+          {
+            "first" : "Jim",
+            "middle" : [],
+            "last" : "Wanderer",
+            "suffix" : ""
+          },
+          {
+            "first" : "Urs",
+            "middle" : [],
+            "last" : "Hölzle",
+            "suffix" : ""
+          },
+          {
+            "first" : "Stephen",
+            "middle" : [],
+            "last" : "Stuart",
+            "suffix" : ""
+          },
+          {
+            "first" : "Amin",
+            "middle" : [],
+            "last" : "Vahdat",
+            "suffix" : ""
+          }
+        ],
+        "dblp_id" : "conf/sigcomm/SinghOAAABBDFGK15",
+        "year" : 2016,
+        "venue" : "Commun. ACM",
+        "volume" : "59",
+        "issue" : "9",
+        "pages" : "88--97",
+        "other_ids" : {},
+        "num" : null,
+        "urls" : [],
+        "raw_text" : "Arjun Singh, Joon Ong, Amit Agarwal, Glen Anderson, Ashby Armistead, Roy Bannon, Seb Boving, Gaurav Desai, Bob Felderman, Paulie Germano, Anand Kanagala, Hong Liu, Jef Provost, Jason Simmons, Eiichi Tanda, Jim Wanderer, Urs Hölzle, Stephen Stuart, and Amin Vahdat. 2016. Jupiter rising: a decade of clos topologies and centralized control in Google's datacenter network. Commun. ACM 59, 9 (2016), 88-97.",
+        "links" : null
+      },
+      "BIBREF33" : {
+        "ref_id" : "b33",
+        "title" : "GraphScope: parameter-free mining of large time-evolving graphs",
+        "authors" : [
+          {
+            "first" : "Jimeng",
+            "middle" : [],
+            "last" : "Sun",
+            "suffix" : ""
+          },
+          {
+            "first" : "Christos",
+            "middle" : [],
+            "last" : "Faloutsos",
+            "suffix" : ""
+          },
+          {
+            "first" : "Spiros",
+            "middle" : [],
+            "last" : "Papadimitriou",
+            "suffix" : ""
+          },
+          {
+            "first" : "Philip",
+            "middle" : [
+              "S"
+            ],
+            "last" : "Yu",
+            "suffix" : ""
+          }
+        ],
+        "dblp_id" : "conf/kdd/SunFPY07",
+        "year" : 2007,
+        "venue" : "KDD. ACM",
+        "volume" : "",
+        "issue" : "",
+        "pages" : "687--696",
+        "other_ids" : {},
+        "num" : null,
+        "urls" : [],
+        "raw_text" : "Jimeng Sun, Christos Faloutsos, Spiros Papadimitriou, and Philip S. Yu. 2007. GraphScope: parameter-free mining of large time-evolving graphs. In KDD. ACM, 687-696.",
+        "links" : null
+      },
+      "BIBREF34" : {
+        "ref_id" : "b34",
+        "title" : "Learning to Route",
+        "authors" : [
+          {
+            "first" : "Asaf",
+            "middle" : [],
+            "last" : "Valadarsky",
+            "suffix" : ""
+          },
+          {
+            "first" : "Michael",
+            "middle" : [],
+            "last" : "Schapira",
+            "suffix" : ""
+          },
+          {
+            "first" : "Dafna",
+            "middle" : [],
+            "last" : "Shahaf",
+            "suffix" : ""
+          },
+          {
+            "first" : "Aviv",
+            "middle" : [],
+            "last" : "Tamar",
+            "suffix" : ""
+          }
+        ],
+        "dblp_id" : "conf/hotnets/ValadarskySST17",
+        "year" : 2017,
+        "venue" : "HotNets. ACM",
+        "volume" : "",
+        "issue" : "",
+        "pages" : "185--191",
+        "other_ids" : {},
+        "num" : null,
+        "urls" : [],
+        "raw_text" : "Asaf Valadarsky, Michael Schapira, Dafna Shahaf, and Aviv Tamar. 2017. Learning to Route. In HotNets. ACM, 185-191.",
+        "links" : null
+      },
+      "BIBREF35" : {
+        "ref_id" : "b35",
+        "title" : "New Algorithms for Heavy Hitters in Data Streams (Invited Talk)",
+        "authors" : [
+          {
+            "first" : "David",
+            "middle" : [
+              "P"
+            ],
+            "last" : "Woodruf",
+            "suffix" : ""
+          }
+        ],
+        "dblp_id" : "conf/icdt/Woodruff16",
+        "year" : 2016,
+        "venue" : "ICDT (LIPIcs",
+        "volume" : "48",
+        "issue" : "",
+        "pages" : "1--4",
+        "other_ids" : {},
+        "num" : null,
+        "urls" : [],
+        "raw_text" : "David P. Woodruf. 2016. New Algorithms for Heavy Hitters in Data Streams (Invited Talk). In ICDT (LIPIcs, Vol. 48). 4:1-4:12.",
+        "links" : null
+      },
+      "BIBREF36" : {
+        "ref_id" : "b36",
+        "title" : "Data Sharing on trafc pattern inside Facebook's data center network",
+        "authors" : [
+          {
+            "first" : "James",
+            "middle" : [],
+            "last" : "Hongyi",
+            "suffix" : ""
+          },
+          {
+            "first" : "Zeng",
+            "middle" : [],
+            "last" : "",
+            "suffix" : ""
+          }
+        ],
+        "dblp_id" : null,
+        "year" : 2017,
+        "venue" : "",
+        "volume" : "",
+        "issue" : "",
+        "pages" : "",
+        "other_ids" : {},
+        "num" : null,
+        "urls" : [],
+        "raw_text" : "James Hongyi Zeng. 2017. Data Sharing on trafc pattern inside Facebook's data center network. https://research.facebook.com/blog/2017/01/data-sharing-on- trafc-pattern-inside-facebooks-datacenter-network/. Accessed: 2022-05-10.",
+        "links" : null
+      },
+      "BIBREF37" : {
+        "ref_id" : "b37",
+        "title" : "Highresolution measurement of data center microbursts",
+        "authors" : [
+          {
+            "first" : "Qiao",
+            "middle" : [],
+            "last" : "Zhang",
+            "suffix" : ""
+          },
+          {
+            "first" : "Vincent",
+            "middle" : [],
+            "last" : "Liu",
+            "suffix" : ""
+          },
+          {
+            "first" : "Hongyi",
+            "middle" : [],
+            "last" : "Zeng",
+            "suffix" : ""
+          },
+          {
+            "first" : "Arvind",
+            "middle" : [],
+            "last" : "Krishnamurthy",
+            "suffix" : ""
+          }
+        ],
+        "dblp_id" : "conf/imc/ZhangLZK17",
+        "year" : 2017,
+        "venue" : "Internet Measurement Conference",
+        "volume" : "",
+        "issue" : "",
+        "pages" : "78--85",
+        "other_ids" : {},
+        "num" : null,
+        "urls" : [],
+        "raw_text" : "Qiao Zhang, Vincent Liu, Hongyi Zeng, and Arvind Krishnamurthy. 2017. High- resolution measurement of data center microbursts. In Internet Measurement Conference. ACM, 78-85.",
+        "links" : null
+      },
+      "BIBREF38" : {
+        "ref_id" : "b38",
+        "title" : "VirtualKnotter: Online virtual machine shufing for congestion resolving in virtualized datacenter",
+        "authors" : [
+          {
+            "first" : "Shihong",
+            "middle" : [],
+            "last" : "Zou",
+            "suffix" : ""
+          },
+          {
+            "first" : "Xitao",
+            "middle" : [],
+            "last" : "Wen",
+            "suffix" : ""
+          },
+          {
+            "first" : "Kai",
+            "middle" : [],
+            "last" : "Chen",
+            "suffix" : ""
+          },
+          {
+            "first" : "Shan",
+            "middle" : [],
+            "last" : "Huang",
+            "suffix" : ""
+          },
+          {
+            "first" : "Yan",
+            "middle" : [],
+            "last" : "Chen",
+            "suffix" : ""
+          },
+          {
+            "first" : "Yongqiang",
+            "middle" : [],
+            "last" : "Liu",
+            "suffix" : ""
+          },
+          {
+            "first" : "Yong",
+            "middle" : [],
+            "last" : "Xia",
+            "suffix" : ""
+          },
+          {
+            "first" : "Chengchen",
+            "middle" : [],
+            "last" : "Hu",
+            "suffix" : ""
+          }
+        ],
+        "dblp_id" : null,
+        "year" : 2014,
+        "venue" : "Comput. Networks",
+        "volume" : "67",
+        "issue" : "",
+        "pages" : "141--153",
+        "other_ids" : {},
+        "num" : null,
+        "urls" : [],
+        "raw_text" : "Shihong Zou, Xitao Wen, Kai Chen, Shan Huang, Yan Chen, Yongqiang Liu, Yong Xia, and Chengchen Hu. 2014. VirtualKnotter: Online virtual machine shufing for congestion resolving in virtualized datacenter. Comput. Networks 67 (2014), 141-153.",
+        "links" : null
+      }
+    }
+  }
+}

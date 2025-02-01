@@ -1,0 +1,726 @@
+{
+    "paper_id": "3507524",
+    "header": {
+        "generated_with": "S2ORC 1.0.0",
+        "date_generated": "2024-03-20T17:52:52.607085Z"
+    },
+    "title": "Clutter Environment Perception Based on Prototypical Network",
+    "authors": [
+        {
+            "first": "Xiangfeng",
+            "middle": [],
+            "last": "Qiu",
+            "suffix": "",
+            "affiliation": {},
+            "email": ""
+        },
+        {
+            "first": "Weidong",
+            "middle": [],
+            "last": "Jiang",
+            "suffix": "",
+            "affiliation": {},
+            "email": ""
+        },
+        {
+            "first": "Xinyu",
+            "middle": [],
+            "last": "Zhang",
+            "suffix": "",
+            "affiliation": {},
+            "email": ""
+        },
+        {
+            "first": "Kai",
+            "middle": [],
+            "last": "Huo",
+            "suffix": "",
+            "affiliation": {
+                "laboratory": "",
+                "institution": "National University of Defense Technology",
+                "location": {}
+            },
+            "email": ""
+        }
+    ],
+    "year": "",
+    "venue": null,
+    "identifiers": {},
+    "abstract": "Clutter environment perception is the basic function of the cognitive radar system, which provides prior information for the subsequent transmitted waveform optimization and adaptive processing of the received signal. In a typical airborne or missile-borne platform, in order to respond quickly to the environment of the highvalue target to be detected, the radar only has a short observation window length and cannot obtain enough data for clutter environment perception, leading to a problem of clutter environment perception under the condition of few data. Aiming at the problem of insufficient clutter environment data, this paper proposed a clutter environment perception method based on prototypical network. It employed the High-Resolution Range Profile of wideband radar as the recognition data, and first used data in the training set to calculate the prototypes corresponding to different clutter environment features. Then, the distances between the features of data in the testing set and the different prototypes was used to realize the perception of the clutter environment. The measured data on microwave anechoic chamber showed that the methods used in this paper can obtain effective perception results for the three typical natural environments of grassland, cement, and asphalt.",
+    "pdf_parse": {
+        "abstract": [
+            {
+                "text": "Clutter environment perception is the basic function of the cognitive radar system, which provides prior information for the subsequent transmitted waveform optimization and adaptive processing of the received signal. In a typical airborne or missile-borne platform, in order to respond quickly to the environment of the highvalue target to be detected, the radar only has a short observation window length and cannot obtain enough data for clutter environment perception, leading to a problem of clutter environment perception under the condition of few data. Aiming at the problem of insufficient clutter environment data, this paper proposed a clutter environment perception method based on prototypical network. It employed the High-Resolution Range Profile of wideband radar as the recognition data, and first used data in the training set to calculate the prototypes corresponding to different clutter environment features. Then, the distances between the features of data in the testing set and the different prototypes was used to realize the perception of the clutter environment. The measured data on microwave anechoic chamber showed that the methods used in this paper can obtain effective perception results for the three typical natural environments of grassland, cement, and asphalt.",
+                "cite_spans": [],
+                "section": "Abstract",
+                "sec_num": null
+            }
+        ],
+        "body_text": [
+            {
+                "text": "As an important means of comprehensive perception of the battlefield situation, radar plays an important role in modern warfare. After nearly a century of rapid development, radar have become an important sensor with detection, tracking, imaging and recognition functions [1] . Its application range has already surpassed the early military field, and it has also been widely used in civil applications [2] , such as disaster assessment in remote sensing, traffic control in civil aviation, obstacle avoidance radar in intelligent driving, ground detection in resource exploration, etc.",
+                "cite_spans": [
+                    {
+                        "start": 272,
+                        "end": 275,
+                        "text": "[1]",
+                        "ref_id": "BIBREF0"
+                    },
+                    {
+                        "start": 403,
+                        "end": 406,
+                        "text": "[2]",
+                        "ref_id": "BIBREF1"
+                    }
+                ],
+                "section": "INTRODUCTION",
+                "sec_num": "1"
+            },
+            {
+                "text": "In the long history of radar, the main driving force for their development usually comes from military needs. With the continuous addition of various military weapons and equipment, the situation faced by radar sensors on the battlefield has become more and more severe [3] [4] . To face these challenges, a Canadian scholar [5] proposed the concept of cognitive radar. It clearly pointed out that cognitive radar is an intelligent radar system with the ability to simulate human cognitive processes. The cognitive radar system first understands its own natural and electromagnetic environments based on the early radar echoes, and then adjusts the its transmitter and receiver parameters based on the results of the environmental perception to achieve the purpose of adapting to the complex working environment. Thereby it can break through the performance bottleneck of the classic radar system.",
+                "cite_spans": [
+                    {
+                        "start": 270,
+                        "end": 273,
+                        "text": "[3]",
+                        "ref_id": "BIBREF2"
+                    },
+                    {
+                        "start": 274,
+                        "end": 277,
+                        "text": "[4]",
+                        "ref_id": "BIBREF4"
+                    },
+                    {
+                        "start": 325,
+                        "end": 328,
+                        "text": "[5]",
+                        "ref_id": "BIBREF5"
+                    }
+                ],
+                "section": "INTRODUCTION",
+                "sec_num": "1"
+            },
+            {
+                "text": "Environment perception [4] refers to the use of various recognition methods to identify the type of clutter in the environment where the observation target is located. By analyzing the echoes of the working environment, radar system regards the result as a priori information to the subsequent detection and tracking data processing, so as to improve the adaptability to the environment and improve the radar performance. Classical clutter environment perception methods [6] [7] use the empirical model of electromagnetic scattering, and perform parameter fitting based on measured data to estimate the statistical distribution of clutter. And then the statistical distribution features are input into the classifier to realize the recognition of the clutter environment. However, in complex scenes such as ports, beaches, forests and grasslands, traditional statistical modeling methods cannot effectively fit the clutter distribution model, and the ability to understand the environment is severely restricted. Therefore, some scholars [8] have proposed an environment perception method based on deep learning. However, when the radar is on a fast-moving platform, due to the short observation time window, it is often impossible to obtain enough echo data, causing data-driven deep learning methods to fail. In this regard, this paper proposed a clutter environment perception method with few data based on prototypical network. ",
+                "cite_spans": [
+                    {
+                        "start": 23,
+                        "end": 26,
+                        "text": "[4]",
+                        "ref_id": "BIBREF4"
+                    },
+                    {
+                        "start": 471,
+                        "end": 474,
+                        "text": "[6]",
+                        "ref_id": "BIBREF6"
+                    },
+                    {
+                        "start": 1038,
+                        "end": 1041,
+                        "text": "[8]",
+                        "ref_id": "BIBREF8"
+                    }
+                ],
+                "section": "INTRODUCTION",
+                "sec_num": "1"
+            },
+            {
+                "text": "In this section, we mainly introduce the basic principles related to this article, including the radar high resolution range profile (HRRP) imaging process of stepped frequency waveform and the basic principles of prototypical network.",
+                "cite_spans": [],
+                "section": "BASIC PRINCIPLE",
+                "sec_num": "2"
+            },
+            {
+                "text": "The stepped frequency waveform [9] is a conventional radar waveform, and the relationship between its frequency and time was shown in Figure 1 . In this figure, \u03c4 denotes the time width of the subpulses, T r is the pulse interval, f 0 denotes the starting frequency of the subpulse, and \u2206f is the stepped frequency size. Assuming that the total number of subpulses is N , then the total bandwidth is (N -1)\u2206f , and the frequency of the n-th subpulse can be expressed as f n = f 0 +(N -1)\u2206f , where n = 0, 1, \u2022 \u2022 \u2022 , N -1. Denote the radar transmit waveform within a pulse repetition interval as",
+                "cite_spans": [
+                    {
+                        "start": 31,
+                        "end": 34,
+                        "text": "[9]",
+                        "ref_id": "BIBREF9"
+                    }
+                ],
+                "section": "HRRP imaging principle of stepped frequency waveform",
+                "sec_num": "2.1"
+            },
+            {
+                "text": "EQUATION",
+                "cite_spans": [],
+                "section": "HRRP imaging principle of stepped frequency waveform",
+                "sec_num": "2.1"
+            },
+            {
+                "text": "then the receiving echo of the point target at the distance R t is expressed as:",
+                "cite_spans": [],
+                "section": "HRRP imaging principle of stepped frequency waveform",
+                "sec_num": "2.1"
+            },
+            {
+                "text": "EQUATION",
+                "cite_spans": [],
+                "section": "HRRP imaging principle of stepped frequency waveform",
+                "sec_num": "2.1"
+            },
+            {
+                "text": ") where rect(\u2022) denotes the rectangular window function. It can be expressed as",
+                "cite_spans": [],
+                "section": "HRRP imaging principle of stepped frequency waveform",
+                "sec_num": "2.1"
+            },
+            {
+                "text": "EQUATION",
+                "cite_spans": [],
+                "section": "HRRP imaging principle of stepped frequency waveform",
+                "sec_num": "2.1"
+            },
+            {
+                "text": "Mixing the above transmitting and receiving signals, we can get",
+                "cite_spans": [],
+                "section": "HRRP imaging principle of stepped frequency waveform",
+                "sec_num": "2.1"
+            },
+            {
+                "text": "EQUATION",
+                "cite_spans": [],
+                "section": "HRRP imaging principle of stepped frequency waveform",
+                "sec_num": "2.1"
+            },
+            {
+                "text": "Equation ( 4) is a typical Doppler echo model. For stationary target, the exponential term exp[j2\u03c0 f 0 2R t c ] is a constant. In addition, ",
+                "cite_spans": [],
+                "section": "HRRP imaging principle of stepped frequency waveform",
+                "sec_num": "2.1"
+            },
+            {
+                "text": "EQUATION",
+                "cite_spans": [],
+                "section": "HRRP imaging principle of stepped frequency waveform",
+                "sec_num": "2.1"
+            },
+            {
+                "text": ")",
+                "cite_spans": [],
+                "section": "HRRP imaging principle of stepped frequency waveform",
+                "sec_num": "2.1"
+            },
+            {
+                "text": "where l = round(",
+                "cite_spans": [],
+                "section": "HRRP imaging principle of stepped frequency waveform",
+                "sec_num": "2.1"
+            },
+            {
+                "text": "2N R\u2206f c",
+                "cite_spans": [],
+                "section": "HRRP imaging principle of stepped frequency waveform",
+                "sec_num": "2.1"
+            },
+            {
+                "text": "), round(\u2022) denotes rounding operation, and n = 0, 1, \u2022 \u2022 \u2022 , N -1. Performing inverse discrete Fourier transform (IDFT) to the signal in (5) and taking the modulus value, we get",
+                "cite_spans": [
+                    {
+                        "start": 138,
+                        "end": 141,
+                        "text": "(5)",
+                        "ref_id": "BIBREF5"
+                    }
+                ],
+                "section": "HRRP imaging principle of stepped frequency waveform",
+                "sec_num": "2.1"
+            },
+            {
+                "text": "EQUATION",
+                "cite_spans": [],
+                "section": "HRRP imaging principle of stepped frequency waveform",
+                "sec_num": "2.1"
+            },
+            {
+                "text": "|H (k)| is the HRRP corresponding to the SFW of a point target, and it achieves its highest value when k = l. For complex targets, the HRRP can be obtained by summing the HRRP of different scattering points on the radar line of sight. HRRP reflects the distribution of different scattering points on the radar line of sight distance, and is a common tool to describe the scattering characteristics of targets.",
+                "cite_spans": [],
+                "section": "HRRP imaging principle of stepped frequency waveform",
+                "sec_num": "2.1"
+            },
+            {
+                "text": "The prototypical network is a few-shot learning model based on distance metric. It uses a few data in the support set to calculate the prototype of each class to be recognized, and then uses these prototypes to learn to form a new metric space representing the features of the data in support set. In the testing part, recognition is achieved by calculating the distance between the feature vectors of new input data and the pre-trained prototype. The recognition principle of the prototypical network is given in Figure 2 , where c 1 , c 2 and c 3 denote the prototype obtained from the support set, x is a sample to be classified. The prototype network classifies x by comparing the distances from different prototype points. Specifically, in the process of using the prototype network to perform few-shot learning, we first give a support set S = {(x 1 , y 1 ), \u2022 \u2022 \u2022 , (x N , y N )} with N labels, where x i \u2208 R D denotes the d-dimensional feature vectors, y i \u2208 {1, \u2022 \u2022 \u2022 , K} represent the corresponding labels. Thus, for the k-th class target, its corresponding set is denoted as S k . The prototypical network calculated the prototype corresponding to each class with mapping function f \u03d5 : R D \u2192 R M , where \u03d5 denotes a learning parameter in the mapping function. For the prototype c k \u2208 R M , it can be achieved by averaging the prototype of each data in the k-th target. Thus, we have",
+                "cite_spans": [],
+                "section": "Basic principles of the prototype network",
+                "sec_num": "2.2"
+            },
+            {
+                "text": "EQUATION",
+                "cite_spans": [],
+                "section": "Basic principles of the prototype network",
+                "sec_num": "2.2"
+            },
+            {
+                "text": "For the sample x to be classified in the query set, the probability distribution of the class to which it belongs can be calculated as ",
+                "cite_spans": [],
+                "section": "Basic principles of the prototype network",
+                "sec_num": "2.2"
+            },
+            {
+                "text": "p \u03d5 (y = k |x) = exp -d f \u03d5 (x) , c k k \u2032 exp -d f \u03d5 (x) , c k \u2032 (8)",
+                "cite_spans": [],
+                "section": "Basic principles of the prototype network",
+                "sec_num": "2.2"
+            },
+            {
+                "text": "|N C | (x i ,y i )\u2208S k f \u03d5 (x i ); end for J \u2190 0 for k in {1, \u2022 \u2022 \u2022 , N C }, do for (x, y) in Q k do update the loss function: J \u2190 J + 1 N C N Q [d(f { \u03d5 }(x), c k ) + log k \u2032 { exp(-d(f { \u03d5 }(x), c k ))",
+                "cite_spans": [],
+                "section": "Basic principles of the prototype network",
+                "sec_num": "2.2"
+            },
+            {
+                "text": "end for end for",
+                "cite_spans": [],
+                "section": "Basic principles of the prototype network",
+                "sec_num": "2.2"
+            },
+            {
+                "text": "In the learning process, the negative log probability of the correct class J(\u03d5) =log p \u03d5 (y = k|x) is used as the loss function. In the training process of the prototypical network, first randomly select a subset of training samples about the class from the training set, and then divide the data in the class subset into a support set and a query set. In the training process, the network parameters are updated by minimizing the loss function J(\u03d5) corresponding to the query set. The calculation process of the loss function J(\u03d5) is given in ALGORITHM 1. In this algorithm, N and K denote the number of samples and classes in the training set, N c < K represents the number of classes randomly selected during each training episode, N s represents the number of samples of each support set, N Q represents the number of samples of each query set, and RS(S, N) represents uniformly extracting N elements from the set S.",
+                "cite_spans": [],
+                "section": "Basic principles of the prototype network",
+                "sec_num": "2.2"
+            },
+            {
+                "text": "In this section, we first introduce the HRRP measurement methods and corresponding results of different clutter environments under microwave anechoic chamber. Then based on the measurement data, the recognition results using the prototype network under different conditions are given. Figure 3 shows a microwave anechoic chamber half-space measurement platform. Inside the anechoic chamber, there is a foam structure bracket for placing the measurement sample, and the outside is a spherical and cylindrical shell that is used to wrap the measurement platform and the sample to be tested. The interior is fully covered with absorbing materials to avoid interference to the measurement sample. There is a high-precision turntable under the foam support in the center of the anechoic chamber, and the position of the turntable can be adjusted by a sliding track connected to it.",
+                "cite_spans": [],
+                "section": "HRRP MEASUREMENT AND EXPERIMENT 3.1 Environment measurement in anechoic chamber",
+                "sec_num": "3"
+            },
+            {
+                "text": "During the measurement, the sample to be measured is placed above the foam holder, and then the turntable and the foam holder are moved to the measurement position along the sliding track. The height of the sample can be adjusted by the lifting platform. The transmitting and receiving antenna used by the measuring equipment is placed on an arc-shaped track on the edge of the spherical surface, and the sample can be measured using two polarization modes of HH/VV and two measurement modes of single and dual stations. The transmit antenna can be controlled and moved along the rail to achieve different electromagnetic wave incidence angles.",
+                "cite_spans": [],
+                "section": "HRRP MEASUREMENT AND EXPERIMENT 3.1 Environment measurement in anechoic chamber",
+                "sec_num": "3"
+            },
+            {
+                "text": "The experiment measured three typical natural environments of grassland, cement and asphalt. Figure 4 shows a schematic diagram of different samples of these environments. Taking into account the need to measure from different azimuth angles, the samples to be measured were made into a circular structure with a diameter of 1 meter. In order to place the loose sand at the bottom of the grass sample, its bottom is fixed with a special container. Besides, the surfaces of the three types of samples have a certain angle inclined design to prevent the shape of the container from affecting the measurement results.",
+                "cite_spans": [],
+                "section": "HRRP MEASUREMENT AND EXPERIMENT 3.1 Environment measurement in anechoic chamber",
+                "sec_num": "3"
+            },
+            {
+                "text": "During the measurement process, gradually change the electromagnetic wave frequency and radar incident angle, and average the data under different measurement conditions to obtain the HRRP of the measurement samples. The detailed measurement information of HRRP in three typical environments was given in Table 1 .",
+                "cite_spans": [],
+                "section": "HRRP MEASUREMENT AND EXPERIMENT 3.1 Environment measurement in anechoic chamber",
+                "sec_num": "3"
+            },
+            {
+                "text": "In Table 1 , \u2206\u03b8 , \u2206f , \u2206\u03c6 denote the sample intervals of azimuth, frequency and grazing angle. The HRRPs of the three environments under the polarization conditions of HH and VV were shown in Figure 5 , and the corresponding grazing angle was 40\u00b0. igure 5: HRRP of three different environments",
+                "cite_spans": [],
+                "section": "HRRP MEASUREMENT AND EXPERIMENT 3.1 Environment measurement in anechoic chamber",
+                "sec_num": "3"
+            },
+            {
+                "text": "In the next section, we use the prototypical network to classify HRRPs in different environments and give the corresponding analysis.",
+                "cite_spans": [],
+                "section": "HRRP MEASUREMENT AND EXPERIMENT 3.1 Environment measurement in anechoic chamber",
+                "sec_num": "3"
+            },
+            {
+                "text": "During the experiment, we used HH polarization HRRPs under 40\u00b0g razing angle as training data, and other HRRPs under different conditions as testing data. Each class of data is composed of 360 HRRPs under different azimuth angles. Due to the small number of classes to be identified, we set the number of subsets of the extracted classes N C to 3 in the training part, that is, N c = K. In the experiment, the number of support set samples in the training and testing parts was set to 1, and the number of samples in the query set was set to 100. In order to perform feature extraction on HRRPs, we approximated the mapping function f \u03d5 : R D \u2192 R M using a network structure of three-layer convolutional blocks. Each convolutional block was composed of a convolutional layer with a convolution kernel size of 3 \u00d7 3, a batch normalization layer, an ReLU activation function, and a maximum pooling layer with a size of 2 \u00d7 2. In the experiment, Adam optimizer was selected for stochastic gradient descent, and the initial learning rate was set to 10 -4 . After every 100 iterations, the learning rate was reduced by half.",
+                "cite_spans": [],
+                "section": "Network structure and experimental results",
+                "sec_num": "3.2"
+            },
+            {
+                "text": "We first studied the influence of different distance metric functions on the classification results. For vectors a = (a",
+                "cite_spans": [],
+                "section": "Network structure and experimental results",
+                "sec_num": "3.2"
+            },
+            {
+                "text": "1 , \u2022 \u2022 \u2022 a n ) T and b = (b 1 , \u2022 \u2022 \u2022 b n ) T ,",
+                "cite_spans": [],
+                "section": "Network structure and experimental results",
+                "sec_num": "3.2"
+            },
+            {
+                "text": "the distance metric functions used in the experiment were given in Table 2 . In this part of the experiment, the VV-polarized HRRPs at a grazing angle of 40\u00b0were used as the test data. When the number of support set samples N shot was set to 5, eight classification results corresponding to different metric functions were given in Table 3 Observing the experimental results in Table 3 , it can be seen that when the Chebyshev distance metric was used, HRRPs of different environments cannot be effectively classified. In addition, compared with the other two metric functions, the method using the Minkowski distance metric (p = 5) had a lower classification effectively reflect the differences in the distribution of different samples in the feature space, and they were ideal measurement choices. In the following content, we used the Euclidean distance metric to further study the clutter environment perception with a few HRRPs under different grazing angles.",
+                "cite_spans": [],
+                "section": "Network structure and experimental results",
+                "sec_num": "3.2"
+            },
+            {
+                "text": "M = n k=1 |a k -b k | Euclidean Distance d E = n k=1 |a k -b k | 2 Chebyshev Distance d C = max k |a k -b k | Minkowski Distance d Min (p) = p n k =1 |a k -b k |",
+                "cite_spans": [],
+                "section": "Network structure and experimental results",
+                "sec_num": "3.2"
+            },
+            {
+                "text": "During the downward viewing of the moving radar, the line of sight between the observation target and the radar is constantly changing, and the grazing angle of the radar incident wave will also be dynamically changing. Therefore, it is of great practical significance to study the clutter environment sensing methods under different grazing angles. In the following content of this section, we continued to use the HRRPs with grazing angle of 40\u00b0and HHpolarization mode as the training data. HRRPs with different grazing angles (40\u00b0, 50\u00b0and 60\u00b0) in VV polarization mode were used to test the trained network. At the same time, the relationship between the number of samples in the support set and the classification result was studied by changing the value of N shot , and the rest of the experimental condition settings were the same as the previous experiment.",
+                "cite_spans": [],
+                "section": "Network structure and experimental results",
+                "sec_num": "3.2"
+            },
+            {
+                "text": "The experimental results in Table 4 showed that the recognition rate of HRRP data of different grazing angles under VV polarization conditions was above 70%. In addition, with the gradual increase of the value of N , the recognition rate of the typical natural environment of the prototype network used in this paper also gradually rises.",
+                "cite_spans": [],
+                "section": "Network structure and experimental results",
+                "sec_num": "3.2"
+            },
+            {
+                "text": "This paper mainly studies clutter environment method with based on prototypical network. The effectiveness of our proposed method was demonstrated by several comparative experiments with measured data in anechoic chamber. By comparing the recognition rate corresponding to different metric functions, we find the Euclidean function was most approximate for clutter environment perception. At the same time, the mobility of the method proposed in this paper was proved by experiments with HRRPs of different grazing angle.",
+                "cite_spans": [],
+                "section": "CONCLUSION",
+                "sec_num": "4"
+            }
+        ],
+        "bib_entries": {
+            "BIBREF0": {
+                "ref_id": "b0",
+                "title": "Development of a ground-based radar for scattering measurements",
+                "authors": [
+                    {
+                        "first": "Chet",
+                        "middle": [
+                            "K"
+                        ],
+                        "last": "",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "V",
+                        "middle": [],
+                        "last": "Kuan",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "C B",
+                        "middle": [],
+                        "last": "Teik",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "C",
+                        "middle": [],
+                        "last": "",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2003,
+                "venue": "J]. IEEE Antennas & Propagation Magazine",
+                "volume": "45",
+                "issue": "2",
+                "pages": "36--42",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Chet K V, Kuan C B, Teik C H. Development of a ground-based radar for scattering measurements[J]. IEEE Antennas & Propagation Magazine, 2003, 45(2): p.36-42.",
+                "links": null
+            },
+            "BIBREF1": {
+                "ref_id": "b1",
+                "title": "Fundamentals of Radar Signal Processing",
+                "authors": [
+                    {
+                        "first": "M",
+                        "middle": [
+                            "A"
+                        ],
+                        "last": "Richards",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2005,
+                "venue": "",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Richards M A. Fundamentals of Radar Signal Processing, Second Edition[M]. 2005.",
+                "links": null
+            },
+            "BIBREF2": {
+                "ref_id": "b2",
+                "title": "Cockpit Instruments [A century of powered flight:1903-2003]",
+                "authors": [
+                    {
+                        "first": "R",
+                        "middle": [],
+                        "last": "Schroer",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2003,
+                "venue": "IEEE Aerospace and Electronic Systems Magazine",
+                "volume": "18",
+                "issue": "7",
+                "pages": "13--18",
+                "other_ids": {
+                    "DOI": [
+                        "10.1109/maes.2003.1226529"
+                    ],
+                    "ISSN": [
+                        "0885-8985"
+                    ],
+                    "ISSNe": [
+                        "1557-959X"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Schroer, R. Electronic warfare. [A century of powered flight: 1903-2003] [",
+                "links": null
+            },
+            "BIBREF3": {
+                "ref_id": "b3",
+                "title": "Electronic warfare",
+                "authors": [
+                    {
+                        "first": "J",
+                        "middle": [],
+                        "last": "",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2003,
+                "venue": "IEEE Aerospace and Electronic Systems Magazine",
+                "volume": "18",
+                "issue": "7",
+                "pages": "49--54",
+                "other_ids": {
+                    "DOI": [
+                        "10.1109/maes.2003.1226535"
+                    ],
+                    "ISSN": [
+                        "0885-8985"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "J]. Aerospace and Electronic Systems Magazine, IEEE, 2003.",
+                "links": null
+            },
+            "BIBREF4": {
+                "ref_id": "b4",
+                "title": "Radar Handbook",
+                "authors": [
+                    {
+                        "first": "M",
+                        "middle": [],
+                        "last": "Skolnik",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2008,
+                "venue": "",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Skolnik M. Radar Handbook, Third Edition [M]. 2008.",
+                "links": null
+            },
+            "BIBREF5": {
+                "ref_id": "b5",
+                "title": "Cognitive radar: a way of the future",
+                "authors": [
+                    {
+                        "first": "S",
+                        "middle": [],
+                        "last": "Haykin",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2006,
+                "venue": "IEEE Signal Processing Magazine",
+                "volume": "23",
+                "issue": "1",
+                "pages": "30--40",
+                "other_ids": {
+                    "DOI": [
+                        "10.1109/msp.2006.1593335"
+                    ],
+                    "ISSN": [
+                        "1053-5888"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Haykin S. Cognitive radar: A way of the future[J]. IEEE Signal Processing Maga- zine, 2006, 23(1):30-40.",
+                "links": null
+            },
+            "BIBREF6": {
+                "ref_id": "b6",
+                "title": "Radar clutter recognition based on feature extraction by \u03b1 truncation-set",
+                "authors": [
+                    {
+                        "first": "X",
+                        "middle": [],
+                        "last": "Ma",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "X",
+                        "middle": [],
+                        "last": "Fang",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "C",
+                        "middle": [],
+                        "last": "Song",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2001,
+                "venue": "C]// International Conference on Radar",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Ma X, Fang X, Song C. Radar clutter recognition based on feature extraction by \u03b1 truncation-set[C]// International Conference on Radar. IEEE, 2001.",
+                "links": null
+            },
+            "BIBREF7": {
+                "ref_id": "b7",
+                "title": "A new method of radar clutter recognition based on multi-\u03b1 truncation set",
+                "authors": [
+                    {
+                        "first": "X",
+                        "middle": [],
+                        "last": "Fang",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "D",
+                        "middle": [],
+                        "last": "Liang",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "K",
+                        "middle": [],
+                        "last": "Zou",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2003,
+                "venue": "IEEE International Conference on Robotics",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Fang X, Liang D, Zou K, et al. A new method of radar clutter recognition based on multi-\u03b1 truncation set[C]// IEEE International Conference on Robotics. IEEE, 2003.",
+                "links": null
+            },
+            "BIBREF8": {
+                "ref_id": "b8",
+                "title": "Radar clutter classification based on noise models and neural networks",
+                "authors": [
+                    {
+                        "first": "C J",
+                        "middle": [
+                            "J"
+                        ],
+                        "last": "Oliver",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "R",
+                        "middle": [
+                            "G"
+                        ],
+                        "last": "White",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 1990,
+                "venue": "IEEE International Conference on Radar",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {
+                    "DOI": [
+                        "10.1109/radar.1990.201187"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Oliver C J, White R G. Radar clutter classification based on noise models and neural networks[C]// IEEE International Radar Conference. IEEE, 1990.",
+                "links": null
+            },
+            "BIBREF9": {
+                "ref_id": "b9",
+                "title": "Radar Signals",
+                "authors": [
+                    {
+                        "first": "Nadav",
+                        "middle": [],
+                        "last": "Levanon",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Eli",
+                        "middle": [],
+                        "last": "Mozeson",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2004,
+                "venue": "",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {
+                    "DOI": [
+                        "10.1002/0471663085"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Levanon N, Mozeson E . Radar Signals[M]. 2004.",
+                "links": null
+            },
+            "BIBREF10": {
+                "ref_id": "b10",
+                "title": "Improved High Range Resolution Profiling of Aircraft using Stepped-Frequency Waveforms with an S-Band Phased Array Radar",
+                "authors": [
+                    {
+                        "first": "A",
+                        "middle": [],
+                        "last": "French",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2006,
+                "venue": "2006 IEEE Conference on Radar",
+                "volume": "",
+                "issue": "",
+                "pages": "69--75",
+                "other_ids": {
+                    "DOI": [
+                        "10.1109/radar.2006.1631778"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "French A. Improved High Range Resolution Profiling of Aircraft using Stepped- Frequency Waveforms with an S-Band Phased Array Radar[C]// IEEE Radar Conference. New York: [s.n.], 2006:69-75.",
+                "links": null
+            }
+        }
+    }
+}

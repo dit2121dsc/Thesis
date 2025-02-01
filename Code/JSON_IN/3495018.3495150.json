@@ -1,0 +1,1150 @@
+{
+  "paper_id" : "3495018",
+  "header" : {
+    "generated_with" : "S2ORC 1.0.0",
+    "date_generated" : "2024-03-20T17:52:47.204934Z"
+  },
+  "title" : "A Novel Efficient Coupling Algorithm for Adaptive Fiber Coupling",
+  "authors" : [
+    {
+      "first" : "Ruoju",
+      "middle" : [],
+      "last" : "Xiong",
+      "suffix" : "",
+      "affiliation" : {
+        "laboratory" : "",
+        "institution" : "Hefei University of Technology",
+        "location" : {
+          "settlement" : "Hefei",
+          "country" : "China"
+        }
+      },
+      "email" : "xiongruoju@gmail.com"
+    }
+  ],
+  "year" : "",
+  "venue" : null,
+  "identifiers" : {},
+  "abstract" : "The high-speed free space optical communication systems based on the fiber techniques play more and more important roles nowadays, the laser beam propagating in the free space should be coupled into the single-mode fiber (SMF) at the input of the receiver. However, propagation through the atmospheric turbulence degrades the laser beam's spatial coherence and the jitters of the launch platform also decrease the convergent efficiency. Based on the existing adaptive coupling system, this paper studies the coupling algorithm based on the gradient descent (GD). We propose a novel algorithm that estimating the gradient through the simultaneous perturbation stochastic approximation (SPSA) and combining it with some traditional deep learning algorithms. Besides, we compare the coupling efficiency and speed of these algorithms. The simulation results demonstrate that the new algorithm combining the SPSA and the iteration point update strategy of Adagrad (SP-Adagrad) algorithm has a great advantage in coupling performance and is robust compared with other traditional algorithms, which improves the performance of the adaptive fiber coupling system in coupling speed and stability.",
+  "pdf_parse" : {
+    "abstract" : [
+      {
+        "text" : "The high-speed free space optical communication systems based on the fiber techniques play more and more important roles nowadays, the laser beam propagating in the free space should be coupled into the single-mode fiber (SMF) at the input of the receiver. However, propagation through the atmospheric turbulence degrades the laser beam's spatial coherence and the jitters of the launch platform also decrease the convergent efficiency. Based on the existing adaptive coupling system, this paper studies the coupling algorithm based on the gradient descent (GD). We propose a novel algorithm that estimating the gradient through the simultaneous perturbation stochastic approximation (SPSA) and combining it with some traditional deep learning algorithms. Besides, we compare the coupling efficiency and speed of these algorithms. The simulation results demonstrate that the ISO 22123123 new algorithm combining the SPSA and the iteration point update strategy of Adagrad (SP-Adagrad) algorithm has a great advantage in coupling performance and is robust compared with other traditional algorithms, which improves the performance of the adaptive fiber coupling system in coupling speed and stability.",
+        "cite_spans" : [],
+        "section" : "Abstract",
+        "sec_num" : null
+      }
+    ],
+    "body_text" : [
+      {
+        "text" : "In recent years, with the rapid development of Internet, Internet of Things, satellite communication and other fields, people begin to research and seek for the new communication technologies to pursue greater communication capacity and communication quality [1] [2] . At the same time, the development of fiber communication technology, such as erbium-doped fiber optical amplifier, Dense Wavelength Division Multiplexing, and Synchronous Digital Hierarchy. Optical fiber communication has become the focus of research in recent years due to its wide transmission frequency band, large communication capacity, small transmission loss, strong anti-electromagnetic anti-interference and anti-corrosion ability, small size and simple installation. Free-space optical communication has the characteristics of both wireless communication and optical fiber communication, and has attracted extensive attention and research because of its advantages such as no need to apply for frequency license and large communication capacity. However, freespace optical communication still faces some technical problems. At the input of the receiving system of the communication system, the laser beam needs to be coupled into the single-mode optical fiber. Because the fiber core is only a few microns, the control of laser beam needs to be very accurate. However, when the laser propagates in the atmosphere, due to the influence of atmospheric turbulence, the jitter of the transmitting platform, static alignment error or noise, some aberrations and external disturbances will be caused, and the coupling efficiency of the optical fiber will be affected at the receiver [3] [4] . Through the experimental simulation, it is found that the static error which affects the coupling of optical fibers is mainly the lateral deviation. And when the beam in the outer space propagate through the atmospheric turbulence, the wavefront is introduced with tip/tilt aberration and mismatch with the field of the SMF, which is the main factor which affects the coupling of optical fibers, i.e., the coupling efficiency (CE) .To solve the problem, an adaptive coupling system based on the fast steering mirror (FMS) and a wavefront sensor is proposed to compensate the aberration [5] [6] [7] . Recently, a new adaptive fiber coupling system was designed and can control the coupling process by directly driving the fiber tip, which can achieve higher coupling efficiency and faster response speed [8] [9] . In the adaptive fiber coupling system, the adaptive coupling algorithm is the core field. Because of the complexity of the coupling system, the researchers regard it as a black box system and construct the fiber-optic coupling problem as a model-free optimization problem. At present, many methods for coupling optimization have been proposed. For example, the gradient decent [10] , hill climbing [11] and annealing [12] and other methods, but the CE of these methods is still low. In 1997, in order to solve the problem of image distortion caused by atmospheric turbulence, Vorontsov proposed to apply the modelfree SPGD learning algorithm in the neural network to the adaptive optical system [13] . And it is applied to fiber coupling to improve the coupling efficiency. Since SPGD algorithm was proposed, it has been widely used to solve the actual problem. Nevertheless, SPGD algorithm still has some defects in fiber coupling. It may Meanwhile, the coupling speed of SPGD algorithm still has room for improvement [14] . Recently, researchers have proposed some improved methods to address the weaknesses of SPGD algorithm. Such as the single-mode fiber coupling method based on grating spiral scanning and SPGD algorithm, the precise delay SPGD algorithm applied to adaptive fiber coupling [15] . Although most of the methods have been optimized to some extent, however, it is still difficult to meet the high coupling efficiency and real time requirements of actual fiber coupling. In this paper, inspired by ADAM, Momentum and other deep learning [16] , a new coupling algorithm based on gradient descent is proposed. Considering that the gradient of the objective function in the actual scene of fiber coupling cannot be accurately calculated, the gradient is estimated through the SPSA and then use it to take place of the exact gradient in the deep learning optimization algorithm. New algorithm that combines the SPSA to estimate the gradient and the iteration point update strategy of the deep learning algorithms is obtained by integrating the SPSA and the deep learning algorithms like GD, momentum, RMSprop, Adagrad and Adam. Comparing these methods' convergent performance through the simulation and analysis, the conclusion is that the SP-Adagrad algorithm has best performance in speed, convergent efficiency and robust.",
+        "cite_spans" : [
+          {
+            "start" : 259,
+            "end" : 262,
+            "text" : "[1]",
+            "ref_id" : "BIBREF0"
+          },
+          {
+            "start" : 263,
+            "end" : 266,
+            "text" : "[2]",
+            "ref_id" : "BIBREF1"
+          },
+          {
+            "start" : 1656,
+            "end" : 1659,
+            "text" : "[3]",
+            "ref_id" : "BIBREF2"
+          },
+          {
+            "start" : 1660,
+            "end" : 1663,
+            "text" : "[4]",
+            "ref_id" : "BIBREF3"
+          },
+          {
+            "start" : 2252,
+            "end" : 2255,
+            "text" : "[5]",
+            "ref_id" : "BIBREF4"
+          },
+          {
+            "start" : 2256,
+            "end" : 2259,
+            "text" : "[6]",
+            "ref_id" : "BIBREF5"
+          },
+          {
+            "start" : 2260,
+            "end" : 2263,
+            "text" : "[7]",
+            "ref_id" : "BIBREF6"
+          },
+          {
+            "start" : 2469,
+            "end" : 2472,
+            "text" : "[8]",
+            "ref_id" : "BIBREF7"
+          },
+          {
+            "start" : 2473,
+            "end" : 2476,
+            "text" : "[9]",
+            "ref_id" : "BIBREF8"
+          },
+          {
+            "start" : 2856,
+            "end" : 2860,
+            "text" : "[10]",
+            "ref_id" : "BIBREF9"
+          },
+          {
+            "start" : 2877,
+            "end" : 2881,
+            "text" : "[11]",
+            "ref_id" : "BIBREF10"
+          },
+          {
+            "start" : 2896,
+            "end" : 2900,
+            "text" : "[12]",
+            "ref_id" : "BIBREF11"
+          },
+          {
+            "start" : 3174,
+            "end" : 3178,
+            "text" : "[13]",
+            "ref_id" : "BIBREF12"
+          },
+          {
+            "start" : 3498,
+            "end" : 3502,
+            "text" : "[14]",
+            "ref_id" : "BIBREF13"
+          },
+          {
+            "start" : 3775,
+            "end" : 3779,
+            "text" : "[15]",
+            "ref_id" : "BIBREF14"
+          },
+          {
+            "start" : 4034,
+            "end" : 4038,
+            "text" : "[16]",
+            "ref_id" : "BIBREF15"
+          }
+        ],
+        "section" : "INTRODUCTION",
+        "sec_num" : "1"
+      },
+      {
+        "text" : "Due to the influence of atmospheric turbulence and jitter of transmitting platform, the coupling efficiency of free space optical communication system at the receiver is greatly reduced. The adaptive fiber coupling system are shown in Figure 1 , The single-mode fiber and the lens form the transmitter, and the disturbing FSM simulate the tip/tilt aberration made by the atmospheric turbulence, the coupling FSM, SMF, power meter and the controller are the core of the adaptive fiber coupling system.",
+        "cite_spans" : [],
+        "section" : "OUR PROPOSED APPROACH 2.1 Current situation and problem formulation",
+        "sec_num" : "2"
+      },
+      {
+        "text" : "When the laser beam propagating in the atmosphere is simulated to be transmitted to the receiver of the communication system, the laser beam is coupled to the single-mode optical fiber through the coupling lens after passing through the FMS, and the light coupled into the optical fiber is transmitted to the receiver partly through the optical coupler, and the other part to the optical power meter. The controller changes the control voltage of the coupling FMS according to the light energy detected by the power meter so as to control the position of the fast mirror. Through the coupling algorithm, the controller can control the fast mirror in real time, so as to achieve the maximum coupling efficiency of the beam. For this fiber-optic coupling system, we set the value measured by the power meter as the objective function and the coupling algorithm is used to control the coupling FSM in real time to optimize the objective function. Thus, the coupling efficiency can reach the extremum point.",
+        "cite_spans" : [],
+        "section" : "OUR PROPOSED APPROACH 2.1 Current situation and problem formulation",
+        "sec_num" : "2"
+      },
+      {
+        "text" : "As a traditional adaptive optical control algorithm, SPGD is a synchronous optimization algorithm, which was originally used to correct the aberration caused by atmospheric turbulence and other factors. Because it is a model-free optimization algorithm and the fact that fiber coupling can not accurately calculate the gradient of the objective function, it is also suitable for this fiber coupling system. Setting the value detected by the optical power meter as the optimization objective function J{(u 1 , u 2, ... u m )}, applying random disturbances ∆u 1 , ∆u 2 , . . . ∆u m to the controlling variables of the function simultaneously. The random disturbances follow Bernoulli or Gaussian distributions with a mean of 0, where m is the number of control variables. We define the change in objective function as:",
+        "cite_spans" : [],
+        "section" : "Proposed method",
+        "sec_num" : "2.2"
+      },
+      {
+        "text" : "EQUATION",
+        "cite_spans" : [],
+        "section" : "Proposed method",
+        "sec_num" : "2.2"
+      },
+      {
+        "text" : "By using the Taylor expansion, we can rewrite the equation 1) as follows:",
+        "cite_spans" : [],
+        "section" : "Proposed method",
+        "sec_num" : "2.2"
+      },
+      {
+        "text" : "EQUATION",
+        "cite_spans" : [],
+        "section" : "Proposed method",
+        "sec_num" : "2.2"
+      },
+      {
+        "text" : "By ignoring the higher order terms we can acquire the approximation of the equation:",
+        "cite_spans" : [],
+        "section" : "Proposed method",
+        "sec_num" : "2.2"
+      },
+      {
+        "text" : "EQUATION",
+        "cite_spans" : [],
+        "section" : "Proposed method",
+        "sec_num" : "2.2"
+      },
+      {
+        "text" : "And in the equation 3), according to the reference [17] , the second term has expectation of zero when we apply the random and independent disturbances to the controlling variables. Thus, we can get the approximation of the objective function's gradient by applying the random stochastic parallel disturbances to the controlling variables.",
+        "cite_spans" : [
+          {
+            "start" : 51,
+            "end" : 55,
+            "text" : "[17]",
+            "ref_id" : "BIBREF16"
+          }
+        ],
+        "section" : "Proposed method",
+        "sec_num" : "2.2"
+      },
+      {
+        "text" : "д k = ∂J ∂u k = ∆J • ∆u k (∆u) 2 (4)",
+        "cite_spans" : [],
+        "section" : "Proposed method",
+        "sec_num" : "2.2"
+      },
+      {
+        "text" : "As aforementioned, the SPGD algorithms adopt the SPSA method to estimate the gradient, and use the gradient descent method to update the iteration point, and the updating method is along the negative gradient. In the process of optimization, the learning steps of all the control variables are unified with the initial default values.",
+        "cite_spans" : [],
+        "section" : "Proposed method",
+        "sec_num" : "2.2"
+      },
+      {
+        "text" : "The convergence speed of the algorithm still needs to be improved, and in the process of optimization, it may be trapped in the local extremum point. Inspired by the deep learning algorithms, we consider using the SPSA to calculate the gradient's change of the objective function and integrate it with the iteration point updating strategy and the adjusting rule of learning rate of deep learning algorithms. Combining the SP algorithm with GD, momentum, RM-Sprop, Adagrad, Adam these deep learning algorithms respectively. The gradient gk of the optimized objective function was obtained by SPSA algorithm. The iteration formula of GD algorithm can be written as:",
+        "cite_spans" : [],
+        "section" : "Proposed method",
+        "sec_num" : "2.2"
+      },
+      {
+        "text" : "EQUATION",
+        "cite_spans" : [],
+        "section" : "Proposed method",
+        "sec_num" : "2.2"
+      },
+      {
+        "text" : ")",
+        "cite_spans" : [],
+        "section" : "Proposed method",
+        "sec_num" : "2.2"
+      },
+      {
+        "text" : "Where n is iteration number, η is the learning rate and it should set the default before the optimization. The iteration formula of momentum algorithm can be written as:",
+        "cite_spans" : [],
+        "section" : "Proposed method",
+        "sec_num" : "2.2"
+      },
+      {
+        "text" : "EQUATION",
+        "cite_spans" : [],
+        "section" : "Proposed method",
+        "sec_num" : "2.2"
+      },
+      {
+        "text" : "Usually γ is set to 0.9 or 1.",
+        "cite_spans" : [],
+        "section" : "Proposed method",
+        "sec_num" : "2.2"
+      },
+      {
+        "text" : "The iteration formula of RMSprop algorithm can be written as:",
+        "cite_spans" : [],
+        "section" : "Proposed method",
+        "sec_num" : "2.2"
+      },
+      {
+        "text" : "EQUATION",
+        "cite_spans" : [],
+        "section" : "Proposed method",
+        "sec_num" : "2.2"
+      },
+      {
+        "text" : "EQUATION",
+        "cite_spans" : [],
+        "section" : "Proposed method",
+        "sec_num" : "2.2"
+      },
+      {
+        "text" : "The iteration formula of Adam algorithm can be written as:",
+        "cite_spans" : [],
+        "section" : "Proposed method",
+        "sec_num" : "2.2"
+      },
+      {
+        "text" : "EQUATION",
+        "cite_spans" : [],
+        "section" : "Proposed method",
+        "sec_num" : "2.2"
+      },
+      {
+        "text" : ")",
+        "cite_spans" : [],
+        "section" : "Proposed method",
+        "sec_num" : "2.2"
+      },
+      {
+        "text" : "Figure 2 : The scheme of the fiber coupling system β1 and β2 are the decay rate close to 1, and ϵ is a small number, which is usually set to 10-8 to avoid calculation errors.",
+        "cite_spans" : [],
+        "section" : "Proposed method",
+        "sec_num" : "2.2"
+      },
+      {
+        "text" : "The iteration formula of Adagrad algorithm can be written as:",
+        "cite_spans" : [],
+        "section" : "Proposed method",
+        "sec_num" : "2.2"
+      },
+      {
+        "text" : "EQUATION",
+        "cite_spans" : [],
+        "section" : "Proposed method",
+        "sec_num" : "2.2"
+      },
+      {
+        "text" : "Gn is the sum of squares of gradient values in the past iteration.",
+        "cite_spans" : [],
+        "section" : "Proposed method",
+        "sec_num" : "2.2"
+      },
+      {
+        "text" : "The fiber coupling system of the optical communication's receiver are shown in Figure 2 , The laser beam passes through an aperture with a diameter of d at plane A and is focused via an optical lens with a focal length of f. The tip of the stationary SMF is installed at the plane B. The SMF mode field approximate to gaussian distribution at plane B. Ideally, the coupling efficiency of the optical fiber is maximum when the center of this intensity distribution coincides with the center of the fiber tip. However, due to the influence of atmospheric turbulence and other factors, the optical intensity distribution center will shift from the center of the fiber tip or the optical intensity distribution will be irregular, thus reducing the coupling efficiency of the optical fiber. According to Parseval's theorem, for convenience the calculation of fiber coupling efficiency in plane B is transferred to plane A. The calculation formula of coupling efficiency η is as follows [18] :",
+        "cite_spans" : [
+          {
+            "start" : 981,
+            "end" : 985,
+            "text" : "[18]",
+            "ref_id" : "BIBREF17"
+          }
+        ],
+        "section" : "SMF coupling efficiency",
+        "sec_num" : "3.1"
+      },
+      {
+        "text" : "EQUATION",
+        "cite_spans" : [],
+        "section" : "SMF coupling efficiency",
+        "sec_num" : "3.1"
+      },
+      {
+        "text" : ")",
+        "cite_spans" : [],
+        "section" : "SMF coupling efficiency",
+        "sec_num" : "3.1"
+      },
+      {
+        "text" : "EQUATION",
+        "cite_spans" : [],
+        "section" : "SMF coupling efficiency",
+        "sec_num" : "3.1"
+      },
+      {
+        "text" : ")",
+        "cite_spans" : [],
+        "section" : "SMF coupling efficiency",
+        "sec_num" : "3.1"
+      },
+      {
+        "text" : "EQUATION",
+        "cite_spans" : [],
+        "section" : "SMF coupling efficiency",
+        "sec_num" : "3.1"
+      },
+      {
+        "text" : "EQUATION",
+        "cite_spans" : [],
+        "section" : "SMF coupling efficiency",
+        "sec_num" : "3.1"
+      },
+      {
+        "text" : ")",
+        "cite_spans" : [],
+        "section" : "SMF coupling efficiency",
+        "sec_num" : "3.1"
+      },
+      {
+        "text" : "ϕ(r, θ ) is the phase of the wavefront, usually we use Zernike polynomials to describe it in adaptive optics. The terms of the polynomial are orthogonal to each other in the circular domain in polar coordinates, and the wavefront aberrations can also be combined linearly by these orthogonal terms. ϕ(r, θ ) can be depicted as [18] :",
+        "cite_spans" : [
+          {
+            "start" : 327,
+            "end" : 331,
+            "text" : "[18]",
+            "ref_id" : "BIBREF17"
+          }
+        ],
+        "section" : "SMF coupling efficiency",
+        "sec_num" : "3.1"
+      },
+      {
+        "text" : "EQUATION",
+        "cite_spans" : [],
+        "section" : "SMF coupling efficiency",
+        "sec_num" : "3.1"
+      },
+      {
+        "text" : "Zi(r,θ ) and ai represent the ith term of the Zernike polynomial and its coefficient respectively. In the Zernike polynomial, Z1 and Z2 represent tilt aberration along the x and y direction, respectively. And the tilt aberration accounts for almost 87% of the total wavefront aberration caused by the atmospheric turbulence. Since the tilt error of the incident Angle of the beam can be equivalent to the transverse offset error of the receiving surface of the optical fiber, there is an approximate linear relationship between the control voltage in X and Y directions of the FMS and the polynomial coefficient a1 and a2, so the coupling efficiency of the optical fiber is optimized by adjusting the polynomial coefficient in the simulation process.",
+        "cite_spans" : [],
+        "section" : "SMF coupling efficiency",
+        "sec_num" : "3.1"
+      },
+      {
+        "text" : "In order to simulate the atmospheric turbulence and the inherent aberration. The first 10 terms of the Zernike polynomial are used to imitate the distorted wavefront, and the initial coefficient a1 to a10 are set as 1.5, 1.5, 0.34, 0.2, 0.15, 0.12, 0.13, 0.16, 0.08, 0.09, and the wavelength λ of the beam is set to 1550nm in the simulation, f is 0.71m, d is 0.15m and the random disturbance step ∆u is 0.01. Because the finite-difference (FD) can accurately estimate the gradient, in order to better analyze the optimization characteristics of different algorithms themselves, we firstly use the FD to calculate the gradient and then the optimization is carried out in combination with different optimization learning algorithms. As shown in Figure 3 , when the initial point is close to the optimal point, the coupling rate of Adagrad algorithm is very fast at the initial optimization stage. In general, several deep learning optimization algorithms can reach the vicinity of the optimal point with the highest coupling efficiency of 68% within ten iterations. As the distance from the initial position to the optimal point gradually increases, AdaGrad can still maintain good coupling performance and fast coupling rate, however, the coupling performance of other When the initial point is [1.9,1.9], only AdaGrad and GD can be coupled to the highest efficiency value, but GD algorithm is much slower than Adagrad algorithm.",
+        "cite_spans" : [],
+        "section" : "Simulation analysis",
+        "sec_num" : "3.2"
+      },
+      {
+        "text" : "Replacing FD with SPSA to estimate the gradient and also conduct the simulation at initial points 1.5 . In each case, each algorithm tries to adjust the learning rate to the optimal performance of the algorithm, and then compare the coupling performance. Because the gradient estimation of SPSA algorithm is random, the method of taking the average value after ten simulations is adopted to reduce the random error and the result are shown in was studied in detail. In the simulation, we changed the ∆u from 0.0001 to 2.5 and explore the impact on SP-Adagrad coupling efficiency. The Figure 7 shows that when ∆u is 10-4,10-3,10-2,0.1,0.5 and 1.5 respectively. The SP-Adagrad can maintain a coupling efficiency of 65% within 120 iterations, and when ∆u becomes to 2.5, the coupling performance deteriorates significantly. Besides, we inquired the effect of ∆u on the initial coupling point, ∆u was set to 1 and the initial point is 2.7, the coupling performance are shown in Figure 4 (f), it still maintain fast convergence speed and a good coupling efficiency within 20 iterations. In a nutshell, SP-Adagrad has strong robustness to the variation of ∆u, and proper control of the hyper-parameter ∆u can effectively improve the dynamic of the initial point, which means it can have better coupling performance in the face of large aberrations compared with other optimization algorithms.",
+        "cite_spans" : [],
+        "section" : "Simulation analysis",
+        "sec_num" : "3.2"
+      },
+      {
+        "text" : "Figure 4",
+        "cite_spans" : [],
+        "section" : "Simulation analysis",
+        "sec_num" : "3.2"
+      },
+      {
+        "text" : "In this paper, we proposed a novel optical fiber coupling optimization algorithm, which realizes an innovation based on the original SPGD coupling algorithm. The update of iteration point and the learning rate of the deep learning optimization algorithm are introduced into the original SPGD algorithm to achieve the global best advantage and faster optimization speed. Through the simulation analysis, it is shown that the gradient estimation by SPSA method combined with Adagrad has faster coupling speed and better coupling efficiency in the application scenario of optical fiber coupling compared with the original SPGD and other optimization algorithms. At the same time, it has better stability performance for the random disturbance of control parameter.",
+        "cite_spans" : [],
+        "section" : "CONCLUSION",
+        "sec_num" : "4"
+      },
+      {
+        "text" : "In future research, we will carry out experiments and research on the performance of this optimization algorithm in more practical and complex beam propagation and receiving environment.",
+        "cite_spans" : [],
+        "section" : "CONCLUSION",
+        "sec_num" : "4"
+      }
+    ],
+    "bib_entries" : {
+      "BIBREF0" : {
+        "ref_id" : "b0",
+        "title" : "An overview of turbulence compensation",
+        "authors" : [
+          {
+            "first" : "Klamer",
+            "middle" : [],
+            "last" : "Schutte",
+            "suffix" : ""
+          }
+        ],
+        "dblp_id" : null,
+        "year" : 2012,
+        "venue" : "Photonics in Security and Defence",
+        "volume" : "",
+        "issue" : "",
+        "pages" : "",
+        "other_ids" : {},
+        "num" : null,
+        "urls" : [],
+        "raw_text" : "Klamer Schutte et al. An overview of turbulence compensation. Paper presented at Optics.Photonics in Security and Defence pp. 85420O-85420O-10, 2012, Edinburgh , United Kingdom, DOI: http://dx.doi.org/.",
+        "links" : null
+      },
+      "BIBREF1" : {
+        "ref_id" : "b1",
+        "title" : "Adaptive smf coupling based on precise-delayed spgd algorithm and its application in free space optical communication",
+        "authors" : [
+          {
+            "first" : "G",
+            "middle" : [],
+            "last" : "Huang",
+            "suffix" : ""
+          },
+          {
+            "first" : "C",
+            "middle" : [],
+            "last" : "Geng",
+            "suffix" : ""
+          },
+          {
+            "first" : "F",
+            "middle" : [],
+            "last" : "Li",
+            "suffix" : ""
+          },
+          {
+            "first" : "Y",
+            "middle" : [],
+            "last" : "Yang",
+            "suffix" : ""
+          },
+          {
+            "first" : "X",
+            "middle" : [],
+            "last" : "Li",
+            "suffix" : ""
+          }
+        ],
+        "dblp_id" : null,
+        "year" : 2018,
+        "venue" : "IEEE Photonics",
+        "volume" : "010",
+        "issue" : "",
+        "pages" : "1--12",
+        "other_ids" : {},
+        "num" : null,
+        "urls" : [],
+        "raw_text" : "G. Huang, C. Geng, F. Li, Y. Yang, and X. Li. Adaptive smf coupling based on precise-delayed spgd algorithm and its application in free space optical commu- nication. IEEE Photonics ,vol. 010, pp. 1-12, 2018.",
+        "links" : null
+      },
+      "BIBREF2" : {
+        "ref_id" : "b2",
+        "title" : "Plane wave coupling into single-mode fiber in the presence of random angular jitter",
+        "authors" : [
+          {
+            "first" : "Ma",
+            "middle" : [],
+            "last" : "Jing",
+            "suffix" : ""
+          },
+          {
+            "first" : "Zhao",
+            "middle" : [],
+            "last" : "Fang",
+            "suffix" : ""
+          },
+          {
+            "first" : "Tan",
+            "middle" : [],
+            "last" : "Liying",
+            "suffix" : ""
+          },
+          {
+            "first" : "Yu",
+            "middle" : [],
+            "last" : "Siyuan",
+            "suffix" : ""
+          },
+          {
+            "first" : "Han",
+            "middle" : [],
+            "last" : "Qiqi",
+            "suffix" : ""
+          }
+        ],
+        "dblp_id" : null,
+        "year" : 2009,
+        "venue" : "Applied optics",
+        "volume" : "048",
+        "issue" : "27",
+        "pages" : "",
+        "other_ids" : {},
+        "num" : null,
+        "urls" : [],
+        "raw_text" : "Ma Jing, Zhao Fang, Tan Liying, Yu Siyuan, Han Qiqi. Plane wave coupling into single-mode fiber in the presence of random angular jitter.Applied optics, vol. 048, no. 27, 2009.",
+        "links" : null
+      },
+      "BIBREF3" : {
+        "ref_id" : "b3",
+        "title" : "Maximum fiber coupling efficiency and optimum beam size in the presence of random angular jitters for free-space laser systems and their applications",
+        "authors" : [
+          {
+            "first" : "M",
+            "middle" : [],
+            "last" : "Toyoshima",
+            "suffix" : ""
+          }
+        ],
+        "dblp_id" : null,
+        "year" : 2009,
+        "venue" : "Journal of the Optical Society of America",
+        "volume" : "023",
+        "issue" : "9",
+        "pages" : "",
+        "other_ids" : {},
+        "num" : null,
+        "urls" : [],
+        "raw_text" : "M. Toyoshima. Maximum fiber coupling efficiency and optimum beam size in the presence of random angular jitters for free-space laser systems and their applications. Journal of the Optical Society of America. vol. 023, no. 9, 2009.",
+        "links" : null
+      },
+      "BIBREF4" : {
+        "ref_id" : "b4",
+        "title" : "Free-space to few-mode-fiber coupling under atmospheric turbulence",
+        "authors" : [
+          {
+            "first" : "Zheng",
+            "middle" : [],
+            "last" : "Donghao",
+            "suffix" : ""
+          },
+          {
+            "first" : "Li",
+            "middle" : [],
+            "last" : "Yan",
+            "suffix" : ""
+          },
+          {
+            "first" : "Chen",
+            "middle" : [],
+            "last" : "Erhu",
+            "suffix" : ""
+          },
+          {
+            "first" : "Li",
+            "middle" : [],
+            "last" : "Beibei",
+            "suffix" : ""
+          },
+          {
+            "first" : "Kong",
+            "middle" : [],
+            "last" : "Deming",
+            "suffix" : ""
+          },
+          {
+            "first" : "Wu",
+            "middle" : [],
+            "last" : "Jian",
+            "suffix" : ""
+          }
+        ],
+        "dblp_id" : null,
+        "year" : 2016,
+        "venue" : "Optics Express",
+        "volume" : "024",
+        "issue" : "16",
+        "pages" : "8739--8744",
+        "other_ids" : {},
+        "num" : null,
+        "urls" : [],
+        "raw_text" : "Zheng Donghao, Li Yan, Chen Erhu, Li Beibei, Kong Deming , Wu Jian. Free-space to few-mode-fiber coupling under atmospheric turbulence. Optics Express, vol. 024, no. 16, pp. 8739-44, 2016.",
+        "links" : null
+      },
+      "BIBREF5" : {
+        "ref_id" : "b5",
+        "title" : "Simulating the performance of adaptive optics techniques on fsocommunications through the atmosphere",
+        "authors" : [
+          {
+            "first" : "N",
+            "middle" : [],
+            "last" : "Martínez",
+            "suffix" : ""
+          },
+          {
+            "first" : "L",
+            "middle" : [
+              "F R"
+            ],
+            "last" : "Ramos",
+            "suffix" : ""
+          },
+          {
+            "first" : "Z",
+            "middle" : [],
+            "last" : "Sodnik",
+            "suffix" : ""
+          }
+        ],
+        "dblp_id" : null,
+        "year" : 2017,
+        "venue" : "Laser Communication and Propagation through the Atmosphere and Oceans VI",
+        "volume" : "10408",
+        "issue" : "",
+        "pages" : "",
+        "other_ids" : {},
+        "num" : null,
+        "urls" : [],
+        "raw_text" : "N. Martínez, L. F. R. Ramos, and Z. Sodnik, \"Simulating the performance of adaptive optics techniques on fsocommunications through the atmosphere, \" in Laser Communication and Propagation through the Atmosphere and Oceans VI, vol. 10408 (International Society for Optics and Photonics, 2017), p. 1040808.",
+        "links" : null
+      },
+      "BIBREF6" : {
+        "ref_id" : "b6",
+        "title" : "Nonpupil adaptive optics for visual simulation of a customized contact lens",
+        "authors" : [
+          {
+            "first" : "Coughlan",
+            "middle" : [],
+            "last" : "Mark",
+            "suffix" : ""
+          },
+          {
+            "first" : "F",
+            "middle" : [],
+            "last" : "",
+            "suffix" : ""
+          },
+          {
+            "first" : "Goncharov",
+            "middle" : [],
+            "last" : "Alexander",
+            "suffix" : ""
+          },
+          {
+            "first" : "V",
+            "middle" : [],
+            "last" : "",
+            "suffix" : ""
+          }
+        ],
+        "dblp_id" : null,
+        "year" : 2018,
+        "venue" : "Applied optics",
+        "volume" : "057",
+        "issue" : "22",
+        "pages" : "57--E63",
+        "other_ids" : {},
+        "num" : null,
+        "urls" : [],
+        "raw_text" : "Coughlan Mark F and Goncharov Alexander V. Nonpupil adaptive optics for visual simulation of a customized contact lens.Applied optics, vol. 057, no. 22, pp. E57-E63, 2018.",
+        "links" : null
+      },
+      "BIBREF7" : {
+        "ref_id" : "b7",
+        "title" : "Experimental demonstration of coherent combining with tip/tilt control based on adaptive space-to-fiber laser beam coupling",
+        "authors" : [
+          {
+            "first" : "F",
+            "middle" : [],
+            "last" : "Li",
+            "suffix" : ""
+          },
+          {
+            "first" : "C",
+            "middle" : [],
+            "last" : "Geng",
+            "suffix" : ""
+          },
+          {
+            "first" : "G",
+            "middle" : [],
+            "last" : "Huang",
+            "suffix" : ""
+          },
+          {
+            "first" : "Y",
+            "middle" : [],
+            "last" : "Yang",
+            "suffix" : ""
+          },
+          {
+            "first" : "X",
+            "middle" : [],
+            "last" : "Li",
+            "suffix" : ""
+          },
+          {
+            "first" : "Q",
+            "middle" : [],
+            "last" : "Qiu",
+            "suffix" : ""
+          }
+        ],
+        "dblp_id" : null,
+        "year" : 2017,
+        "venue" : "IEEE Photon",
+        "volume" : "009",
+        "issue" : "2",
+        "pages" : "",
+        "other_ids" : {},
+        "num" : null,
+        "urls" : [],
+        "raw_text" : "F. Li, C. Geng, G. Huang, Y. Yang, X. Li, and Q. Qiu (2017),Experimental demonstra- tion of coherent combining with tip/tilt control based on adaptive space-to-fiber laser beam coupling.IEEE Photon. vol. 009, no. 2, Art. No.7102812.",
+        "links" : null
+      },
+      "BIBREF8" : {
+        "ref_id" : "b8",
+        "title" : "Experimental demonstration of single-mode fiber coupling using adaptive fiber coupler",
+        "authors" : [
+          {
+            "first" : "W",
+            "middle" : [],
+            "last" : "Luo",
+            "suffix" : ""
+          },
+          {
+            "first" : "C",
+            "middle" : [],
+            "last" : "Geng",
+            "suffix" : ""
+          },
+          {
+            "first" : "Y",
+            "middle" : [],
+            "last" : "Wu",
+            "suffix" : ""
+          },
+          {
+            "first" : "Y",
+            "middle" : [],
+            "last" : "Tan",
+            "suffix" : ""
+          },
+          {
+            "first" : "H",
+            "middle" : [],
+            "last" : "Liu",
+            "suffix" : ""
+          },
+          {
+            "first" : "X",
+            "middle" : [],
+            "last" : "Li",
+            "suffix" : ""
+          }
+        ],
+        "dblp_id" : null,
+        "year" : 2014,
+        "venue" : "Chinese Physics B",
+        "volume" : "023",
+        "issue" : "1",
+        "pages" : "",
+        "other_ids" : {},
+        "num" : null,
+        "urls" : [],
+        "raw_text" : "W. Luo, C. Geng, Y. Wu, Y. Tan, H. Liu, and X. Li. Experimental demonstration of single-mode fiber coupling using adaptive fiber coupler. Chinese Physics B, vol. 023, no. 1, 2014.",
+        "links" : null
+      },
+      "BIBREF9" : {
+        "ref_id" : "b9",
+        "title" : "Coherent beam combination of an optical array using adaptive fiber optics collimators",
+        "authors" : [
+          {
+            "first" : "C",
+            "middle" : [],
+            "last" : "Geng",
+            "suffix" : ""
+          },
+          {
+            "first" : "X",
+            "middle" : [],
+            "last" : "Li",
+            "suffix" : ""
+          },
+          {
+            "first" : "X",
+            "middle" : [],
+            "last" : "Zhang",
+            "suffix" : ""
+          },
+          {
+            "first" : "C",
+            "middle" : [],
+            "last" : "Rao",
+            "suffix" : ""
+          }
+        ],
+        "dblp_id" : null,
+        "year" : 2011,
+        "venue" : "Optics Communications",
+        "volume" : "284",
+        "issue" : "24",
+        "pages" : "5531--5536",
+        "other_ids" : {},
+        "num" : null,
+        "urls" : [],
+        "raw_text" : "C. Geng, X. Li, X. Zhang, and C. Rao. Coherent beam combination of an optical array using adaptive fiber optics collimators. Optics Communications, vol. 284, no.24, pp. 5531-5536, 2011.",
+        "links" : null
+      },
+      "BIBREF10" : {
+        "ref_id" : "b10",
+        "title" : "Exploration of the optimisation algorithms used in the implementation of adaptive optics in confocal and multiphoton microscopy",
+        "authors" : [
+          {
+            "first" : "A",
+            "middle" : [
+              "J"
+            ],
+            "last" : "Wright",
+            "suffix" : ""
+          },
+          {
+            "first" : "D",
+            "middle" : [],
+            "last" : "Burns",
+            "suffix" : ""
+          },
+          {
+            "first" : "B",
+            "middle" : [
+              "A"
+            ],
+            "last" : "Patterson",
+            "suffix" : ""
+          },
+          {
+            "first" : "S",
+            "middle" : [
+              "P"
+            ],
+            "last" : "Poland",
+            "suffix" : ""
+          },
+          {
+            "first" : "G",
+            "middle" : [
+              "J"
+            ],
+            "last" : "Valentine",
+            "suffix" : ""
+          },
+          {
+            "first" : ".",
+            "middle" : [
+              "M"
+            ],
+            "last" : "Girkin",
+            "suffix" : ""
+          }
+        ],
+        "dblp_id" : null,
+        "year" : 2005,
+        "venue" : "Microscopy Research and Technique",
+        "volume" : "067",
+        "issue" : "1",
+        "pages" : "36--44",
+        "other_ids" : {},
+        "num" : null,
+        "urls" : [],
+        "raw_text" : "A.J.Wright, D.Burns, B.A.Patterson, S.P.Poland, G.J.Valentine, andJ.M.Girkin. Ex- ploration of the optimisation algorithms used in the implementation of adaptive optics in confocal and multiphoton microscopy. Microscopy Research and Tech- nique, vol. 067, no. 1, pp. 36-44, 2005.",
+        "links" : null
+      },
+      "BIBREF11" : {
+        "ref_id" : "b11",
+        "title" : "Equation of State Calculations by Fast Computing Machines",
+        "authors" : [
+          {
+            "first" : "Nicholas",
+            "middle" : [],
+            "last" : "Metropolis",
+            "suffix" : ""
+          },
+          {
+            "first" : "Arianna",
+            "middle" : [
+              "W"
+            ],
+            "last" : "Rosenbluth",
+            "suffix" : ""
+          },
+          {
+            "first" : "Marshall",
+            "middle" : [
+              "N"
+            ],
+            "last" : "Rosenbluth",
+            "suffix" : ""
+          }
+        ],
+        "dblp_id" : null,
+        "year" : 1953,
+        "venue" : "Journal of Chemical Physics",
+        "volume" : "021",
+        "issue" : "6",
+        "pages" : "1087--1092",
+        "other_ids" : {},
+        "num" : null,
+        "urls" : [],
+        "raw_text" : "Nicholas Metropolis, Arianna W. Rosenbluth, Marshall N. Rosenbluth et al. Equa- tion of State Calculations by Fast Computing Machines. Journal of Chemical Physics, vol. 021, no. 6, pp. 1087-1092, 1953.",
+        "links" : null
+      },
+      "BIBREF12" : {
+        "ref_id" : "b12",
+        "title" : "Adaptive phase-distortion correction based on parallel gradient-descent optimization",
+        "authors" : [
+          {
+            "first" : "M",
+            "middle" : [],
+            "last" : "Vorontsov",
+            "suffix" : ""
+          },
+          {
+            "first" : "G",
+            "middle" : [],
+            "last" : "Carhart",
+            "suffix" : ""
+          },
+          {
+            "first" : "J",
+            "middle" : [],
+            "last" : "Ricklin",
+            "suffix" : ""
+          }
+        ],
+        "dblp_id" : null,
+        "year" : 1997,
+        "venue" : "Optics letters",
+        "volume" : "022",
+        "issue" : "12",
+        "pages" : "",
+        "other_ids" : {},
+        "num" : null,
+        "urls" : [],
+        "raw_text" : "M. Vorontsov, G. Carhart, and J. Ricklin. Adaptive phase-distortion correction based on parallel gradient-descent optimization.. Optics letters, vol. 022, no. 12, pp. 907, 1997.",
+        "links" : null
+      },
+      "BIBREF13" : {
+        "ref_id" : "b13",
+        "title" : "Incoherent beam combining based on the momentum SPGD algorithm",
+        "authors" : [
+          {
+            "first" : "G",
+            "middle" : [],
+            "last" : "Yang",
+            "suffix" : ""
+          },
+          {
+            "first" : "L",
+            "middle" : [],
+            "last" : "Liu",
+            "suffix" : ""
+          },
+          {
+            "first" : "Z",
+            "middle" : [],
+            "last" : "Jiang",
+            "suffix" : ""
+          },
+          {
+            "first" : "J",
+            "middle" : [],
+            "last" : "Guo",
+            "suffix" : ""
+          },
+          {
+            "first" : "T",
+            "middle" : [],
+            "last" : "Wang",
+            "suffix" : ""
+          }
+        ],
+        "dblp_id" : null,
+        "year" : 2018,
+        "venue" : "Optics and Laser Technology",
+        "volume" : "101",
+        "issue" : "",
+        "pages" : "372--378",
+        "other_ids" : {},
+        "num" : null,
+        "urls" : [],
+        "raw_text" : "G. Yang, L. Liu, Z. Jiang, J. Guo, and T. Wang. Incoherent beam combining based on the momentum SPGD algorithm. Optics and Laser Technology, vol. 101, pp. 372-378, 2018.",
+        "links" : null
+      },
+      "BIBREF14" : {
+        "ref_id" : "b14",
+        "title" : "Studies from Chinese Academy of Sciences Yield New Data on Photonics (Adaptive Smf Coupling Based On Precise-delayed Spgd Algorithm and Its Application In Free Space Optical Communication)",
+        "authors" : [],
+        "dblp_id" : null,
+        "year" : 2019,
+        "venue" : "",
+        "volume" : "",
+        "issue" : "",
+        "pages" : "",
+        "other_ids" : {},
+        "num" : null,
+        "urls" : [],
+        "raw_text" : "Photonics; Studies from Chinese Academy of Sciences Yield New Data on Pho- tonics (Adaptive Smf Coupling Based On Precise-delayed Spgd Algorithm and Its Application In Free Space Optical Communication).Mathematics Week, 2019.",
+        "links" : null
+      },
+      "BIBREF15" : {
+        "ref_id" : "b15",
+        "title" : "Adam: A Method for Stochastic Optimization",
+        "authors" : [
+          {
+            "first" : "P",
+            "middle" : [],
+            "last" : "Diederik",
+            "suffix" : ""
+          },
+          {
+            "first" : "Jimmy",
+            "middle" : [],
+            "last" : "Kingma",
+            "suffix" : ""
+          },
+          {
+            "first" : "",
+            "middle" : [],
+            "last" : "Ba",
+            "suffix" : ""
+          }
+        ],
+        "dblp_id" : "journals/corr/KingmaB14",
+        "year" : 2014,
+        "venue" : "",
+        "volume" : "",
+        "issue" : "",
+        "pages" : "",
+        "other_ids" : {},
+        "num" : null,
+        "urls" : [],
+        "raw_text" : "Diederik P. Kingma and Jimmy Ba. Adam: A Method for Stochastic Optimization. CoRR, abs/1412.6980, 2014.",
+        "links" : null
+      },
+      "BIBREF16" : {
+        "ref_id" : "b16",
+        "title" : "A parallel gradient descent method for learning in analog vlsi neural networks",
+        "authors" : [
+          {
+            "first" : "J",
+            "middle" : [],
+            "last" : "Alspector",
+            "suffix" : ""
+          },
+          {
+            "first" : "R",
+            "middle" : [],
+            "last" : "Meir",
+            "suffix" : ""
+          },
+          {
+            "first" : "B",
+            "middle" : [],
+            "last" : "Yuhas",
+            "suffix" : ""
+          },
+          {
+            "first" : "A",
+            "middle" : [],
+            "last" : "Jayakumar",
+            "suffix" : ""
+          },
+          {
+            "first" : "D",
+            "middle" : [],
+            "last" : "Lippe",
+            "suffix" : ""
+          }
+        ],
+        "dblp_id" : "conf/nips/AlspectorMYJL92",
+        "year" : 1993,
+        "venue" : "Advances in neural information processing systems",
+        "volume" : "",
+        "issue" : "",
+        "pages" : "836--844",
+        "other_ids" : {},
+        "num" : null,
+        "urls" : [],
+        "raw_text" : "J. Alspector, R. Meir, B. Yuhas, A. Jayakumar, and D. Lippe. A parallel gradient descent method for learning in analog vlsi neural networks. in Advances in neural information processing systems, pp. 836-844, 1993.",
+        "links" : null
+      },
+      "BIBREF17" : {
+        "ref_id" : "b17",
+        "title" : "Zernike polynomials and atmospheric turbulence",
+        "authors" : [
+          {
+            "first" : "R",
+            "middle" : [
+              "J"
+            ],
+            "last" : "Noll",
+            "suffix" : ""
+          }
+        ],
+        "dblp_id" : null,
+        "year" : 1976,
+        "venue" : "JOsA",
+        "volume" : "066",
+        "issue" : "",
+        "pages" : "207--211",
+        "other_ids" : {},
+        "num" : null,
+        "urls" : [],
+        "raw_text" : "R. J. Noll. Zernike polynomials and atmospheric turbulence, JOsA vol. 066, pp. 207-211, 1976.",
+        "links" : null
+      }
+    }
+  }
+}

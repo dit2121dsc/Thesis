@@ -1,0 +1,501 @@
+{
+    "paper_id": "3489048",
+    "header": {
+        "generated_with": "S2ORC 1.0.0",
+        "date_generated": "2024-03-20T17:52:55.166858Z"
+    },
+    "title": "Cerberus",
+    "authors": [
+        {
+            "first": "Chen",
+            "middle": [],
+            "last": "Griner",
+            "suffix": "",
+            "affiliation": {},
+            "email": "griner@post.bgu.ac.il"
+        },
+        {
+            "first": "Johannes",
+            "middle": [],
+            "last": "Zerwas",
+            "suffix": "",
+            "affiliation": {},
+            "email": "johannes.zerwas@tum.de"
+        },
+        {
+            "first": "Andreas",
+            "middle": [],
+            "last": "Blenk",
+            "suffix": "",
+            "affiliation": {},
+            "email": "andreas.blenk@tum.de"
+        },
+        {
+            "first": "Manya",
+            "middle": [],
+            "last": "Ghobadi",
+            "suffix": "",
+            "affiliation": {},
+            "email": "ghobadi@csail.mit.edu"
+        },
+        {
+            "first": "Stefan",
+            "middle": [],
+            "last": "Schmid",
+            "suffix": "",
+            "affiliation": {},
+            "email": "stefan.schmid@tu-berlin.de"
+        },
+        {
+            "first": "Chen",
+            "middle": [],
+            "last": "Avin",
+            "suffix": "",
+            "affiliation": {},
+            "email": "avin@cse.bgu.ac.il"
+        }
+    ],
+    "year": "",
+    "venue": null,
+    "identifiers": {},
+    "abstract": "The bandwidth and latency requirements of modern datacenter applications have led researchers to propose various topology designs using static, dynamic demand-oblivious (rotor), and/or dynamic demand-aware switches. However, given the diverse nature of datacenter traffic, there is little consensus about how these designs would fare against each other. In this work, we analyze the throughput of existing topology designs under different traffic patterns and study their unique advantages and potential costs in terms of bandwidth and latency \"tax\". To overcome the identified inefficiencies, we propose Cerberus, a unified, two-layer leaf-spine optical datacenter design with three topology types. Cerberus systematically matches different traffic patterns with their most suitable topology type: e.g., latency-sensitive flows are transmitted via a static topology, all-to-all traffic via a rotor topology, and elephant flows via a demand-aware topology. We show analytically and in simulations that Cerberus can improve throughput significantly compared to alternative approaches and operate datacenters at higher loads while being throughput-proportional.",
+    "pdf_parse": {
+        "abstract": [
+            {
+                "text": "The bandwidth and latency requirements of modern datacenter applications have led researchers to propose various topology designs using static, dynamic demand-oblivious (rotor), and/or dynamic demand-aware switches. However, given the diverse nature of datacenter traffic, there is little consensus about how these designs would fare against each other. In this work, we analyze the throughput of existing topology designs under different traffic patterns and study their unique advantages and potential costs in terms of bandwidth and latency \"tax\". To overcome the identified inefficiencies, we propose Cerberus, a unified, two-layer leaf-spine optical datacenter design with three topology types. Cerberus systematically matches different traffic patterns with their most suitable topology type: e.g., latency-sensitive flows are transmitted via a static topology, all-to-all traffic via a rotor topology, and elephant flows via a demand-aware topology. We show analytically and in simulations that Cerberus can improve throughput significantly compared to alternative approaches and operate datacenters at higher loads while being throughput-proportional.",
+                "cite_spans": [],
+                "section": "Abstract",
+                "sec_num": null
+            }
+        ],
+        "body_text": [
+            {
+                "text": "Datacenter networks have become a critical backbone of our digital society. The traffic these networks need to serve is growing explosively, and researchers are exploring novel optical datacenter networks, including both static and dynamic topologies. The architectural design choices of operators are expanding. In particular, there exist several fundamentally different optical datacenter topologies, relying on different switching technologies. We classify these topologies along the two independent dimensions, static vs dynamic and demand-oblivious vs demand-aware and we identify three main topology types: (i) Traditionally, datacenter networks are based on static and demand-oblivious topologies, e.g., Clos and expander graphs [1] , (ii) More recent proposals also explore dynamic but demand-oblivious topologies, e.g., relying on rotor switches that periodically reconfigure the topology [2] .(iii) Furthermore, there are dynamic and demand-aware topologies that can be reconfigured according to the current traffic pattern.However, there is little consensus in the networking community on how these different designs fare against each other [1] , in particular when it comes to throughput [3] . What is more, we currently lack a unified model and analytical tools to close this gap. Matching traffic patterns to topology designs. This paper is motivated by the observation that existing datacenter network designs in many cases provide a mismatch between some common traffic patterns and the switching technology used in the network topology to serve them. Different optical topologies provide different tradeoffs and the used topology should depend on the demand. For example, mice flows that are time-sensitive should be served on a static topology since reconfiguration times may violate their latency constraints. Elephant flows, may benefit from dynamic demand-aware topologies. Since the reconfiguration time is relatively small compared to the transmission time of such large flows, the reconfiguration can be amortized, and throughput improved by establishing direct links between frequently communicating pairs.",
+                "cite_spans": [
+                    {
+                        "start": 736,
+                        "end": 739,
+                        "text": "[1]",
+                        "ref_id": "BIBREF0"
+                    },
+                    {
+                        "start": 898,
+                        "end": 901,
+                        "text": "[2]",
+                        "ref_id": "BIBREF1"
+                    },
+                    {
+                        "start": 1152,
+                        "end": 1155,
+                        "text": "[1]",
+                        "ref_id": "BIBREF0"
+                    },
+                    {
+                        "start": 1200,
+                        "end": 1203,
+                        "text": "[3]",
+                        "ref_id": "BIBREF2"
+                    }
+                ],
+                "section": "INTRODUCTION",
+                "sec_num": "1"
+            },
+            {
+                "text": "A key concern: throughput. Our main metric of interest is the end-to-end throughput supported by systems in a fluid-flow model. We follow the throughput definition by Jyothi et al. [3] and focus on the network topology. The throughput of a system for a traffic demand matrix \ud835\udc47 is the highest scaling factor \ud835\udf03 (\ud835\udc47 ) for which the traffic is feasible in the system. That is, we seek the maximum scaling factor for which there exists a feasible multi-commodity network flow assignment that routes the traffic in the matrix \ud835\udf03 (\ud835\udc47 ) \u2022 \ud835\udc47 through the network from each source to each destination. A feasible flow means that the flow rates are subject to link capacities and to flow conservation at each intermediate node. The throughput of a topology, denoted by \ud835\udf03 * , is defined as the worst-case throughput among all traffic matrices [3] . Potential inefficiencies: bandwidth and latency tax. To compare the throughput of different topologies, we propose to quantify their inefficiencies in terms of taxes. Static topologies require multihop forwarding. This can be problematic, especially for large flows: the more hops a flow must traverse, the more network capacity is consumed. As noticed in prior work [2] , inefficiency arising from multi-hop routing can be seen as a \"bandwidth tax\" (BW-Tax). In contrast, in dynamic networks, the topology may be reconfigured to provide direct connectivity to elephant flows at the cost of a reconfiguration time. In general, we can regard the reconfiguration time as a \"latency tax\" (LT-Tax). Regarding the design choice between static vs dynamic topology, we therefore observe that whereas dynamic topologies introduce a latency tax, static topologies introduce a bandwidth tax. In this paper, we present a systematic approach to study the throughput of both static and dynamic topologies for different traffic types. We make the following contributions. Contribution 1: Throughput analysis including bandwidth and latency tax. We first extend the throughput definition by Jyothi et al. [3] from a demand matrix \ud835\udc47 to our general traffic generation model T . We further extend the definition to apply also to dynamic network topologies rather than only static topologies. In turn, we present a mathematical framework that allows us to evaluate analytically the performance and trade-offs of arbitrary demands using different optical switches, considering real traffic distributions. In particular, based on our models, we formally show that all three topology types have a unique raison d'etre. In contrast to previous work , we propose to study the throughput via demand completion time (DCT), which allows us to incorporate both bandwidth and latency tax into our analysis. We further show that the efficiency of different topology types depends on the skewness of the traffic distribution in a non-trivial manner. This enables us to provide novel insights into an abstract version of existing architectures such as rotor-net for RotorNet [2] and expander-net for Xpander [1] , including their throughput. Contribution 2: A unified network model. We formalize the forte of three popular optical topologies from prior work: a static expander-based [1] , a rotor-based [2] , and a demand-aware topology [4] . Based on these models, we propose a unified two-layer leaf-spine network model, called ToR-Matching-ToR (TMT), that simultaneously contains both static and dynamic topologies, and in particular, the three topology parts: static, rotor, and demand-aware. This generalizes the existing architectures mentioned above since the spine switches can be of different types. The main topology designs we consider in this paper and their related properties and achieved throughput (with our improvement in %).",
+                "cite_spans": [
+                    {
+                        "start": 181,
+                        "end": 184,
+                        "text": "[3]",
+                        "ref_id": "BIBREF2"
+                    },
+                    {
+                        "start": 827,
+                        "end": 830,
+                        "text": "[3]",
+                        "ref_id": "BIBREF2"
+                    },
+                    {
+                        "start": 1200,
+                        "end": 1203,
+                        "text": "[2]",
+                        "ref_id": "BIBREF1"
+                    },
+                    {
+                        "start": 2023,
+                        "end": 2026,
+                        "text": "[3]",
+                        "ref_id": "BIBREF2"
+                    },
+                    {
+                        "start": 2976,
+                        "end": 2979,
+                        "text": "[2]",
+                        "ref_id": "BIBREF1"
+                    },
+                    {
+                        "start": 3009,
+                        "end": 3012,
+                        "text": "[1]",
+                        "ref_id": "BIBREF0"
+                    },
+                    {
+                        "start": 3184,
+                        "end": 3187,
+                        "text": "[1]",
+                        "ref_id": "BIBREF0"
+                    },
+                    {
+                        "start": 3204,
+                        "end": 3207,
+                        "text": "[2]",
+                        "ref_id": "BIBREF1"
+                    },
+                    {
+                        "start": 3238,
+                        "end": 3241,
+                        "text": "[4]",
+                        "ref_id": "BIBREF3"
+                    }
+                ],
+                "section": "INTRODUCTION",
+                "sec_num": "1"
+            },
+            {
+                "text": "Contribution 3: Matching traffic to topologies with Cerberus.",
+                "cite_spans": [],
+                "section": "INTRODUCTION",
+                "sec_num": "1"
+            },
+            {
+                "text": "Motivated by the identified inefficiencies resulting from a mismatch between traffic and topology, we describe a novel architecture, Cerberus 1 , which can serve traffic on the topology that best matches the traffic's characteristics. For example, latency-sensitive mice flows can be transmitted via static switches, all-to-all traffic via dynamic rotor switches, and elephant flows via demand-aware switches. Table 1 gives an overview of our corresponding contributions. For example, our simulations show that compared to static and dynamic demand-oblivious topologies, Cerberus improves the throughput by 33% or more for a datamining workload, by 36% or more for a synthetic case study imitating realistic flow-size distributions, and by 88% or more for permutation matrices, i.e., sparse matrices which represent the worst-case input for oblivious designs. We further prove that Cerberus is throughput-proportional [1] , namely, that Cerberus is able to utilize its full capacity proportionally, even when only a subset of the servers generates traffic.",
+                "cite_spans": [
+                    {
+                        "start": 918,
+                        "end": 921,
+                        "text": "[1]",
+                        "ref_id": "BIBREF0"
+                    }
+                ],
+                "section": "INTRODUCTION",
+                "sec_num": "1"
+            },
+            {
+                "text": "In Greek mythology, Cerberus is a dog with three heads (corresponding to our three topology parts).",
+                "cite_spans": [],
+                "section": "",
+                "sec_num": null
+            }
+        ],
+        "bib_entries": {
+            "BIBREF0": {
+                "ref_id": "b0",
+                "title": "Beyond fat-trees without antennae, mirrors, and disco-balls",
+                "authors": [
+                    {
+                        "first": "Simon",
+                        "middle": [],
+                        "last": "Kassing",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Asaf",
+                        "middle": [],
+                        "last": "Valadarsky",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Gal",
+                        "middle": [],
+                        "last": "Shahaf",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Michael",
+                        "middle": [],
+                        "last": "Schapira",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Ankit",
+                        "middle": [],
+                        "last": "Singla",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/sigcomm/KassingVSSS17",
+                "year": 2017,
+                "venue": "Proceedings of the Conference of the ACM Special Interest Group on Data Communication",
+                "volume": "",
+                "issue": "",
+                "pages": "281--294",
+                "other_ids": {
+                    "DOI": [
+                        "10.1145/3098822.3098836"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "S. Kassing, A. Valadarsky, G. Shahaf, M. Schapira, and A. Singla, \"Beyond fat-trees without antennae, mirrors, and disco-balls, \" in Proceedings of the Conference of the ACM Special Interest Group on Data Communication, pp. 281-294, ACM, 2017.",
+                "links": null
+            },
+            "BIBREF1": {
+                "ref_id": "b1",
+                "title": "RotorNet",
+                "authors": [
+                    {
+                        "first": "William",
+                        "middle": [
+                            "M"
+                        ],
+                        "last": "Mellette",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Rob",
+                        "middle": [],
+                        "last": "Mcguinness",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Arjun",
+                        "middle": [],
+                        "last": "Roy",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Alex",
+                        "middle": [],
+                        "last": "Forencich",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "George",
+                        "middle": [],
+                        "last": "Papen",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Alex",
+                        "middle": [
+                            "C"
+                        ],
+                        "last": "Snoeren",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "George",
+                        "middle": [],
+                        "last": "Porter",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/sigcomm/MelletteMRFPSP17",
+                "year": 2017,
+                "venue": "Proceedings of the Conference of the ACM Special Interest Group on Data Communication",
+                "volume": "",
+                "issue": "",
+                "pages": "267--280",
+                "other_ids": {
+                    "DOI": [
+                        "10.1145/3098822.3098838"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "W. M. Mellette, R. McGuinness, A. Roy, A. Forencich, G. Papen, A. C. Snoeren, and G. Porter, \"Rotornet: A scalable, low-complexity, optical datacenter network, \" in Proceedings of the Conference of the ACM Special Interest Group on Data Communi- cation, pp. 267-280, ACM, 2017.",
+                "links": null
+            },
+            "BIBREF2": {
+                "ref_id": "b2",
+                "title": "Measuring and Understanding Throughput of Network Topologies",
+                "authors": [
+                    {
+                        "first": "Sangeetha",
+                        "middle": [
+                            "Abdu"
+                        ],
+                        "last": "Jyothi",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Ankit",
+                        "middle": [],
+                        "last": "Singla",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "P",
+                        "middle": [
+                            "Brighten"
+                        ],
+                        "last": "Godfrey",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Alexandra",
+                        "middle": [],
+                        "last": "Kolla",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/sc/JyothiSGK16",
+                "year": 2016,
+                "venue": "SC16: International Conference for High Performance Computing, Networking, Storage and Analysis",
+                "volume": "",
+                "issue": "",
+                "pages": "761--772",
+                "other_ids": {
+                    "DOI": [
+                        "10.1109/sc.2016.64"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "S. A. Jyothi, A. Singla, P. B. Godfrey, and A. Kolla, \"Measuring and understand- ing throughput of network topologies, \" in SC'16: Proceedings of the International Conference for High Performance Computing, Networking, Storage and Analysis, pp. 761-772, IEEE, 2016.",
+                "links": null
+            },
+            "BIBREF3": {
+                "ref_id": "b3",
+                "title": "ProjecToR",
+                "authors": [
+                    {
+                        "first": "Monia",
+                        "middle": [],
+                        "last": "Ghobadi",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Ratul",
+                        "middle": [],
+                        "last": "Mahajan",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Amar",
+                        "middle": [],
+                        "last": "Phanishayee",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Nikhil",
+                        "middle": [],
+                        "last": "Devanur",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Janardhan",
+                        "middle": [],
+                        "last": "Kulkarni",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Gireeja",
+                        "middle": [],
+                        "last": "Ranade",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Pierre-Alexandre",
+                        "middle": [],
+                        "last": "Blanche",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Houman",
+                        "middle": [],
+                        "last": "Rastegarfar",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Madeleine",
+                        "middle": [],
+                        "last": "Glick",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Daniel",
+                        "middle": [],
+                        "last": "Kilper",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/sigcomm/GhobadiMPDKRBRG16",
+                "year": 2016,
+                "venue": "Proceedings of the 2016 ACM SIGCOMM Conference",
+                "volume": "",
+                "issue": "",
+                "pages": "216--229",
+                "other_ids": {
+                    "DOI": [
+                        "10.1145/2934872.2934911"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "M. Ghobadi, R. Mahajan, A. Phanishayee, N. Devanur, J. Kulkarni, G. Ranade, P.-A. Blanche, H. Rastegarfar, M. Glick, and D. Kilper, \"Projector: Agile reconfigurable data center interconnect, \" in Proceedings of the 2016 ACM SIGCOMM Conference, pp. 216-229, ACM, 2016.",
+                "links": null
+            },
+            "BIBREF4": {
+                "ref_id": "b4",
+                "title": "Cerberus",
+                "authors": [
+                    {
+                        "first": "Chen",
+                        "middle": [],
+                        "last": "Griner",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Johannes",
+                        "middle": [],
+                        "last": "Zerwas",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Andreas",
+                        "middle": [],
+                        "last": "Blenk",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Manya",
+                        "middle": [],
+                        "last": "Ghobadi",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Stefan",
+                        "middle": [],
+                        "last": "Schmid",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Chen",
+                        "middle": [],
+                        "last": "Avin",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2021,
+                "venue": "Proceedings of the ACM on Measurement and Analysis of Computing Systems",
+                "volume": "5",
+                "issue": "3",
+                "pages": "1--33",
+                "other_ids": {
+                    "DOI": [
+                        "10.1145/3491050"
+                    ],
+                    "ISSNe": [
+                        "2476-1249"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "C. Griner, J. Zerwas, A. Blenk, M. Ghobadi, S. Schmid, and C. Avin, \"Cerberus: The power of choices in datacenter topology design-a throughput perspective,\" Proceedings of the ACM on Measurement and Analysis of Computing Systems, vol. 5, no. 3, pp. 1-33, 2021.",
+                "links": null
+            }
+        }
+    }
+}

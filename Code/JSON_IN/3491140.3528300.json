@@ -1,0 +1,566 @@
+{
+    "paper_id": "3491140",
+    "header": {
+        "generated_with": "S2ORC 1.0.0",
+        "date_generated": "2024-03-20T17:53:05.501372Z"
+    },
+    "title": "A Chatbot-Server Framework for Scalable Machine Learning Education through Crowdsourced Data",
+    "authors": [
+        {
+            "first": "Jingting",
+            "middle": [],
+            "last": "Li",
+            "suffix": "",
+            "affiliation": {
+                "laboratory": "",
+                "institution": "City University of Hong Kong Hong Kong",
+                "location": {}
+            },
+            "email": ""
+        },
+        {
+            "first": "Wei",
+            "middle": [],
+            "last": "Chee",
+            "suffix": "",
+            "affiliation": {
+                "laboratory": "",
+                "institution": "Nautilus Software Technologies Hong Kong",
+                "location": {}
+            },
+            "email": ""
+        },
+        {
+            "first": "",
+            "middle": [],
+            "last": "Tan",
+            "suffix": "",
+            "affiliation": {
+                "laboratory": "",
+                "institution": "Nautilus Software Technologies Hong Kong",
+                "location": {}
+            },
+            "email": ""
+        },
+        {
+            "first": "Ching",
+            "middle": [
+                "Nam"
+            ],
+            "last": "Hang",
+            "suffix": "",
+            "affiliation": {
+                "laboratory": "",
+                "institution": "City University of Hong Kong Hong Kong",
+                "location": {}
+            },
+            "email": ""
+        },
+        {
+            "first": "Xintong",
+            "middle": [],
+            "last": "Qi",
+            "suffix": "",
+            "affiliation": {
+                "laboratory": "",
+                "institution": "Columbia University",
+                "location": {
+                    "country": "USA"
+                }
+            },
+            "email": ""
+        }
+    ],
+    "year": "",
+    "venue": null,
+    "identifiers": {},
+    "abstract": "In this paper, we propose a novel chatbot-server computer programming framework for students to learn Artificial Intelligence (AI) by creating game AI chatbot applications, whilst conforming to a distributed frontend-backend application structure (e.g., clientserver model). The chatbot interface allows students to share their work over online social networks and invite other human players to test-drive the game AI and to collect data for training of machine learning models by crowdsourcing. We introduce a few test cases based on this framework to facilitate the online learning of AI and full-stack software engineering knowledge, thus enabling a progressive learning of machine learning education using crowdsourcing.",
+    "pdf_parse": {
+        "abstract": [
+            {
+                "text": "In this paper, we propose a novel chatbot-server computer programming framework for students to learn Artificial Intelligence (AI) by creating game AI chatbot applications, whilst conforming to a distributed frontend-backend application structure (e.g., clientserver model). The chatbot interface allows students to share their work over online social networks and invite other human players to test-drive the game AI and to collect data for training of machine learning models by crowdsourcing. We introduce a few test cases based on this framework to facilitate the online learning of AI and full-stack software engineering knowledge, thus enabling a progressive learning of machine learning education using crowdsourcing.",
+                "cite_spans": [],
+                "section": "Abstract",
+                "sec_num": null
+            }
+        ],
+        "body_text": [
+            {
+                "text": "Artificial Intelligence (AI) and machine learning education have attracted much attention in recent years, and there are ongoing worldwide efforts in teaching AI to students at the K-12 and interdisciplinary higher education levels. There are publicly available Permission to make digital or hard copies of all or part of this work for personal or classroom use is granted without fee provided that copies are not made or distributed for profit or commercial advantage and that copies bear this notice and the full citation on the first page. Copyrights for components of this work owned by others than ACM must be honored. Abstracting with credit is permitted. To copy otherwise, or republish, to post on servers or to redistribute to lists, requires prior specific permission and/or a fee. Request permissions from permissions@acm.org. L@S '22, June 1-3, 2022, New York City, NY, USA \u00a9 2022 Association for Computing Machinery. ACM ISBN 978-1-4503-9158-0/22/06. . . $15.00 https://doi.org/10. 1145 online platforms like Google's Teachable Machine, Tensorflow Playground and AI for K-12 student initiatives (see [7] ) to learn AI and machine learning. The Google's Teachable Machine can incorporate human interaction with training models for vision and speech and is good for all ages, while the Google's Tensorflow Playground allows students (at high-school and tertiary level) to visualize the training process of a supervised deep learning model [5] . These platforms can introduce conceptual understanding and do not require computer programming. However, for students to level up their skills and knowledge, integrating the idea of crowdsourcing in [6, 8] with AI game programming can be useful for machine learning education.",
+                "cite_spans": [
+                    {
+                        "start": 995,
+                        "end": 999,
+                        "text": "1145",
+                        "ref_id": null
+                    },
+                    {
+                        "start": 1113,
+                        "end": 1116,
+                        "text": "[7]",
+                        "ref_id": "BIBREF6"
+                    },
+                    {
+                        "start": 1450,
+                        "end": 1453,
+                        "text": "[5]",
+                        "ref_id": "BIBREF4"
+                    },
+                    {
+                        "start": 1655,
+                        "end": 1658,
+                        "text": "[6,",
+                        "ref_id": "BIBREF5"
+                    },
+                    {
+                        "start": 1659,
+                        "end": 1661,
+                        "text": "8]",
+                        "ref_id": "BIBREF7"
+                    }
+                ],
+                "section": "INTRODUCTION",
+                "sec_num": "1"
+            },
+            {
+                "text": "In this paper, we introduce a chatbot-server computer programming framework for students to learn AI and test-drive their machine learning models through a game AI perspective with crowdsourcing. The chatbot interface allows students to share their work over online social networks, invite other human players to testdrive their work, and to collect data for training of machine learning models via crowdsourcing. The crowdsourcing mechanism provides not only the data to train and upgrade machine learning models, but also enables the teaching of machine learning ideas like neural networks and reinforcement learning. Last but not least, the framework facilitates the online learning of AI and full-stack software engineering knowledge in a progressive manner. Figure 2 : An example of a texting game. The player sends the unique snippet ID to start the game, and the game AI will automatically reply to the player with several options to make a single choice. The player and the AI take turns to play the game using the same set of options in alternating turns till a game outcome is reached.",
+                "cite_spans": [],
+                "section": "INTRODUCTION",
+                "sec_num": "1"
+            },
+            {
+                "text": "The chatbot-server framework consists of a chatbot frontend and a server backend, conforming to a distributed client-server architecture as shown in Figure 1 . The chatbot allows anyone to interact with the game AI and the server stores data and students' code snippets that can be invoked from the chatbot, which is accessible from https://nemo.algebragame.app.",
+                "cite_spans": [],
+                "section": "THE CHATBOT-SERVER FRAMEWORK",
+                "sec_num": "2"
+            },
+            {
+                "text": "The frontend part of our game AI platform allows students to program in Javascript a chatbot game that can be shared with anyone over online social networks like Facebook Messenger and Telegram. Over these networks, game interaction serves as a crowdsourcing mechanism where crowd-sourced data can be stored at a remote server for training of machine learning models. In particular, when student programmers upload their code snippet to the server-side, the server return unique snippet IDs that can be invoked from the chatbot interface by anyone to run specific game instances created by the student programmer and online interactions between the chatbot and the human player are stored at the server.",
+                "cite_spans": [],
+                "section": "The Chatbot",
+                "sec_num": "2.1"
+            },
+            {
+                "text": "Currently, the chatbot supports texting game AI where the human player and the chatbot take alternating turns to messaging. A human player interacts with the chatbot by choosing from programmable options in order to transit to a next state of the game. With the prevalence of mobile phones and the use of social messaging, game instances and data can be easily shared and collected respectively. The text-form data also makes training machine learning models easier. An example of the texting game is shown in Figure 2 . ",
+                "cite_spans": [],
+                "section": "The Chatbot",
+                "sec_num": "2.1"
+            },
+            {
+                "text": "The server is the backend part for storing the students' programmable chatbot game code and the students' machine learning code snippets as well as the data associated with that particular chatbot game instances. The server can also leverage software libraries like Ten-sorFlow and the application programming interfaces of other AI software (e.g., Open AI, AWS AI etc). Our framework allows students to use basic full-stack software development skills to create game AI ranging from two-player games (i.e., AI against human) to multi-player games using machine learning and crowdsourcing as shown in Figure 3 .",
+                "cite_spans": [],
+                "section": "The Server",
+                "sec_num": "2.2"
+            },
+            {
+                "text": "We briefly describe three case studies to showcase the learning of different aspects of machine learning in neural networks, language processing and logic models created by undergraduate students using our framework under remote instruction.",
+                "cite_spans": [],
+                "section": "EVALUATION",
+                "sec_num": "3"
+            },
+            {
+                "text": "The first case study is the classical two-player game Nim that uses a single layer neural network model with reinforcement learning and crowdsourcing. This game requires two players to take alternating turns to choose a number of stones to remove from an initial pile, and the player who takes the last stone loses the game.",
+                "cite_spans": [],
+                "section": "Case study: Nim Game",
+                "sec_num": "3.1"
+            },
+            {
+                "text": "We develop a neural network interpretation of the probabilistic decision rule that D. Michie invented for the game of tic-tac-toe [4] . The initial pile and the possible number of stones to be removed by a player at each turn are configured so that the AI, initially unaware of a winning strategy, can be trained to become skilful at winning. In our Nim game, the student uses a one-layer connected neural network to train the game AI by crowdsourcing. The one-layer neural network model is shown in Figure 4 . The input nodes and output nodes correspond to possible game states. At the start, a same weight is given to all possible states (i.e., AI does not have a strategy and so picks any move randomly). If the AI loses or wins a game at each turn, the weights are decreased or increased respectively for the corresponding move (i.e., wrong moves are penalized in order to steer the AI towards a possible winning strategy). One can interpret the weight updates as the training process in supervised learning with the total number of crowdsourced game trials as the training set. Our framework thus allows a crowd of human players to teach the AI machine to play the single-row Nim game. In the process, the student programmer can derive insights like the right number of game trials by crowdsourcing (e.g., crowdsourced data increases with the number of stones in the initial pile) and the quality of training data matters (so as to have minimal training data) as shown in Table 1 1 : The Nim Game AI performance under different game configuration where \ud835\udc41 is the number of initial pile of stones, \ud835\udc3e is the maximum number of stones that can be taken at each turn and \ud835\udc3f is the observed number of rounds needed for training.",
+                "cite_spans": [
+                    {
+                        "start": 130,
+                        "end": 133,
+                        "text": "[4]",
+                        "ref_id": "BIBREF3"
+                    }
+                ],
+                "section": "Case study: Nim Game",
+                "sec_num": "3.1"
+            },
+            {
+                "text": "The next case study is a Role Playing Game (RPG) that use natural language processing with crowdsourcing. The RPG game adopts the gamebook concept whereby players jump about different stages depending on their choices made at each stage, and thus players may have different outcomes based on their previous decisions. A student programmer can explore natural language processing tools to generate a dialogue tree for a player and then use the crowdsourced data as a feedback to modify the logical narrative and outcomes in the game. For example, the student programmer can use the method in [2] to generate dynamically dialogue trees by analyzing a player's input and then to leverage machine learning tools to generate the option menus to create an interactive chatbot game.",
+                "cite_spans": [
+                    {
+                        "start": 591,
+                        "end": 594,
+                        "text": "[2]",
+                        "ref_id": "BIBREF1"
+                    }
+                ],
+                "section": "Case Study: NLP based Role Playing Game",
+                "sec_num": "3.2"
+            },
+            {
+                "text": "When the game starts, a teaser problem is presented. Depending on messages from different players, the system records the input that are parsed in the server for ranking to obtain a choice that is most relevant. Based on the ranking decisions by different users, the system can present subsequent questions or generate a new dialogue tree for each user. A unique feature of using our framework is the ease of generating natural language processing-based dialogue tree authoring using the crowd-sourced data and to build a semantic database for the RPG. An example is shown in Figure 6(a) . The user proposes an answer to the teaser question that is parsed and ranked accordingly. Suppose this answer input is considered wrong by the system, it generates a corresponding tree with the user's text input marked on the node, and prompts another related problem as a second chance before ending the game. If the user answers this problem correctly, the system returns back to the main track of the gamebook and proceeds to a new thread of dialogue. Otherwise, it terminates the game and delivers the generated dialogue tree that can be further refined using crowdsourcing-based classification algorithms in [6] .",
+                "cite_spans": [
+                    {
+                        "start": 1203,
+                        "end": 1206,
+                        "text": "[6]",
+                        "ref_id": "BIBREF5"
+                    }
+                ],
+                "section": "Case Study: NLP based Role Playing Game",
+                "sec_num": "3.2"
+            },
+            {
+                "text": "We briefly introduce the gamification of propositional logic puzzle where players are challenged to validate if a conclusion is true given a set of facts and premises by interpreting English sentences as Boolean algebra (i.e., statements of predicate variables). We can",
+                "cite_spans": [],
+                "section": "Case Study: Propositional Logic Game",
+                "sec_num": "3.3"
+            },
+            {
+                "text": "\u223c \ud835\udc5d \u2228 \u223c \ud835\udc5e, \u223c \ud835\udc5f \u2228 \u223c \ud835\udc60, \ud835\udc5e \u2228 \ud835\udc60 \u21d2 \u223c \ud835\udc5d \u2228 \u223c \ud835\udc5f \u223c \ud835\udc5d \u2228 \u223c \ud835\udc5e, \u223c \ud835\udc5f \u2228 \u223c \ud835\udc60, \ud835\udc5e \u2228 \ud835\udc60 \u21d2 \u223c \ud835\udc5d, \u223c \ud835\udc5f \u223c \ud835\udc5d, \u223c \ud835\udc5f \u2228 \u223c \ud835\udc60, \ud835\udc5e \u2228 \ud835\udc60 \u21d2 \u223c \ud835\udc5d, \u223c \ud835\udc5f \u223c \ud835\udc5e, \u223c \ud835\udc5f \u2228 \u223c \ud835\udc60, \ud835\udc5e \u2228 \ud835\udc60 \u21d2 \u223c \ud835\udc5d, \u223c \ud835\udc5f \u223c \ud835\udc5e, \u223c \ud835\udc5f, \ud835\udc5e \u2228 \ud835\udc60 \u21d2 \u223c \ud835\udc5d, \u223c \ud835\udc5f \u223c \ud835\udc5e, \u223c \ud835\udc60, \ud835\udc5e \u2228 \ud835\udc60 \u21d2 \u223c \ud835\udc5d, \u223c \ud835\udc5f \u223c \ud835\udc5e, \u223c \ud835\udc60, \ud835\udc5e \u21d2 \u223c \ud835\udc5d, \u223c \ud835\udc5f \u223c \ud835\udc5e, \u223c \ud835\udc60, \ud835\udc60 \u21d2 \u223c \ud835\udc5d, \u223c \ud835\udc5f \u223c \ud835\udc60, \ud835\udc5e \u21d2 \u223c \ud835\udc5d, \u223c \ud835\udc5f, \ud835\udc5e \u223c \ud835\udc5e, \ud835\udc60 \u21d2 \u223c \ud835\udc5d, \u223c \ud835\udc5f, \ud835\udc60",
+                "cite_spans": [],
+                "section": "Case Study: Propositional Logic Game",
+                "sec_num": "3.3"
+            },
+            {
+                "text": "Figure 7 : A rooted decision tree generated by Wang's algorithm in [9] to solve a classical Lewis Carroll's logic puzzle. A dashed underline of a propositional statement indicates that statement will be processed in the next step, and a solid underline represents a contradiction appearing and hence termination of a proof. If there are common predicate variables at both sides of the symbol \u21d2, the conjecture is true. Otherwise, the conjecture is disproved. The decision tree of Wang's algorithm proves that the conclusion is valid.",
+                "cite_spans": [
+                    {
+                        "start": 67,
+                        "end": 70,
+                        "text": "[9]",
+                        "ref_id": "BIBREF8"
+                    }
+                ],
+                "section": "Case Study: Propositional Logic Game",
+                "sec_num": "3.3"
+            },
+            {
+                "text": "adopt a Bayesian learning model with crowdsourcing as in [3] to check on the correctness of reasoning by challenging a crowdsourced player to deduce a correct proof assuming that each proof has a probability of being correct. A machine learning model can also be obtained from the decision tree generated by Wang's algorithm in [9] by assigning some form of reliability scores to each crowdsourced player of the game using propositional logic games as honeypot questions. An example of a classical Lewis Carroll's logic puzzle is shown here [1] : ",
+                "cite_spans": [
+                    {
+                        "start": 57,
+                        "end": 60,
+                        "text": "[3]",
+                        "ref_id": "BIBREF2"
+                    },
+                    {
+                        "start": 328,
+                        "end": 331,
+                        "text": "[9]",
+                        "ref_id": "BIBREF8"
+                    },
+                    {
+                        "start": 541,
+                        "end": 544,
+                        "text": "[1]",
+                        "ref_id": "BIBREF0"
+                    }
+                ],
+                "section": "Case Study: Propositional Logic Game",
+                "sec_num": "3.3"
+            },
+            {
+                "text": "If he is a baby, then he cannot manage a crocodile. Now, the premises and conclusion can be rephrased by the predicate variables: \ud835\udc5d: he is a baby; \ud835\udc5e: he is logical; \ud835\udc5f : he can manage a crocodile; and \ud835\udc60: he is despised, leading to the following statements:",
+                "cite_spans": [],
+                "section": "Conclusion (C):",
+                "sec_num": null
+            },
+            {
+                "text": "P1: \ud835\udc5d \u2192 \u223c \ud835\udc5e \u21d2 \u223c \ud835\udc5d \u2228 \u223c \ud835\udc5e; P2: \ud835\udc5f \u2192 \u223c \ud835\udc60 \u21d2 \u223c \ud835\udc5f \u2228 \u223c \ud835\udc60; P3: \u223c \ud835\udc5e \u2192 \ud835\udc60 \u21d2 \ud835\udc5e \u2228 \ud835\udc60; C: \ud835\udc5d \u2192 \u223c \ud835\udc5f \u21d2 \u223c \ud835\udc5d \u2228 \u223c \ud835\udc5f .",
+                "cite_spans": [],
+                "section": "Conclusion (C):",
+                "sec_num": null
+            },
+            {
+                "text": "Though truth tables can validate a propositional statement by listing down all possible and legitimate combinations of input values, this approach usually requires a huge memory space. We use a Bayesian learning approach with Wang's algorithm in [9] to design honeypot questions to design a propositional logic game that leverages crowdsourcing data from many different players. ",
+                "cite_spans": [
+                    {
+                        "start": 246,
+                        "end": 249,
+                        "text": "[9]",
+                        "ref_id": "BIBREF8"
+                    }
+                ],
+                "section": "Conclusion (C):",
+                "sec_num": null
+            },
+            {
+                "text": "We presented a chatbot-server computer programming framework for students to program chatbot applications that leverage crowdsourcing. The ease of human-computer interaction and the idea of crowdsourcing will be of essence to building a human-AI system that facilitates learning. We described three case studies where students used our online programming framework to build machine learning models for AI chatbot games using crowdsourcing. Students were exposed to introductory full-stack software development in the process. As future work, it will be interesting to leverage advances in crowdsourcing and robotic process automation to extend our framework for teaching AI and machine learning.",
+                "cite_spans": [],
+                "section": "CONCLUSION",
+                "sec_num": "4"
+            }
+        ],
+        "bib_entries": {
+            "BIBREF0": {
+                "ref_id": "b0",
+                "title": "Symbolic logic and the game of logic",
+                "authors": [
+                    {
+                        "first": "Lewis",
+                        "middle": [],
+                        "last": "Carroll",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 1958,
+                "venue": "Courier Corporation",
+                "volume": "1",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Lewis Carroll. 1958. Symbolic logic and the game of logic. Vol. 1. Courier Corpora- tion, New York.",
+                "links": null
+            },
+            "BIBREF1": {
+                "ref_id": "b1",
+                "title": "Using natural language to manage NPC dialog",
+                "authors": [
+                    {
+                        "first": "Gary",
+                        "middle": [],
+                        "last": "Kacmarcik",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/aiide/Kacmarcik06",
+                "year": 2006,
+                "venue": "Proceedings of the AAAI Conference on Artificial Intelligence and Interactive Digital Entertainment",
+                "volume": "2",
+                "issue": "",
+                "pages": "115--117",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Gary Kacmarcik. 2006. Using natural language to manage NPC dialog. In Pro- ceedings of the AAAI Conference on Artificial Intelligence and Interactive Digital Entertainment, Vol. 2. 115-117.",
+                "links": null
+            },
+            "BIBREF2": {
+                "ref_id": "b2",
+                "title": "Human-Assisted Computation for Auto-grading",
+                "authors": [
+                    {
+                        "first": "Lin",
+                        "middle": [],
+                        "last": "Ling",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Chee",
+                        "middle": [],
+                        "last": "Wei",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Tan",
+                        "middle": [],
+                        "last": "",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/icdm/Ling018",
+                "year": 2018,
+                "venue": "IEEE ICDM Workshop on Machine Learning for Education",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Lin Ling and Chee Wei Tan. 2018. Human-Assisted Computation for Auto-grading. In IEEE ICDM Workshop on Machine Learning for Education.",
+                "links": null
+            },
+            "BIBREF3": {
+                "ref_id": "b3",
+                "title": "Experiments on the mechanization of game-learning Part I: Characterization of the model and its parameters",
+                "authors": [
+                    {
+                        "first": "Donald",
+                        "middle": [],
+                        "last": "Michie",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 1963,
+                "venue": "The Computer Journal",
+                "volume": "6",
+                "issue": "",
+                "pages": "232--236",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Donald Michie. 1963. Experiments on the mechanization of game-learning Part I: Characterization of the model and its parameters. In The Computer Journal, Vol. 6. 232--236.",
+                "links": null
+            },
+            "BIBREF4": {
+                "ref_id": "b4",
+                "title": "Direct-manipulation visualization of deep networks",
+                "authors": [
+                    {
+                        "first": "Daniel",
+                        "middle": [],
+                        "last": "Smilkov",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Shan",
+                        "middle": [],
+                        "last": "Carter",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "D",
+                        "middle": [],
+                        "last": "Sculley",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Fernanda",
+                        "middle": [
+                            "B"
+                        ],
+                        "last": "Vi\u00e9gas",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Martin",
+                        "middle": [],
+                        "last": "Wattenberg",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2017,
+                "venue": "",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {
+                    "arXiv": [
+                        "arXiv:1708.03788"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Daniel Smilkov, Shan Carter, D Sculley, Fernanda B Vi\u00e9gas, and Martin Watten- berg. 2017. Direct-manipulation visualization of deep networks. arXiv preprint arXiv:1708.03788 (2017).",
+                "links": null
+            },
+            "BIBREF5": {
+                "ref_id": "b5",
+                "title": "Open data collection for training intelligent software in the Open Mind Initiative",
+                "authors": [
+                    {
+                        "first": "David",
+                        "middle": [
+                            "G"
+                        ],
+                        "last": "Stork",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2000,
+                "venue": "Proceedings of the Engineering Intelligent Systems",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "David G. Stork. 2000. Open data collection for training intelligent software in the Open Mind Initiative. In Proceedings of the Engineering Intelligent Systems.",
+                "links": null
+            },
+            "BIBREF6": {
+                "ref_id": "b6",
+                "title": "Envisioning AI for K-12: What Should Every Child Know about AI?",
+                "authors": [
+                    {
+                        "first": "David",
+                        "middle": [],
+                        "last": "Touretzky",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Christina",
+                        "middle": [],
+                        "last": "Gardner-Mccune",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Fred",
+                        "middle": [],
+                        "last": "Martin",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Deborah",
+                        "middle": [],
+                        "last": "Seehorn",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/aaai/TouretzkyGMS19",
+                "year": 2019,
+                "venue": "The Thirty-Third AAAI Conference on Artificial Intelligence",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "David Touretzky, Christina Gardner-McCune, Fred Martin, and Deborah Seehorn. 2019. Envisioning AI for K-12: What Should Every Child Know about AI?. In The Thirty-Third AAAI Conference on Artificial Intelligence.",
+                "links": null
+            },
+            "BIBREF7": {
+                "ref_id": "b7",
+                "title": "Designing games with a purpose",
+                "authors": [
+                    {
+                        "first": "Laura",
+                        "middle": [],
+                        "last": "Luis Von Ahn",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "",
+                        "middle": [],
+                        "last": "Dabbish",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2008,
+                "venue": "Communications of the ACM",
+                "volume": "51",
+                "issue": "",
+                "pages": "57--67",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Luis von Ahn and Laura Dabbish. 2008. Designing games with a purpose. In Communications of the ACM, Vol. 51. 57--67.",
+                "links": null
+            },
+            "BIBREF8": {
+                "ref_id": "b8",
+                "title": "Computer theorem proving and artificial intelligence",
+                "authors": [
+                    {
+                        "first": "Wang",
+                        "middle": [],
+                        "last": "Hao",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 1984,
+                "venue": "Automated Theorem Proving: After 25 Years",
+                "volume": "29",
+                "issue": "",
+                "pages": "49--70",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Hao Wang. 1984. Computer theorem proving and artificial intelligence. In Auto- mated Theorem Proving: After 25 Years, American Mathematical Society, Contempo- rary Mathematics, Vol. 29. Springer, Dordrecht, The Netherlands, 49--70.",
+                "links": null
+            }
+        }
+    }
+}

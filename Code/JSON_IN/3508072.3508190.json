@@ -1,0 +1,1722 @@
+{
+    "paper_id": "3508072",
+    "header": {
+        "generated_with": "S2ORC 1.0.0",
+        "date_generated": "2024-03-20T17:53:11.459783Z"
+    },
+    "title": "Development of high-speed fiber-optic communication lines for transferring large amounts of information",
+    "authors": [
+        {
+            "first": "Dmitry",
+            "middle": [
+                "N"
+            ],
+            "last": "Shurupov",
+            "suffix": "",
+            "affiliation": {},
+            "email": "shurupoff.dm@yandex.ru"
+        },
+        {
+            "first": "Grigoriy",
+            "middle": [
+                "A"
+            ],
+            "last": "Pchelkin",
+            "suffix": "",
+            "affiliation": {},
+            "email": ""
+        },
+        {
+            "first": "Vadim",
+            "middle": [
+                "V"
+            ],
+            "last": "Davydov",
+            "suffix": "",
+            "affiliation": {},
+            "email": "davydov_vadim66@mail.ru"
+        },
+        {
+            "first": "Vasiliy",
+            "middle": [
+                "Y"
+            ],
+            "last": "Rud'",
+            "suffix": "",
+            "affiliation": {},
+            "email": ""
+        }
+    ],
+    "year": "",
+    "venue": null,
+    "identifiers": {},
+    "abstract": "In this article, the mode composition of the microstructured optical fiber was calculated. The values of the effective (waveguide) refractive index of the first six spatial modes, the propagation of which are supported by an optical fiber, are calculated. The structures of microstructured fiber have been manufactured and presented. An experimental study of the distribution of optical radiation at the exit from the manufactured microstructured fiber has been carried out. The results of the research are presented.",
+    "pdf_parse": {
+        "abstract": [
+            {
+                "text": "In this article, the mode composition of the microstructured optical fiber was calculated. The values of the effective (waveguide) refractive index of the first six spatial modes, the propagation of which are supported by an optical fiber, are calculated. The structures of microstructured fiber have been manufactured and presented. An experimental study of the distribution of optical radiation at the exit from the manufactured microstructured fiber has been carried out. The results of the research are presented.",
+                "cite_spans": [],
+                "section": "Abstract",
+                "sec_num": null
+            }
+        ],
+        "body_text": [
+            {
+                "text": "In the modern world, the volumes of transmitted information are constantly increasing [1] [2] [3] [4] [5] . This information must be transmitted over long distances in short periods of time [5] [6] [7] [8] . Every year the number of tasks increases when information is exchanged in an Permission to make digital or hard copies of all or part of this work for personal or classroom use is granted without fee provided that copies are not made or distributed for profit or commercial advantage and that copies bear this notice and the full citation on the first page. Copyrights for components of this work owned by others than ACM must be honored. Abstracting with credit is permitted. To copy otherwise, or republish, to post on servers or to redistribute to lists, requires prior specific permission and/or a fee. Request permissions from permissions@acm.org. ICFNDS 2021, December interactive mode with the participation of a large number of users [9] [10] [11] . To solve these problems, various communication systems are used [10] [11] [12] [13] [14] [15] [16] . Among terrestrial communication systems, fiber-optic communication lines (FOCL) have the greatest advantages [17] [18] [19] [20] . It should be noted that fiber-optic communication lines are also included in the systems of cellular and satellite communication lines, performing an important function in their composition [8, 14, 18, [21] [22] [23] . The main problem that is now being faced when transmitting large amounts of information over fiber-optic communication lines is the limit on the speed and volume of data transmitted over a single-mode fiber, both on trunk communication lines and on local ones [23] [24] [25] [26] . Technologies of wavelength division multiplexing of information in communication channels have reached their limit. An increase in the density in the fiber-optic communication line leads to the loss of information or a sharp increase in the signal attenuation during transmission [25] [26] [27] . The currently developed multimode fibers do not provide the transmission of the required amounts of information, especially over long distances. Therefore, various developments and research aimed at solving this problem are extremely relevant.",
+                "cite_spans": [
+                    {
+                        "start": 86,
+                        "end": 89,
+                        "text": "[1]",
+                        "ref_id": "BIBREF0"
+                    },
+                    {
+                        "start": 90,
+                        "end": 93,
+                        "text": "[2]",
+                        "ref_id": "BIBREF1"
+                    },
+                    {
+                        "start": 94,
+                        "end": 97,
+                        "text": "[3]",
+                        "ref_id": "BIBREF2"
+                    },
+                    {
+                        "start": 98,
+                        "end": 101,
+                        "text": "[4]",
+                        "ref_id": "BIBREF3"
+                    },
+                    {
+                        "start": 102,
+                        "end": 105,
+                        "text": "[5]",
+                        "ref_id": "BIBREF4"
+                    },
+                    {
+                        "start": 190,
+                        "end": 193,
+                        "text": "[5]",
+                        "ref_id": "BIBREF4"
+                    },
+                    {
+                        "start": 194,
+                        "end": 197,
+                        "text": "[6]",
+                        "ref_id": "BIBREF5"
+                    },
+                    {
+                        "start": 198,
+                        "end": 201,
+                        "text": "[7]",
+                        "ref_id": "BIBREF6"
+                    },
+                    {
+                        "start": 202,
+                        "end": 205,
+                        "text": "[8]",
+                        "ref_id": "BIBREF7"
+                    },
+                    {
+                        "start": 950,
+                        "end": 953,
+                        "text": "[9]",
+                        "ref_id": "BIBREF8"
+                    },
+                    {
+                        "start": 954,
+                        "end": 958,
+                        "text": "[10]",
+                        "ref_id": "BIBREF9"
+                    },
+                    {
+                        "start": 959,
+                        "end": 963,
+                        "text": "[11]",
+                        "ref_id": "BIBREF10"
+                    },
+                    {
+                        "start": 1030,
+                        "end": 1034,
+                        "text": "[10]",
+                        "ref_id": "BIBREF9"
+                    },
+                    {
+                        "start": 1035,
+                        "end": 1039,
+                        "text": "[11]",
+                        "ref_id": "BIBREF10"
+                    },
+                    {
+                        "start": 1040,
+                        "end": 1044,
+                        "text": "[12]",
+                        "ref_id": "BIBREF11"
+                    },
+                    {
+                        "start": 1045,
+                        "end": 1049,
+                        "text": "[13]",
+                        "ref_id": "BIBREF12"
+                    },
+                    {
+                        "start": 1050,
+                        "end": 1054,
+                        "text": "[14]",
+                        "ref_id": "BIBREF13"
+                    },
+                    {
+                        "start": 1055,
+                        "end": 1059,
+                        "text": "[15]",
+                        "ref_id": "BIBREF14"
+                    },
+                    {
+                        "start": 1060,
+                        "end": 1064,
+                        "text": "[16]",
+                        "ref_id": "BIBREF15"
+                    },
+                    {
+                        "start": 1176,
+                        "end": 1180,
+                        "text": "[17]",
+                        "ref_id": "BIBREF16"
+                    },
+                    {
+                        "start": 1181,
+                        "end": 1185,
+                        "text": "[18]",
+                        "ref_id": "BIBREF17"
+                    },
+                    {
+                        "start": 1186,
+                        "end": 1190,
+                        "text": "[19]",
+                        "ref_id": "BIBREF18"
+                    },
+                    {
+                        "start": 1191,
+                        "end": 1195,
+                        "text": "[20]",
+                        "ref_id": "BIBREF19"
+                    },
+                    {
+                        "start": 1388,
+                        "end": 1391,
+                        "text": "[8,",
+                        "ref_id": "BIBREF7"
+                    },
+                    {
+                        "start": 1392,
+                        "end": 1395,
+                        "text": "14,",
+                        "ref_id": "BIBREF13"
+                    },
+                    {
+                        "start": 1396,
+                        "end": 1399,
+                        "text": "18,",
+                        "ref_id": "BIBREF17"
+                    },
+                    {
+                        "start": 1400,
+                        "end": 1404,
+                        "text": "[21]",
+                        "ref_id": "BIBREF20"
+                    },
+                    {
+                        "start": 1405,
+                        "end": 1409,
+                        "text": "[22]",
+                        "ref_id": "BIBREF21"
+                    },
+                    {
+                        "start": 1410,
+                        "end": 1414,
+                        "text": "[23]",
+                        "ref_id": "BIBREF22"
+                    },
+                    {
+                        "start": 1677,
+                        "end": 1681,
+                        "text": "[23]",
+                        "ref_id": "BIBREF22"
+                    },
+                    {
+                        "start": 1682,
+                        "end": 1686,
+                        "text": "[24]",
+                        "ref_id": "BIBREF23"
+                    },
+                    {
+                        "start": 1687,
+                        "end": 1691,
+                        "text": "[25]",
+                        "ref_id": "BIBREF24"
+                    },
+                    {
+                        "start": 1692,
+                        "end": 1696,
+                        "text": "[26]",
+                        "ref_id": "BIBREF25"
+                    },
+                    {
+                        "start": 1979,
+                        "end": 1983,
+                        "text": "[25]",
+                        "ref_id": "BIBREF24"
+                    },
+                    {
+                        "start": 1984,
+                        "end": 1988,
+                        "text": "[26]",
+                        "ref_id": "BIBREF25"
+                    },
+                    {
+                        "start": 1989,
+                        "end": 1993,
+                        "text": "[27]",
+                        "ref_id": "BIBREF26"
+                    }
+                ],
+                "section": "INTRODUCTION",
+                "sec_num": "1"
+            },
+            {
+                "text": "One of the possible solutions may be the use of a microstructured fiber with a given mode composition [25] [26] [27] [28] . The use of these fibers makes it possible to increase the amount of transmitted information due to its distribution between adjacent modes. These fibers, like single-mode ones, are resistant to temperature changes and mechanical stress. To transmit large amounts of information over long distances in a microstructured fiber, it is necessary to provide a certain topology of the channels, their size and pitch between them. These parameters are highly dependent on the fiber manufacturing technology (temperature, pressure, drawing speed and frequency of longitudinal twisting of the optical fiber around its axis, etc.). The optimal choice of these parameters makes it possible to ensure the presence in the fiber of only three modes (LP 01 , LP 11 , LP 21 ) necessary for the stable transmission of large amounts of information and low losses (minimal leakage of the optical signal). For each microstructured optical fiber topology, these parameters differ from each other, especially in the case of using different fiber technologies. Therefore, a comprehensive solution to this problem is presented in the work (experimental studies have ",
+                "cite_spans": [
+                    {
+                        "start": 102,
+                        "end": 106,
+                        "text": "[25]",
+                        "ref_id": "BIBREF24"
+                    },
+                    {
+                        "start": 107,
+                        "end": 111,
+                        "text": "[26]",
+                        "ref_id": "BIBREF25"
+                    },
+                    {
+                        "start": 112,
+                        "end": 116,
+                        "text": "[27]",
+                        "ref_id": "BIBREF26"
+                    },
+                    {
+                        "start": 117,
+                        "end": 121,
+                        "text": "[28]",
+                        "ref_id": "BIBREF27"
+                    }
+                ],
+                "section": "INTRODUCTION",
+                "sec_num": "1"
+            },
+            {
+                "text": "Before the manufacture of a microstructured optical fiber, in most cases, a numerical calculation of its mode characteristics is performed. For each equipment and technological cycle, it is necessary to carry out its own calculation. In our case, the calculation was performed in the COMSOL Multiphysics software for the following parameters of a fiber with a displaced core: the number of orders of circular cross-section holes -4; structure pitch (distance between adjacent holes) -10.9 microns; the outer diameter of the fiber is 125 microns; laser radiation wavelength \u03bb = 1550 nm; the structure filling parameter (k), determined by the size of the voids in the order surrounding the cores, is 0.95. Based on the results of numerical modeling by the finite element method in the COMSOL Multiphysics software environment, the values of the effective (waveguide) refractive index of the first six spatial modes were obtained, the propagation of which is supported by an optical fiber (Figure 1 ).",
+                "cite_spans": [],
+                "section": "CALCULATION OF THE MOD COMPOSITION OF A MICROSTRUCTURED OPTICAL FIBER",
+                "sec_num": "2"
+            },
+            {
+                "text": "Analysis of the results obtained shows a small difference between the effective refractive index for the first four modes. This allows us to conclude that their distribution is stable. Further, the difference increases, which in practice will be characterized by excessive attenuation of the optical signal. Therefore, in fiber, it is most preferable to transmit information using the fundamental mode (LP 01 ) or the first three higher modes (LP 11 , LP 21 , and LP 02 ).",
+                "cite_spans": [],
+                "section": "CALCULATION OF THE MOD COMPOSITION OF A MICROSTRUCTURED OPTICAL FIBER",
+                "sec_num": "2"
+            },
+            {
+                "text": "When researching the operation of information transmission systems with microstructured optical fibers, one of the important parameters is the spatial distribution of laser radiation in the cross section of the fiber for various modes. Using the results of numerical simulation by the finite element method in the COMSOL Multiphysics software environment, the distribution of laser radiation was obtained for the first six spatial modes, the propagation of which is supported by an optical fiber. These results are shown in figure 2 The data obtained show the great possibilities of microstructured optical fibers for information transmission.",
+                "cite_spans": [],
+                "section": "CALCULATION OF THE MOD COMPOSITION OF A MICROSTRUCTURED OPTICAL FIBER",
+                "sec_num": "2"
+            },
+            {
+                "text": "The technology for manufacturing microstructured fibers with a given modal composition consists in choosing an internal structure that is assembled with the help of capillaries. Then they are inserted into a quartz tube for further drawing. In figure 3 shows an example of one of the blanks Fiberglass fibers with concentric birefringent or non-concentric cores are spun at high speed while passing through a miniature oven in a drawing machine. Depending on the location of the capillaries and the technological cycle, different topologies of chiral microstructured fibers can be obtained. In figure 4 shows one of them (a star).",
+                "cite_spans": [],
+                "section": "EXPERIMENTAL STUDY OF THE DISTRIBUTION OF OPTICAL RADIATION AT THE EXIT FROM A MICROSTRUCTURED FIBER",
+                "sec_num": "3"
+            },
+            {
+                "text": "In figure 5 shows the distribution of optical radiation at the exit from the microstructured fiber (star topology) at different speeds of rotation of the preform per meter of fiber length.",
+                "cite_spans": [],
+                "section": "EXPERIMENTAL STUDY OF THE DISTRIBUTION OF OPTICAL RADIATION AT THE EXIT FROM A MICROSTRUCTURED FIBER",
+                "sec_num": "3"
+            },
+            {
+                "text": "The research results showed the dependence of the mode composition on the rotation speed of the workpiece. This makes it possible to optimize the technological process to obtain the required mode composition in the optical fiber for information transmission. ",
+                "cite_spans": [],
+                "section": "EXPERIMENTAL STUDY OF THE DISTRIBUTION OF OPTICAL RADIATION AT THE EXIT FROM A MICROSTRUCTURED FIBER",
+                "sec_num": "3"
+            },
+            {
+                "text": "The results obtained show that the use of spatial modes LP 01 , LP 11 , LP 21 strongly affects the stability of the final signal due to the similar geometry of the intensity distribution. High signal stability allows The proposed technique for selecting the parameters of the technological process for the manufacture of microstructured fibers allows obtaining a clear resolution of three modes in the fiber for transmitting large amounts of information. It was found that the rotation rate affects the mode composition of the optical fiber by increasing the attenuation of individual modes. It can be assumed that for certain pressures and temperatures, the rotation speed is a mode filter.",
+                "cite_spans": [],
+                "section": "CONCLUSION",
+                "sec_num": "4"
+            }
+        ],
+        "bib_entries": {
+            "BIBREF0": {
+                "ref_id": "b0",
+                "title": "Development of Models and Methods for Using Heterogeneous Gateways in 5G/IMT-2020 Network Infrastructure",
+                "authors": [
+                    {
+                        "first": "L",
+                        "middle": [],
+                        "last": "Vlasenko",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "V",
+                        "middle": [],
+                        "last": "Kulik",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "R",
+                        "middle": [],
+                        "last": "Kirichek",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "A",
+                        "middle": [],
+                        "last": "Koucheryavy",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": null,
+                "venue": "Communications in Computer and Information Science",
+                "volume": "",
+                "issue": "",
+                "pages": "636--645",
+                "other_ids": {
+                    "DOI": [
+                        "10.1007/978-3-030-36625-4_51"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "L. Vlasenko, V. Kulik, R. Kirichek and A. Koucheryavy, 2019. Development of Models and Methods for Using Heterogeneous Gateways in 5G/IMT-2020 Net- work Infrastructure. Communications in Computer and Information Science 1141 CCIS, (September 2019), 636-645. DOI: 10.1007/978-3-030-36625-4_51.",
+                "links": null
+            },
+            "BIBREF1": {
+                "ref_id": "b1",
+                "title": "Interaction of the IoT traffic generated by a smart city segment with SDN core network",
+                "authors": [
+                    {
+                        "first": "A",
+                        "middle": [],
+                        "last": "Volkov",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "A",
+                        "middle": [],
+                        "last": "Khakimov",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "A",
+                        "middle": [],
+                        "last": "Muthanna",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "A",
+                        "middle": [],
+                        "last": "Vladyko",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "A",
+                        "middle": [],
+                        "last": "Koucheryavy",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/wwic/VolkovKMKVK17",
+                "year": 2017,
+                "venue": "Lecture Notes in Computer Science (including subseries Lecture Notes in Artificial Intelligence and Lecture Notes in Bioinformatics) 10372 LNCS",
+                "volume": "",
+                "issue": "",
+                "pages": "115--126",
+                "other_ids": {
+                    "DOI": [
+                        "10.1007/978-3-319-61382-6-10"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "A. Volkov, A. Khakimov, A. Muthanna, A. Vladyko and A. Koucheryavy, 2017. Interaction of the IoT traffic generated by a smart city segment with SDN core network. Lecture Notes in Computer Science (including subseries Lecture Notes in Artificial Intelligence and Lecture Notes in Bioinformatics) 10372 LNCS, (Sep- tember 2017), 115-126. DOI: 10.1007/978-3-319-61382-6-10.",
+                "links": null
+            },
+            "BIBREF2": {
+                "ref_id": "b2",
+                "title": "Smart system based on DOA IoT for products monitoring anti-counterfeiting",
+                "authors": [
+                    {
+                        "first": "M",
+                        "middle": [],
+                        "last": "Al-Bahri",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "A",
+                        "middle": [],
+                        "last": "Yankovsky",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "R",
+                        "middle": [],
+                        "last": "Kirichek",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "A",
+                        "middle": [],
+                        "last": "Borodin",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2019,
+                "venue": "Proceedings of 4th MEC International Conference on Big Data and Smart City",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {
+                    "DOI": [
+                        "10.1109/ICBDSC.2019.8645610"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "M. Al-Bahri, A. Yankovsky, R. Kirichek and A. Borodin, 2019. Smart system based on DOA IoT for products monitoring anti-counterfeiting. In Proceedings of 4th MEC International Conference on Big Data and Smart City, ICBDSC 2019, 8645610 (February 2019). DOI: 10.1109/ICBDSC.2019.8645610.",
+                "links": null
+            },
+            "BIBREF3": {
+                "ref_id": "b3",
+                "title": "Survey on intelligence edge computing in 6G: Characteristics, challenges, potential use cases, and market drivers",
+                "authors": [
+                    {
+                        "first": "A",
+                        "middle": [],
+                        "last": "Al-Ansi",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "A",
+                        "middle": [
+                            "M"
+                        ],
+                        "last": "Al-Ansi",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "A",
+                        "middle": [],
+                        "last": "Muthanna",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "L",
+                        "middle": [],
+                        "last": "Elgendy",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "A",
+                        "middle": [],
+                        "last": "Koucheryavy",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "journals/fi/Al-AnsiAMEK21",
+                "year": 2021,
+                "venue": "Future Internet",
+                "volume": "13",
+                "issue": "5",
+                "pages": "",
+                "other_ids": {
+                    "DOI": [
+                        "10.3390/fi13050118"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "A. Al-Ansi, A.M. Al-Ansi, A. Muthanna, L. Elgendy and A. Koucheryavy, 2021. Survey on intelligence edge computing in 6G: Characteristics, challenges, po- tential use cases, and market drivers. Future Internet 13, 5 (May 2021), 118. DOI: 10.3390/fi13050118.",
+                "links": null
+            },
+            "BIBREF4": {
+                "ref_id": "b4",
+                "title": "Microwave frequency standard on Hg-199 ions for space stations and vehicles",
+                "authors": [
+                    {
+                        "first": "N",
+                        "middle": [
+                            "A"
+                        ],
+                        "last": "Lukashev",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2019,
+                "venue": "Journal of Physics: Conference Series",
+                "volume": "1400",
+                "issue": "2",
+                "pages": "",
+                "other_ids": {
+                    "DOI": [
+                        "10.1088/1742-6596/1400/2/022050"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "N.A. Lukashev, 2019. Microwave frequency standard on Hg-199 ions for space stations and vehicles. Journal of Physics: Conference Series 1400, 2 (December 2019), 022050. DOI: 10.1088/1742-6596/1400/2/022050.",
+                "links": null
+            },
+            "BIBREF5": {
+                "ref_id": "b5",
+                "title": "Development of Models and Methods for Using Heterogeneous Gateways in 5G/IMT-2020 Network Infrastructure",
+                "authors": [
+                    {
+                        "first": "L",
+                        "middle": [],
+                        "last": "Vlasenko",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "V",
+                        "middle": [],
+                        "last": "Kulik",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "R",
+                        "middle": [],
+                        "last": "Kirichek",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "A",
+                        "middle": [],
+                        "last": "Koucheryavy",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": null,
+                "venue": "Communications in Computer and Information Science",
+                "volume": "",
+                "issue": "",
+                "pages": "636--645",
+                "other_ids": {
+                    "DOI": [
+                        "10.1007/978-3-030-36625-4_51"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "L. Vlasenko, V. Kulik, R. Kirichek and A. Koucheryavy, 2019. Development of Models and Methods for Using Heterogeneous Gateways in 5G/IMT-2020 Net- work Infrastructure. Communications in Computer and Information Science 1141 CCIS, (September 2019), 636-645. DOI: 10.1007/978-3-030-36625-4_51.",
+                "links": null
+            },
+            "BIBREF6": {
+                "ref_id": "b6",
+                "title": "Digital frequency synthesizer for 133Cs-vapor atomic clock",
+                "authors": [
+                    {
+                        "first": "A",
+                        "middle": [
+                            "A"
+                        ],
+                        "last": "Petrov",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2017,
+                "venue": "Journal of Communications Technology and Electronics",
+                "volume": "62",
+                "issue": "3",
+                "pages": "289--293",
+                "other_ids": {
+                    "DOI": [
+                        "10.1134/S1064226917030160"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "A.A. Petrov, 2017. Digital frequency synthesizer for 133Cs-vapor atomic clock. Journal of Communications Technology and Electronics 62, 3 (March 2017), 289-293. DOI:10.1134/S1064226917030160.",
+                "links": null
+            },
+            "BIBREF7": {
+                "ref_id": "b7",
+                "title": "An Efficient Method for Choosing Digital Cluster Size in Ultralow Latency Networks",
+                "authors": [
+                    {
+                        "first": "A",
+                        "middle": [],
+                        "last": "Paramonov",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "M",
+                        "middle": [],
+                        "last": "Khayyat",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "N",
+                        "middle": [],
+                        "last": "Chistova",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "A",
+                        "middle": [],
+                        "last": "Muthanna",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "A",
+                        "middle": [],
+                        "last": "Koucheryavy",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "A",
+                        "middle": [
+                            "A"
+                        ],
+                        "last": "El-Latif",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2021,
+                "venue": "Wireless Communications and Mobile Computing",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {
+                    "DOI": [
+                        "10.1155/2021/9188658"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "A. Paramonov, M. Khayyat, N. Chistova, A. Muthanna, A. Koucheryavy and A.A. Abd El-Latif, 2021. An Efficient Method for Choosing Digital Cluster Size in Ultralow Latency Networks. Wireless Communications and Mobile Computing 2021, May 2021), 9188658. DOI:10.1155/2021/9188658.",
+                "links": null
+            },
+            "BIBREF8": {
+                "ref_id": "b8",
+                "title": "3D Location Accuracy Estimation of Radio Emission Sources for Beamforming in Ultra-Dense Radio Networks",
+                "authors": [
+                    {
+                        "first": "G",
+                        "middle": [],
+                        "last": "Fokin",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "V",
+                        "middle": [],
+                        "last": "Lazarev",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/icumt/FokinL19",
+                "year": 2019,
+                "venue": "International Congress on Ultra Modern Telecommunications and Control Systems and Workshops",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {
+                    "DOI": [
+                        "10.1109/ICUMT48472.2019.8970939"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "G. Fokin and V. Lazarev, 2019. 3D Location Accuracy Estimation of Radio Emission Sources for Beamforming in Ultra-Dense Radio Networks. International Congress on Ultra Modern Telecommunications and Control Systems and Workshops 2019, (October 2019), 8970939. DOI:10.1109/ICUMT48472.2019.8970939.",
+                "links": null
+            },
+            "BIBREF9": {
+                "ref_id": "b9",
+                "title": "Method of early pedestrian warning in developing intelligent transportation system infrastructure",
+                "authors": [
+                    {
+                        "first": "A",
+                        "middle": [],
+                        "last": "Vladyko",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "V",
+                        "middle": [],
+                        "last": "Elagin",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "G",
+                        "middle": [],
+                        "last": "Rogozinsky",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2020,
+                "venue": "Transportation Research Procedia",
+                "volume": "50",
+                "issue": "",
+                "pages": "708--715",
+                "other_ids": {
+                    "DOI": [
+                        "10.1016/j.trpro.2020.10.083"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "A. Vladyko, V. Elagin and G. Rogozinsky, 2020. Method of early pedestrian warn- ing in developing intelligent transportation system infrastructure. Transportation Research Procedia 50, (October 2020), 708-715. DOI: 10.1016/j.trpro.2020.10.083.",
+                "links": null
+            },
+            "BIBREF10": {
+                "ref_id": "b10",
+                "title": "Improving characteristics of microwave frequency standard on Hg-199 ions for telecommunication systems",
+                "authors": [
+                    {
+                        "first": "N",
+                        "middle": [
+                            "A"
+                        ],
+                        "last": "Lukashev",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "R",
+                        "middle": [
+                            "V"
+                        ],
+                        "last": "Davydov",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "A",
+                        "middle": [
+                            "P"
+                        ],
+                        "last": "Glinushkin",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "V",
+                        "middle": [
+                            "Y"
+                        ],
+                        "last": "Rud",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2019,
+                "venue": "Journal of Physics: Conference Series",
+                "volume": "1326",
+                "issue": "1",
+                "pages": "",
+                "other_ids": {
+                    "DOI": [
+                        "10.1088/1742-6596/1326/1/012046"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "N.A. Lukashev, R.V. Davydov, A.P. Glinushkin and V.Y. Rud', 2019. Improving characteristics of microwave frequency standard on Hg-199 ions for telecommu- nication systems. Journal of Physics: Conference Series 1326, 1 (October 2019), 012046. DOI:10.1088/1742-6596/1326/1/012046.",
+                "links": null
+            },
+            "BIBREF11": {
+                "ref_id": "b11",
+                "title": "Advanced Deep Learning for Resource Allocation and Security Aware Data Offloading in Industrial Mobile Edge Computing",
+                "authors": [
+                    {
+                        "first": "I",
+                        "middle": [
+                            "A"
+                        ],
+                        "last": "Elgendy",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "A",
+                        "middle": [],
+                        "last": "Muthanna",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "M",
+                        "middle": [],
+                        "last": "Hammoudeh",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "D",
+                        "middle": [],
+                        "last": "",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "M",
+                        "middle": [],
+                        "last": "Khayyat",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "journals/bigdata/ElgendyMHSUK21",
+                "year": 2021,
+                "venue": "Big Data",
+                "volume": "9",
+                "issue": "4",
+                "pages": "265--278",
+                "other_ids": {
+                    "DOI": [
+                        "10.1089/big.2020.0284"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "I.A. Elgendy, A. Muthanna, M. Hammoudeh, D. Unal and M. Khayyat, 2021. Advanced Deep Learning for Resource Allocation and Security Aware Data Offloading in Industrial Mobile Edge Computing. Big Data 9, 4 (August 2021), 265-278. DOI:10.1089/big.2020.0284.",
+                "links": null
+            },
+            "BIBREF12": {
+                "ref_id": "b12",
+                "title": "Agriculture Management Based on LoRa Edge Computing System",
+                "authors": [
+                    {
+                        "first": "F",
+                        "middle": [],
+                        "last": "Sharofidinov",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "M",
+                        "middle": [
+                            "S A"
+                        ],
+                        "last": "Muthanna",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "V",
+                        "middle": [
+                            "D"
+                        ],
+                        "last": "Pham",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "A",
+                        "middle": [],
+                        "last": "Muthanna",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "K",
+                        "middle": [],
+                        "last": "Samouylov",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/dccn/SharofidinovMPK20",
+                "year": 2020,
+                "venue": "Lecture Notes in Computer Science (including subseries Lecture Notes in Artificial Intelligence and Lecture Notes in Bioinformatics)12563 LNCS",
+                "volume": "",
+                "issue": "",
+                "pages": "113--125",
+                "other_ids": {
+                    "DOI": [
+                        "10.1007/978-3-030-66471-8_10"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "F. Sharofidinov, M.S.A. Muthanna, V.D. Pham, A. Muthanna and K. Samouylov, 2020. Agriculture Management Based on LoRa Edge Computing System. Lecture Notes in Computer Science (including subseries Lecture Notes in Artificial In- telligence and Lecture Notes in Bioinformatics)12563 LNCS, (September 2020), 113-125. DOI:10.1007/978-3-030-66471-8_10.",
+                "links": null
+            },
+            "BIBREF13": {
+                "ref_id": "b13",
+                "title": "Toward an Ultra-low Latency and Energy Efficient LoRaWAN",
+                "authors": [
+                    {
+                        "first": "M",
+                        "middle": [
+                            "S A"
+                        ],
+                        "last": "Muthanna",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "P",
+                        "middle": [],
+                        "last": "Wang",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "M",
+                        "middle": [],
+                        "last": "Wei",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "A",
+                        "middle": [
+                            "A"
+                        ],
+                        "last": "Ateya",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "A",
+                        "middle": [],
+                        "last": "Muthanna",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/new2an/MuthannaWWAM19",
+                "year": 2019,
+                "venue": "LNCS",
+                "volume": "11660",
+                "issue": "",
+                "pages": "233--242",
+                "other_ids": {
+                    "DOI": [
+                        "10.1007/978-3-030-30859-9_20"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "M.S.A. Muthanna, P. Wang, M. Wei, A.A. Ateya and A. Muthanna, 2019. Toward an Ultra-low Latency and Energy Efficient LoRaWAN. Lecture Notes in Computer Science (including subseries Lecture Notes in Artificial Intelligence and Lecture Notes in Bioinformatics) 11660 LNCS, (August 2019), 233-242. DOI:10.1007/978- 3-030-30859-9_20.",
+                "links": null
+            },
+            "BIBREF14": {
+                "ref_id": "b14",
+                "title": "Technological aspects of blockchain application for vehicle-to-network",
+                "authors": [
+                    {
+                        "first": "V",
+                        "middle": [],
+                        "last": "Elagin",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "A",
+                        "middle": [],
+                        "last": "Spirkina",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "M",
+                        "middle": [],
+                        "last": "Buinevich",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "A",
+                        "middle": [],
+                        "last": "Vladyko",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "journals/information/ElaginSBV20",
+                "year": 2020,
+                "venue": "Information (Switzerland)",
+                "volume": "11",
+                "issue": "",
+                "pages": "1--19",
+                "other_ids": {
+                    "DOI": [
+                        "10.3390/info11100465"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "V. Elagin, A. Spirkina, M. Buinevich and A. Vladyko, 2020. Technological aspects of blockchain application for vehicle-to-network. Information (Switzerland) 11, 10 (October 2020), 1-19. DOI:10.3390/info11100465.",
+                "links": null
+            },
+            "BIBREF15": {
+                "ref_id": "b15",
+                "title": "Improvement frequency stability of caesium atomic clock for satellite communication system",
+                "authors": [
+                    {
+                        "first": "A",
+                        "middle": [
+                            "A"
+                        ],
+                        "last": "Petrov",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/new2an/PetrovD15",
+                "year": 2015,
+                "venue": "Lecture Notes in Computer Science (including subseries Lecture Notes in Artificial Intelligence and Lecture Notes in Bioinformatics",
+                "volume": "",
+                "issue": "",
+                "pages": "739--744",
+                "other_ids": {
+                    "DOI": [
+                        "10.1007/978-3-319-23126-6_68"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "A.A. Petrov, 2015. Improvement frequency stability of caesium atomic clock for satellite communication system. Lecture Notes in Computer Science (including subseries Lecture Notes in Artificial Intelligence and Lecture Notes in Bioinfor- matics) 9247, (August 2015), 739-744. DOI: 10.1007/978-3-319-23126-6_68.",
+                "links": null
+            },
+            "BIBREF16": {
+                "ref_id": "b16",
+                "title": "A New Scheme for Transmitting Heterodyne Signals Based on a Fiber-Optical Transmission System for Receiving Antenna Devices of Radar Stations and Communication Systems",
+                "authors": [
+                    {
+                        "first": "A",
+                        "middle": [
+                            "V"
+                        ],
+                        "last": "Moroz",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "R",
+                        "middle": [
+                            "V"
+                        ],
+                        "last": "Davydov",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/new2an/MorozDD19",
+                "year": 2019,
+                "venue": "LNCS",
+                "volume": "11660",
+                "issue": "",
+                "pages": "710--718",
+                "other_ids": {
+                    "DOI": [
+                        "10.1007/978-3-030-30859-9_62"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "A.V. Moroz and R.V. Davydov, 2019. A New Scheme for Transmitting Heterodyne Signals Based on a Fiber-Optical Transmission System for Receiving Antenna Devices of Radar Stations and Communication Systems, Lecture Notes in Com- puter Science (including subseries Lecture Notes in Artificial Intelligence and Lecture Notes in Bioinformatics) 11660 LNCS, (September 2019), 710-718. DOI: 10.1007/978-3-030-30859-9_62.",
+                "links": null
+            },
+            "BIBREF17": {
+                "ref_id": "b17",
+                "title": "Parameter Control System for a Nuclear Power Plant Based on Fiber-Optic Sensors and Communication Lines",
+                "authors": [
+                    {
+                        "first": "R",
+                        "middle": [],
+                        "last": "Davydov",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "V",
+                        "middle": [],
+                        "last": "Antonov",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "M",
+                        "middle": [],
+                        "last": "Angelina",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2019,
+                "venue": "Proceedings of the 2019 IEEE International Conference on Electrical Engineering and Photonics",
+                "volume": "",
+                "issue": "",
+                "pages": "42--45",
+                "other_ids": {
+                    "DOI": [
+                        "10.1109/EExPolytech.2019.8906791"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "R. Davydov, V. Antonov and M. Angelina, 2019. Parameter Control System for a Nuclear Power Plant Based on Fiber-Optic Sensors and Communication Lines. In Proceedings of the 2019 IEEE International Conference on Electrical Engi- neering and Photonics, EExPolytech 2019, 8906791 (October 2019), 42-45. DOI: 10.1109/EExPolytech.2019.8906791.",
+                "links": null
+            },
+            "BIBREF18": {
+                "ref_id": "b18",
+                "title": "Features of the construction of the noise compensation circuit of a small-sized active phased antenna array",
+                "authors": [
+                    {
+                        "first": "A",
+                        "middle": [
+                            "V"
+                        ],
+                        "last": "Moroz",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "K",
+                        "middle": [
+                            "Y"
+                        ],
+                        "last": "Malanin",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "A",
+                        "middle": [
+                            "A"
+                        ],
+                        "last": "Krasnov",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2019,
+                "venue": "Journal of Physics: Conference Series",
+                "volume": "1400",
+                "issue": "4",
+                "pages": "",
+                "other_ids": {
+                    "DOI": [
+                        "10.1088/1742-6596/1400/4/044009"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "A.V. Moroz, K.Y. Malanin and A.A. Krasnov. 2019. Features of the construction of the noise compensation circuit of a small-sized active phased antenna array. Journal of Physics: Conference Series 1400, 4 (December 2019), 044009. DOI: 10.1088/1742-6596/1400/4/044009.",
+                "links": null
+            },
+            "BIBREF19": {
+                "ref_id": "b19",
+                "title": "New design of fiber-optic communication line for the transmission of microwave signals in the X-band",
+                "authors": [
+                    {
+                        "first": "V",
+                        "middle": [
+                            "B"
+                        ],
+                        "last": "Fadeenko",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "V",
+                        "middle": [
+                            "A"
+                        ],
+                        "last": "Kuts",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "D",
+                        "middle": [
+                            "A"
+                        ],
+                        "last": "Vasiliev",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2018,
+                "venue": "Journal of Physics: Conference Series",
+                "volume": "1135",
+                "issue": "1",
+                "pages": "",
+                "other_ids": {
+                    "DOI": [
+                        "10.1088/1742-6596/1135/1/012053"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "V.B. Fadeenko, V.A. Kuts and D.A. Vasiliev, 2018. New design of fiber-optic communication line for the transmission of microwave signals in the X-band. Journal of Physics: Conference Series 1135, 1 (December 2018), 012053. DOI: 10.1088/1742-6596/1135/1/012053.",
+                "links": null
+            },
+            "BIBREF20": {
+                "ref_id": "b20",
+                "title": "On the Potential Application of Direct Digital Synthesis in the Development of Frequency Synthesizers for Quantum Frequency Standards",
+                "authors": [
+                    {
+                        "first": "A",
+                        "middle": [
+                            "A"
+                        ],
+                        "last": "Petrov",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "N",
+                        "middle": [
+                            "M"
+                        ],
+                        "last": "Grebenikova",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2018,
+                "venue": "Journal of Communications Technology and Electronics",
+                "volume": "63",
+                "issue": "11",
+                "pages": "1281--1285",
+                "other_ids": {
+                    "DOI": [
+                        "10.1134/S1064226918110086"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "A.A. Petrov and N.M. Grebenikova, 2018. On the Potential Application of Direct Digital Synthesis in the Development of Frequency Synthesizers for Quantum Frequency Standards. Journal of Communications Technology and Electronics 63, 11 (November 2018), 1281-1285. DOI: 10.1134/S1064226918110086.",
+                "links": null
+            },
+            "BIBREF21": {
+                "ref_id": "b21",
+                "title": "Features of the transmission of microwave signals at offshore facilities",
+                "authors": [
+                    {
+                        "first": "G",
+                        "middle": [
+                            "A"
+                        ],
+                        "last": "Pchelkin",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "V",
+                        "middle": [
+                            "V"
+                        ],
+                        "last": "Davydov",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2019,
+                "venue": "Journal of Physics: Conference Series",
+                "volume": "1368",
+                "issue": "2",
+                "pages": "",
+                "other_ids": {
+                    "DOI": [
+                        "10.1088/1742-6596/1368/2/022045"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "G.A. Pchelkin and V.V. Davydov, 2019. Features of the transmission of microwave signals at offshore facilities. Journal of Physics: Conference Series 1368, 2 (No- vember 2019), 022045.DOI:10.1088/1742-6596/1368/2/022045.",
+                "links": null
+            },
+            "BIBREF22": {
+                "ref_id": "b22",
+                "title": "Features of the transmission of microwave signals in the range of 8-12 GHz in the maritime radar station over fiber-optic communication line",
+                "authors": [
+                    {
+                        "first": "V",
+                        "middle": [
+                            "B"
+                        ],
+                        "last": "Fadeenko",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "G",
+                        "middle": [
+                            "A"
+                        ],
+                        "last": "Pchelkin",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "V",
+                        "middle": [
+                            "V"
+                        ],
+                        "last": "Davydov",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "V",
+                        "middle": [],
+                        "last": "Yu",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "",
+                        "middle": [],
+                        "last": "Rud",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2019,
+                "venue": "Journal of Physics: Conference Series",
+                "volume": "1400",
+                "issue": "4",
+                "pages": "",
+                "other_ids": {
+                    "DOI": [
+                        "10.1088/1742-6596/1400/4/044010"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "V.B. Fadeenko, G.A. Pchelkin, V.V. Davydov and V.Yu. Rud, 2019. Features of the transmission of microwave signals in the range of 8-12 GHz in the maritime radar station over fiber-optic communication line. Journal of Physics: Conference Series 1400, 4 (December 2019), 044010. DOI: 10.1088/1742-6596/1400/4/044010.",
+                "links": null
+            },
+            "BIBREF23": {
+                "ref_id": "b23",
+                "title": "Features of construction of the scheme of fiber-optic communication system for transmission of analog signals in the frequency range from 0.135 to 40 GHz",
+                "authors": [
+                    {
+                        "first": "V",
+                        "middle": [
+                            "B"
+                        ],
+                        "last": "Fadeenko",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "G",
+                        "middle": [
+                            "A"
+                        ],
+                        "last": "Pchelkin",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "V",
+                        "middle": [
+                            "V"
+                        ],
+                        "last": "Davydov",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "O",
+                        "middle": [
+                            "O"
+                        ],
+                        "last": "Beloshapkina",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "V",
+                        "middle": [
+                            "Y"
+                        ],
+                        "last": "Rud",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2019,
+                "venue": "Journal of Physics: Conference Series",
+                "volume": "1410",
+                "issue": "1",
+                "pages": "",
+                "other_ids": {
+                    "DOI": [
+                        "10.1088/1742-6596/1410/1/012238"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "V.B. Fadeenko, G.A. Pchelkin, V.V. Davydov, O.O. Beloshapkina and V.Y. Rud, 2019. Features of construction of the scheme of fiber-optic communication system for transmission of analog signals in the frequency range from 0.135 to 40 GHz. Journal of Physics: Conference Series 1410, 1 (December 2019), 012238. DOI: 10.1088/1742-6596/1410/1/012238.",
+                "links": null
+            },
+            "BIBREF24": {
+                "ref_id": "b24",
+                "title": "Formation of Gd2O3:Nd3+ nanocrystals in silica microcapillary preforms and hollow-core anti-resonant optical fibers",
+                "authors": [
+                    {
+                        "first": "A",
+                        "middle": [
+                            "S"
+                        ],
+                        "last": "Matrosova",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "N",
+                        "middle": [
+                            "K"
+                        ],
+                        "last": "Kuzmenko",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "N",
+                        "middle": [
+                            "V"
+                        ],
+                        "last": "Nikonorov",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "K",
+                        "middle": [
+                            "V"
+                        ],
+                        "last": "Dukelskii",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "S",
+                        "middle": [
+                            "K"
+                        ],
+                        "last": "Evstropiev",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2021,
+                "venue": "Optical Fiber Technology",
+                "volume": "65",
+                "issue": "",
+                "pages": "",
+                "other_ids": {
+                    "DOI": [
+                        "10.1016/j.yofte.2021.102547"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "A.S. Matrosova, N.K. Kuzmenko, N.V. Nikonorov, K.V. Dukelskii and S.K. Evstropiev, 2021. Formation of Gd2O3:Nd3+ nanocrystals in silica microcapillary preforms and hollow-core anti-resonant optical fibers. Optical Fiber Technology 65, (September 2021), 102547. DOI: 10.1016/j.yofte.2021.102547.",
+                "links": null
+            },
+            "BIBREF25": {
+                "ref_id": "b25",
+                "title": "Singlet Oxygen Generation in Microcapillary Optical Elements with Photoactive Coatings",
+                "authors": [
+                    {
+                        "first": "I",
+                        "middle": [
+                            "V"
+                        ],
+                        "last": "Bagrov",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "V",
+                        "middle": [
+                            "M"
+                        ],
+                        "last": "Kiselev",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "S",
+                        "middle": [
+                            "K"
+                        ],
+                        "last": "Evstropiev",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "V",
+                        "middle": [
+                            "V"
+                        ],
+                        "last": "Demidov",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "A",
+                        "middle": [
+                            "V"
+                        ],
+                        "last": "Matrosova",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2020,
+                "venue": "Optics and Spectroscopy",
+                "volume": "128",
+                "issue": "2",
+                "pages": "214--219",
+                "other_ids": {
+                    "DOI": [
+                        "10.1134/S0030400X20020034"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "I.V. Bagrov, V.M. Kiselev, S.K. Evstropiev, V.V. Demidov and A.V. Matrosova, 2020. Singlet Oxygen Generation in Microcapillary Optical Elements with Pho- toactive Coatings. Optics and Spectroscopy 128, 2 (February 2020), 214-219. DOI:10.1134/S0030400X20020034.",
+                "links": null
+            },
+            "BIBREF26": {
+                "ref_id": "b26",
+                "title": "Orbital angular momentum beam excitation using an all-fiber weakly fused mode selective coupler",
+                "authors": [
+                    {
+                        "first": "S",
+                        "middle": [],
+                        "last": "Pidishety",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "S",
+                        "middle": [],
+                        "last": "Pachava",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "P",
+                        "middle": [],
+                        "last": "Gregg",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "S",
+                        "middle": [],
+                        "last": "Ramachandran",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "G",
+                        "middle": [],
+                        "last": "Brambilla",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "B",
+                        "middle": [],
+                        "last": "Srinivasan",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2017,
+                "venue": "Opt. Lett",
+                "volume": "42",
+                "issue": "",
+                "pages": "4347--4350",
+                "other_ids": {
+                    "DOI": [
+                        "10.1364/OL.42.004347"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "S. Pidishety, S. Pachava, P. Gregg, S. Ramachandran, G. Brambilla and B. Srini- vasan, 2017. Orbital angular momentum beam excitation using an all-fiber weakly fused mode selective coupler, Opt. Lett. 42, 21 (November 2017), 4347-4350. DOI: 10.1364/OL.42.004347.",
+                "links": null
+            },
+            "BIBREF27": {
+                "ref_id": "b27",
+                "title": "Optically controlling the emission chirality of microlasers",
+                "authors": [
+                    {
+                        "first": "N",
+                        "middle": [],
+                        "last": "Carlon Zambon",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "P",
+                        "middle": [],
+                        "last": "St-Jean",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "M",
+                        "middle": [],
+                        "last": "Milicevic",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "A",
+                        "middle": [],
+                        "last": "Lema\u00eetre",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "A",
+                        "middle": [],
+                        "last": "Harouri",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "L",
+                        "middle": [
+                            "Le"
+                        ],
+                        "last": "Gratiet",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "O",
+                        "middle": [],
+                        "last": "Bleu",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "D",
+                        "middle": [
+                            "D"
+                        ],
+                        "last": "Solnyshkov",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "G",
+                        "middle": [],
+                        "last": "Malpuech",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "I",
+                        "middle": [],
+                        "last": "Sagnes",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "S",
+                        "middle": [],
+                        "last": "Ravets",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "A",
+                        "middle": [],
+                        "last": "Amo",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "J",
+                        "middle": [],
+                        "last": "Bloch",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2019,
+                "venue": "Nat. Photonics",
+                "volume": "13",
+                "issue": "4",
+                "pages": "283--288",
+                "other_ids": {
+                    "DOI": [
+                        "10.1038/s41566-019-0380-z"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "N. Carlon Zambon, P. St-Jean, M. Milicevic, A. Lema\u00eetre, A. Harouri, L. Le Gratiet, O. Bleu, D. D. Solnyshkov, G. Malpuech, I. Sagnes, S. Ravets, A. Amo and J. Bloch, 2019. Optically controlling the emission chirality of microlasers, Nat. Photonics 13, 4 (May 2019), 283-288. DOI: 10.1038/s41566-019-0380-z.",
+                "links": null
+            }
+        }
+    }
+}

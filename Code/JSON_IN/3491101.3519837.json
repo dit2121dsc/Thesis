@@ -1,0 +1,2701 @@
+{
+    "paper_id": "3491101",
+    "header": {
+        "generated_with": "S2ORC 1.0.0",
+        "date_generated": "2024-03-20T17:52:47.895163Z"
+    },
+    "title": "A Game of Dark Paterns: Designing Healthy, Highly-Engaging Mobile Games",
+    "authors": [
+        {
+            "first": "Jacob",
+            "middle": [],
+            "last": "Aagaard",
+            "suffix": "",
+            "affiliation": {},
+            "email": "j-aagaard@hotmail.com"
+        },
+        {
+            "first": "Per",
+            "middle": [],
+            "last": "Baekgaard",
+            "suffix": "",
+            "affiliation": {},
+            "email": ""
+        },
+        {
+            "first": "Miria",
+            "middle": [],
+            "last": "Emma",
+            "suffix": "",
+            "affiliation": {},
+            "email": ""
+        },
+        {
+            "first": "Clausen",
+            "middle": [],
+            "last": "Knudsen",
+            "suffix": "",
+            "affiliation": {},
+            "email": "mclausenknudsen@gmail.com"
+        },
+        {
+            "first": "Kevin",
+            "middle": [],
+            "last": "Doherty",
+            "suffix": "",
+            "affiliation": {},
+            "email": ""
+        }
+    ],
+    "year": "",
+    "venue": null,
+    "identifiers": {},
+    "abstract": "Gaming is a more accessible, engaging and popular past-time than ever before. Recent research highlights games as strikingly efective means of capturing and holding our attention -so efective, some argue, to the point of deleterious efect. An impassioned CHI2021 panel discussion directed these eforts towards the ethics and adoption of dark patterns. And yet, we know little as to how dark patterns are perceived and arise in the design, development and use of games. This paper seeks to address this knowledge gap by recounting fndings from a design-led inquiry comprising interviews and workshops conducted with mobile game players, designers, developers, and business developers. We contribute an understanding of how dark patterns arise in the development, use and commercialisation of mobile games, their efects on players and industry professionals, and means for the consideration, negotiation and navigation of these strategies for gamer-engagement by designin support of healthier, highly-engaging game experiences.",
+    "pdf_parse": {
+        "abstract": [
+            {
+                "text": "Gaming is a more accessible, engaging and popular past-time than ever before. Recent research highlights games as strikingly efective means of capturing and holding our attention -so efective, some argue, to the point of deleterious efect. An impassioned CHI2021 panel discussion directed these eforts towards the ethics and adoption of dark patterns. And yet, we know little as to how dark patterns are perceived and arise in the design, development and use of games. This paper seeks to address this knowledge gap by recounting fndings from a design-led inquiry comprising interviews and workshops conducted with mobile game players, designers, developers, and business developers. We contribute an understanding of how dark patterns arise in the development, use and commercialisation of mobile games, their efects on players and industry professionals, and means for the consideration, negotiation and navigation of these strategies for gamer-engagement by designin support of healthier, highly-engaging game experiences.",
+                "cite_spans": [],
+                "section": "Abstract",
+                "sec_num": null
+            }
+        ],
+        "body_text": [
+            {
+                "text": "Gaming is today a source of pleasure and joy for many more among us than ever before; an activity, hobby and culture at the same time relaxing, stimulating, social and uplifting. The now near-ubiquitous nature of mobile devices in particular has transformed gaming from an activity bound in large part to the home console or computer, to a means of passing the time accessible to many, anywhere and at any time. Mobile gaming has proved a means and medium of engaging all ages and demographics [41] , accounting for a signifcant percentage of all screen time, and in turn gaming market share; generating vast profts for game development studios, and driving new, highly-engaging and lucrative game design paradigms, 'gacha, ' 'casual' and 'hyper-casual' in nature [41] .",
+                "cite_spans": [
+                    {
+                        "start": 494,
+                        "end": 498,
+                        "text": "[41]",
+                        "ref_id": null
+                    },
+                    {
+                        "start": 764,
+                        "end": 768,
+                        "text": "[41]",
+                        "ref_id": null
+                    }
+                ],
+                "section": "INTRODUCTION",
+                "sec_num": "1"
+            },
+            {
+                "text": "While much research points to the benefts of gaming -as a pasttime like many others, relaxing, social, educational and even therapeutic -others have highlighted the capacity of highly-engaging games to induce harm; adversely impacting individuals' wellbeing in terms economic, social and psychological [9, 46] . 1 Recent public and policy attention has focused on game mechanisms considered to place players at increased economic risk; including in particular micro-transactions and loot-boxes now designated gambling in certain legal jurisdictions [6, 38, 59 ]. This public attention has equally highlighted the capacity of highly-engaging games to adversely impact particularly vulnerable populations [9, 46] ; surfacing numerous accounts of young children's spending of tens of thousands of US dollars on casual mobile games [3, 14, 32, 39, 48, 50, 55] , and the description of certain players as 'whales,' enthusiastically sought after by game studios for their vast monthly spending [16] . Many of these critiques can be related to broader criticisms of digital technology as detracting from daily life, reducing autonomy, serving as distraction, and manipulating thoughts and behaviour -often leading to polarised discussion of personal, social and corporate responsibilities across public media, online fora, and the academic literature alike [43] [44] [45] 49] .",
+                "cite_spans": [
+                    {
+                        "start": 302,
+                        "end": 305,
+                        "text": "[9,",
+                        "ref_id": "BIBREF8"
+                    },
+                    {
+                        "start": 306,
+                        "end": 309,
+                        "text": "46]",
+                        "ref_id": "BIBREF45"
+                    },
+                    {
+                        "start": 549,
+                        "end": 552,
+                        "text": "[6,",
+                        "ref_id": "BIBREF5"
+                    },
+                    {
+                        "start": 553,
+                        "end": 556,
+                        "text": "38,",
+                        "ref_id": "BIBREF37"
+                    },
+                    {
+                        "start": 557,
+                        "end": 559,
+                        "text": "59",
+                        "ref_id": "BIBREF58"
+                    },
+                    {
+                        "start": 703,
+                        "end": 706,
+                        "text": "[9,",
+                        "ref_id": "BIBREF8"
+                    },
+                    {
+                        "start": 707,
+                        "end": 710,
+                        "text": "46]",
+                        "ref_id": "BIBREF45"
+                    },
+                    {
+                        "start": 828,
+                        "end": 831,
+                        "text": "[3,",
+                        "ref_id": "BIBREF2"
+                    },
+                    {
+                        "start": 832,
+                        "end": 835,
+                        "text": "14,",
+                        "ref_id": "BIBREF13"
+                    },
+                    {
+                        "start": 836,
+                        "end": 839,
+                        "text": "32,",
+                        "ref_id": "BIBREF31"
+                    },
+                    {
+                        "start": 840,
+                        "end": 843,
+                        "text": "39,",
+                        "ref_id": "BIBREF38"
+                    },
+                    {
+                        "start": 844,
+                        "end": 847,
+                        "text": "48,",
+                        "ref_id": "BIBREF47"
+                    },
+                    {
+                        "start": 848,
+                        "end": 851,
+                        "text": "50,",
+                        "ref_id": "BIBREF49"
+                    },
+                    {
+                        "start": 852,
+                        "end": 855,
+                        "text": "55]",
+                        "ref_id": "BIBREF54"
+                    },
+                    {
+                        "start": 988,
+                        "end": 992,
+                        "text": "[16]",
+                        "ref_id": "BIBREF15"
+                    },
+                    {
+                        "start": 1350,
+                        "end": 1354,
+                        "text": "[43]",
+                        "ref_id": "BIBREF42"
+                    },
+                    {
+                        "start": 1355,
+                        "end": 1359,
+                        "text": "[44]",
+                        "ref_id": "BIBREF43"
+                    },
+                    {
+                        "start": 1360,
+                        "end": 1364,
+                        "text": "[45]",
+                        "ref_id": "BIBREF44"
+                    },
+                    {
+                        "start": 1365,
+                        "end": 1368,
+                        "text": "49]",
+                        "ref_id": "BIBREF48"
+                    }
+                ],
+                "section": "INTRODUCTION",
+                "sec_num": "1"
+            },
+            {
+                "text": "Human-computer interaction (HCI) researchers attempting to understand the design and impact of mobile games have turned to the identifcation and description of 'dark patterns' employed by designers and developers, collectively game creators (GCs), for the engagement of players -design strategies yielding experiences against users' best interests and often eluding their awareness or consent [58] . Prior research has focused on the development of defnitions and ontologies of dark patterns [21] , including not only loot boxes but playing by appointment, grinding, reciprocity, and many more. These design patterns are often posited as a result of the nature of game development as not only a creative but commercial process comprising practices of design, implementation and user testing driven by quantitative data and business metrics including retention rates and lifetime value measures [7, 53] . The adverse efects of highly-engaging game experiences are often then described as an inevitable consequence of the adoption of dark patterns in the pursuit of a proft motive. A richer understanding of the adoption, implementation and use of dark game design patterns may yet however allow us to facilitate and prioritise the ethical design and development of digital technologies of all kinds.",
+                "cite_spans": [
+                    {
+                        "start": 393,
+                        "end": 397,
+                        "text": "[58]",
+                        "ref_id": "BIBREF57"
+                    },
+                    {
+                        "start": 492,
+                        "end": 496,
+                        "text": "[21]",
+                        "ref_id": "BIBREF20"
+                    },
+                    {
+                        "start": 894,
+                        "end": 897,
+                        "text": "[7,",
+                        "ref_id": "BIBREF6"
+                    },
+                    {
+                        "start": 898,
+                        "end": 901,
+                        "text": "53]",
+                        "ref_id": "BIBREF52"
+                    }
+                ],
+                "section": "INTRODUCTION",
+                "sec_num": "1"
+            },
+            {
+                "text": "And yet, we currently know little as to how we might design to support healthy, highly-engaging game experiences. This is a challenge signifcantly complicated by twin ethical dilemmas at the heart of the experience and adoption of dark patterns. The frst pertains to the degree of personal responsibility and autonomy granted to players in weighing questions of ethical engagement. As one indie game designer put it; \"diferent kinds of experiences are meaningful to diferent people, and . . . we shouldn't judge people for what is meaningful to them\" [12] . The second, less studied, concerns the involvement of multiple stakeholders in the design, development and commercialisation of mobile games. While some have argued that the only solution to the adoption of manipulative design patterns is to \"shame the developers away from using them\" [34] , such moralising in practice tends not only to lead to polarised conversations but may also serve to mask the complex combination of values at play in the process of highly-engaging game designan industry practice into which researchers currently possess little insight. Industry professionals have commented that the \"responsibilities (for digital wellbeing, ed.) lie everywhere and with everyone\" [33] . To what extent is this the case, and what might this look like in practice?",
+                "cite_spans": [
+                    {
+                        "start": 551,
+                        "end": 555,
+                        "text": "[12]",
+                        "ref_id": "BIBREF11"
+                    },
+                    {
+                        "start": 844,
+                        "end": 848,
+                        "text": "[34]",
+                        "ref_id": "BIBREF33"
+                    },
+                    {
+                        "start": 1249,
+                        "end": 1253,
+                        "text": "[33]",
+                        "ref_id": "BIBREF32"
+                    }
+                ],
+                "section": "INTRODUCTION",
+                "sec_num": "1"
+            },
+            {
+                "text": "This paper seeks to address this knowledge gap in support of the design of healthy, highly-engaging game experiences, by developing an understanding of a) how dark patterns are experienced by mobile game players, b) the role of diverse industry stakeholders in crafting dark patterns, and c) how we might in fact design to shape the adoption and experience of dark patterns in support of wellbeing. We recount fndings from a design-led inquiry comprising interviews and design workshops conducted with a diverse sample of mobile game players, GCs and business developers (BDs); contributing an understanding of just how dark patterns arise in the development, use and commercialisation of mobile games, their efects on players and industry professionals, and means for the consideration, negotiation and navigation of these strategies for gamer-engagement by design -in support of healthier, highlyengaging game experiences.",
+                "cite_spans": [],
+                "section": "INTRODUCTION",
+                "sec_num": "1"
+            },
+            {
+                "text": "This work takes place at the intersection of three key HCI research threads; concerning design for user engagement, the implementation and ethics of dark patterns, and digital wellbeing.",
+                "cite_spans": [],
+                "section": "RELATED WORK",
+                "sec_num": "2"
+            },
+            {
+                "text": "User Engagement. Much HCI research in recent years has focused on the engagement of users [15] . With respect to gaming alone, researchers have applied psychological theory to persuasive game mechanics [31] , studied engaging collaborative play [60] , and explored players' motivations for gameplay [23] . Within the gaming industry, the realisation of highly-engaging game experiences is the ultimate aim of most game creators, for reasons both creative and economic. And it is through games, and strategies of gamifcation, that we have often proved most successful at engaging users [44] . User engagement design is supported by a wide variety of strategies, measures and theories, including and often most prominently, self-determination theory [17, 27] and fow theory [24, 26, 35] . Cowley et al. posit that games are particularly suited to generating experiences of fow, noting that \"games give immediate access to their inherent potential for optimal experience, and that potential is facilitated by the structured nature of further gameplay\" [11] . Gaming is therefore a domain in which we have proved strikingly successful at designing for engagement.",
+                "cite_spans": [
+                    {
+                        "start": 90,
+                        "end": 94,
+                        "text": "[15]",
+                        "ref_id": "BIBREF14"
+                    },
+                    {
+                        "start": 202,
+                        "end": 206,
+                        "text": "[31]",
+                        "ref_id": "BIBREF30"
+                    },
+                    {
+                        "start": 245,
+                        "end": 249,
+                        "text": "[60]",
+                        "ref_id": "BIBREF59"
+                    },
+                    {
+                        "start": 299,
+                        "end": 303,
+                        "text": "[23]",
+                        "ref_id": "BIBREF22"
+                    },
+                    {
+                        "start": 585,
+                        "end": 589,
+                        "text": "[44]",
+                        "ref_id": "BIBREF43"
+                    },
+                    {
+                        "start": 748,
+                        "end": 752,
+                        "text": "[17,",
+                        "ref_id": "BIBREF16"
+                    },
+                    {
+                        "start": 753,
+                        "end": 756,
+                        "text": "27]",
+                        "ref_id": "BIBREF26"
+                    },
+                    {
+                        "start": 772,
+                        "end": 776,
+                        "text": "[24,",
+                        "ref_id": "BIBREF23"
+                    },
+                    {
+                        "start": 777,
+                        "end": 780,
+                        "text": "26,",
+                        "ref_id": "BIBREF25"
+                    },
+                    {
+                        "start": 781,
+                        "end": 784,
+                        "text": "35]",
+                        "ref_id": "BIBREF34"
+                    },
+                    {
+                        "start": 1049,
+                        "end": 1053,
+                        "text": "[11]",
+                        "ref_id": "BIBREF10"
+                    }
+                ],
+                "section": "RELATED WORK",
+                "sec_num": "2"
+            },
+            {
+                "text": "Dark Patterns. So successful in fact that some have begun to worry about the ethical ramifcations, and practices of ethical decisionmaking, entailed in the process of game design. Recent years have seen increased attention devoted, in particular, to the topic of dark patterns [42] . Much of this work has focused on identifying, defning and categorising strategies considered misleading, manipulative or even coercive. And yet developing an ontology of dark design patterns is itself far from an easy task; the efects of these strategies dependent on a wide variety of individual characteristics, and their defnition morally-contingent. Zagal et al. comment, for example, that game design patterns are best thought of as 'value-neutral tools' yet admit that this \"does not necessarily make them useful for identifying problematic or unethical design choices made by designers\" [58] . Recent eforts by HCI researchers to further our understanding of the relationship between GCs' intentions and players' experiences include assessment of the impact of dark patterns on users [13, 20, 36, 56] and the creation of new guidelines for GCs [1, 34, 47] . Lukof et al. suggest new design norms as means to mitigate the efects of dark patterns; including shaming companies which employ dark patterns, requiring GCs to articulate the ethical values underlying their design practice, and incorporating material concerning dark patterns into design curricula. Fitton & Read similarly ofer a framework to support critical consideration of dark patterns in the creation of free-to-play games, to be employed during game design to \"help creators of free-to-play apps focus on the experience and wellbeing of younger users even when monetization is essential\" [18] .",
+                "cite_spans": [
+                    {
+                        "start": 277,
+                        "end": 281,
+                        "text": "[42]",
+                        "ref_id": "BIBREF41"
+                    },
+                    {
+                        "start": 878,
+                        "end": 882,
+                        "text": "[58]",
+                        "ref_id": "BIBREF57"
+                    },
+                    {
+                        "start": 1075,
+                        "end": 1079,
+                        "text": "[13,",
+                        "ref_id": "BIBREF12"
+                    },
+                    {
+                        "start": 1080,
+                        "end": 1083,
+                        "text": "20,",
+                        "ref_id": "BIBREF19"
+                    },
+                    {
+                        "start": 1084,
+                        "end": 1087,
+                        "text": "36,",
+                        "ref_id": "BIBREF35"
+                    },
+                    {
+                        "start": 1088,
+                        "end": 1091,
+                        "text": "56]",
+                        "ref_id": "BIBREF55"
+                    },
+                    {
+                        "start": 1135,
+                        "end": 1138,
+                        "text": "[1,",
+                        "ref_id": "BIBREF0"
+                    },
+                    {
+                        "start": 1139,
+                        "end": 1142,
+                        "text": "34,",
+                        "ref_id": "BIBREF33"
+                    },
+                    {
+                        "start": 1143,
+                        "end": 1146,
+                        "text": "47]",
+                        "ref_id": "BIBREF46"
+                    },
+                    {
+                        "start": 1745,
+                        "end": 1749,
+                        "text": "[18]",
+                        "ref_id": "BIBREF17"
+                    }
+                ],
+                "section": "RELATED WORK",
+                "sec_num": "2"
+            },
+            {
+                "text": "Digital Wellbeing. Questions of ethical user engagement and design then hinge on conceptions of what it means to be well. And much HCI research has focused on the topic of digital wellbeing in recent years, producing new measures [25, 37] , implications for design [8, 19, 22, 40] , and the application of new lenses to gaming research, including emotional regulation [10, 51, 54] and life satisfaction perspectives [57, p 16] . Signifcantly, studies suggest that both positive and negative emotions alike shape and aid in producing good player experiences [30] .",
+                "cite_spans": [
+                    {
+                        "start": 230,
+                        "end": 234,
+                        "text": "[25,",
+                        "ref_id": "BIBREF24"
+                    },
+                    {
+                        "start": 235,
+                        "end": 238,
+                        "text": "37]",
+                        "ref_id": "BIBREF36"
+                    },
+                    {
+                        "start": 265,
+                        "end": 268,
+                        "text": "[8,",
+                        "ref_id": "BIBREF7"
+                    },
+                    {
+                        "start": 269,
+                        "end": 272,
+                        "text": "19,",
+                        "ref_id": "BIBREF18"
+                    },
+                    {
+                        "start": 273,
+                        "end": 276,
+                        "text": "22,",
+                        "ref_id": "BIBREF21"
+                    },
+                    {
+                        "start": 277,
+                        "end": 280,
+                        "text": "40]",
+                        "ref_id": "BIBREF39"
+                    },
+                    {
+                        "start": 368,
+                        "end": 372,
+                        "text": "[10,",
+                        "ref_id": "BIBREF9"
+                    },
+                    {
+                        "start": 373,
+                        "end": 376,
+                        "text": "51,",
+                        "ref_id": "BIBREF50"
+                    },
+                    {
+                        "start": 377,
+                        "end": 380,
+                        "text": "54]",
+                        "ref_id": "BIBREF53"
+                    },
+                    {
+                        "start": 416,
+                        "end": 426,
+                        "text": "[57, p 16]",
+                        "ref_id": null
+                    },
+                    {
+                        "start": 557,
+                        "end": 561,
+                        "text": "[30]",
+                        "ref_id": "BIBREF29"
+                    }
+                ],
+                "section": "RELATED WORK",
+                "sec_num": "2"
+            },
+            {
+                "text": "These overlapping research threads then together surface the question: Is it possible, and how might we, develop game experiences both 'healthy' and 'highly-engaging?'",
+                "cite_spans": [],
+                "section": "RELATED WORK",
+                "sec_num": "2"
+            },
+            {
+                "text": "Through this work then, we aimed to develop an understanding of players' and GCs' experiences of dark patterns, just how these design patterns come to exist, and how we might support and practice design to realise healthy highly-engaging mobile game experiences.",
+                "cite_spans": [],
+                "section": "METHOD",
+                "sec_num": "3"
+            },
+            {
+                "text": "To generate and leverage insight into these complex problems, we adopted a design research approach entailing stages of qualitative research, divergent ideation, convergent prototyping, and testing; inspired by the Stanford d.school's fve-stage model (See Figure 1 ). First, 16 individual semi-structured interviews allowed us to empathise and identify common themes across participants. Divergent brainstorming and mind mapping exercises then enabled the generation of concept solutions to the challenge of designing healthy, highly-engaging games. These were expanded and iterated upon together with stakeholders during the co-design workshops of phase 3 -four workshops conducted with participants in pairs -and then further developed and refned using knowledge and insight from these interactions during phase 4. In phase 5, stakeholders were again consulted during workshops for the iterative co-design, testing and validation of these concepts. And fnally, we added a sixth phase, during which a coherent strategy to support communication and translation of the outputs and design implications of the research project at scale and in practice was developed.",
+                "cite_spans": [],
+                "section": "METHOD",
+                "sec_num": "3"
+            },
+            {
+                "text": "Participants for this project included 13 mobile game players (PLs), 3 professional game designers (DSs), 3 game developers (DVs) and 2 BDs, recruited through social media (Reddit, ResetEra, Twitter and Facebook), LinkedIn, university intranet, and convenience sampling of personal, professional and academic networks (See Table 1 ). This was a diverse sample of stakeholders, the engagement of whom we considered an equally important design challenge in the planning and conduct of this research.",
+                "cite_spans": [],
+                "section": "METHOD",
+                "sec_num": "3"
+            },
+            {
+                "text": "Participants ranged in age from 22 to 40; with an average age of 30. On average, GCs and BDs played mobile games for 31 minutes per day, while players played an average of 136 minutes per day. Two GCs described playing games once a day, while the other GCs and BDs played games occasionally. Players, on the other hand, all played multiple times a day, with the exception of three; two playing once a day and one only occasionally. All GCs and BDs resided in Europe, while only three players did so, four living in North America and one in Asia. All participant interactions took place over Zoom, and were organised using email and Discord, as a result of the COVID-19 pandemic. We employed the virtual work-space tool Miro to support the creation and use of several novel visual research methods for the reciprocal activation and creative engagement of participants in co-design. This included, for example, an ice-breaker and needs-fnding exercise entailing the sorting of dark patterns (See Figure 2 ), and another involving the interactive placement of initial concept solutions according to axes of perceived value and feasibility.",
+                "cite_spans": [],
+                "section": "METHOD",
+                "sec_num": "3"
+            },
+            {
+                "text": "Interviews and workshops were envisaged to last an hour although often ran longer, participants eager and willing to share their insights. All data captured was fully anonymised, and participants provided an information sheet communicating the research procedure, objectives, and handling of data as well as a short and anonymous demographic questionnaire in advance of each study phase. Digital notes were taken by both participants and researchers during these workshop exercises, interviews audiorecorded, anonymised, transcribed in full, and analysed using a combination of visual network analysis and Braun & Clarke's method of thematic analysis entailing the inductive and iterative generation of codes followed by cross-cutting themes; as comprise the key fndings articulated in this paper [4, 5] .",
+                "cite_spans": [
+                    {
+                        "start": 797,
+                        "end": 800,
+                        "text": "[4,",
+                        "ref_id": "BIBREF3"
+                    },
+                    {
+                        "start": 801,
+                        "end": 803,
+                        "text": "5]",
+                        "ref_id": "BIBREF4"
+                    }
+                ],
+                "section": "METHOD",
+                "sec_num": "3"
+            },
+            {
+                "text": "The fndings of this work highlight three themes in particular; players' experience of mobile games and dark patterns, industry professionals' perceptions as to how dark patterns arise and who's responsible for them, and how knowledge of the presence of tension, confict and conversation at the heart of mobile game design practices might enable us to move closer towards the design of healthy, highly-engaging game experiences.",
+                "cite_spans": [],
+                "section": "FINDINGS",
+                "sec_num": "4"
+            },
+            {
+                "text": "Players spoke of mobile gaming as part of everyday life, past-time, and identity; engagement motivated by social connection, relaxation, and a desire to escape reality. Many participants commented on the accessibility of mobile games as generating broader appeal, bringing \"a lot of other people into gaming that otherwise wouldn't\" (PL7), and even extending the target audience for hypercasual games to \"everybody from 10 to 90\" (DS1). Although almost all participants spoke of positive and fun experiences with mobile games, many shared also negative perceptions of the medium, commenting on manipulative practices, 'industrial greed, ' exploitative monetization and a feeling of 'burnout,' leading to a felt need to limit playtime. Players then spoke as knowing, yet also striving to distinguish in practice, between healthy and unhealthy game experiences; \"I wish I were playing them less. I've tried . . . I'm trying\" (PL1).",
+                "cite_spans": [],
+                "section": "Gaming; A Guilty Pleasure",
+                "sec_num": "4.1"
+            },
+            {
+                "text": "Asked about dark patterns, many players expressed a lack of familiarity with the term, although were able to easily identify mechanics meeting the defnition encountered during game play.",
+                "cite_spans": [],
+                "section": "Gaming; A Guilty Pleasure",
+                "sec_num": "4.1"
+            },
+            {
+                "text": "The patterns most often identifed and discussed by participants included Pay to Win mechanics, Playing by Appointment, Daily Rewards, Artifcial Defcit, Invested Value (Sunk Cost Fallacy), Gacha mechanics, and Loot Boxes [52] . Many participants spoke of these mechanics as frustrating, eliciting a sense of being cheated, and situated in the context of an adversarial relationship between game professionals' striving for proft and players' desiring to avoid manipulative monetization. And yet, participants also commented that not all patterns were equally 'dark,' and some only so when implemented in combination with other mechanics, otherwise supporting positive and fun experiences; \"there's not a moment when like this is good and this is bad. The small tricks you make, and the small economy changes you make to the prices and to the timing, etc. [defne] how exploitative or harmful these things are\" (DS3). Participants unanimously agreed however that gambling mechanics including loot boxes and practices of impersonation were among the darkest patterns in mobile game experiences (See Figure 2 ). And yet, many players admitted to willingly and often engaging with loot boxes in their favourite games, enjoying the time spent with these mechanics while warning others away.",
+                "cite_spans": [
+                    {
+                        "start": 220,
+                        "end": 224,
+                        "text": "[52]",
+                        "ref_id": "BIBREF51"
+                    }
+                ],
+                "section": "Gaming; A Guilty Pleasure",
+                "sec_num": "4.1"
+            },
+            {
+                "text": "This raises the question then as to how dark patterns arise, and who's responsible for them. Some GCs argued that dark patterns could simply be 'stumbled' upon or 'fallen' into, whereas others spoke of these patterns as intentional, immutable and inescapable design choices driven by market forces beyond their control; \"We have ads every 30 seconds. That's a lot, right. We do it because that's what everyone else does. I cannot aford to only show an ad every minute\" (BD1). This trend was therefore described by GCs as motivated not by greed but a desire to remain working in the mobile game industry. GCs and BDs also spoke of dark patterns as arising as a result of data-driven engagement metrics, as surfacing inevitably over time, as related to other drivers of engagement, and as a consequence of a culture of disposable experiences; \"I'm going to do everything I can to make sure that you stay here and you click on [our game] again . . . I know that you don't actually care about this stuf I've made, you just try to distract yourself\" (DS2).",
+                "cite_spans": [],
+                "section": "The Road to Dark Design Is Paved With Good Intentions",
+                "sec_num": "4.2"
+            },
+            {
+                "text": "When it came to the attribution of responsibility however, perceptions varied signifcantly among stakeholders. For some, including players themselves, 'dark patterns exist because they work,' and would only evolve if players were to stop engaging with such games or legal frameworks were instituted against these practices. Some BDs defended certain patterns, including in-game purchases, as increasing the options available to players; \"It makes it possible to create deeper layers inside of the game\" (BD1). Others returned to the inevitability of dark patterns given market forces, refecting a difusion of responsibility possibly attributable to a bystander efect [2] . A small minority of GCs however counted themselves responsible, and expressed deep discontent with \"very exploitative forms of game design\" (DS3). DV3, in particular, spoke of a consistent pattern of what they considered 'trickery' in game design as motivating their departure from the industry, \"sick of developing those games.\" For the majority of participants however, responsibility was to some extent shared among players, parents, GCs, and industry fgures, noting that it was not always a design pattern that was itself dark by nature but rather its implementation. Prior defnitions of dark patterns tend to relate their presence to intentional decisions autonomously made by technology creators [58] . Participants' comments suggest however that we might also fnd value in defning the 'dark game design pattern' as a pattern or combination of patterns implemented in such a way that it drives players towards experiences negatively afecting their wellbeing.",
+                "cite_spans": [
+                    {
+                        "start": 667,
+                        "end": 670,
+                        "text": "[2]",
+                        "ref_id": "BIBREF1"
+                    },
+                    {
+                        "start": 1375,
+                        "end": 1379,
+                        "text": "[58]",
+                        "ref_id": "BIBREF57"
+                    }
+                ],
+                "section": "The Road to Dark Design Is Paved With Good Intentions",
+                "sec_num": "4.2"
+            },
+            {
+                "text": "The Dark",
+                "cite_spans": [],
+                "section": "A Lack of Communication Leaves Us All In",
+                "sec_num": "4.3"
+            },
+            {
+                "text": "This process of research and design provided insight into the inner workings of the mobile game industry. And the development of hyper-casual games in particular was found to present a variety of highly-unique features. These are games often developed in a period as brief as two weeks (DS1), each kept as simple as possible in terms of theme and gameplay, and focused around only one or two gameplay mechanics; allowing these games to be easily understood, and immediately satisfying to play. Such games were described by creators as the result of a 'super data-driven' approach designed to keep players in a hyper-casual loop, and easy to play to the extent that winning becomes trivial. Many hyper-casual game studios work under a publisher, which additionally helps developers to inform their design choices using data gathered from the \"successes and failures of thousands upon thousands of games\" (DS1). This further enables not only the dissolution of responsibility for design choices, but makes it difcult for individual stakeholders to make their voices heard. This was refected most starkly in participants' comments as to the implementation of monetization in mobile games as a point of tension and confict between diferent professional roles within development studios, as between studios and players. Many game designers and developers spoke openly of their games and gaming as being 'corrupted' by their colleagues in business development, and of fghting against the inclusion of these practices; \"every game . . . started out as people with a passion for a thing . . . and as it keeps going, it turns into a company thing, 'how do we make more money?' \" (DV2), \"it was 'us against the business guy' \" (DS3). Although the implementation of dark patterns might therefore be characterised as a conversation, it is one in which GCs described themselves as having little voice; \"you know what I would say if they invited me. That's probably why I'm not invited\" (DS2).",
+                "cite_spans": [],
+                "section": "A Lack of Communication Leaves Us All In",
+                "sec_num": "4.3"
+            },
+            {
+                "text": "The creation of healthy, highly-engaging mobile game experiences then hinges in part on each stakeholder's ability to make their voices heard, and in relation to the game economy in particular; one designer describing \"the majority [of mobile games]\" as \"healthy . . . just wrapped in unhealthy wrapping paper . . . in order to make money\" (DS1). Monetisation practices adverse to creators then inevitably drain creativity and detract from the felt meaning of GCs' work; \"you sorta lose the passion when you're making those games\" (DV3). This suggests the value of weighing monetization as a design process and practice in itself, and of striving to create value through monetization -enabling game developers to innovate new, more creative and potentially less predatory monetization strategies.",
+                "cite_spans": [],
+                "section": "A Lack of Communication Leaves Us All In",
+                "sec_num": "4.3"
+            },
+            {
+                "text": "Several participants commented that monetization elements could even enhance the game experience, or add new aspects to a game, as in the case of the 'battle pass' model which allows players to pay money to gain more rewards while playing, providing \"constantly a feeling of earning something\" (DS2). Players then also should equally not be excluded from these conversations -ethical game development a user-centred process in itself.",
+                "cite_spans": [],
+                "section": "A Lack of Communication Leaves Us All In",
+                "sec_num": "4.3"
+            },
+            {
+                "text": "Dark patterns then shape not only players' but GCs' and BDs' experiences of mobile games and their development. And, we undertook this user-centred design research process with the aim not only of generating insight into these strategies and practices, but of enabling and practising design to support healthy, highly-engaging mobile game experiences.",
+                "cite_spans": [],
+                "section": "DISCUSSION",
+                "sec_num": "5"
+            },
+            {
+                "text": "Highly-Engaging Game Experiences",
+                "cite_spans": [],
+                "section": "Practising Design to Support Healthy",
+                "sec_num": "5.1"
+            },
+            {
+                "text": "The early phases of this process led to the proposal of numerous unique tools, methods and materials in support of this goal. Discussion, interaction and evaluation of 6 of which with stakeholders led to the selection and refnement of 3 fnal concept solutions deemed feasible, valuable, and which might realistically be adopted and implemented in practice -each approaching the problem of healthy highly-engaging game design from a unique perspective.",
+                "cite_spans": [],
+                "section": "Practising Design to Support Healthy",
+                "sec_num": "5.1"
+            },
+            {
+                "text": "A Dark Pattern Badge. Our frst concept entails an illustrated badge system, integrated across app stores to inform players of the dark patterns present within a game before its download -enabling players to make more informed choices and preparing them for the mechanisms to which they are likely to be exposed. This concept then provides increased transparency around the design and impact of dark patterns, inspired by players' comments as to a lack of awareness of the dark design patterns a game could contain (See Figure 3 ). Considerations in the design of this concept included prioritising core principles of glanceability and legibility, enabling access to multiple levels of information, and avoiding explicit moralisation. A unique icon was created for each dark pattern; the type of pattern (temporal, monetary, social or psychological) denoted by a coloured border, and these icons displayed as a stack. Clicking an icon would result in the presentation of a more detailed description to users, facilitating the education of players over time including in regard to the efect of multiple patterns in combination -an interaction highlighted by players as key to their impact. By simply listing those patterns present, this concept attempts to refrain from granting weight to the often-polarising nature of the public and professional debate regarding dark patterns. A Healthy Game Design Course. Findings of this work highlighted GCs' striving to create and participate in conversations around more ethical practices of monetization, yet also a lack of confdence and knowledge among GCs in contrast with BDs. Our second concept takes the form of a Healthy Game Design Course designed to grant GCs the knowledge, tools and skills to implement new and alternative monetization design patterns in co-operation with other industry professionals. This concept was communicated drawing inspiration from standardised university course descriptions. Our workshop participants envisioned a workshop format as most effective, during which students would learn about dark patterns and possible alternate monetization strategies, actively engage in design problems, analyse games containing dark patterns, and work on healthy alternatives in groups. This course would additionally make use of real-world examples to simulate production conficts, providing creators the tools to participate in such discussions on more equal terms, and in this way contributing towards more ethical practices of monetization.",
+                "cite_spans": [],
+                "section": "Practising Design to Support Healthy",
+                "sec_num": "5.1"
+            },
+            {
+                "text": "An Emotion Assessment Toolkit. GCs and BDs all agreed that it is core gameplay which ultimately comprises the heart of any highly-engaging game experience, and that although mobile game design is often a 'super data-driven' process, GCs often lack insight into the impact of their choices on players; which can lead to the inadvertent implementation of dark patterns. Our fnal concept comprises an Emotion Assessment Toolkit designed to elevate developers' knowledge of players' experiences, leveraging not only interaction logs and retention rates but ecological momentary assessments of players' mental states as means to inform practices of decision-making in support of healthy highly-engaging game experiences. Key considerations in the design of this tool were the questions posed to players and considered useful by developers as means to both generate knowledge and foster empathy with players. During workshops, participants were asked to rank a variety of emotional states in regard to their value for informing game development. GCs selected as most valuable the negatively-valenced emotions 'annoyed', 'disappointed' and 'manipulated', and the positive emotion 'interested'. Participants highlighted 'interested' as a felt experience \"very unique and hard to achieve, \" (DS3) and therefore an indicator of healthy engagement, and the negative emotions chosen as among \"the most unintentional things that might happen in the game, \" (DS3) noting that a game would never strive to entice such feelings in players, whereas other negative feelings, such as 'frustrated,' could often be intentionally elicited to drive further investment from players.",
+                "cite_spans": [],
+                "section": "Practising Design to Support Healthy",
+                "sec_num": "5.1"
+            },
+            {
+                "text": "The value of these three concept solutions lies not only in their fnal form but in the shared vision of ethical game design they promote and support; to empower players through increased transparency of game mechanics, educate and raise awareness among GCs of dark patterns, and better inform GCs of players' experiences, throughout the conception, creation and consumption of mobile games. We advise researchers seeking to support such practices by design to; a) elevate game players' capacity to transparently weigh the presence and impact of game design patterns, as a means to combat manipulative monetization mechanics, b) empower all stakeholders of game play and design to make their voices heard, overcoming siloed mentalities and adversarial relationships, in support of the development of an ethical gaming culture, and c) increase GCs' capacity to access rich and diverse forms of knowledge about players' experiences, beyond data driven-design. The fndings and refections of this work are best considered one contribution to this very conversation, in support of new opportunities to realise healthy, highly-engaging mobile game experiences.",
+                "cite_spans": [],
+                "section": "Translating Insights & Implications into Practice",
+                "sec_num": "5.2"
+            },
+            {
+                "text": "This work is not only about gaming but about how manipulative patterns arise in technology design, shape our experiences, and might be surfaced and navigated through practices and processes of communication, conversation, and co-design, bringing players, developers, designers and business developers together, elevating consciousness of each stakeholder's responsibilities, and in turn supporting healthy, highly-engaging mobile game experiences by design.",
+                "cite_spans": [],
+                "section": "CONCLUSION",
+                "sec_num": "6"
+            }
+        ],
+        "bib_entries": {
+            "BIBREF0": {
+                "ref_id": "b0",
+                "title": "The Ethics of Multiplayer Game Design and Community Management: Industry Perspectives and Challenges",
+                "authors": [
+                    {
+                        "first": "Lucy",
+                        "middle": [
+                            "A"
+                        ],
+                        "last": "Sparrow",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Martin",
+                        "middle": [],
+                        "last": "Gibbs",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Michael",
+                        "middle": [],
+                        "last": "Arnold",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/chi/SparrowGA21",
+                "year": 2021,
+                "venue": "Proceedings of the 2021 CHI Conference on Human Factors in Computing Systems",
+                "volume": "",
+                "issue": "",
+                "pages": "1--13",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Lucy A. Sparrow, Martin Gibbs, and Michael Arnold. 2021. The Ethics of Multi- player Game Design and Community Management: Industry Perspectives and Challenges. In Proceedings of the 2021 CHI Conference on Human Factors in Com- puting Systems. 1-13.",
+                "links": null
+            },
+            "BIBREF1": {
+                "ref_id": "b1",
+                "title": "Difusion of responsibility",
+                "authors": [
+                    {
+                        "first": "Robert",
+                        "middle": [
+                            "D"
+                        ],
+                        "last": "Blagg",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2016,
+                "venue": "",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Robert D. Blagg. 2016. Difusion of responsibility. https://www.britannica.com/ topic/bystander-efect/Difusion-of-responsibility",
+                "links": null
+            },
+            "BIBREF2": {
+                "ref_id": "b2",
+                "title": "British children spending \u00a3270m a year on mobile game 'loot boxes' and in-app purchases",
+                "authors": [
+                    {
+                        "first": "Hannah",
+                        "middle": [],
+                        "last": "Boland",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2019,
+                "venue": "",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Hannah Boland. 2019. British children spending \u00a3270m a year on mobile game 'loot boxes' and in-app purchases. https://www.telegraph.co.uk/technology/ 2019/08/28/british-children-young-11-spend-270m-year-video-game-loot- boxes/",
+                "links": null
+            },
+            "BIBREF3": {
+                "ref_id": "b3",
+                "title": "Using thematic analysis in psychology",
+                "authors": [
+                    {
+                        "first": "Virginia",
+                        "middle": [],
+                        "last": "Braun",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Victoria",
+                        "middle": [],
+                        "last": "Clarke",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2006,
+                "venue": "Qualitative research in psychology",
+                "volume": "3",
+                "issue": "2",
+                "pages": "77--101",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Virginia Braun and Victoria Clarke. 2006. Using thematic analysis in psychology. Qualitative research in psychology 3, 2 (2006), 77-101.",
+                "links": null
+            },
+            "BIBREF4": {
+                "ref_id": "b4",
+                "title": "Refecting on refexive thematic analysis",
+                "authors": [
+                    {
+                        "first": "Virginia",
+                        "middle": [],
+                        "last": "Braun",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Victoria",
+                        "middle": [],
+                        "last": "Clarke",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2019,
+                "venue": "Qualitative Research in Sport, Exercise and Health",
+                "volume": "11",
+                "issue": "4",
+                "pages": "589--597",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Virginia Braun and Victoria Clarke. 2019. Refecting on refexive thematic analysis. Qualitative Research in Sport, Exercise and Health 11, 4 (2019), 589-597.",
+                "links": null
+            },
+            "BIBREF5": {
+                "ref_id": "b5",
+                "title": "Associations between loot box use, problematic gaming and gambling, and gambling-related cognitions",
+                "authors": [
+                    {
+                        "first": "A",
+                        "middle": [],
+                        "last": "Gabriel",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Luke",
+                        "middle": [],
+                        "last": "Brooks",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "",
+                        "middle": [],
+                        "last": "Clark",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2019,
+                "venue": "Addictive behaviors",
+                "volume": "96",
+                "issue": "",
+                "pages": "26--34",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Gabriel A Brooks and Luke Clark. 2019. Associations between loot box use, problematic gaming and gambling, and gambling-related cognitions. Addictive behaviors 96 (2019), 26-34.",
+                "links": null
+            },
+            "BIBREF6": {
+                "ref_id": "b6",
+                "title": "Predicting customer lifetime value in free-to-play games",
+                "authors": [
+                    {
+                        "first": "Paolo",
+                        "middle": [],
+                        "last": "Burelli",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2019,
+                "venue": "Data analytics applications in gaming and entertainment",
+                "volume": "",
+                "issue": "",
+                "pages": "79--107",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Paolo Burelli. 2019. Predicting customer lifetime value in free-to-play games. In Data analytics applications in gaming and entertainment. Auerbach Publications, 79-107.",
+                "links": null
+            },
+            "BIBREF7": {
+                "ref_id": "b7",
+                "title": "Designing for digital wellbeing: A research & practice agenda",
+                "authors": [
+                    {
+                        "first": "Marta",
+                        "middle": [
+                            "E"
+                        ],
+                        "last": "Cecchinato",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "John",
+                        "middle": [],
+                        "last": "Rooksby",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Alexis",
+                        "middle": [],
+                        "last": "Hiniker",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Sean",
+                        "middle": [],
+                        "last": "Munson",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Kai",
+                        "middle": [],
+                        "last": "Lukof",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Luigina",
+                        "middle": [],
+                        "last": "Ciolf",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Anja",
+                        "middle": [],
+                        "last": "Thieme",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Daniel",
+                        "middle": [],
+                        "last": "Harrison",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/chi/CecchinatoRHMLC19",
+                "year": 2019,
+                "venue": "Extended abstracts of the 2019 CHI conference on human factors in computing systems",
+                "volume": "",
+                "issue": "",
+                "pages": "1--8",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Marta E Cecchinato, John Rooksby, Alexis Hiniker, Sean Munson, Kai Lukof, Luigina Ciolf, Anja Thieme, and Daniel Harrison. 2019. Designing for digital wellbeing: A research & practice agenda. In Extended abstracts of the 2019 CHI conference on human factors in computing systems. 1-8.",
+                "links": null
+            },
+            "BIBREF8": {
+                "ref_id": "b8",
+                "title": "Loot boxes in online games and their efect on consumers, in particular young consumers",
+                "authors": [
+                    {
+                        "first": "Annette",
+                        "middle": [],
+                        "last": "Cerulli-Harms",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "M",
+                        "middle": [],
+                        "last": "M\u00fcnsch",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Christian",
+                        "middle": [],
+                        "last": "Thorun",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Frithjof",
+                        "middle": [],
+                        "last": "Michaelsen",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Pierre",
+                        "middle": [],
+                        "last": "Hausemer",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2020,
+                "venue": "Publication for the Committee on the Internal Market and Consumer Protection (IMCO), Policy Department for Economic, Scientifc and Quality of Life Policies",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Annette Cerulli-Harms, M M\u00fcnsch, Christian Thorun, Frithjof Michaelsen, and Pierre Hausemer. 2020. Loot boxes in online games and their efect on consumers, in particular young consumers. Publication for the Committee on the Internal Market and Consumer Protection (IMCO), Policy Department for Economic, Scientifc and Quality of Life Policies, European Parliament, Luxembourg 202 (2020).",
+                "links": null
+            },
+            "BIBREF9": {
+                "ref_id": "b9",
+                "title": "Needs met through computer game play among adolescents",
+                "authors": [
+                    {
+                        "first": "John",
+                        "middle": [],
+                        "last": "Colwell",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2007,
+                "venue": "Personality and Individual Diferences",
+                "volume": "43",
+                "issue": "8",
+                "pages": "2072--2082",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "John Colwell. 2007. Needs met through computer game play among adolescents. Personality and Individual Diferences 43, 8 (2007), 2072-2082.",
+                "links": null
+            },
+            "BIBREF10": {
+                "ref_id": "b10",
+                "title": "Toward an understanding of fow in video games",
+                "authors": [
+                    {
+                        "first": "Ben",
+                        "middle": [],
+                        "last": "Cowley",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Darryl",
+                        "middle": [],
+                        "last": "Charles",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Michaela",
+                        "middle": [],
+                        "last": "Black",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Ray",
+                        "middle": [],
+                        "last": "Hickey",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2008,
+                "venue": "Computers in Entertainment (CIE)",
+                "volume": "6",
+                "issue": "2",
+                "pages": "1--27",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Ben Cowley, Darryl Charles, Michaela Black, and Ray Hickey. 2008. Toward an understanding of fow in video games. Computers in Entertainment (CIE) 6, 2 (2008), 1-27.",
+                "links": null
+            },
+            "BIBREF11": {
+                "ref_id": "b11",
+                "title": "Whatever the Emotional Experience, It's Up to Them\": Insights from Designers of Emotionally Impactful Games",
+                "authors": [
+                    {
+                        "first": "Alena",
+                        "middle": [],
+                        "last": "Denisova",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Julia",
+                        "middle": [
+                            "Ayumi"
+                        ],
+                        "last": "Bopp",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Thuy",
+                        "middle": [
+                            "Duong"
+                        ],
+                        "last": "Nguyen",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Elisa",
+                        "middle": [
+                            "D"
+                        ],
+                        "last": "Mekler",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/chi/DenisovaBNM21",
+                "year": 2021,
+                "venue": "Proceedings of the 2021 CHI Conference on Human Factors in Computing Systems",
+                "volume": "",
+                "issue": "",
+                "pages": "1--9",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Alena Denisova, Julia Ayumi Bopp, Thuy Duong Nguyen, and Elisa D Mekler. 2021. \"Whatever the Emotional Experience, It's Up to Them\": Insights from De- signers of Emotionally Impactful Games. In Proceedings of the 2021 CHI Conference on Human Factors in Computing Systems. 1-9.",
+                "links": null
+            },
+            "BIBREF12": {
+                "ref_id": "b12",
+                "title": "UI dark patterns and where to fnd them: a study on mobile applications and user perception",
+                "authors": [
+                    {
+                        "first": "Linda",
+                        "middle": [],
+                        "last": "Di Geronimo",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Larissa",
+                        "middle": [],
+                        "last": "Braz",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Enrico",
+                        "middle": [],
+                        "last": "Fregnan",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Fabio",
+                        "middle": [],
+                        "last": "Palomba",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Alberto",
+                        "middle": [],
+                        "last": "Bacchelli",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2020,
+                "venue": "Proceedings of the 2020 CHI Conference on Human Factors in Computing Systems",
+                "volume": "",
+                "issue": "",
+                "pages": "1--14",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Linda Di Geronimo, Larissa Braz, Enrico Fregnan, Fabio Palomba, and Alberto Bacchelli. 2020. UI dark patterns and where to fnd them: a study on mobile applications and user perception. In Proceedings of the 2020 CHI Conference on Human Factors in Computing Systems. 1-14.",
+                "links": null
+            },
+            "BIBREF13": {
+                "ref_id": "b13",
+                "title": "7-year-old kid generates Rs 1.33 lakh bill in iPhone game, father forced to sell family car to pay",
+                "authors": [
+                    {
+                        "first": "Sarthak",
+                        "middle": [],
+                        "last": "Dogra",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2021,
+                "venue": "",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Sarthak Dogra. 2021. 7-year-old kid generates Rs 1.33 lakh bill in iPhone game, father forced to sell family car to pay. https://www.indiatoday.in/ technology/news/story/7-year-old-kid-generates-rs-1-33-lakh-bill-in-iphone- game-father-forced-to-sell-family-car-to-pay-1821290-2021-06-30",
+                "links": null
+            },
+            "BIBREF14": {
+                "ref_id": "b14",
+                "title": "Engagement in HCI: Conception, Theory and Measurement",
+                "authors": [
+                    {
+                        "first": "Kevin",
+                        "middle": [],
+                        "last": "Doherty",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Gavin",
+                        "middle": [],
+                        "last": "Doherty",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2018,
+                "venue": "ACM Computing Surveys (CSUR)",
+                "volume": "51",
+                "issue": "5",
+                "pages": "1--39",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Kevin Doherty and Gavin Doherty. 2018. Engagement in HCI: Conception, Theory and Measurement. ACM Computing Surveys (CSUR) 51, 5 (2018), 1-39.",
+                "links": null
+            },
+            "BIBREF15": {
+                "ref_id": "b15",
+                "title": "Meet the Man Who's Spent $70,000 Playing a Mobile Game",
+                "authors": [
+                    {
+                        "first": "Daniel",
+                        "middle": [],
+                        "last": "Epstein",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Miho",
+                        "middle": [],
+                        "last": "Inada",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2018,
+                "venue": "",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Daniel Epstein and Miho Inada. 2018. Meet the Man Who's Spent $70,000 Playing a Mobile Game. https://www.wsj.com/articles/meet-the-man-whos-spent-70- 000-playing-a-mobile-game-1521107255",
+                "links": null
+            },
+            "BIBREF16": {
+                "ref_id": "b16",
+                "title": "Exploring Game Aesthetics as Antecedents of Game Continuance: An Analysis in the Lens of Self-Determination Theory",
+                "authors": [
+                    {
+                        "first": "Bernie",
+                        "middle": [],
+                        "last": "Fabito",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Rafael",
+                        "middle": [],
+                        "last": "Cabredo",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/sigcpr/FabitoC19",
+                "year": 2019,
+                "venue": "Proceedings of the 2019 on Computers and People Research Conference",
+                "volume": "",
+                "issue": "",
+                "pages": "157--163",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Bernie Fabito and Rafael Cabredo. 2019. Exploring Game Aesthetics as An- tecedents of Game Continuance: An Analysis in the Lens of Self-Determination Theory. In Proceedings of the 2019 on Computers and People Research Conference. 157-163.",
+                "links": null
+            },
+            "BIBREF17": {
+                "ref_id": "b17",
+                "title": "Creating a framework to support the critical consideration of dark design aspects in free-to-play apps",
+                "authors": [
+                    {
+                        "first": "Dan",
+                        "middle": [],
+                        "last": "Fitton",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Janet",
+                        "middle": [
+                            "C"
+                        ],
+                        "last": "Read",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/acmidc/FittonR19",
+                "year": 2019,
+                "venue": "Proceedings of the 18th ACM International Conference on Interaction Design and Children",
+                "volume": "",
+                "issue": "",
+                "pages": "407--418",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Dan Fitton and Janet C Read. 2019. Creating a framework to support the critical consideration of dark design aspects in free-to-play apps. In Proceedings of the 18th ACM International Conference on Interaction Design and Children. 407-418.",
+                "links": null
+            },
+            "BIBREF18": {
+                "ref_id": "b18",
+                "title": "Hung Up': Designing for the Mobile App Engagement University Students Desire",
+                "authors": [
+                    {
+                        "first": "Margarita",
+                        "middle": [],
+                        "last": "Genova",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Nermen",
+                        "middle": [],
+                        "last": "Ghoniem",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Kevin",
+                        "middle": [],
+                        "last": "Doherty",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/chi/GenovaGD21",
+                "year": 2021,
+                "venue": "Extended Abstracts of the 2021 CHI Conference on Human Factors in Computing Systems",
+                "volume": "",
+                "issue": "",
+                "pages": "1--7",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Margarita Genova, Nermen Ghoniem, and Kevin Doherty. 2021. 'Hung Up': De- signing for the Mobile App Engagement University Students Desire. In Extended Abstracts of the 2021 CHI Conference on Human Factors in Computing Systems. 1-7.",
+                "links": null
+            },
+            "BIBREF19": {
+                "ref_id": "b19",
+                "title": "Horror, guilt and shame\"-Uncomfortable Experiences in Digital Games",
+                "authors": [
+                    {
+                        "first": "Chad",
+                        "middle": [],
+                        "last": "Phoenix",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Rose",
+                        "middle": [],
+                        "last": "Gowler",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Ioanna",
+                        "middle": [],
+                        "last": "Iacovides",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/chiplay/GowlerI19",
+                "year": 2019,
+                "venue": "Proceedings of the Annual Symposium on Computer-Human Interaction in Play",
+                "volume": "",
+                "issue": "",
+                "pages": "325--337",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Chad Phoenix Rose Gowler and Ioanna Iacovides. 2019. \"Horror, guilt and shame\"-Uncomfortable Experiences in Digital Games. In Proceedings of the An- nual Symposium on Computer-Human Interaction in Play. 325-337.",
+                "links": null
+            },
+            "BIBREF20": {
+                "ref_id": "b20",
+                "title": "The dark (patterns) side of UX design",
+                "authors": [
+                    {
+                        "first": "Colin M",
+                        "middle": [],
+                        "last": "Gray",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Yubo",
+                        "middle": [],
+                        "last": "Kou",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Bryan",
+                        "middle": [],
+                        "last": "Battles",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Joseph",
+                        "middle": [],
+                        "last": "Hoggatt",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Austin",
+                        "middle": [
+                            "L"
+                        ],
+                        "last": "Toombs",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/chi/GrayKBHT18",
+                "year": 2018,
+                "venue": "Proceedings of the 2018 CHI Conference on Human Factors in Computing Systems",
+                "volume": "",
+                "issue": "",
+                "pages": "1--14",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Colin M Gray, Yubo Kou, Bryan Battles, Joseph Hoggatt, and Austin L Toombs. 2018. The dark (patterns) side of UX design. In Proceedings of the 2018 CHI Conference on Human Factors in Computing Systems. 1-14.",
+                "links": null
+            },
+            "BIBREF21": {
+                "ref_id": "b21",
+                "title": "Dark patterns and the legal requirements of consent banners: an interaction criticism perspective",
+                "authors": [
+                    {
+                        "first": "Colin M",
+                        "middle": [],
+                        "last": "Gray",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Cristiana",
+                        "middle": [],
+                        "last": "Santos",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Nataliia",
+                        "middle": [],
+                        "last": "Bielova",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Michael",
+                        "middle": [],
+                        "last": "Toth",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Damian",
+                        "middle": [],
+                        "last": "Cliford",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/chi/GraySBTC21",
+                "year": 2021,
+                "venue": "Proceedings of the 2021 CHI Conference on Human Factors in Computing Systems",
+                "volume": "",
+                "issue": "",
+                "pages": "1--18",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Colin M Gray, Cristiana Santos, Nataliia Bielova, Michael Toth, and Damian Cliford. 2021. Dark patterns and the legal requirements of consent banners: an interaction criticism perspective. In Proceedings of the 2021 CHI Conference on Human Factors in Computing Systems. 1-18.",
+                "links": null
+            },
+            "BIBREF22": {
+                "ref_id": "b22",
+                "title": "Motivational Factors of Australian Mobile Gamers",
+                "authors": [
+                    {
+                        "first": "Jordan",
+                        "middle": [],
+                        "last": "Greenwood",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Leigh",
+                        "middle": [],
+                        "last": "Achterbosch",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Grant",
+                        "middle": [],
+                        "last": "Meredith",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Peter",
+                        "middle": [],
+                        "last": "Vamplew",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/acsw/GreenwoodAM020",
+                "year": 2020,
+                "venue": "Proceedings of the Australasian Computer Science Week Multiconference",
+                "volume": "",
+                "issue": "",
+                "pages": "1--6",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Jordan Greenwood, Leigh Achterbosch, Grant Meredith, and Peter Vamplew. 2020. Motivational Factors of Australian Mobile Gamers. In Proceedings of the Australasian Computer Science Week Multiconference. 1-6.",
+                "links": null
+            },
+            "BIBREF23": {
+                "ref_id": "b23",
+                "title": "A systematic review of the defnition and measurement of engagement in serious games",
+                "authors": [
+                    {
+                        "first": "Geofrey",
+                        "middle": [],
+                        "last": "Hookham",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Keith",
+                        "middle": [],
+                        "last": "Nesbitt",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2019,
+                "venue": "Proceedings of the Australasian Computer Science Week Multiconference",
+                "volume": "",
+                "issue": "",
+                "pages": "1--10",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Geofrey Hookham and Keith Nesbitt. 2019. A systematic review of the defni- tion and measurement of engagement in serious games. In Proceedings of the Australasian Computer Science Week Multiconference. 1-10.",
+                "links": null
+            },
+            "BIBREF24": {
+                "ref_id": "b24",
+                "title": "Predicting Well-being Using Short Ecological Momentary Audio Recordings",
+                "authors": [
+                    {
+                        "first": "Yu-Ning",
+                        "middle": [],
+                        "last": "Huang",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Siyan",
+                        "middle": [],
+                        "last": "Zhao",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Michael",
+                        "middle": [
+                            "L"
+                        ],
+                        "last": "Rivera",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Jason",
+                        "middle": [
+                            "I"
+                        ],
+                        "last": "Hong",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Robert",
+                        "middle": [
+                            "E"
+                        ],
+                        "last": "Kraut",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/chi/HuangZRHK21",
+                "year": 2021,
+                "venue": "Extended Abstracts of the 2021 CHI Conference on Human Factors in Computing Systems",
+                "volume": "",
+                "issue": "",
+                "pages": "1--7",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Yu-Ning Huang, Siyan Zhao, Michael L Rivera, Jason I Hong, and Robert E Kraut. 2021. Predicting Well-being Using Short Ecological Momentary Audio Recordings. In Extended Abstracts of the 2021 CHI Conference on Human Factors in Computing Systems. 1-7.",
+                "links": null
+            },
+            "BIBREF25": {
+                "ref_id": "b25",
+                "title": "EngageMon: Multi-modal engagement sensing for mobile games",
+                "authors": [
+                    {
+                        "first": "Sinh",
+                        "middle": [],
+                        "last": "Huynh",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Seungmin",
+                        "middle": [],
+                        "last": "Kim",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Jeonggil",
+                        "middle": [],
+                        "last": "Ko",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Rajesh",
+                        "middle": [],
+                        "last": "Krishna Balan",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Youngki",
+                        "middle": [],
+                        "last": "Lee",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2018,
+                "venue": "Proceedings of the ACM on Interactive, Mobile, Wearable and Ubiquitous Technologies",
+                "volume": "2",
+                "issue": "1",
+                "pages": "1--27",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Sinh Huynh, Seungmin Kim, JeongGil Ko, Rajesh Krishna Balan, and Youngki Lee. 2018. EngageMon: Multi-modal engagement sensing for mobile games. Pro- ceedings of the ACM on Interactive, Mobile, Wearable and Ubiquitous Technologies 2, 1 (2018), 1-27.",
+                "links": null
+            },
+            "BIBREF26": {
+                "ref_id": "b26",
+                "title": "Design considerations towards long-term engagement in games for health",
+                "authors": [
+                    {
+                        "first": "Fares",
+                        "middle": [],
+                        "last": "Kayali",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Naemi",
+                        "middle": [],
+                        "last": "Luckner",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Peter",
+                        "middle": [],
+                        "last": "Purgathofer",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Katta",
+                        "middle": [],
+                        "last": "Spiel",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Geraldine",
+                        "middle": [],
+                        "last": "Fitzpatrick",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/fdg/KayaliLPSF18",
+                "year": 2018,
+                "venue": "Proceedings of the 13th international conference on the foundations of digital games",
+                "volume": "",
+                "issue": "",
+                "pages": "1--8",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Fares Kayali, Naemi Luckner, Peter Purgathofer, Katta Spiel, and Geraldine Fitz- patrick. 2018. Design considerations towards long-term engagement in games for health. In Proceedings of the 13th international conference on the foundations of digital games. 1-8.",
+                "links": null
+            },
+            "BIBREF27": {
+                "ref_id": "b27",
+                "title": "How Much is 'Too Much'? The Role of a Smartphone Addiction Narrative in Individuals' Experience of Use",
+                "authors": [
+                    {
+                        "first": "Simone",
+                        "middle": [],
+                        "last": "Lanette",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Phoebe",
+                        "middle": [
+                            "K"
+                        ],
+                        "last": "Chua",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Gillian",
+                        "middle": [],
+                        "last": "Hayes",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Melissa",
+                        "middle": [],
+                        "last": "Mazmanian",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2018,
+                "venue": "Proceedings of the ACM on Human-Computer Interaction",
+                "volume": "2",
+                "issue": "",
+                "pages": "1--22",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Simone Lanette, Phoebe K Chua, Gillian Hayes, and Melissa Mazmanian. 2018. How Much is 'Too Much'? The Role of a Smartphone Addiction Narrative in Individuals' Experience of Use. Proceedings of the ACM on Human-Computer Interaction 2, CSCW (2018), 1-22.",
+                "links": null
+            },
+            "BIBREF28": {
+                "ref_id": "b28",
+                "title": "The Smartphone \"Addiction\" Narrative is Compelling, but Largely Unfounded",
+                "authors": [
+                    {
+                        "first": "Simone",
+                        "middle": [],
+                        "last": "Lanette",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Melissa",
+                        "middle": [],
+                        "last": "Mazmanian",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/chi/LanetteM18",
+                "year": 2018,
+                "venue": "Extended Abstracts of the 2018 CHI Conference on Human Factors in Computing Systems",
+                "volume": "",
+                "issue": "",
+                "pages": "1--6",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Simone Lanette and Melissa Mazmanian. 2018. The Smartphone \"Addiction\" Narrative is Compelling, but Largely Unfounded. In Extended Abstracts of the 2018 CHI Conference on Human Factors in Computing Systems. 1-6.",
+                "links": null
+            },
+            "BIBREF29": {
+                "ref_id": "b29",
+                "title": "Why we play: afect and the fun of games",
+                "authors": [
+                    {
+                        "first": "Nicole",
+                        "middle": [],
+                        "last": "Lazzaro",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2009,
+                "venue": "Human-computer interaction: Designing for diverse users and domains",
+                "volume": "155",
+                "issue": "",
+                "pages": "679--700",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Nicole Lazzaro. 2009. Why we play: afect and the fun of games. Human-computer interaction: Designing for diverse users and domains 155 (2009), 679-700.",
+                "links": null
+            },
+            "BIBREF30": {
+                "ref_id": "b30",
+                "title": "Persuasive mobile game mechanics for user retention",
+                "authors": [
+                    {
+                        "first": "Lukas",
+                        "middle": [],
+                        "last": "Legner",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Chloe",
+                        "middle": [],
+                        "last": "Eghtebas",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Gudrun",
+                        "middle": [],
+                        "last": "Klinker",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/chiplay/LegnerEK19",
+                "year": 2019,
+                "venue": "Extended Abstracts of the Annual Symposium on Computer-Human Interaction in Play Companion Extended Abstracts",
+                "volume": "",
+                "issue": "",
+                "pages": "493--500",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Lukas Legner, Chloe Eghtebas, and Gudrun Klinker. 2019. Persuasive mobile game mechanics for user retention. In Extended Abstracts of the Annual Symposium on Computer-Human Interaction in Play Companion Extended Abstracts. 493-500.",
+                "links": null
+            },
+            "BIBREF31": {
+                "ref_id": "b31",
+                "title": "8-Year-Old Kid Accidentally Spends P100,000 on Parents' Debit Card for Mobile Games",
+                "authors": [
+                    {
+                        "first": "Mario",
+                        "middle": [],
+                        "last": "Alvaro",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Limos",
+                        "middle": [],
+                        "last": "",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2021,
+                "venue": "",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Mario Alvaro Limos. 2021. 8-Year-Old Kid Accidentally Spends P100,000 on Parents' Debit Card for Mobile Games. https://www.esquiremag.ph/politics/ news/boy-spends-100k-on-parents-card-for-mobile-games-a00293-20210113",
+                "links": null
+            },
+            "BIBREF32": {
+                "ref_id": "b32",
+                "title": "Digital Wellbeing is way more than just reducing screen time",
+                "authors": [
+                    {
+                        "first": "Kai",
+                        "middle": [],
+                        "last": "Lukof",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2019,
+                "venue": "",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Kai Lukof. 2019. Digital Wellbeing is way more than just reducing screen time. https://uxdesign.cc/digital-wellbeing-more-than-just-reducing-screen- time-46223db9f057",
+                "links": null
+            },
+            "BIBREF33": {
+                "ref_id": "b33",
+                "title": "What Can CHI Do About Dark Patterns?",
+                "authors": [
+                    {
+                        "first": "Kai",
+                        "middle": [],
+                        "last": "Lukof",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Alexis",
+                        "middle": [],
+                        "last": "Hiniker",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Colin",
+                        "middle": [
+                            "M"
+                        ],
+                        "last": "Gray",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Arunesh",
+                        "middle": [],
+                        "last": "Mathur",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Shruthi",
+                        "middle": [],
+                        "last": "Sai",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Chivukula",
+                        "middle": [],
+                        "last": "",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/chi/LukoffHGMC21",
+                "year": 2021,
+                "venue": "Extended Abstracts of the 2021 CHI Conference on Human Factors in Computing Systems",
+                "volume": "",
+                "issue": "",
+                "pages": "1--6",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Kai Lukof, Alexis Hiniker, Colin M Gray, Arunesh Mathur, and Shruthi Sai Chivukula. 2021. What Can CHI Do About Dark Patterns?. In Extended Abstracts of the 2021 CHI Conference on Human Factors in Computing Systems. 1-6.",
+                "links": null
+            },
+            "BIBREF34": {
+                "ref_id": "b34",
+                "title": "Balancing rewards against efort in Gamifcation",
+                "authors": [
+                    {
+                        "first": "Andrzej",
+                        "middle": [],
+                        "last": "Marczewski",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2015,
+                "venue": "",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Andrzej Marczewski. 2015. Balancing rewards against efort in Gamifca- tion. https://www.gamifed.uk/2015/08/04/balancing-rewards-against-efort-in- gamifcation/",
+                "links": null
+            },
+            "BIBREF35": {
+                "ref_id": "b35",
+                "title": "What makes a dark pattern... dark? design attributes, normative considerations, and measurement methods",
+                "authors": [
+                    {
+                        "first": "Arunesh",
+                        "middle": [],
+                        "last": "Mathur",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Mihir",
+                        "middle": [],
+                        "last": "Kshirsagar",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Jonathan",
+                        "middle": [],
+                        "last": "Mayer",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/chi/MathurKM21",
+                "year": 2021,
+                "venue": "Proceedings of the 2021 CHI Conference on Human Factors in Computing Systems",
+                "volume": "",
+                "issue": "",
+                "pages": "1--18",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Arunesh Mathur, Mihir Kshirsagar, and Jonathan Mayer. 2021. What makes a dark pattern... dark? design attributes, normative considerations, and measurement methods. In Proceedings of the 2021 CHI Conference on Human Factors in Computing Systems. 1-18.",
+                "links": null
+            },
+            "BIBREF36": {
+                "ref_id": "b36",
+                "title": "The race towards digital wellbeing: Issues and opportunities",
+                "authors": [
+                    {
+                        "first": "Alberto",
+                        "middle": [],
+                        "last": "Monge",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Rofarello",
+                        "middle": [],
+                        "last": "",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Luigi",
+                        "middle": [],
+                        "last": "De",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Russis",
+                        "middle": [],
+                        "last": "",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/chi/RoffarelloR19",
+                "year": 2019,
+                "venue": "Proceedings of the 2019 CHI conference on human factors in computing systems",
+                "volume": "",
+                "issue": "",
+                "pages": "1--14",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Alberto Monge Rofarello and Luigi De Russis. 2019. The race towards digital wellbeing: Issues and opportunities. In Proceedings of the 2019 CHI conference on human factors in computing systems. 1-14.",
+                "links": null
+            },
+            "BIBREF37": {
+                "ref_id": "b37",
+                "title": "Star wars battlefront II game faces further backlash",
+                "authors": [],
+                "dblp_id": null,
+                "year": 2017,
+                "venue": "",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "BBC News. 2017. Star wars battlefront II game faces further backlash. https: //www.bbc.com/news/technology-41997252",
+                "links": null
+            },
+            "BIBREF38": {
+                "ref_id": "b38",
+                "title": "Child spends $16K on iPad game in-app purchases",
+                "authors": [
+                    {
+                        "first": "Malcolm",
+                        "middle": [],
+                        "last": "Owen",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2020,
+                "venue": "",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Malcolm Owen. 2020. Child spends $16K on iPad game in-app pur- chases. https://appleinsider.com/articles/20/12/13/kid-spends-16k-on-in-app- purchases-for-ipad-game-sonic-forces",
+                "links": null
+            },
+            "BIBREF39": {
+                "ref_id": "b39",
+                "title": "Design for Wellbeing-Methods and Strategies for Supporting Psychological Needs in User Experience",
+                "authors": [
+                    {
+                        "first": "Dorian",
+                        "middle": [],
+                        "last": "Peters",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Rafael",
+                        "middle": [],
+                        "last": "Calvo",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/chi/PetersC21",
+                "year": 2021,
+                "venue": "Extended Abstracts of the 2021 CHI Conference on Human Factors in Computing Systems",
+                "volume": "",
+                "issue": "",
+                "pages": "1--3",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Dorian Peters and Rafael Calvo. 2021. Design for Wellbeing-Methods and Strate- gies for Supporting Psychological Needs in User Experience. In Extended Abstracts of the 2021 CHI Conference on Human Factors in Computing Systems. 1-3.",
+                "links": null
+            },
+            "BIBREF41": {
+                "ref_id": "b41",
+                "title": "The dark side of interaction design",
+                "authors": [
+                    {
+                        "first": "Yvonne",
+                        "middle": [],
+                        "last": "Rogers",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Margot",
+                        "middle": [],
+                        "last": "Brereton",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Paul",
+                        "middle": [],
+                        "last": "Dourish",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Jodi",
+                        "middle": [],
+                        "last": "Forlizzi",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Patrick",
+                        "middle": [],
+                        "last": "Olivier",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/chi/RogersBDFO21",
+                "year": 2021,
+                "venue": "Extended Abstracts of the 2021 CHI Conference on Human Factors in Computing Systems",
+                "volume": "",
+                "issue": "",
+                "pages": "1--2",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Yvonne Rogers, Margot Brereton, Paul Dourish, Jodi Forlizzi, and Patrick Olivier. 2021. The dark side of interaction design. In Extended Abstracts of the 2021 CHI Conference on Human Factors in Computing Systems. 1-2.",
+                "links": null
+            },
+            "BIBREF42": {
+                "ref_id": "b42",
+                "title": "Optimization of what? For-proft health apps as manipulative digital environments",
+                "authors": [
+                    {
+                        "first": "Marijn",
+                        "middle": [],
+                        "last": "Sax",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2021,
+                "venue": "Ethics and Information Technology",
+                "volume": "",
+                "issue": "",
+                "pages": "1--17",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Marijn Sax. 2021. Optimization of what? For-proft health apps as manipulative digital environments. Ethics and Information Technology (2021), 1-17.",
+                "links": null
+            },
+            "BIBREF43": {
+                "ref_id": "b43",
+                "title": "Addiction by design",
+                "authors": [
+                    {
+                        "first": "Natasha",
+                        "middle": [],
+                        "last": "Dow",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Sch\u00fcll",
+                        "middle": [],
+                        "last": "",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2012,
+                "venue": "",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Natasha Dow Sch\u00fcll. 2012. Addiction by design. Princeton University Press.",
+                "links": null
+            },
+            "BIBREF44": {
+                "ref_id": "b44",
+                "title": "Data for life: Wearable technology and the design of self-care",
+                "authors": [
+                    {
+                        "first": "Natasha",
+                        "middle": [],
+                        "last": "Dow",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Sch\u00fcll",
+                        "middle": [],
+                        "last": "",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2016,
+                "venue": "BioSocieties",
+                "volume": "11",
+                "issue": "3",
+                "pages": "317--333",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Natasha Dow Sch\u00fcll. 2016. Data for life: Wearable technology and the design of self-care. BioSocieties 11, 3 (2016), 317-333.",
+                "links": null
+            },
+            "BIBREF45": {
+                "ref_id": "b45",
+                "title": "Long-term efects of in-game purchases and event game mechanics on young mobile social game players in Japan",
+                "authors": [
+                    {
+                        "first": "Akiko",
+                        "middle": [],
+                        "last": "Shibuya",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Mizuha",
+                        "middle": [],
+                        "last": "Teramoto",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Akiyo",
+                        "middle": [],
+                        "last": "Shoun",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Kumiko",
+                        "middle": [],
+                        "last": "Akiyama",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2019,
+                "venue": "Simulation & Gaming",
+                "volume": "50",
+                "issue": "1",
+                "pages": "76--92",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Akiko Shibuya, Mizuha Teramoto, Akiyo Shoun, and Kumiko Akiyama. 2019. Long-term efects of in-game purchases and event game mechanics on young mobile social game players in Japan. Simulation & Gaming 50, 1 (2019), 76-92.",
+                "links": null
+            },
+            "BIBREF46": {
+                "ref_id": "b46",
+                "title": "It Started as a Joke\" On the Design of Idle Games",
+                "authors": [
+                    {
+                        "first": "Katta",
+                        "middle": [],
+                        "last": "Spiel",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "A",
+                        "middle": [],
+                        "last": "Sultan",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Andrew",
+                        "middle": [],
+                        "last": "Alharthi",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Jessica",
+                        "middle": [],
+                        "last": "Jian-Lan Cen",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "",
+                        "middle": [],
+                        "last": "Hammer",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Z O",
+                        "middle": [],
+                        "last": "Lennart E Nacke",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Tess",
+                        "middle": [],
+                        "last": "Toups",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "",
+                        "middle": [],
+                        "last": "Tanenbaum",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/chiplay/SpielACHNTT19",
+                "year": 2019,
+                "venue": "Proceedings of the Annual Symposium on Computer-Human Interaction in Play",
+                "volume": "",
+                "issue": "",
+                "pages": "495--508",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Katta Spiel, Sultan A Alharthi, Andrew Jian-lan Cen, Jessica Hammer, Lennart E Nacke, Z O Toups, and Tess Tanenbaum. 2019. \"It Started as a Joke\" On the Design of Idle Games. In Proceedings of the Annual Symposium on Computer- Human Interaction in Play. 495-508.",
+                "links": null
+            },
+            "BIBREF47": {
+                "ref_id": "b47",
+                "title": "5-year-old shocks mother by spending $1,480 on inapp purchases in Mobile Game",
+                "authors": [
+                    {
+                        "first": "Jewel",
+                        "middle": [],
+                        "last": "Stolarchuk",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2020,
+                "venue": "",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Jewel Stolarchuk. 2020. 5-year-old shocks mother by spending $1,480 on in- app purchases in Mobile Game. https://theindependent.sg/5-year-old-shocks- mother-by-spending-s1480-on-in-app-purchases-in-mobile-game/",
+                "links": null
+            },
+            "BIBREF48": {
+                "ref_id": "b48",
+                "title": "How do you change complex systems?",
+                "authors": [],
+                "dblp_id": null,
+                "year": 2021,
+                "venue": "",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Center for Humane Technology. 2021. How do you change complex sys- tems? https://mailchi.mp/humanetech.com/leverage-points-framework?e= 70287dfa08",
+                "links": null
+            },
+            "BIBREF49": {
+                "ref_id": "b49",
+                "title": "Our 11-year-old daughter ran up a \u00a32",
+                "authors": [
+                    {
+                        "first": "Anna",
+                        "middle": [],
+                        "last": "Timms",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2021,
+                "venue": "400 Roblox gaming bill",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Anna Timms. 2021. Our 11-year-old daughter ran up a \u00a32,400 Roblox gam- ing bill. https://www.theguardian.com/money/2021/feb/25/our-11-year-old- daughter-ran-up-a-2400-gaming-bill",
+                "links": null
+            },
+            "BIBREF50": {
+                "ref_id": "b50",
+                "title": "Restorative play: Videogames improve player wellbeing after a need-frustrating event",
+                "authors": [
+                    {
+                        "first": "Peta",
+                        "middle": [],
+                        "last": "Tyack",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Daniel",
+                        "middle": [],
+                        "last": "Wyeth",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "",
+                        "middle": [],
+                        "last": "Johnson",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/chi/TyackW020",
+                "year": 2020,
+                "venue": "Proceedings of the 2020 CHI Conference on Human Factors in Computing Systems",
+                "volume": "",
+                "issue": "",
+                "pages": "1--15",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "April Tyack, Peta Wyeth, and Daniel Johnson. 2020. Restorative play: Videogames improve player wellbeing after a need-frustrating event. In Proceedings of the 2020 CHI Conference on Human Factors in Computing Systems. 1-15.",
+                "links": null
+            },
+            "BIBREF51": {
+                "ref_id": "b51",
+                "title": "Dark Gaming Patterns",
+                "authors": [
+                    {
+                        "first": "",
+                        "middle": [],
+                        "last": "Ofsky",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2019,
+                "venue": "",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Reddit user: Ofsky. 2019. Dark Gaming Patterns. https://www.darkpattern. games/patterns.php",
+                "links": null
+            },
+            "BIBREF52": {
+                "ref_id": "b52",
+                "title": "A/Btest of retention and monetization using the Cox model",
+                "authors": [
+                    {
+                        "first": "Markus",
+                        "middle": [],
+                        "last": "Viljanen",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Antti",
+                        "middle": [],
+                        "last": "Airola",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Jukka",
+                        "middle": [],
+                        "last": "Heikkonen",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Tapio",
+                        "middle": [],
+                        "last": "Pahikkala",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/aiide/ViljanenAHP17",
+                "year": 2017,
+                "venue": "Thirteenth Artifcial Intelligence and Interactive Digital Entertainment Conference",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Markus Viljanen, Antti Airola, Jukka Heikkonen, and Tapio Pahikkala. 2017. A/B- test of retention and monetization using the Cox model. In Thirteenth Artifcial Intelligence and Interactive Digital Entertainment Conference.",
+                "links": null
+            },
+            "BIBREF53": {
+                "ref_id": "b53",
+                "title": "Videogames for emotion regulation: a systematic review",
+                "authors": [
+                    {
+                        "first": "Daniela",
+                        "middle": [],
+                        "last": "Villani",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Claudia",
+                        "middle": [],
+                        "last": "Carissoli",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Stefano",
+                        "middle": [],
+                        "last": "Triberti",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Antonella",
+                        "middle": [],
+                        "last": "Marchetti",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Gabriella",
+                        "middle": [],
+                        "last": "Gilli",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Giuseppe",
+                        "middle": [],
+                        "last": "Riva",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2018,
+                "venue": "Games for health journal",
+                "volume": "7",
+                "issue": "2",
+                "pages": "85--99",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Daniela Villani, Claudia Carissoli, Stefano Triberti, Antonella Marchetti, Gabriella Gilli, and Giuseppe Riva. 2018. Videogames for emotion regulation: a systematic review. Games for health journal 7, 2 (2018), 85-99.",
+                "links": null
+            },
+            "BIBREF54": {
+                "ref_id": "b54",
+                "title": "Dad shocked to fnd $6,000 bill after his 6-year-old son spends all the money on in-app game purchases",
+                "authors": [
+                    {
+                        "first": "Ally",
+                        "middle": [],
+                        "last": "Villar",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2021,
+                "venue": "",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Ally Villar. 2021. Dad shocked to fnd $6,000 bill after his 6-year-old son spends all the money on in-app game purchases. https://sg.style.yahoo.com/dad-shocked- 6-000-bill-065749786.html",
+                "links": null
+            },
+            "BIBREF55": {
+                "ref_id": "b55",
+                "title": "One of the baddies all along\" Moments that Challenge a Player's Perspective",
+                "authors": [
+                    {
+                        "first": "Matthew",
+                        "middle": [],
+                        "last": "Alexander",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Whitby",
+                        "middle": [],
+                        "last": "",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Sebastian",
+                        "middle": [],
+                        "last": "Deterding",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Ioanna",
+                        "middle": [],
+                        "last": "Iacovides",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/chiplay/WhitbyDI19",
+                "year": 2019,
+                "venue": "Proceedings of the Annual Symposium on Computer-Human Interaction in Play",
+                "volume": "",
+                "issue": "",
+                "pages": "339--350",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Matthew Alexander Whitby, Sebastian Deterding, and Ioanna Iacovides. 2019. \"One of the baddies all along\" Moments that Challenge a Player's Perspective. In Aagaard et al. Proceedings of the Annual Symposium on Computer-Human Interaction in Play. 339-350.",
+                "links": null
+            },
+            "BIBREF56": {
+                "ref_id": "b56",
+                "title": "The Relationship Between Time Spent Playing Mobile Games and Wellbeing",
+                "authors": [
+                    {
+                        "first": "Shinichi",
+                        "middle": [],
+                        "last": "Yamaguchi",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2020,
+                "venue": "",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Shinichi Yamaguchi. 2020. The Relationship Between Time Spent Playing Mobile Games and Wellbeing. Available at SSRN 3568469 (2020).",
+                "links": null
+            },
+            "BIBREF57": {
+                "ref_id": "b57",
+                "title": "Dark patterns in the design of games",
+                "authors": [
+                    {
+                        "first": "Stafan",
+                        "middle": [],
+                        "last": "Jose P Zagal",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Chris",
+                        "middle": [],
+                        "last": "Bjork",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "",
+                        "middle": [],
+                        "last": "Lewis",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/fdg/ZagalB013",
+                "year": 2013,
+                "venue": "",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Jose P Zagal, Stafan Bjork, and Chris Lewis. 2013. Dark patterns in the design of games. (2013).",
+                "links": null
+            },
+            "BIBREF58": {
+                "ref_id": "b58",
+                "title": "Video game loot boxes are linked to problem gambling: Results of a large-scale survey",
+                "authors": [
+                    {
+                        "first": "David",
+                        "middle": [],
+                        "last": "Zendle",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Paul",
+                        "middle": [],
+                        "last": "Cairns",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2018,
+                "venue": "PloS one",
+                "volume": "13",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "David Zendle and Paul Cairns. 2018. Video game loot boxes are linked to problem gambling: Results of a large-scale survey. PloS one 13, 11 (2018), e0206767.",
+                "links": null
+            },
+            "BIBREF59": {
+                "ref_id": "b59",
+                "title": "Mobile Collocated Gaming: Collaborative Play and Meaning-Making on a University Campus",
+                "authors": [
+                    {
+                        "first": "Xun",
+                        "middle": [],
+                        "last": "Zhang",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Xinning",
+                        "middle": [],
+                        "last": "Gui",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Yubo",
+                        "middle": [],
+                        "last": "Kou",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Yukun",
+                        "middle": [],
+                        "last": "Li",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2020,
+                "venue": "Proceedings of the ACM on Human-Computer Interaction",
+                "volume": "4",
+                "issue": "",
+                "pages": "1--24",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Xun Zhang, Xinning Gui, Yubo Kou, and Yukun Li. 2020. Mobile Collocated Gaming: Collaborative Play and Meaning-Making on a University Campus. Pro- ceedings of the ACM on Human-Computer Interaction 4, CSCW2 (2020), 1-24.",
+                "links": null
+            }
+        }
+    }
+}

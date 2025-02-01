@@ -1,0 +1,1143 @@
+{
+    "paper_id": "3538950",
+    "header": {
+        "generated_with": "S2ORC 1.0.0",
+        "date_generated": "2024-03-20T17:52:58.693085Z"
+    },
+    "title": "Information Intelligence System Solution Based on Big Data Flink Technology",
+    "authors": [
+        {
+            "first": "Baolin",
+            "middle": [],
+            "last": "Xu",
+            "suffix": "",
+            "affiliation": {
+                "laboratory": "",
+                "institution": "Guangdong Baiyun University",
+                "location": {}
+            },
+            "email": ""
+        },
+        {
+            "first": "Jin",
+            "middle": [],
+            "last": "Jiang",
+            "suffix": "",
+            "affiliation": {
+                "laboratory": "",
+                "institution": "Guangdong Baiyun University",
+                "location": {}
+            },
+            "email": ""
+        },
+        {
+            "first": "Junbin",
+            "middle": [],
+            "last": "Ye",
+            "suffix": "",
+            "affiliation": {
+                "laboratory": "",
+                "institution": "Guangdong Baiyun University",
+                "location": {}
+            },
+            "email": ""
+        }
+    ],
+    "year": "",
+    "venue": null,
+    "identifiers": {},
+    "abstract": "Purpose/Significance] This paper aims to discuss how to use big data Flink technology to develop information intelligence system, and provides a reference case for developing information intelligence system using big data real-time streaming technology. [Design/Methodology] This paper briefly introduces the basic concepts of big data, batch processing, stream processing, Flink technology and its superiority in real-time stream processing. And then, according to the thinking mode of big data, complete a set of technical framework for processing information intelligence system [Findings/Conclusion] Compared with some other big data processing technologies such as Spark , Storm, Flink technology has obvious performance advantages in processing real-time stream information. [Originality/Value] Based on the big data thinking mode and the general process of big data processing, the research team creatively proposed an information intelligence processing system solution based on big data Flink technology. The solution takes Flink streaming technology as the processing center, Kafka as the message transmission queue, Elasticsearch as the real-time search engine, Kibana as the front-end display and Mysql as the database storage system. Experiments show that this solution can effectively process big data real-time streaming data and has good practical reference value in the field of information intelligence processing based on big data real-time streaming data.",
+    "pdf_parse": {
+        "abstract": [
+            {
+                "text": "Purpose/Significance] This paper aims to discuss how to use big data Flink technology to develop information intelligence system, and provides a reference case for developing information intelligence system using big data real-time streaming technology. [Design/Methodology] This paper briefly introduces the basic concepts of big data, batch processing, stream processing, Flink technology and its superiority in real-time stream processing. And then, according to the thinking mode of big data, complete a set of technical framework for processing information intelligence system [Findings/Conclusion] Compared with some other big data processing technologies such as Spark , Storm, Flink technology has obvious performance advantages in processing real-time stream information. [Originality/Value] Based on the big data thinking mode and the general process of big data processing, the research team creatively proposed an information intelligence processing system solution based on big data Flink technology. The solution takes Flink streaming technology as the processing center, Kafka as the message transmission queue, Elasticsearch as the real-time search engine, Kibana as the front-end display and Mysql as the database storage system. Experiments show that this solution can effectively process big data real-time streaming data and has good practical reference value in the field of information intelligence processing based on big data real-time streaming data.",
+                "cite_spans": [],
+                "section": "Abstract",
+                "sec_num": null
+            }
+        ],
+        "body_text": [
+            {
+                "text": "With the vigorous development of computer technology, the widespread use of mobile devices, the emergence of various information systems, streaming media software, and the rise of Internet of Things technology, all walks of life have produced a huge amount of data in various formats, big data Has entered thousands of households. In recent years, the importance of big data has become prominent, and many countries in the world have raised big data to the height of national strategies [1] . The emergence and development of science and technology, social demand is the fundamental driving force. The emergence and existence of big data drives people to study big data technology, develop various tools and software, and seek the best technical solutions that match their industry.",
+                "cite_spans": [
+                    {
+                        "start": 487,
+                        "end": 490,
+                        "text": "[1]",
+                        "ref_id": "BIBREF1"
+                    }
+                ],
+                "section": "INTRODUCTION",
+                "sec_num": "1"
+            },
+            {
+                "text": "After a period of research, a basically consistent definition of the concept of big data has been formed. Big data is data with a large amount of data (Volume), a wide variety of data (Variety), fast data change processing speed (Velocity), and low value density (Value) [2] .",
+                "cite_spans": [
+                    {
+                        "start": 271,
+                        "end": 274,
+                        "text": "[2]",
+                        "ref_id": "BIBREF2"
+                    }
+                ],
+                "section": "INTRODUCTION",
+                "sec_num": "1"
+            },
+            {
+                "text": "At present, the research and application of big data real-time streaming Flink technology mainly focus on three directions: One is to propose some optimization strategies for the internal structure of the Flink framework. Literature [3] proposes a Flink task scheduling algorithm FSACE oriented to the container environment. By obtaining the performance information of each node and the distribution information of the container on the node, the container of the node with more free resources is preferentially selected to avoid the container being blocked. Frequent selection results in uneven load, improving resource usage and computing speed. Reference [4] improves the parallelism of multi-table connection calculation by optimizing the connection algorithm inside Flink, shortens the job running time, and reduces the network IO cost in star connection. Reference [5] combines Flink batch processing technology and machine learning algorithm to improve the adaptability of SVM algorithm in big data platform. The second is to develop and design some applications with high real-time performance, mainly because there are many master's thesis in some colleges and universities. Reference [6] utilizes Flink's real-time stream data processing for real-time monitoring. Reference [7] uses Flink's real-time attributes for data mining. The third is to use Flink as a component for specific fields. Reference [8] uses Flink for iterative fault tolerance, thereby improving its efficiency. Literature [9] uses Flink for triangle counting, so as to achieve the purpose of graph data mining.",
+                "cite_spans": [
+                    {
+                        "start": 233,
+                        "end": 236,
+                        "text": "[3]",
+                        "ref_id": "BIBREF3"
+                    },
+                    {
+                        "start": 657,
+                        "end": 660,
+                        "text": "[4]",
+                        "ref_id": "BIBREF4"
+                    },
+                    {
+                        "start": 870,
+                        "end": 873,
+                        "text": "[5]",
+                        "ref_id": "BIBREF5"
+                    },
+                    {
+                        "start": 1193,
+                        "end": 1196,
+                        "text": "[6]",
+                        "ref_id": "BIBREF6"
+                    },
+                    {
+                        "start": 1283,
+                        "end": 1286,
+                        "text": "[7]",
+                        "ref_id": "BIBREF7"
+                    },
+                    {
+                        "start": 1410,
+                        "end": 1413,
+                        "text": "[8]",
+                        "ref_id": "BIBREF8"
+                    },
+                    {
+                        "start": 1501,
+                        "end": 1504,
+                        "text": "[9]",
+                        "ref_id": "BIBREF9"
+                    }
+                ],
+                "section": "RELATED WORK",
+                "sec_num": "2"
+            },
+            {
+                "text": "The above literatures have studied and applied Flink technology from many aspects, but they rarely reflect the big data thinking mode and processing process. This paper follows the thinking processing mode of big data, and according to the basic process of big data processing, it focuses on the basic links of big data processing such as data acquisition and data preprocessing, and proposes an information intelligence system solution based on big data realtime streaming technology, which is universal and representative. In the specific design stage, related technologies are mentioned. The technical solution takes Flink [10] streaming technology as the processing center, Kafka [11] as the message transmission queue, Elasticsearch [12] as the real-time search engine, Kibana [13] as the front-end display, and Mysql [14] as the front-end display database storage system.",
+                "cite_spans": [
+                    {
+                        "start": 626,
+                        "end": 630,
+                        "text": "[10]",
+                        "ref_id": "BIBREF10"
+                    },
+                    {
+                        "start": 684,
+                        "end": 688,
+                        "text": "[11]",
+                        "ref_id": "BIBREF11"
+                    },
+                    {
+                        "start": 738,
+                        "end": 742,
+                        "text": "[12]",
+                        "ref_id": "BIBREF12"
+                    },
+                    {
+                        "start": 782,
+                        "end": 786,
+                        "text": "[13]",
+                        "ref_id": "BIBREF13"
+                    },
+                    {
+                        "start": 823,
+                        "end": 827,
+                        "text": "[14]",
+                        "ref_id": "BIBREF14"
+                    }
+                ],
+                "section": "RELATED WORK",
+                "sec_num": "2"
+            },
+            {
+                "text": "The following will briefly introduce the big data processing method and its framework technology, and make a brief review of Flink technology. Combining the characteristics of information intelligence, according to the thinking and processing mode of big data, starting from the two stages of design and development, it explains how to implement an application example of an information intelligence processing system centered on Flink technology. The next subsections provide instructions on how to insert figures, tables, and equations in your document.",
+                "cite_spans": [],
+                "section": "RELATED WORK",
+                "sec_num": "2"
+            },
+            {
+                "text": "There are three main processing technologies on the market: batch processing and stream processing.",
+                "cite_spans": [],
+                "section": "BIG DATA PROCESSING METHODS AND THEIR FRAMEWORK TECHNOLOGIES",
+                "sec_num": "3"
+            },
+            {
+                "text": "Batch processing technology is mainly used to process a batch of data in stages, such as summarizing, summing, averaging and other usage scenarios. Hadoop [15] provides a running environment for massively parallel data processing algorithms, and its working principle is as follows: The job is decomposed into smaller tasks, the data is partitioned, each task instance handles a different partition, and the task instances are executed in parallel, which fully reflects the idea of \"divide and conquer\".",
+                "cite_spans": [
+                    {
+                        "start": 155,
+                        "end": 159,
+                        "text": "[15]",
+                        "ref_id": "BIBREF15"
+                    }
+                ],
+                "section": "Batch Processing",
+                "sec_num": "3.1"
+            },
+            {
+                "text": "Stream processing mainly operates a large number of scenarios that continuously generate data, and its latency is required to be within milliseconds. Stream processing is suitable for aggregated collection of relevant information and intelligence in real time. The main technologies of stream processing are: Storm [16] , Samza [17] , etc.",
+                "cite_spans": [
+                    {
+                        "start": 315,
+                        "end": 319,
+                        "text": "[16]",
+                        "ref_id": "BIBREF16"
+                    },
+                    {
+                        "start": 328,
+                        "end": 332,
+                        "text": "[17]",
+                        "ref_id": "BIBREF17"
+                    }
+                ],
+                "section": "Stream Processing",
+                "sec_num": "3.2"
+            },
+            {
+                "text": "When studying granularity changes,the Batch processing and stream processing are not easy to distinguish. So some merchants combine the characteristics of batch processing and stream processing to abstract a product that can handle both scenarios at the same time. These products are Spark [18] , Flink, etc.",
+                "cite_spans": [
+                    {
+                        "start": 290,
+                        "end": 294,
+                        "text": "[18]",
+                        "ref_id": null
+                    }
+                ],
+                "section": "Hybrid Processing Systems: Batch and Streaming",
+                "sec_num": "3.3"
+            },
+            {
+                "text": "Apache Flink is a distributed processing engine and framework for stateful computing on bounded and unbounded data streams.",
+                "cite_spans": [],
+                "section": "Flink Technology Review",
+                "sec_num": null
+            },
+            {
+                "text": "Flink is designed to run in all common cluster environments, performing computations at any scale and at memory-level speeds. This technique treats batch tasks as a subset of stream processing by treating batch data as a stream of data with bounded boundaries.",
+                "cite_spans": [],
+                "section": "Flink Technology Review",
+                "sec_num": null
+            },
+            {
+                "text": "Flink applications can consume real-time data from streaming data sources such as message queues or distributed logs (such as Apache Kafka or Kinesis), as well as bounded historical data from a variety of data sources. Meanwhile, streams of results generated by Flink applications can be sent to various sinks [19] ",
+                "cite_spans": [
+                    {
+                        "start": 310,
+                        "end": 314,
+                        "text": "[19]",
+                        "ref_id": "BIBREF19"
+                    }
+                ],
+                "section": "Flink Technology Review",
+                "sec_num": null
+            },
+            {
+                "text": "Since the 1990s, there has been a debate between \"intelligence\" and \"information\" in Chinese information science. Some people think that the separation of \"intelligence\" and \"information\" stems from historical reasons when the concept of intelligence flows into China for translation from abroad. Some scholars suggested that the term \"information\" should be used uniformly outside the scope of military intelligence research, and some scholars suggested that the unified use of the term \"information\" would be beneficial to the development and construction of the discipline of information science, and would help China's information science to embark on an international track. Other scholars believe that simply \"unification of terms\" is not feasible. If it is not possible to uniformly translate \"Information\" in English literature into \"information\" and \"Intelligence\" into \"intelligence\", then the two will cause domestic problems. The controversy will never stop [20] ..This paper does not strictly distinguish between the concepts of information and intelligence.",
+                "cite_spans": [
+                    {
+                        "start": 970,
+                        "end": 974,
+                        "text": "[20]",
+                        "ref_id": "BIBREF20"
+                    }
+                ],
+                "section": "DESIGN AND IMPLEMENTATION OF INFORMATION INTELLIGENCE PROCESSING SYSTEM BASED ON FLINK REAL-TIME STREAMING TECHNOLOGY",
+                "sec_num": "4"
+            },
+            {
+                "text": "It is to get the content and user comments about the site's content of the popular video site Bilibili. The content of the website is mainly expressed in the form of hot words. It is assumed that the words that appear more frequently are the issues that users are more concerned about. The evaluation of website content is performed by word segmentation on the user's evaluation, and the processed words are compared with the emotion dictionary and mapped into three emotion words of \"positive\", \"negative\" and \"unknown\", and an analysis chart is formed.",
+                "cite_spans": [],
+                "section": "Functional Requirements",
+                "sec_num": "4.1"
+            },
+            {
+                "text": "Using the thinking mode and development process of big data technology to develop an information intelligence system, the basic process includes: data acquisition, data preprocessing, data transmission, data analysis and processing, data storage, data visualization, etc. We complete data collection and preprocessing by writing programs, transmit data through Kafka message queue, choose Flink technology to analyze website content and count emotional hot words, choose Mysql as relational database, and choose Elasticsearch as real-time search engine , select Kibana to implement the front-end display function. The data collection tools in diary files mainly include Flume [22] of Cloudera, Scribe[23] of Facebook, Chukwa [24] of Hadoop platform, etc. Network data collection is mainly realized by crawling technology or by calling the development API interface of related websites.",
+                "cite_spans": [
+                    {
+                        "start": 676,
+                        "end": 680,
+                        "text": "[22]",
+                        "ref_id": "BIBREF21"
+                    },
+                    {
+                        "start": 725,
+                        "end": 729,
+                        "text": "[24]",
+                        "ref_id": "BIBREF22"
+                    }
+                ],
+                "section": "System Design",
+                "sec_num": "4.2"
+            },
+            {
+                "text": "Figure 1",
+                "cite_spans": [],
+                "section": "System Architecture Diagram. As shown in",
+                "sec_num": "4.2.1"
+            },
+            {
+                "text": "The program collection program is implemented based on Python, and its essence is an idempotent crawler. It uses the Beau-tifulSoup [25] and Requests [26] open source libraries and programs to pull data. We send a RESTful API request to the Bilibili website, analyze the returned HTML text, and crawl the relevant data information about the video on the web page.",
+                "cite_spans": [
+                    {
+                        "start": 132,
+                        "end": 136,
+                        "text": "[25]",
+                        "ref_id": null
+                    },
+                    {
+                        "start": 150,
+                        "end": 154,
+                        "text": "[26]",
+                        "ref_id": "BIBREF24"
+                    }
+                ],
+                "section": "System Architecture Diagram. As shown in",
+                "sec_num": "4.2.1"
+            },
+            {
+                "text": "(2) Data preprocessing After data collection, the format of the obtained data does not meet the requirements of data analysis. To complete the analysis and statistics function, it is necessary to group the data according to the function, so the captured data should be normalized and transformed, and the Json packaging format should be encapsulated according to the different contents of the data. Then it is sent to a specific topic in the distributed message queue Kafka in serialized form. Topic refers to the subject of the information, which corresponds to the content of the data. The data after data preprocessing is completed as shown in Figure 2 (3) Data transfer storage Usually big data storage is mainly based on Apache Hadoop's HDFS -Hadoop Distributed System. This solution is real-time stream data processing, which is delivered to the real-time processing end through the Kafka queue. According to the different content of the information, it is encapsulated in different topics, which are divided into metadata topic, hot word topic, and emotion topic.",
+                "cite_spans": [],
+                "section": "System Architecture Diagram. As shown in",
+                "sec_num": "4.2.1"
+            },
+            {
+                "text": "(4) Data analysis and processing To mine the great value of big data, it is necessary to analyze and calculate the content of big data [27] The information crawled from the Bilibili server, after data preprocessing and cleaning, is passed through the Kafka queue in an orderly manner to the Flink stream processing framework. In the Flink framework, the relevant API functions are called to complete the processing of the corresponding information.",
+                "cite_spans": [
+                    {
+                        "start": 135,
+                        "end": 139,
+                        "text": "[27]",
+                        "ref_id": "BIBREF25"
+                    }
+                ],
+                "section": "System Architecture Diagram. As shown in",
+                "sec_num": "4.2.1"
+            },
+            {
+                "text": "In the specific implementation process, according to the different topics, it is divided into a metadata processing unit, a hot word calculation unit, and an emotion calculation unit.",
+                "cite_spans": [],
+                "section": "System Architecture Diagram. As shown in",
+                "sec_num": "4.2.1"
+            },
+            {
+                "text": "Metadata processing unit: Kafka processes different information through the Topic field. Therefore, before data processing, different information content must be distinguished, and then sent to the Hot word calculation unit: Hot words need to perform text analysis and word segmentation on all text information, and then summarize.",
+                "cite_spans": [],
+                "section": "System Architecture Diagram. As shown in",
+                "sec_num": "4.2.1"
+            },
+            {
+                "text": "Sentiment calculation unit: The emotion calculation unit does not need to perform word segmentation processing, but also maps the words extracted after word segmentation with the emotion dictionary into three emotion words of \"positive\", \"negative\" and \"unknown\".",
+                "cite_spans": [],
+                "section": "System Architecture Diagram. As shown in",
+                "sec_num": "4.2.1"
+            },
+            {
+                "text": "( ",
+                "cite_spans": [],
+                "section": "System Architecture Diagram. As shown in",
+                "sec_num": "4.2.1"
+            },
+            {
+                "text": "The rapid development of the Internet, Internet of Things, and cloud computing technologies and the endless emergence of various applications have led to the explosive growth of data scale, making data infiltrated into every industry and business field today, and data has become an important factor of production.",
+                "cite_spans": [],
+                "section": "CONCLUDING REMARKS",
+                "sec_num": "5"
+            },
+            {
+                "text": "For the field of information intelligence, real-time requirements are particularly high. The \"information intelligence system solution based on big data Flink technology\" proposed in this paper can efficiently screen intelligence data from massive flow data. Experiments show that: This solution uses Flink streaming technology as the processing center, Kafka as the message transmission queue, Elasticsearch as the real-time search engine, Kibana as the frontend display, and Mysql as the database storage system, which can efficiently realize real-time processing of information intelligence. Compared with big data processing technologies such as Spark and Storm, its performance advantage is more obvious. This article is processed according to the thinking mode and standard process of big data, which is more representative and has the value of promotion and use.",
+                "cite_spans": [],
+                "section": "CONCLUDING REMARKS",
+                "sec_num": "5"
+            }
+        ],
+        "bib_entries": {
+            "BIBREF0": {
+                "ref_id": "b0",
+                "title": "Figure 7\u2014source data 3. Summary of results shown in Figure 7\u2014figure supplement 3.",
+                "authors": [],
+                "dblp_id": null,
+                "year": null,
+                "venue": "",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {
+                    "DOI": [
+                        "10.7554/elife.12727.024"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Hard disk: SSD 1TB (2)Software Tool Information JDK 1.8,Used as Development language Kafka 2.5.0, Used as Message delivery queue Flink 1.12.1, Used as Distributed real-time data stream processing framework Elasticsearch 7.9.3, Used as Search engine Kibana 7.9.3, Used as Information Statistics and Display Python 3.7,Used as Develop a crawler Mysql 5.7, Used as Data storage database CentOS 7.3,Operating system 4.3.2 Experimental results. (1) The collected hot words and user sentiment statistics are shown in Figure 3 below. (2) Stress test Inject 800K data into Kafka and perform a stress test on Flink. By viewing the Jps process, the Flink process runs smoothly. The results are shown in Figure 4 . REFERENCES",
+                "links": null
+            },
+            "BIBREF1": {
+                "ref_id": "b1",
+                "title": "History, present, and future of big data management systems",
+                "authors": [
+                    {
+                        "first": "X",
+                        "middle": [
+                            "Y"
+                        ],
+                        "last": "Du",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "W",
+                        "middle": [],
+                        "last": "Lu",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "F",
+                        "middle": [],
+                        "last": "Zhang",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2019,
+                "venue": "Ruan Jian Xue Bao/Journal of Software",
+                "volume": "30",
+                "issue": "1",
+                "pages": "127--141",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Du XY, Lu W, Zhang F.History, present, and future of big data manage- ment systems.Ruan Jian Xue Bao/Journal of Software, 2019, 30)1(:127-141)in Chinese(.http:/www.jos.org.cn/1000-9825/5644.htm",
+                "links": null
+            },
+            "BIBREF2": {
+                "ref_id": "b2",
+                "title": "Visual analytics towards big data",
+                "authors": [
+                    {
+                        "first": "L",
+                        "middle": [],
+                        "last": "Ren",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Y",
+                        "middle": [],
+                        "last": "Du",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "S",
+                        "middle": [],
+                        "last": "Ma",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "X",
+                        "middle": [
+                            "L"
+                        ],
+                        "last": "Zhang",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "G",
+                        "middle": [
+                            "Z"
+                        ],
+                        "last": "Dai",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2014,
+                "venue": "Ruan Jian Xue Bao/Journal of Software",
+                "volume": "25",
+                "issue": "9",
+                "pages": "1909--1936",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Ren L, Du Y, Ma S, Zhang XL, Dai GZ.Visual analytics towards big data.Ruan Jian Xue Bao/Journal of Software, 2014, 25)9(:1909-1936)in Chinese(.http://www. jos.org.cn/1000-9825/4645.htm",
+                "links": null
+            },
+            "BIBREF3": {
+                "ref_id": "b3",
+                "title": "Research on Task Collaborative Scheduling Algorithm for Container Cloud",
+                "authors": [
+                    {
+                        "first": "Fang",
+                        "middle": [],
+                        "last": "Huangshan",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Xu",
+                        "middle": [],
+                        "last": "Liuyi",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Duan",
+                        "middle": [],
+                        "last": "Haotong",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "",
+                        "middle": [],
+                        "last": "Xiaodong",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2021,
+                "venue": "Proceedings of 2021 The 11th International Workshop on Computer Science and Engineering",
+                "volume": "43",
+                "issue": "",
+                "pages": "1173--1184",
+                "other_ids": {
+                    "DOI": [
+                        "10.18178/wcse.2021.06.021"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Huangshan, Fang Liuyi, Xu Haotong, Duan Xiaodong. Research on task schedul- ing optimization of Flink for container environment [J]. Computer Engineering and Science. 2021,43(07):1173-1184.",
+                "links": null
+            },
+            "BIBREF4": {
+                "ref_id": "b4",
+                "title": "Flink-oriented multi-table join computing performance optimization algorithm",
+                "authors": [
+                    {
+                        "first": "Li",
+                        "middle": [],
+                        "last": "Wang",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Shuang",
+                        "middle": [],
+                        "last": "Kai",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2021,
+                "venue": "J]. Computer Applications and Software",
+                "volume": "38",
+                "issue": "06",
+                "pages": "31--38",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Li Wang, Shuang Kai. Flink-oriented multi-table join computing performance optimization algorithm [J]. Computer Applications and Software, 2021, 38(06): 31-38.",
+                "links": null
+            },
+            "BIBREF5": {
+                "ref_id": "b5",
+                "title": "Research on the application of parallel SVM algorithm in Flink platform",
+                "authors": [
+                    {
+                        "first": "Liu",
+                        "middle": [],
+                        "last": "Bai Yuxin",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "",
+                        "middle": [],
+                        "last": "Xiaoyan",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2021,
+                "venue": "J]. Small Microcomputer System",
+                "volume": "42",
+                "issue": "05",
+                "pages": "1003--1007",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Bai Yuxin, Liu Xiaoyan. Research on the application of parallel SVM algorithm in Flink platform[J]. Small Microcomputer System, 2021, 42(05): 1003-1007",
+                "links": null
+            },
+            "BIBREF6": {
+                "ref_id": "b6",
+                "title": "Design and implementation of intelligent monitoring and alarm system based on Flink",
+                "authors": [
+                    {
+                        "first": "Wang",
+                        "middle": [],
+                        "last": "Yu",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2021,
+                "venue": "",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Wang Yu. Design and implementation of intelligent monitoring and alarm system based on Flink [D]. Beijing: Beijing Jiaotong University, 2021.",
+                "links": null
+            },
+            "BIBREF7": {
+                "ref_id": "b7",
+                "title": "Research on distributed e-commerce recommendation system based on Flink",
+                "authors": [
+                    {
+                        "first": "Ma",
+                        "middle": [],
+                        "last": "Teng",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2021,
+                "venue": "",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Ma Teng. Research on distributed e-commerce recommendation system based on Flink [D]. Beijing: Beijing University of Posts and Telecommunications, 2021.",
+                "links": null
+            },
+            "BIBREF8": {
+                "ref_id": "b8",
+                "title": "Efficient fault-tolerant processing technology for Flink iterative computing",
+                "authors": [
+                    {
+                        "first": "Guo",
+                        "middle": [],
+                        "last": "Wenpeng",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Zhao",
+                        "middle": [],
+                        "last": "Yuhai",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Wang",
+                        "middle": [],
+                        "last": "Guoren",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Wei",
+                        "middle": [],
+                        "last": "Liuguo",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2020,
+                "venue": "Chinese Journal of Computer",
+                "volume": "43",
+                "issue": "11",
+                "pages": "2101--2118",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Guo Wenpeng, Zhao Yuhai, Wang Guoren, Wei Liuguo. Efficient fault-tolerant processing technology for Flink iterative computing [J]. Chinese Journal of Computer, 2020, 43(11):2101-2118.",
+                "links": null
+            },
+            "BIBREF9": {
+                "ref_id": "b9",
+                "title": "Research on triangle counting algorithm in sliding window based on FLINK",
+                "authors": [
+                    {
+                        "first": "Wang",
+                        "middle": [],
+                        "last": "Xu",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Yang",
+                        "middle": [],
+                        "last": "Xiaochun",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2020,
+                "venue": "J]. Computer Science",
+                "volume": "47",
+                "issue": "10",
+                "pages": "83--90",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Wang Xu, Yang Xiaochun. Research on triangle counting algorithm in sliding window based on FLINK[J]. Computer Science, 2020, 47(10):83-90.",
+                "links": null
+            },
+            "BIBREF10": {
+                "ref_id": "b10",
+                "title": "Apache Flink",
+                "authors": [
+                    {
+                        "first": "Fabian",
+                        "middle": [],
+                        "last": "Hueske",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Timo",
+                        "middle": [],
+                        "last": "Walther",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2022,
+                "venue": "Encyclopedia of Big Data Technologies",
+                "volume": "",
+                "issue": "",
+                "pages": "1--9",
+                "other_ids": {
+                    "DOI": [
+                        "10.1007/978-3-319-63962-8_303-2"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "What is Apache Flink? -Architecture. Retrieved Feb 8, 2022 from https://flink. apache.org/flink-architecture.html",
+                "links": null
+            },
+            "BIBREF11": {
+                "ref_id": "b11",
+                "title": "Apache Kafka",
+                "authors": [
+                    {
+                        "first": "Anatoly",
+                        "middle": [],
+                        "last": "Zelenin",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Alexander",
+                        "middle": [],
+                        "last": "Kropp",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2022,
+                "venue": "",
+                "volume": "",
+                "issue": "",
+                "pages": "I--XVII",
+                "other_ids": {
+                    "DOI": [
+                        "10.3139/9783446470460.fm"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Kafka 3.1 Documentation. Retrieved Feb 8, 2022 from https://kafka.apache.org/ documentation/#introduction",
+                "links": null
+            },
+            "BIBREF12": {
+                "ref_id": "b12",
+                "title": "elastic - Elasticsearch for R",
+                "authors": [
+                    {
+                        "first": "Scott",
+                        "middle": [],
+                        "last": "Chamberlain",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2022,
+                "venue": "What is Elasticsearch",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {
+                    "DOI": [
+                        "10.59350/ng3c6-wch93"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "What is Elasticsearch .Retrieved Feb 8, 2022 from https://www.elastic.co/guide/ en/elasticsearch/reference/current/elasticsearch-intro.html",
+                "links": null
+            },
+            "BIBREF13": {
+                "ref_id": "b13",
+                "title": "Getting Started with Kibana",
+                "authors": [
+                    {
+                        "first": "Vishal",
+                        "middle": [],
+                        "last": "Sharma",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2022,
+                "venue": "Beginning Elastic Stack",
+                "volume": "",
+                "issue": "",
+                "pages": "29--44",
+                "other_ids": {
+                    "DOI": [
+                        "10.1007/978-1-4842-1694-1_3"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Your window into the Elastic Stack. Retrieved Feb 8, 2022 from https://www. elastic.co/kibana/",
+                "links": null
+            },
+            "BIBREF14": {
+                "ref_id": "b14",
+                "title": "MySQL Database Service",
+                "authors": [
+                    {
+                        "first": "Charles",
+                        "middle": [],
+                        "last": "Bell",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2022,
+                "venue": "MySQL Database Service Revealed",
+                "volume": "",
+                "issue": "",
+                "pages": "137--195",
+                "other_ids": {
+                    "DOI": [
+                        "10.1007/978-1-4842-8945-7_4"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "MySQL HeatWave Database Service.Retrieved Feb 8, 2022 from https://www. oracle.com/mysql/",
+                "links": null
+            },
+            "BIBREF15": {
+                "ref_id": "b15",
+                "title": "Ecosystem at Large: Hadoop with Apache Bigtop",
+                "authors": [],
+                "dblp_id": null,
+                "year": 2022,
+                "venue": "",
+                "volume": "",
+                "issue": "",
+                "pages": "141--160",
+                "other_ids": {
+                    "DOI": [
+                        "10.1002/9781119281320.ch7"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Apache Hadoop. Retrieved Feb 8, 2022 from https://hadoop.apache.org/",
+                "links": null
+            },
+            "BIBREF16": {
+                "ref_id": "b16",
+                "title": "Apache Storm, a Hands on Tutorial",
+                "authors": [
+                    {
+                        "first": "Robert",
+                        "middle": [],
+                        "last": "Evans",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/ic2e/Evans15",
+                "year": 2022,
+                "venue": "2015 IEEE International Conference on Cloud Engineering",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {
+                    "DOI": [
+                        "10.1109/ic2e.2015.67"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Apache Storm. Retrieved Feb 8, 2022 from https://storm.apache.org/releases/2.3. 0/Tutorial.html",
+                "links": null
+            },
+            "BIBREF17": {
+                "ref_id": "b17",
+                "title": "A distributed stream processing framework",
+                "authors": [
+                    {
+                        "first": "Apache",
+                        "middle": [],
+                        "last": "Samza",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2022,
+                "venue": "",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Apache Samza. A distributed stream processing framework.Retrieved Feb 8, 2022 from https://samza.apache.org/",
+                "links": null
+            },
+            "BIBREF19": {
+                "ref_id": "b19",
+                "title": "847, 1754-11-04, FLINK (Govert), peintre \u2020, FLINK (Nicolaas Antoni), fils \u2020",
+                "authors": [
+                    {
+                        "first": "Learn",
+                        "middle": [],
+                        "last": "Flink",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2022,
+                "venue": "",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {
+                    "DOI": [
+                        "10.1163/2210-7886_asc-847"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Learn Flink: Hands-On Training . Retrieved Feb 8, 2022 from https://nightlies. apache.org/flink/flink-docs-release-1.14/docs/learn-flink/overview/",
+                "links": null
+            },
+            "BIBREF20": {
+                "ref_id": "b20",
+                "title": "Implications of the use of the terms \"intelligence\" and \"information",
+                "authors": [
+                    {
+                        "first": "Cao",
+                        "middle": [],
+                        "last": "Shujin",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Wang",
+                        "middle": [],
+                        "last": "Yaqi",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2022,
+                "venue": "Modern Intelligence",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Cao Shujin, Wang Yaqi. Implications of the use of the terms \"intelligence\" and \"information\" for informatics research [D]. Modern Intelligence, 2022.",
+                "links": null
+            },
+            "BIBREF21": {
+                "ref_id": "b21",
+                "title": "Apache Flume",
+                "authors": [
+                    {
+                        "first": "Deepak",
+                        "middle": [],
+                        "last": "Vohra",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2022,
+                "venue": "Practical Hadoop Ecosystem",
+                "volume": "",
+                "issue": "",
+                "pages": "287--300",
+                "other_ids": {
+                    "DOI": [
+                        "10.1007/978-1-4842-2199-0_6"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Flume 1.9.0 Developer Guide. Retrieved Feb 8, 2022 from https://flume.apache. org/releases/content/1.9.0/FlumeDeveloperGuide.html",
+                "links": null
+            },
+            "BIBREF22": {
+                "ref_id": "b22",
+                "title": "Welcome to Apache Camel",
+                "authors": [
+                    {
+                        "first": "Guilherme",
+                        "middle": [],
+                        "last": "Camposo",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2022,
+                "venue": "Cloud Native Integration with Apache Camel",
+                "volume": "",
+                "issue": "",
+                "pages": "1--37",
+                "other_ids": {
+                    "DOI": [
+                        "10.1007/978-1-4842-7211-4_1"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Welcome to Apache Chukwa!.Retrieved Feb 8, 2022 from https://chukwa.apache. org/",
+                "links": null
+            },
+            "BIBREF24": {
+                "ref_id": "b24",
+                "title": "Requests",
+                "authors": [
+                    {
+                        "first": "Moshe",
+                        "middle": [],
+                        "last": "Zadka",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2022,
+                "venue": "DevOps in Python",
+                "volume": "",
+                "issue": "",
+                "pages": "85--94",
+                "other_ids": {
+                    "DOI": [
+                        "10.1007/978-1-4842-4433-3_7"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Requests: Make HTTP serve humans.Retrieved Feb 8, 2022 from https://docs. python-requests.org/zh_CN/latest/",
+                "links": null
+            },
+            "BIBREF25": {
+                "ref_id": "b25",
+                "title": "Survey on big data system and analytic technology",
+                "authors": [
+                    {
+                        "first": "X",
+                        "middle": [
+                            "Q"
+                        ],
+                        "last": "Cheng",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "X",
+                        "middle": [
+                            "L"
+                        ],
+                        "last": "Jin",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Y",
+                        "middle": [
+                            "Z"
+                        ],
+                        "last": "Wang",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Guo",
+                        "middle": [],
+                        "last": "Jf",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "T",
+                        "middle": [
+                            "Y"
+                        ],
+                        "last": "Zhang",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "G",
+                        "middle": [
+                            "J"
+                        ],
+                        "last": "Li",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2014,
+                "venue": "Ruan Jian Xue Bao/Journal of Software",
+                "volume": "25",
+                "issue": "9",
+                "pages": "1240--1252",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Cheng XQ, Jin XL, Wang YZ, GUO JF, Zhang TY, Li GJ.Survey on big data system and analytic technology.Ruan Jian Xue Bao/Journal of Software, 2014, 25)9(:1240- 1252)in Chinese(.http://www.jos.org.cn/1000-9825/4674.htm",
+                "links": null
+            },
+            "BIBREF26": {
+                "ref_id": "b26",
+                "title": "Research and Implementation of Distributed Intelligent Search Engine Based on Elasticsearch",
+                "authors": [
+                    {
+                        "first": "Zeng",
+                        "middle": [],
+                        "last": "Yafei",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2016,
+                "venue": "",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Zeng Yafei. Research and Implementation of Distributed Intelligent Search Engine Based on Elasticsearch[D]. Chongqing University, 2016.",
+                "links": null
+            }
+        }
+    }
+}

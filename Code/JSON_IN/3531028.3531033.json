@@ -1,0 +1,1602 @@
+{
+    "paper_id": "3531028",
+    "header": {
+        "generated_with": "S2ORC 1.0.0",
+        "date_generated": "2024-03-20T17:52:47.312278Z"
+    },
+    "title": "Using Augmented Reality (AR) to Educate the Student: Bridging the Communication for Internet Addiction",
+    "authors": [
+        {
+            "first": "Muharman",
+            "middle": [],
+            "last": "Lubis",
+            "suffix": "",
+            "affiliation": {},
+            "email": "muharmanlubis@telkomuniversity.ac.id"
+        },
+        {
+            "first": "Oktarina",
+            "middle": [],
+            "last": "Dini",
+            "suffix": "",
+            "affiliation": {},
+            "email": ""
+        },
+        {
+            "first": "",
+            "middle": [],
+            "last": "Handayani",
+            "suffix": "",
+            "affiliation": {},
+            "email": ""
+        },
+        {
+            "first": "Arif",
+            "middle": [
+                "Ridho"
+            ],
+            "last": "Lubis",
+            "suffix": "",
+            "affiliation": {},
+            "email": ""
+        },
+        {
+            "first": "Qadhli",
+            "middle": [],
+            "last": "Jafar",
+            "suffix": "",
+            "affiliation": {},
+            "email": "qadhliadrian@teknokrat.ac.id"
+        }
+    ],
+    "year": "",
+    "venue": null,
+    "identifiers": {},
+    "abstract": "Internet gaming addiction is now recognized as a mental health condition that can have a significant impact on an individual's wellbeing. Over the last decade, studies have accumulated showing that overuse of the Internet can lead to the development of behavioral addiction. Meanwhile, technological advances have introduced virtual and augmented environment, which allows developer to reduce the time and cost of product development iterations while improving the quality of final products, of course bringing user with richness and immersiveness with large scale environment. It opens up new media and approaches to the gaming experience and online browsing activities. The implications means that immersive technology promises higher design fidelity, resulting in higher quality final products at a lower cost than traditional prototyping technology can offer. Thus, this study want to explore in the qualitative approach on how the design in term of augmented reality product influence the student's behavior in the educational purposes.",
+    "pdf_parse": {
+        "abstract": [
+            {
+                "text": "Internet gaming addiction is now recognized as a mental health condition that can have a significant impact on an individual's wellbeing. Over the last decade, studies have accumulated showing that overuse of the Internet can lead to the development of behavioral addiction. Meanwhile, technological advances have introduced virtual and augmented environment, which allows developer to reduce the time and cost of product development iterations while improving the quality of final products, of course bringing user with richness and immersiveness with large scale environment. It opens up new media and approaches to the gaming experience and online browsing activities. The implications means that immersive technology promises higher design fidelity, resulting in higher quality final products at a lower cost than traditional prototyping technology can offer. Thus, this study want to explore in the qualitative approach on how the design in term of augmented reality product influence the student's behavior in the educational purposes.",
+                "cite_spans": [],
+                "section": "Abstract",
+                "sec_num": null
+            }
+        ],
+        "body_text": [
+            {
+                "text": "The major revolution from mobile to immersive computing was seen as the dawn of the third wave of devices using augmented reality and virtual reality (AR and VR). It defines two spectra of immersive technology that may replace mobile computing. Objects or 3D images are often used in the world of cinema and games because they are more visible so they attract people who see them rohmat [1] . Large investments and acquisitions by tech giants suggest that these technologies will become increasingly integrated with content-consuming platforms. AR and VR offer a whole new creative media as a dreamlike perfect approach to building the world pixel by pixel. This promises to replace linear devices with technology that visualizes the ever-expanding world of concentric circles, providing an unprecedented level of immersiveness for in depth experience. This can be a game changer. It has the immersive nature of technology because users are centered and placed in an ever-expanding virtual world rather than viewing content.",
+                "cite_spans": [
+                    {
+                        "start": 387,
+                        "end": 390,
+                        "text": "[1]",
+                        "ref_id": "BIBREF0"
+                    }
+                ],
+                "section": "INTRODUCTION",
+                "sec_num": "1"
+            },
+            {
+                "text": "Immersive technology allows us to engage with global issues such as the humanitarian crisis and enable a form of telepresence that elicits a level of empathy as if it were there. While there are suggestions that increased consumption of digital media can reduce empathy, many AR and VR artists have made media the ultimate empathy machine, based on information from other communities and identities. I'm confident we'll nurture a community from perspective. One potential barrier to rapid advancement in the AR and VR industry is a lack of talent to meet growth demands that go beyond the technical challenges of device size to battery life. Governments are wise in developing strategic talent acquisition plans for emerging technologies to ensure their country is at the forefront of the next computing frontier.",
+                "cite_spans": [],
+                "section": "INTRODUCTION",
+                "sec_num": "1"
+            },
+            {
+                "text": "AR technology has the potential to further enhance the role of smartphones in the Internet of Things as the computer's vision disappears and disappears into the background. Meanwhile, big companies are currently experimenting with ways to further leverage the AR model by incorporating smartphones into a new form factor [2] . As the number of mobile phone users increases, the cause of addiction is mainly due to the applications provided within the device. Internet addiction is becoming an ever-growing problem, and the harm caused by the overuse of computers has attracted the attention and interest of experts around the world. Today, the use of the Internet and computers is rooted in modern society and is changing our way of life more than any other technological medium to date. Computer addiction includes both online and offline activities that can perform using the computer application as it became more widely available, games such as Solitaire, Tetris, and Minesweeper were programmed into the built in software and easy to access.",
+                "cite_spans": [
+                    {
+                        "start": 321,
+                        "end": 324,
+                        "text": "[2]",
+                        "ref_id": "BIBREF1"
+                    }
+                ],
+                "section": "INTRODUCTION",
+                "sec_num": "1"
+            },
+            {
+                "text": "AR is a technology that allows users to overlay virtual text or computer-generated images on real-world objects in real time. Recognition is usually done using a camera and the augmented reality is output through the user's screen, phone, monitor, helmet, augmented reality goggles, windows, or car windshield. You can overlay virtual text or images on selected objects in the user's surroundings to display additional information about the selected objects [3] . Today, from a consumer point of view, this technology is still the most widely used in games, but it is also used in specialized applications in the professional context of education, healthcare and real estate. When the idea of AR appeals to viewers, the first step is to decide if you want to sell the right type of product to take advantage of the technology. The next step is to define the right approaches and tools for building proper app or making more sense with the partner once emphasizing the need of the dedication and experiencing in order to make it work. It is important to remember that the goal is not to introduce a new type of friction by clarifying the value proposition, but to facilitate the buying process of application services to provide clear value in order to present clearly explaination to the client the problem that the application solves [4] .",
+                "cite_spans": [
+                    {
+                        "start": 458,
+                        "end": 461,
+                        "text": "[3]",
+                        "ref_id": "BIBREF2"
+                    },
+                    {
+                        "start": 1335,
+                        "end": 1338,
+                        "text": "[4]",
+                        "ref_id": "BIBREF3"
+                    }
+                ],
+                "section": "LITERATURE REVIEW",
+                "sec_num": "2"
+            },
+            {
+                "text": "The information society has clarified the impact of the spread of information technology on society. Addiction behavior is a form of deviant behavior, characterized by a persistent desire for a pleasing subjective emotional state, represented by active changes in mental state. Therefore, the Internet seems to be attractive to addicts who have the ability to relieve stress from the social environment [5] . Internet addicts need emotional support and recognize the Internet as a medium that can provide this support, unlike in a real social environment where it is more difficult to get this support. Internet addiction also leads to the formation of various psychological problems, which only exacerbate the existing social problems of young people and their lack of social experience [6] . Ease of access or minimization has a significant impact on internet and video game addiction. This is because the shorter the waiting time between a substance or mood-altering behavior and subsequent reinforcement, the more addictive the process. The phenomenological overlap observed between Internet addiction and substance and gambling addiction suggests that common neurobiological substrates, including reward system disorders, underlie these disorders [7] . Dissatisfaction will always occur if the actual situation does not meet your requirements and standards [8] . Education aims to improve the quality of human resources and motivate them to look to the future. It also plays an important role in reducing ignorance, recognizing agencies and shaping social behavior [9] .",
+                "cite_spans": [
+                    {
+                        "start": 403,
+                        "end": 406,
+                        "text": "[5]",
+                        "ref_id": "BIBREF4"
+                    },
+                    {
+                        "start": 788,
+                        "end": 791,
+                        "text": "[6]",
+                        "ref_id": "BIBREF5"
+                    },
+                    {
+                        "start": 1252,
+                        "end": 1255,
+                        "text": "[7]",
+                        "ref_id": "BIBREF6"
+                    },
+                    {
+                        "start": 1362,
+                        "end": 1365,
+                        "text": "[8]",
+                        "ref_id": "BIBREF7"
+                    },
+                    {
+                        "start": 1570,
+                        "end": 1573,
+                        "text": "[9]",
+                        "ref_id": "BIBREF8"
+                    }
+                ],
+                "section": "LITERATURE REVIEW",
+                "sec_num": "2"
+            },
+            {
+                "text": "The development of a digital ecosystem is for mutually beneficial purposes such as business advantage, innovation, or common interests that enable interaction with customers, partners, neighboring industries, and even competitors must include an integrated and connected digital platform. This means that service providers can communicate directly with their customers, such as chat services and direct email calls that can recognize other relevant information through comparisons and market knowledge [10] . In the game, players communicate frequently with the guild and work together to achieve game-related goals. In addition, they play a role by taking on virtual characters called avatars such as sorcerers and warriors. Finally, we will simulate real life with the Metaverse. Everything you can do in real life can also be done in a second virtual world [11] .",
+                "cite_spans": [
+                    {
+                        "start": 502,
+                        "end": 506,
+                        "text": "[10]",
+                        "ref_id": "BIBREF9"
+                    },
+                    {
+                        "start": 860,
+                        "end": 864,
+                        "text": "[11]",
+                        "ref_id": "BIBREF10"
+                    }
+                ],
+                "section": "LITERATURE REVIEW",
+                "sec_num": "2"
+            },
+            {
+                "text": "Under the new DSM-5, internet game cases will be proven at least 5 times a year, using the internet repeatedly to participate in the game and regularly working with different players. It refers to causing clinically significant disability or misery. Meanwhile, the symptoms are based on game distractions, side effects of withdrawal, resistance to investing in more energy games, lack of control, loss of various premiums, use regardless of negative consequences, deception, mental status change, as well as important part loss of relationships, work, and life [12] . In fact, addiction has six psychological components. When applied to the game, the salience of the game controls thoughts, emotions, behaviors, etc., the second is to change the mood of the game for use as a coping strategy or to change the mood, and the third is tolerable score, as it evaluate the degree on the users need to play the game longer to achieve a similar level of mood correction. Fourth, withdrawal symptoms, feeling mentally or physically uncomfortable when not able to play. Fifth, conflicts such as occuring between and/or individuals resulting from game behavior, and finally recurrences that go back to old patterns of play after a period of abstinence. These six factors closely correspond to the drug dependence criteria of both the DSM-IV-TR and ICD-10 [13] . By having the accepted application that allow both way of communication, it is expected that user can keep himself far away to be addicted, while the one that have been fallen can find or direct his attention elsewhere such as productive game or reading news, which in this case, the digital ecosystem play critical role to have distributed, adaptive and open social system that allow collaboration with diverse entity [14] .",
+                "cite_spans": [
+                    {
+                        "start": 561,
+                        "end": 565,
+                        "text": "[12]",
+                        "ref_id": "BIBREF11"
+                    },
+                    {
+                        "start": 1345,
+                        "end": 1349,
+                        "text": "[13]",
+                        "ref_id": "BIBREF12"
+                    },
+                    {
+                        "start": 1771,
+                        "end": 1775,
+                        "text": "[14]",
+                        "ref_id": "BIBREF13"
+                    }
+                ],
+                "section": "LITERATURE REVIEW",
+                "sec_num": "2"
+            },
+            {
+                "text": "Previous studies have shown that cognitive-behavioral therapy (CBT) is effective in psychotherapy of online video game addiction, while other medications (methylphenidate and bupropion), counseling, and online programs based on motivational interviewing has been shown that this types of treatments claim to be effective [15] . Media organizations are being pressured to monetize their businesses and look for different sources of revenue, which can increase media convergence between games and other profitable activities such as gambling. Gaming on the go is a potentially huge growth area and can affect hypergaming between handy devices such as handheld game consoles, PDAs, mobile phones, tablets and MP3 players. Given the fact that the Internet is gender-neutral, not only will more women participate in online games, but problems will result, which can lead to more feminine games [16] .",
+                "cite_spans": [
+                    {
+                        "start": 321,
+                        "end": 325,
+                        "text": "[15]",
+                        "ref_id": "BIBREF14"
+                    },
+                    {
+                        "start": 889,
+                        "end": 893,
+                        "text": "[16]",
+                        "ref_id": "BIBREF15"
+                    }
+                ],
+                "section": "LITERATURE REVIEW",
+                "sec_num": "2"
+            },
+            {
+                "text": "Actually, active participation and contribution of actors add value to the ecosystem that the strength of actors increases the likelihood that they will exist and continue to utilize the functions and the features in ecosystem activities in the future [17] . In addition to using AR content and services, users use the sensor functionality of smart devices to create unique content such as location and Figure 1 : RMS Utility Principles regional information and contribute to the system through a crowdsourcing approach. With the ecosystem, AR app developers do not have to collect data, design their own AR devices, or provide their own tracking algorithms. Instead, it can use the standard API to take packets of data from the content provider and embed existing algorithms related to augmented reality on third-party manufacturers' devices [18] . Public awareness and understanding of nature's services tends to lag behind the increasing use of concepts in landscape planning and design. AR tools on mobile devices such as smartphones can help provide ecosystem services in a variety of landscape settings and extend the reach of participatory landscape management [19] .",
+                "cite_spans": [
+                    {
+                        "start": 252,
+                        "end": 256,
+                        "text": "[17]",
+                        "ref_id": "BIBREF16"
+                    },
+                    {
+                        "start": 843,
+                        "end": 847,
+                        "text": "[18]",
+                        "ref_id": "BIBREF17"
+                    },
+                    {
+                        "start": 1168,
+                        "end": 1172,
+                        "text": "[19]",
+                        "ref_id": "BIBREF18"
+                    }
+                ],
+                "section": "LITERATURE REVIEW",
+                "sec_num": "2"
+            },
+            {
+                "text": "In this case, the simplified design method encourages utility criteria based on user preferences and shared values, by formulating resilience and flexibility for user-system interactions within the digital ecosystem. The user experience highlighted the aspects of experience, influence, meaning and value of human-computer interaction and ownership of a product ryan [20] . Implemented in the form of an RSM (Recognize, Scrutinize and Materialize) design approach. It consisted of cycle phases of recognize, scrutinize and materialize, which is the simplification of design thinking CH [21] . Therefore, it has a specific meaning to provide what you need based on the specific features you need by designing the best user experience when using the service or product. In economics, the concept of utility is used to model value or value as its use has evolved significantly over time. It can be defined as the benefits and joys that consumers can get from services and goods. Therefore, it is important to meet market demand by focusing on the core issues as catalysts by providing solutions by bringing interactions within the application system. Actually, user experience design as the design philosophy used in this study related to a collective term for every types of activities that improve the user acceptance and satisfaction when using an application through typical features. In this case, unity was used as the development software through the utility principles. It have been divided into three layers based on R (user preferences, shared values, open innovation and collaborated ecosystem), S (spectrum of devices, spatial interfaces and structural instantiation) and M (dimension of learning and applied rule). Therefore, in order for a project system to be successful, it must not only be aesthetically pleasing but also present practical, comfortable and useful value. By implementing user experience design in the process, users can be emotionally connected and satisfied when interacting with the system [22] .",
+                "cite_spans": [
+                    {
+                        "start": 367,
+                        "end": 371,
+                        "text": "[20]",
+                        "ref_id": "BIBREF19"
+                    },
+                    {
+                        "start": 586,
+                        "end": 590,
+                        "text": "[21]",
+                        "ref_id": "BIBREF20"
+                    },
+                    {
+                        "start": 2022,
+                        "end": 2026,
+                        "text": "[22]",
+                        "ref_id": "BIBREF21"
+                    }
+                ],
+                "section": "RESEARCH METHOD",
+                "sec_num": "3"
+            },
+            {
+                "text": "To conduct the analysis in aligning with RMS Design Approach, this study focus in bringing the application based on five design criteria (finger rules) consist of accesibility based on human rule, bridgeability based on tangibility rule, compatibility based on balancing rule, discoverability based on ambiguity rule and enability based on redesign rule. In short, human rule represent that the design activity should emphasize the social attribute in nature by bringing back to human centric point of view considering the cultures, habits or behaviors. Therefore, tangibility rule related to the concept of making the ideas have been formulated to the feature that can facilitate the integration and communication as the proper and suitable media platform. Meanwhile, balancing rule explain the attempt to put harmonization between market demand and economic pressures. On the other hand, ambiguity rule describe the preservation of experimenting the limits of user ability to perceive or interpret the function differently and lastly, the redesign rule allow every design to be changed based on certain circumstances based on the user needs. Thus, the dimension of learning should be conducted first as trial error in designing the plan for augmented application.",
+                "cite_spans": [],
+                "section": "RESEARCH METHOD",
+                "sec_num": "3"
+            },
+            {
+                "text": "Researchers soon realized that their obsession with playing computer games was a problem in some environments. Meanwhile, office employees spend a lot of time playing these games, which can significantly reduce their productivity. Even today, these classic games are still available and thousands of new and modern games are also available, in the end the Internet addiction is still prevalent and harmful today. Interestingly, the profession requires technical and business-oriented skills such as programming, data modeling, data warehouse and enterprise strategy, but in term of multimedia content development, the design paradigm become the priorities. Rhetorically, understanding the context of use can be through 5W (who, what, when, where, why) and 1H (how) questions in order to allow successful implementation of application. Answering to these questions are obtained by describing the structure of the modeling as a series of scenarios, alternatives and decision making, thus aligning with the problem arise by Internet addiction through its potentiality of utilization.",
+                "cite_spans": [],
+                "section": "RESEARCH METHOD",
+                "sec_num": "3"
+            },
+            {
+                "text": "The Internet provides users with a wealth of data and knowledge. For some, the easy opportunity to find information has turned into an uncontrollable urge to collect and organize data. In some cases, asking for information is a manifestation of an existing obsessivecompulsive disorder tendency. In general, forced retrieval of information reduces work productivity and can even lead to dismissal. Depending on the severity of the addiction, treatment options can range from a variety of therapeutic approaches, targeting both changes in compulsive behavior and the development of coping strategies for treatment. Different types of treatment are effective, depending on the severity of the addiction and the behavior of the individual. If someone have been known is overusing the Internet, the first step is to plan an intervention or express your concerns about their actions. Treatment is generally combined with addiction treatment, along with potentially comorbid disorders such as anxiety, depression, and obsessive-compulsive disorder. In some cases, medications are used to control the symptoms of these underlying mental illnesses, or to control intrusive thoughts about going online when other treatment options are ineffective.",
+                "cite_spans": [],
+                "section": "DISCUSSION AND ANALYSIS",
+                "sec_num": "4"
+            },
+            {
+                "text": "In general, innovation departs from the traditional perspective by optimizing resources and assets both internally and externally by detailing relevant factors such as production and development costs, time to market, product value, and means creative thinking that changes the way of thinking. This process is expected to lead to a higher level of technical, logical and organizational ownership of uncertainty, rather than simply redesigning the product to attract customers [23, 24] . It is important to answer the amount of users that will utilize the device by certain physical space within the application to optimize the running process. Meanwhile, the designer should understand the condition of user when utilizing the feature of AR application related to the mobility as part of fidelity to make ease the bridgeability aspects. Things like mouse, pointer, keyboard, windows, etc. should be designed precisely and comfortable for user in the long time to anticipate higher error rates and harder process lead to complex tasks through use of digital assistant like touch, voice or certain type of controller.",
+                "cite_spans": [
+                    {
+                        "start": 477,
+                        "end": 481,
+                        "text": "[23,",
+                        "ref_id": "BIBREF22"
+                    },
+                    {
+                        "start": 482,
+                        "end": 485,
+                        "text": "24]",
+                        "ref_id": "BIBREF23"
+                    }
+                ],
+                "section": "DISCUSSION AND ANALYSIS",
+                "sec_num": "4"
+            },
+            {
+                "text": "The information-rich AR model should be displayed on a simplified display platform linked to the mobile device to present the attributes of ease of use [25] . Therefore, designers need to explore spatial interfaces by combining interface transition types with list operations for smooth navigation within the process. Presence design, on the other hand, should be useful for increasing user enjoyment by enabling collaborative feedback, providing filtering, and providing many menu features to increase dialogue. Overall, the learning curve for developing AR models was initially very steep as we were new to open source and free 3D creation software. On the other hand, there is important concept that is important to consider, which mental workloads based on the theory of limited working memory capacity, cognitive workload and limited cognitive ability when developing AR applications [26] . The main motivation behind this concept related to measure the mental cost of performing tasks in order to predict operator and system performance by creating a working environment that does not exceed the imposed mental workload. In the end, it will help the development to understand the limit or constraint towards the capacity that is unacceptable based on performance levels. In this case, the AR app is designed as a new approach to elementary school math homework to enhance interaction and experience. Thus, in the figure 3 , the first and second page was presented as the final interface design as well the guideline in 'bahasa Indonesia', which were translated as 1. Open Application, 2. Direct the camera unto marker, 3. The object will appear as marker pointed out. Therefore, figure 2 present the list of geometry to learn by students while figure 3 provide the list of questions in the marker book.",
+                "cite_spans": [
+                    {
+                        "start": 152,
+                        "end": 156,
+                        "text": "[25]",
+                        "ref_id": "BIBREF24"
+                    },
+                    {
+                        "start": 889,
+                        "end": 893,
+                        "text": "[26]",
+                        "ref_id": "BIBREF25"
+                    }
+                ],
+                "section": "DISCUSSION AND ANALYSIS",
+                "sec_num": "4"
+            },
+            {
+                "text": "Designers planning an asynchronous learning experience have many benefits that come with transition time and do not need to participate at the real time by providing flexible opportunities for dialogue and communication. Some of the benefits of them include the benefits of flexible responds when students can change easily over time to access the course. It also gives students more time and space to reflect on their learning and practice then improving their contribution to the class activities. Lastly, it can create an archive of information that students refer to, throughout the semester, including discussion posts, teacher summaries, and recorded videos. To allow this design process connect with the requirement, diagrammatic reasoning map should be developed before deciding what type of educational activity to include in the course. Of course, some asynchronous activities are suitable for a particular purpose, so it is helpful to study the course content, learner needs, and course purpose. In fact, it can be done by combining schematic representation with recent research on the cognitive, logical, and especially computational properties of map thinking.",
+                "cite_spans": [],
+                "section": "DISCUSSION AND ANALYSIS",
+                "sec_num": "4"
+            },
+            {
+                "text": "Certain attributes can be used as the basis for evaluations [27, 28] such as performance related to the ability of AR applications to overlay virtual data on physical objects and display them in real time when the user's position changes. On the other hand, there is also usability that focus intuitively to execute common or actual activity without any trouble. For added value, it can visualize the business process under investigation by using an AR application. In short, utility criteria were not used to replace important positions in many common design aspects but putting priority as the fulfilment to this proposed finger rule will accommodate those aspects inherently. There are also some features to avoid, such as avoiding overwriting spaces in your AR app, and being careful about mixing carousels, scrolling and zooming areas, and hamburger menus. Therefore, the designer must also take into account the time it takes to move the space. This could interfere with the interaction. It is also important to anticipate adding time when the program feels unresponsive by thinking of acronyms that imply a sense of space.",
+                "cite_spans": [
+                    {
+                        "start": 60,
+                        "end": 64,
+                        "text": "[27,",
+                        "ref_id": "BIBREF26"
+                    },
+                    {
+                        "start": 65,
+                        "end": 68,
+                        "text": "28]",
+                        "ref_id": "BIBREF27"
+                    }
+                ],
+                "section": "DISCUSSION AND ANALYSIS",
+                "sec_num": "4"
+            },
+            {
+                "text": "As mentioned in the literature reviews, the objective of developing AR to encourage students to have new experience on new medium leading to reduce the their activity time of Internet browsing or gaming platform. It is also suggested that motivational approach has been presented as alternetive treatments that effective to counter Internet addiction. Therefore, exercising regularly can reduce symptoms of depression and anxiety. By performing homework and tests on a regular basis, augmented reality applications can provide mood-improving benefits and reduce the need to deal with Internet addiction On the other hand, scheduling breaks from the Internet and scheduling time limits that are restricted to Internet use can also help reduce overall use. Just as technological developments are increasing Internet access, real world technologies also offer alternative solutions to Internet misuse.",
+                "cite_spans": [],
+                "section": "DISCUSSION AND ANALYSIS",
+                "sec_num": "4"
+            },
+            {
+                "text": "To see how far the application of AR has succeeded in reducing dependence on the Internet, the collaboration with the elementary school was carried out for two weeks in working on mathematical assignments. Therefore, the results obtained proved that students ",
+                "cite_spans": [],
+                "section": "DISCUSSION AND ANALYSIS",
+                "sec_num": "4"
+            },
+            {
+                "text": "In conclusion, with the increase in Internet access, more and more people are finding it difficult to regulate their use. Learning about Internet addiction treatments and alternative solutions will help restore a balanced use of the Internet. Meanwhile, the Internet addiction treatment may be necessary for individuals who feel out of control and obsess over their Internet use. Avoiding the Internet completely is impractical for most people in our culture, but it is possible to recover from Internet addiction by developing healthy boundaries regarding Internet use. Internet addiction treatment with AR gaming experience consists of teaching and learning techniques to help people reduce their use of the Internet. In the early stages of treatment, therapy can stimulate change and focus on being more aware of how harmful Internet abuse can be. A large part of Internet addiction treatment is identifying triggers and high-risk situations and learning how to deal with them.",
+                "cite_spans": [],
+                "section": "CONCLUSION",
+                "sec_num": "5"
+            }
+        ],
+        "bib_entries": {
+            "BIBREF0": {
+                "ref_id": "b0",
+                "title": "Designing an Android-based Space Travel Application Trough Virtual Reality for Teaching Media",
+                "authors": [
+                    {
+                        "first": "R",
+                        "middle": [
+                            "I"
+                        ],
+                        "last": "Borman",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Y",
+                        "middle": [
+                            "P"
+                        ],
+                        "last": "Putra",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Y",
+                        "middle": [],
+                        "last": "Fernando",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "D",
+                        "middle": [
+                            "E"
+                        ],
+                        "last": "Kurniawan",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "P",
+                        "middle": [],
+                        "last": "Prasetyawan",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "I",
+                        "middle": [],
+                        "last": "Ahmad",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2016,
+                "venue": "Proc. 2018 Int. Conf. Appl. Eng. ICAE 2018",
+                "volume": "",
+                "issue": "",
+                "pages": "1--5",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "R. I. Borman, Y. P. Putra, Y. Fernando, D. E. Kurniawan, P. Prasetyawan, and I. Ahmad, 2016. Designing an Android-based Space Travel Application Trough Virtual Reality for Teaching Media. Proc. 2018 Int. Conf. Appl. Eng. ICAE 2018, pp. 1-5.",
+                "links": null
+            },
+            "BIBREF1": {
+                "ref_id": "b1",
+                "title": "Augmented Reality and the Internet of Things",
+                "authors": [
+                    {
+                        "first": "A",
+                        "middle": [],
+                        "last": "Ilic",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "E",
+                        "middle": [],
+                        "last": "Fleisch",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2016,
+                "venue": "",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "A. Ilic and E. Fleisch. 2016. Augmented Reality and the Internet of Things. Auto-ID Labs White Paper WP-BIZAPP-068, December 2016.",
+                "links": null
+            },
+            "BIBREF2": {
+                "ref_id": "b2",
+                "title": "Big Data, Internet of Things, Augmented Reality: Technology Convergence in Visualization Issues",
+                "authors": [
+                    {
+                        "first": "D",
+                        "middle": [
+                            "A"
+                        ],
+                        "last": "Smuseva",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "A",
+                        "middle": [
+                            "Y"
+                        ],
+                        "last": "Rolich",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "L",
+                        "middle": [
+                            "S"
+                        ],
+                        "last": "Voskov",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "I",
+                        "middle": [
+                            "Y"
+                        ],
+                        "last": "Malakhov",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2019,
+                "venue": "Int. Conf. on ITNT",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "D.A. Smuseva, A.Y. Rolich, L.S. Voskov and I.Y. Malakhov. 2019. Big Data, Internet of Things, Augmented Reality: Technology Convergence in Visualization Issues\". Int. Conf. on ITNT.",
+                "links": null
+            },
+            "BIBREF3": {
+                "ref_id": "b3",
+                "title": "Bridging the Imagination Gap: How Augmented Reality can Boost Sales",
+                "authors": [
+                    {
+                        "first": "A",
+                        "middle": [],
+                        "last": "Sword",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "S",
+                        "middle": [],
+                        "last": "Lester",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2018,
+                "venue": "Internet Retailing White Paper in Conjunction with Flixmedia",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "A. Sword and S. Lester. 2018. Bridging the Imagination Gap: How Augmented Re- ality can Boost Sales. Internet Retailing White Paper in Conjunction with Flixmedia, October.",
+                "links": null
+            },
+            "BIBREF4": {
+                "ref_id": "b4",
+                "title": "Students' Internet Addiction: Study and Prevention",
+                "authors": [
+                    {
+                        "first": "S",
+                        "middle": [
+                            "D"
+                        ],
+                        "last": "Neverkovich",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "I",
+                        "middle": [
+                            "S"
+                        ],
+                        "last": "Bubnova",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "N",
+                        "middle": [
+                            "N"
+                        ],
+                        "last": "Kosarenko",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "R",
+                        "middle": [
+                            "G"
+                        ],
+                        "last": "Sakhieva",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Z",
+                        "middle": [
+                            "M"
+                        ],
+                        "last": "Sizova",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "V",
+                        "middle": [
+                            "L"
+                        ],
+                        "last": "Zakharova",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "M",
+                        "middle": [
+                            "G"
+                        ],
+                        "last": "Sergeeva",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2018,
+                "venue": "EURASIA J. of Mathematics, Science and Technology Education",
+                "volume": "14",
+                "issue": "4",
+                "pages": "1483--1495",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "S.D. Neverkovich, I.S. Bubnova, N.N. Kosarenko, R.G. Sakhieva, Z.M. Sizova, V.L. Zakharova and M.G. Sergeeva. 2018. Students' Internet Addiction: Study and Prevention. EURASIA J. of Mathematics, Science and Technology Education, 14(4), 1483-1495.",
+                "links": null
+            },
+            "BIBREF5": {
+                "ref_id": "b5",
+                "title": "Internet Gaming Disorder in Children and Adolescents",
+                "authors": [
+                    {
+                        "first": "D",
+                        "middle": [
+                            "A"
+                        ],
+                        "last": "Gentile",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "K",
+                        "middle": [],
+                        "last": "Bailey",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "D",
+                        "middle": [],
+                        "last": "Bavelier",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "J",
+                        "middle": [
+                            "F"
+                        ],
+                        "last": "Brockmyer",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "H",
+                        "middle": [],
+                        "last": "Cash",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "S",
+                        "middle": [
+                            "M"
+                        ],
+                        "last": "Coyne",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "A",
+                        "middle": [],
+                        "last": "Doan",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "D",
+                        "middle": [
+                            "S"
+                        ],
+                        "last": "Grant",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "S",
+                        "middle": [],
+                        "last": "Green",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "M",
+                        "middle": [],
+                        "last": "Griffiths",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "T",
+                        "middle": [],
+                        "last": "Markle",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "N",
+                        "middle": [
+                            "M"
+                        ],
+                        "last": "Petry",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "S",
+                        "middle": [],
+                        "last": "Prot",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "C",
+                        "middle": [
+                            "D"
+                        ],
+                        "last": "Rae",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "F",
+                        "middle": [],
+                        "last": "Rehbein",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "M",
+                        "middle": [],
+                        "last": "Rich",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "D",
+                        "middle": [],
+                        "last": "Sullivan",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "E",
+                        "middle": [],
+                        "last": "Woolley",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "K",
+                        "middle": [],
+                        "last": "Young",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2017,
+                "venue": "Pediatrics",
+                "volume": "140",
+                "issue": "2",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "D.A. Gentile, K. Bailey, D. Bavelier, J.F. Brockmyer, H. Cash, S.M. Coyne, A. Doan, D.S. Grant, S. Green, M. Griffiths, T. Markle, N.M. Petry, S. Prot, C.D. Rae, F. Rehbein, M. Rich, D. Sullivan, E. Woolley and K. Young. 2017. Internet Gaming Disorder in Children and Adolescents. Pediatrics, 140(s2), November.",
+                "links": null
+            },
+            "BIBREF6": {
+                "ref_id": "b6",
+                "title": "Treatment Considerations in Internet and Video Game Addiction: A Qualitative Discussion",
+                "authors": [
+                    {
+                        "first": "D",
+                        "middle": [
+                            "N"
+                        ],
+                        "last": "Greenfield",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2018,
+                "venue": "Child Adolesc. Psychiatric Clin. N. Am",
+                "volume": "27",
+                "issue": "",
+                "pages": "327--344",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "D.N. Greenfield. 2018. Treatment Considerations in Internet and Video Game Addiction: A Qualitative Discussion. Child Adolesc. Psychiatric Clin. N. Am. 27, 327-344.",
+                "links": null
+            },
+            "BIBREF7": {
+                "ref_id": "b7",
+                "title": "A Case Study of Universities of Dormitory Residence Management (DRMS) in Indonesia",
+                "authors": [
+                    {
+                        "first": "M",
+                        "middle": [],
+                        "last": "Lubis",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "R",
+                        "middle": [],
+                        "last": "Fauzi",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "A",
+                        "middle": [
+                            "R"
+                        ],
+                        "last": "Lubis",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "R",
+                        "middle": [],
+                        "last": "Fauzi",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2018,
+                "venue": "",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "M. Lubis, R. Fauzi, A.R. Lubis and R. Fauzi. 2018. A Case Study of Universities of Dormitory Residence Management (DRMS) in Indonesia. IEEE Int. Conf. Cyber and IT Service.",
+                "links": null
+            },
+            "BIBREF8": {
+                "ref_id": "b8",
+                "title": "Enterprise Application Integration for High School Students using Blended Learning System",
+                "authors": [
+                    {
+                        "first": "M",
+                        "middle": [],
+                        "last": "Lubis",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "R",
+                        "middle": [],
+                        "last": "Fauzi",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "A",
+                        "middle": [
+                            "R"
+                        ],
+                        "last": "Lubis",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2018,
+                "venue": "MATEC Web of Conferences",
+                "volume": "218",
+                "issue": "1",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "M. Lubis, R. Fauzi and A.R. Lubis. 2018. Enterprise Application Integration for High School Students using Blended Learning System. MATEC Web of Conferences 218(1):04016.",
+                "links": null
+            },
+            "BIBREF9": {
+                "ref_id": "b9",
+                "title": "Digital Ecosystem Development in Customer Relationship Management (CRM) for Hajj Portal Website",
+                "authors": [
+                    {
+                        "first": "M",
+                        "middle": [],
+                        "last": "Lubis",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "A",
+                        "middle": [
+                            "A"
+                        ],
+                        "last": "Ananto",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "M",
+                        "middle": [],
+                        "last": "Afifudin",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2021,
+                "venue": "ACM Int. Conf. on e-Business and Applications",
+                "volume": "",
+                "issue": "",
+                "pages": "47--53",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "M. Lubis, A.A. Ananto and M. Afifudin. 2021. Digital Ecosystem Development in Customer Relationship Management (CRM) for Hajj Portal Website. ACM Int. Conf. on e-Business and Applications, 47-53.",
+                "links": null
+            },
+            "BIBREF10": {
+                "ref_id": "b10",
+                "title": "Internet Gaming Addiction: A Systematic Review of Empirical Research",
+                "authors": [
+                    {
+                        "first": "D",
+                        "middle": [
+                            "J"
+                        ],
+                        "last": "Kuss",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "M",
+                        "middle": [
+                            "D"
+                        ],
+                        "last": "Griffiths",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2012,
+                "venue": "Int. J. of Mental and Addiction",
+                "volume": "10",
+                "issue": "2",
+                "pages": "278--296",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "D.J. Kuss and M.D. Griffiths. 2012. Internet Gaming Addiction: A Systematic Review of Empirical Research. Int. J. of Mental and Addiction, 10(2), 278-296.",
+                "links": null
+            },
+            "BIBREF11": {
+                "ref_id": "b11",
+                "title": "Addiction to Internet Games",
+                "authors": [
+                    {
+                        "first": "S",
+                        "middle": [
+                            "A"
+                        ],
+                        "last": "Hassan",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "S",
+                        "middle": [],
+                        "last": "Bhateja",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "G",
+                        "middle": [],
+                        "last": "Arora",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "F",
+                        "middle": [],
+                        "last": "Prathyusha",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2020,
+                "venue": "Journal of Management Research and Analysis",
+                "volume": "7",
+                "issue": "2",
+                "pages": "52--56",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "S.A. Hassan, S. Bhateja, G. Arora and F. Prathyusha. 2020. Addiction to Internet Games. Journal of Management Research and Analysis, 7(2), 52-56.",
+                "links": null
+            },
+            "BIBREF12": {
+                "ref_id": "b12",
+                "title": "Gaming Addiction, Definition and Measurement: A Large-Scale Empirical Study",
+                "authors": [
+                    {
+                        "first": "M",
+                        "middle": [
+                            "L C"
+                        ],
+                        "last": "Spekman",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "E",
+                        "middle": [
+                            "A"
+                        ],
+                        "last": "Konijn",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "P",
+                        "middle": [
+                            "H M P"
+                        ],
+                        "last": "Roelofsma",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "M",
+                        "middle": [
+                            "D"
+                        ],
+                        "last": "Griffiths",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2013,
+                "venue": "Computers in Human Behavior",
+                "volume": "29",
+                "issue": "",
+                "pages": "2150--2155",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "M.L.C. Spekman, E.A. Konijn, P.H.M.P. Roelofsma and M.D. Griffiths. 2013. Gam- ing Addiction, Definition and Measurement: A Large-Scale Empirical Study. Computers in Human Behavior, 29, 2150-2155.",
+                "links": null
+            },
+            "BIBREF13": {
+                "ref_id": "b13",
+                "title": "Design Approach in Electronic Health Consultation Application: User Empowerment for Internet Addiction",
+                "authors": [
+                    {
+                        "first": "M",
+                        "middle": [],
+                        "last": "Lubis",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "D",
+                        "middle": [
+                            "O"
+                        ],
+                        "last": "Handayani",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "A",
+                        "middle": [],
+                        "last": "Rostiawan",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Q",
+                        "middle": [
+                            "J"
+                        ],
+                        "last": "Adrian",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "R",
+                        "middle": [],
+                        "last": "Fauzi",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "I",
+                        "middle": [
+                            "F"
+                        ],
+                        "last": "Zamzami",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2022,
+                "venue": "",
+                "volume": "",
+                "issue": "",
+                "pages": "1--6",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "M. Lubis, D. O. Handayani, A. Rostiawan, Q. J. Adrian, R. Fauzi, and I. F. Zamzami. 2022. Design Approach in Electronic Health Consultation Application: User Empowerment for Internet Addiction. 1-6.",
+                "links": null
+            },
+            "BIBREF14": {
+                "ref_id": "b14",
+                "title": "Internet Gaming Disorder Treatment: A Case Study Evaluation of Four Different Types of Adolescent Problematic Gamers",
+                "authors": [
+                    {
+                        "first": "A",
+                        "middle": [],
+                        "last": "Torres-Rodriguez",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "M",
+                        "middle": [
+                            "D"
+                        ],
+                        "last": "Griffiths",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "X",
+                        "middle": [],
+                        "last": "Carbonell",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "N",
+                        "middle": [],
+                        "last": "Farriols-Hernando",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "E",
+                        "middle": [],
+                        "last": "Torress-Jimenez",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2017,
+                "venue": "Int. J. Ment. Health Addiction",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "A. Torres-Rodriguez, M.D. Griffiths, X. Carbonell, N. Farriols-Hernando and E. Torress-Jimenez. 2017. Internet Gaming Disorder Treatment: A Case Study Evaluation of Four Different Types of Adolescent Problematic Gamers. Int. J. Ment. Health Addiction, 5 Dec.",
+                "links": null
+            },
+            "BIBREF15": {
+                "ref_id": "b15",
+                "title": "Video Game Addiction: Past, Present and Future",
+                "authors": [
+                    {
+                        "first": "M",
+                        "middle": [
+                            "D"
+                        ],
+                        "last": "Griffiths",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "D",
+                        "middle": [
+                            "J"
+                        ],
+                        "last": "Kuss",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "D",
+                        "middle": [
+                            "L"
+                        ],
+                        "last": "King",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2012,
+                "venue": "Current Psychiatry Reviews",
+                "volume": "8",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "M.D. Griffiths, D.J. Kuss and D.L. King. 2012. Video Game Addiction: Past, Present and Future. Current Psychiatry Reviews, 8.",
+                "links": null
+            },
+            "BIBREF16": {
+                "ref_id": "b16",
+                "title": "A Case Study of the Health of an Augmented Reality Software Ecosystem: Vuforia",
+                "authors": [
+                    {
+                        "first": "L",
+                        "middle": [],
+                        "last": "Soussi",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Z",
+                        "middle": [],
+                        "last": "Spijkerman",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "S",
+                        "middle": [],
+                        "last": "Jansen",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/icsob/SoussiSJ16",
+                "year": 2016,
+                "venue": "Springer ICSOB, LNBIP",
+                "volume": "240",
+                "issue": "",
+                "pages": "145--152",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "L. Soussi, Z. Spijkerman and S. Jansen. 2016. A Case Study of the Health of an Augmented Reality Software Ecosystem: Vuforia. Springer ICSOB, LNBIP 240, 145-152, 2016.",
+                "links": null
+            },
+            "BIBREF17": {
+                "ref_id": "b17",
+                "title": "Enabling an Augmented Reality Ecosystem: Content-oriented Survey",
+                "authors": [
+                    {
+                        "first": "Z",
+                        "middle": [],
+                        "last": "Zhang",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "P",
+                        "middle": [],
+                        "last": "Hui",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "S",
+                        "middle": [
+                            "R"
+                        ],
+                        "last": "Kulkarni",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "C",
+                        "middle": [],
+                        "last": "Peylo",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2014,
+                "venue": "",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Z. Zhang, P. Hui, S.R. Kulkarni and C. Peylo. 2014. Enabling an Augmented Reality Ecosystem: Content-oriented Survey\". ACM MARS.",
+                "links": null
+            },
+            "BIBREF18": {
+                "ref_id": "b18",
+                "title": "Framing Nature: Using Augmented Reality to Communicate Ecosystem Services",
+                "authors": [
+                    {
+                        "first": "S",
+                        "middle": [],
+                        "last": "Taigel",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "A",
+                        "middle": [],
+                        "last": "Lovett",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "K",
+                        "middle": [],
+                        "last": "Appleton",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2014,
+                "venue": "Peer Reviewed Proc. of Digital Landscape Architecture",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "S. Taigel, A. Lovett and K. Appleton. 2014. Framing Nature: Using Augmented Reality to Communicate Ecosystem Services. In book: U.W. Hayek, P. Fricker and E. Buhmann. Peer Reviewed Proc. of Digital Landscape Architecture, Springer.",
+                "links": null
+            },
+            "BIBREF19": {
+                "ref_id": "b19",
+                "title": "Investigation on the effect of user's experience to motivate playing online games",
+                "authors": [
+                    {
+                        "first": "R",
+                        "middle": [
+                            "R"
+                        ],
+                        "last": "Suryono",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "A",
+                        "middle": [
+                            "P"
+                        ],
+                        "last": "Subriadi",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2016,
+                "venue": "J. Theor. Appl. Inf. Technol",
+                "volume": "86",
+                "issue": "1",
+                "pages": "62--67",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "R. R. Suryono and A. P. Subriadi. 2016. Investigation on the effect of user's experience to motivate playing online games, J. Theor. Appl. Inf. Technol., vol. 86, no. 1, pp. 62-67.",
+                "links": null
+            },
+            "BIBREF20": {
+                "ref_id": "b20",
+                "title": "Channel Treatment Addiction with Puskesmas Application: Design Approach with Usability Heuristics",
+                "authors": [
+                    {
+                        "first": "M",
+                        "middle": [],
+                        "last": "Lubis",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "D",
+                        "middle": [
+                            "O"
+                        ],
+                        "last": "Handayani",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Q",
+                        "middle": [
+                            "J"
+                        ],
+                        "last": "Adrian",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "A",
+                        "middle": [],
+                        "last": "Gustiarani",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "C",
+                        "middle": [
+                            "K"
+                        ],
+                        "last": "Madjid",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "I",
+                        "middle": [],
+                        "last": "Nurhas",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2022,
+                "venue": "",
+                "volume": "",
+                "issue": "",
+                "pages": "1--6",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "M. Lubis, D. O. Handayani, Q. J. Adrian, A. Gustiarani, C. K. Madjid, and I. Nurhas. 2022. Channel Treatment Addiction with Puskesmas Application: Design Approach with Usability Heuristics. 1-6.",
+                "links": null
+            },
+            "BIBREF21": {
+                "ref_id": "b21",
+                "title": "User Experience in Mobile Application Design: Utility Defined Context of Use",
+                "authors": [
+                    {
+                        "first": "M",
+                        "middle": [],
+                        "last": "Lubis",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "E",
+                        "middle": [],
+                        "last": "Sutoyo",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "M",
+                        "middle": [],
+                        "last": "Azuddin",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "D",
+                        "middle": [],
+                        "last": "Handayani",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2019,
+                "venue": "J. Phys.: Conf. Ser",
+                "volume": "1361",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "M. Lubis, E. Sutoyo, M. Azuddin and D. Handayani. 2019. User Experience in Mobile Application Design: Utility Defined Context of Use. J. Phys.: Conf. Ser. 1361 012043.",
+                "links": null
+            },
+            "BIBREF22": {
+                "ref_id": "b22",
+                "title": "Responsive Innovation through Perceived Shared Values and Preferences of Customers",
+                "authors": [
+                    {
+                        "first": "M",
+                        "middle": [],
+                        "last": "Lubis",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "R",
+                        "middle": [],
+                        "last": "Fauzi",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "E",
+                        "middle": [],
+                        "last": "Sutoyo",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "S",
+                        "middle": [],
+                        "last": "Abdulmana",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2018,
+                "venue": "J. Phys.: Conf. Ser",
+                "volume": "1361",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "M. Lubis, R. Fauzi, E. Sutoyo and S. Abdulmana. 2018. Responsive Innovation through Perceived Shared Values and Preferences of Customers. J. Phys.: Conf. Ser. 1361 012075.",
+                "links": null
+            },
+            "BIBREF23": {
+                "ref_id": "b23",
+                "title": "New Product Development Architectural Framework for Sustainability and Innovation within Telecommunication Industry",
+                "authors": [
+                    {
+                        "first": "M",
+                        "middle": [],
+                        "last": "Lubis",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "M",
+                        "middle": [],
+                        "last": "Fathoni",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "A",
+                        "middle": [
+                            "R"
+                        ],
+                        "last": "Lubis",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/icccm/LubisFL20",
+                "year": 2020,
+                "venue": "Proc. of ACM ICCCM",
+                "volume": "",
+                "issue": "",
+                "pages": "145--150",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "M. Lubis, M. Fathoni and A.R. Lubis. 2020. New Product Development Architec- tural Framework for Sustainability and Innovation within Telecommunication Industry\". Proc. of ACM ICCCM, 145-150.",
+                "links": null
+            },
+            "BIBREF24": {
+                "ref_id": "b24",
+                "title": "Development and use of augmented reality models to teach medicinal chemistry",
+                "authors": [
+                    {
+                        "first": "C",
+                        "middle": [],
+                        "last": "Smith",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "C",
+                        "middle": [
+                            "J"
+                        ],
+                        "last": "Friel",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2021,
+                "venue": "Currents in Pharmacy Teaching and Learning",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "C. Smith and C.J. Friel. 2021. Development and use of augmented reality models to teach medicinal chemistry. Currents in Pharmacy Teaching and Learning, 18 June.",
+                "links": null
+            },
+            "BIBREF25": {
+                "ref_id": "b25",
+                "title": "A Review of Augmented Reality Systems and Their Effects on Mental Workload and Task Performance",
+                "authors": [
+                    {
+                        "first": "N",
+                        "middle": [
+                            "F S"
+                        ],
+                        "last": "Jeffri",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "D",
+                        "middle": [
+                            "R A"
+                        ],
+                        "last": "Rambli",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2021,
+                "venue": "Heliyon",
+                "volume": "7",
+                "issue": "3",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "N.F.S. Jeffri and D.R.A. Rambli. 2021. A Review of Augmented Reality Systems and Their Effects on Mental Workload and Task Performance. Heliyon, 7(3), March.",
+                "links": null
+            },
+            "BIBREF26": {
+                "ref_id": "b26",
+                "title": "The Augmented Reality Technology as Enabler for the Digitization of Industrial business Processes: Case Studies",
+                "authors": [
+                    {
+                        "first": "F",
+                        "middle": [],
+                        "last": "Bellalouna",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2021,
+                "venue": "Procedia CIRP",
+                "volume": "98",
+                "issue": "",
+                "pages": "400--405",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "F. Bellalouna. 2021. The Augmented Reality Technology as Enabler for the Digiti- zation of Industrial business Processes: Case Studies. Procedia CIRP 98, 400-405.",
+                "links": null
+            },
+            "BIBREF27": {
+                "ref_id": "b27",
+                "title": "Digitization of Industrial Engineering Processes using the Augmented Reality Technology: Industrial Case Studies",
+                "authors": [
+                    {
+                        "first": "F",
+                        "middle": [],
+                        "last": "Bellalouna",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2021,
+                "venue": "Procedia CIRP",
+                "volume": "100",
+                "issue": "",
+                "pages": "554--559",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "F. Bellalouna. 2021. Digitization of Industrial Engineering Processes using the Augmented Reality Technology: Industrial Case Studies. Procedia CIRP 100, 554- 559.",
+                "links": null
+            }
+        }
+    }
+}

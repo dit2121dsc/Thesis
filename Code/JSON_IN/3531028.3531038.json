@@ -1,0 +1,822 @@
+{
+    "paper_id": "3531028",
+    "header": {
+        "generated_with": "S2ORC 1.0.0",
+        "date_generated": "2024-03-20T17:52:50.741250Z"
+    },
+    "title": "Design of a hybrid fiber optic coaxial transmission medium",
+    "authors": [
+        {
+            "first": "Jorge",
+            "middle": [],
+            "last": "Contreras-Cossio",
+            "suffix": "",
+            "affiliation": {},
+            "email": ""
+        },
+        {
+            "first": "Fernando",
+            "middle": [],
+            "last": "Hoyos-Rivas",
+            "suffix": "",
+            "affiliation": {},
+            "email": ""
+        },
+        {
+            "first": "Carlos",
+            "middle": [],
+            "last": "Segura-Villarreal",
+            "suffix": "",
+            "affiliation": {},
+            "email": ""
+        },
+        {
+            "first": "Luis",
+            "middle": [],
+            "last": "Cornejo-Olivares",
+            "suffix": "",
+            "affiliation": {},
+            "email": ""
+        },
+        {
+            "first": "Sergio",
+            "middle": [],
+            "last": "Martinez-Martinez",
+            "suffix": "",
+            "affiliation": {},
+            "email": ""
+        },
+        {
+            "first": "Jos\u00e9",
+            "middle": [],
+            "last": "Farf\u00e1n-Aguilar",
+            "suffix": "",
+            "affiliation": {},
+            "email": ""
+        },
+        {
+            "first": "Juan",
+            "middle": [
+                "2022"
+            ],
+            "last": "Grados",
+            "suffix": "",
+            "affiliation": {},
+            "email": ""
+        }
+    ],
+    "year": "",
+    "venue": null,
+    "identifiers": {},
+    "abstract": "The present work shows the design and optimization of a means of hybrid coaxial transmission with optical fiber, perfected to reduce conductive losses at high frequencies. It is a work based on the RV 719 \"Hybrid high-speed transmission medium of more coaxial fiber\", the RV 1071 \"N-Male connector for hybrid transmission medium with optical fiber\" and the RV 1096 \"N-Female connector for hybrid transmission medium with optical fiber\", INDECOPI, 2020. It contains in its internal structure an optical fiber for the transmission of data in parallel of high speed by both means. The design and calculation of the parameters was carried out and correlated with their common market peers where the improvement in the design characteristics was demonstrated, the versatility of the proposed design allows the future to unify equipment and technologies.",
+    "pdf_parse": {
+        "abstract": [
+            {
+                "text": "The present work shows the design and optimization of a means of hybrid coaxial transmission with optical fiber, perfected to reduce conductive losses at high frequencies. It is a work based on the RV 719 \"Hybrid high-speed transmission medium of more coaxial fiber\", the RV 1071 \"N-Male connector for hybrid transmission medium with optical fiber\" and the RV 1096 \"N-Female connector for hybrid transmission medium with optical fiber\", INDECOPI, 2020. It contains in its internal structure an optical fiber for the transmission of data in parallel of high speed by both means. The design and calculation of the parameters was carried out and correlated with their common market peers where the improvement in the design characteristics was demonstrated, the versatility of the proposed design allows the future to unify equipment and technologies.",
+                "cite_spans": [],
+                "section": "Abstract",
+                "sec_num": null
+            }
+        ],
+        "body_text": [
+            {
+                "text": "At present to access the services of internet, cable television, cellular telephone network and in general data networks, there are various types of data transmission lines [1] , in the case of high frequency the most common since 1932 are of the coaxial cable type and more recent high-speed fiber optic cables [2] , each designed for data connections according to speed, frequency and bandwidth requirements with its equipment separately fiber optic from the coaxial, some final equipment of data networks have connectors for both technologies, in the same way their connectors are made with separate connections and in the variants of hybrid technologies, each cable is maintained with its structure independently and never unified in a single medium or line of transmission.",
+                "cite_spans": [
+                    {
+                        "start": 173,
+                        "end": 176,
+                        "text": "[1]",
+                        "ref_id": "BIBREF0"
+                    },
+                    {
+                        "start": 312,
+                        "end": 315,
+                        "text": "[2]",
+                        "ref_id": "BIBREF1"
+                    }
+                ],
+                "section": "INTRODUCTION",
+                "sec_num": "1"
+            },
+            {
+                "text": "This work focused on the design of a hybrid coaxial transmission line to optimize the parameters at high frequencies and, in turn, contain in its internal structure a fiber optic line and that does not affect the parameters and design of the coaxial. [3] The use of this new line, will allow unifying equipment and technologies that are designed in separate devices and converge in a single concentrator device [4] , it is intended to achieve the convergence of devices and services, reduce wiring and connection separately, by bringing the optical fiber to the end customer it would also be possible to unify devices such as a Router to access the internet with a decoder to access cable channels in a single access hub, a single power supply, less power consumption and losses.",
+                "cite_spans": [
+                    {
+                        "start": 251,
+                        "end": 254,
+                        "text": "[3]",
+                        "ref_id": null
+                    },
+                    {
+                        "start": 411,
+                        "end": 414,
+                        "text": "[4]",
+                        "ref_id": "BIBREF3"
+                    }
+                ],
+                "section": "INTRODUCTION",
+                "sec_num": "1"
+            },
+            {
+                "text": "The problem observed is that current technologies use one or another form of connection and continue to be developed separately, each equipment has its own transmission line and power supply, its different types of connectors and different connections are not unified by a single way.",
+                "cite_spans": [],
+                "section": "INTRODUCTION",
+                "sec_num": "1"
+            },
+            {
+                "text": "It is known that the current trend of telecommunications technologies is the convergence of services and applications, even in their communication wirelessly, but there are some telecommunications equipment and devices that can be unified in a single equipment with a single wired connection, which is not implemented worldwide [5] Therefore, the following is considered as a research problem: How to optimize the design of a coaxial transmission line that includes an optical fiber in a hybrid way?",
+                "cite_spans": [
+                    {
+                        "start": 328,
+                        "end": 331,
+                        "text": "[5]",
+                        "ref_id": "BIBREF4"
+                    }
+                ],
+                "section": "INTRODUCTION",
+                "sec_num": "1"
+            },
+            {
+                "text": "The goal is to design and optimize a coaxial hybrid transmission medium and add an optical fiber inside.",
+                "cite_spans": [],
+                "section": "DESCRIPTION OF THE PROBLEM 2.1 Objective of the Research",
+                "sec_num": "2"
+            },
+            {
+                "text": "The structure and internal composition of generic coaxial cables is shown in Figure 1 . The coaxial cable consists of a central conductor, the insulating dielectric that surrounds the conductor, the outer braided cover for signal shielding and the outer plastic cover that protects the internal elements from the inclemency of the weather.",
+                "cite_spans": [],
+                "section": "Central Driver",
+                "sec_num": "2.2"
+            },
+            {
+                "text": "We will focus on the central conductor and the dielectric because, in order to optimize the parameters of the coaxial line, improve the characteristics and contain the optical fiber, it is important to consider both resistive and conductive losses, as well as the inductive and capacitive behaviors that occur in the central conductor and in the dielectric respectively.",
+                "cite_spans": [],
+                "section": "Central Driver",
+                "sec_num": "2.2"
+            },
+            {
+                "text": "The main disadvantage of the central conductor is that, although it is generally copper, very good conductor, it has a certain resistivity because it is not an ideal or perfect conductor, this resistivity increases the resistive losses per unit length, this can be considered important only for large distances and is relatively true, but these losses are not increased to considerable values in essence by their resistivity, but by the increase in frequency; by the Skin, skin or film effect, where the charges that move through the interior of the conductor generate magnetic fields that in turn generate induced currents, if we consider this inmogeneous redistribution within the conductor, it can be calculated where the loads will be found for different frequency ranges, as shown in Figure 2 .",
+                "cite_spans": [],
+                "section": "Central Driver",
+                "sec_num": "2.2"
+            },
+            {
+                "text": "To maintain the concentric structure of both conductors, it is necessary to use common dielectric materials inside, such as those shown in Table 1 where the signal velocities for different materials are appreciated. Except when using air indoors, speeds never exceed 80% of the speed of light, which we consider a problem to solve. For all cases the electrical permittivity or dielectric constant greater than the vacuum value indicates greater conductive losses, which translates into signal attenuation and higher unit length capacities.",
+                "cite_spans": [],
+                "section": "Dielectric",
+                "sec_num": "2.3"
+            },
+            {
+                "text": "The Film effect, Skin or Kelvin, occurs in solid electrical conductive media, when transmitting frequencies of high or very high frequency, the charge density of the electrons is concentrated or accumulate at the edge or surface of the conductor according to the frequency of the transmitted signal. This produces an increase in the effective resistance of the conductor against alternating current which, in our case, will always be of high frequency, of the order of MHz or GHz.",
+                "cite_spans": [],
+                "section": "PARAMETER CALCULATION 3.1 Film Effect",
+                "sec_num": "3"
+            },
+            {
+                "text": "Figure 2 shows a comparison of the distribution of loads in a conductor for different frequencies, this shows that the electrical resistance is greater with increasing frequency and, therefore, the losses of those explained above. P\u00e9rez et al., [6] establishes how to calculate the film effect and the load concentration, this was also shown by Ramo. [7] Figure 3 shows the proposed design of the profile of the central cable where the area of the outer surface is increased trying to simulate the Litz wire, for the conduction of loads with a larger diameter without linearly increasing the outer diameter of the central conductor, leaving the inside of it empty to position the optical fiber according to its precise dimensions.",
+                "cite_spans": [
+                    {
+                        "start": 245,
+                        "end": 248,
+                        "text": "[6]",
+                        "ref_id": "BIBREF5"
+                    },
+                    {
+                        "start": 351,
+                        "end": 354,
+                        "text": "[7]",
+                        "ref_id": "BIBREF6"
+                    }
+                ],
+                "section": "PARAMETER CALCULATION 3.1 Film Effect",
+                "sec_num": "3"
+            },
+            {
+                "text": "For calculations, Talavera [1] sets the formulas for the parameters distributed and concentrated on the line.",
+                "cite_spans": [
+                    {
+                        "start": 27,
+                        "end": 30,
+                        "text": "[1]",
+                        "ref_id": "BIBREF0"
+                    }
+                ],
+                "section": "PARAMETER CALCULATION 3.1 Film Effect",
+                "sec_num": "3"
+            },
+            {
+                "text": "For the calculation of the film effect, it was considered to use equation 1): \u03b4",
+                "cite_spans": [],
+                "section": "PARAMETER CALCULATION 3.1 Film Effect",
+                "sec_num": "3"
+            },
+            {
+                "text": "For the calculation of the effect of the film, it was considered that equation 1) was used:",
+                "cite_spans": [],
+                "section": "PARAMETER CALCULATION 3.1 Film Effect",
+                "sec_num": "3"
+            },
+            {
+                "text": "EQUATION",
+                "cite_spans": [],
+                "section": "PARAMETER CALCULATION 3.1 Film Effect",
+                "sec_num": "3"
+            },
+            {
+                "text": "Being:",
+                "cite_spans": [],
+                "section": "PARAMETER CALCULATION 3.1 Film Effect",
+                "sec_num": "3"
+            },
+            {
+                "text": "\u2022 \u03c0 : the constant 3.14159,",
+                "cite_spans": [],
+                "section": "PARAMETER CALCULATION 3.1 Film Effect",
+                "sec_num": "3"
+            },
+            {
+                "text": "\u2022 f : the working frequency in Ghz \u2022 \u00b5 : the relative permeability (considered value 1)",
+                "cite_spans": [],
+                "section": "PARAMETER CALCULATION 3.1 Film Effect",
+                "sec_num": "3"
+            },
+            {
+                "text": "\u2022 \u03c3 : the conductivity of copper in Siemens per meter For the design, a space of 20 m of copper with silver bath is considered, which guarantees that sufficient film space for the Considering the empty central space inside this central conductor to contain the optical fiber and its protective gel to keep the structure solid, which, otherwise, because it is hollow or empty, in the curves and pronounced radiums of the cable could be deformed, which does not happen in our case.",
+                "cite_spans": [],
+                "section": "PARAMETER CALCULATION 3.1 Film Effect",
+                "sec_num": "3"
+            },
+            {
+                "text": "Another important aspect of our design is the weight per length, which is lower compared to solid conductors by 5%, due to the lower amount of copper and dielectric material, there is no physical deformation of the central conductor in curves with radii of 90 degrees and more, it acquires flexibility and contains the optical fiber without extra spaces.",
+                "cite_spans": [],
+                "section": "PARAMETER CALCULATION 3.1 Film Effect",
+                "sec_num": "3"
+            },
+            {
+                "text": "For the dielectric we consider decreasing from the physical point of view the weight of the cable and improving the electrical parameters, for that we opted for a fractal structure of flat tree along the length of the line.",
+                "cite_spans": [],
+                "section": "STRUCTURE DESIGN 4.1 Fractal Structure",
+                "sec_num": "4"
+            },
+            {
+                "text": "Mandelbrot [8] shows the structure and mathematical sequence of nature in the form of fractals like trees. As shown [9] in Figure 4 , the structure of one of the 8 strands is shown; radially these strands offer rigidity along the line, flexibility and a significant improvement in electrical parameters, by decreasing the electrical permittivity of the medium decrease losses and their capacity so that it can work at higher frequencies. The calculations [10] were made according to the dielectric medium and the improvements of the parameters when incorporating air inside. To decrease the conductivity that the dielectric could exist and increase the speed, the most important thing is to decrease the average electrical permittivity of the dielectric medium, so incorporating the largest possible volume of air inside is the objective of the design, in Figure 5 the structure is shown transversely with all the structural elements for a better understanding.",
+                "cite_spans": [
+                    {
+                        "start": 11,
+                        "end": 14,
+                        "text": "[8]",
+                        "ref_id": "BIBREF7"
+                    },
+                    {
+                        "start": 116,
+                        "end": 119,
+                        "text": "[9]",
+                        "ref_id": "BIBREF8"
+                    },
+                    {
+                        "start": 455,
+                        "end": 459,
+                        "text": "[10]",
+                        "ref_id": "BIBREF9"
+                    }
+                ],
+                "section": "STRUCTURE DESIGN 4.1 Fractal Structure",
+                "sec_num": "4"
+            },
+            {
+                "text": "The material considered is cellular polytetrafluoroethylene also known as Teflon for its dielectric constant of 1.4, lower in its class and with a physical structure capable of supporting the structure without deformations.",
+                "cite_spans": [],
+                "section": "STRUCTURE DESIGN 4.1 Fractal Structure",
+                "sec_num": "4"
+            },
+            {
+                "text": "For the calculations of the capacitive parameters, the equation 2) was considered:",
+                "cite_spans": [],
+                "section": "STRUCTURE DESIGN 4.1 Fractal Structure",
+                "sec_num": "4"
+            },
+            {
+                "text": "EQUATION",
+                "cite_spans": [],
+                "section": "STRUCTURE DESIGN 4.1 Fractal Structure",
+                "sec_num": "4"
+            },
+            {
+                "text": "Being:",
+                "cite_spans": [],
+                "section": "STRUCTURE DESIGN 4.1 Fractal Structure",
+                "sec_num": "4"
+            },
+            {
+                "text": "\u2022 c : capacitance in farads per meter \u2022 \u03be : the relative electrical permittivity of the material \u2022 b : the outer diameter in millimetres \u2022 a : the diameter of the central conductor in millimetres As shown in Figure 5 , the elements that make up the transmission medium are as follows:",
+                "cite_spans": [],
+                "section": "STRUCTURE DESIGN 4.1 Fractal Structure",
+                "sec_num": "4"
+            },
+            {
+                "text": "1. Fiber optic cable 2. Protective gel cover 3. Central conductor of the coaxial 4. Dielectric in the fractal structure 5. Volume of air content 6. Conductor external 7. Flexible shielding mesh 8. External protective cover ",
+                "cite_spans": [],
+                "section": "STRUCTURE DESIGN 4.1 Fractal Structure",
+                "sec_num": "4"
+            },
+            {
+                "text": "Considering that this technology is not yet on the market, the connectors shown in Figures 7 and Figure 8 , taken from [11] were also designed. [12] The components of the connector N -Male as follows:",
+                "cite_spans": [
+                    {
+                        "start": 119,
+                        "end": 123,
+                        "text": "[11]",
+                        "ref_id": "BIBREF10"
+                    },
+                    {
+                        "start": 144,
+                        "end": 148,
+                        "text": "[12]",
+                        "ref_id": "BIBREF11"
+                    }
+                ],
+                "section": "CONNECTORS",
+                "sec_num": "5"
+            },
+            {
+                "text": "1. Fiber optic splint. 2. Coaxial central connector.",
+                "cite_spans": [],
+                "section": "CONNECTORS",
+                "sec_num": "5"
+            },
+            {
+                "text": "3. Internal connector thread. 4. The body of the external connector. 5. Adjustment of the external connector. According to [13] figure 8 can specify the components of the connector N -Female for the devices to be connected to the transmission line [13] Figure 8 is generic, the O-rings at the end of the connector that allows the hermetic sealing against moisture that could affect the optical fiber are not observed.",
+                "cite_spans": [
+                    {
+                        "start": 123,
+                        "end": 127,
+                        "text": "[13]",
+                        "ref_id": "BIBREF12"
+                    },
+                    {
+                        "start": 248,
+                        "end": 252,
+                        "text": "[13]",
+                        "ref_id": "BIBREF12"
+                    }
+                ],
+                "section": "CONNECTORS",
+                "sec_num": "5"
+            },
+            {
+                "text": "Its main components are: 1. Connection ferrule for fiber optics. ",
+                "cite_spans": [],
+                "section": "CONNECTORS",
+                "sec_num": "5"
+            },
+            {
+                "text": "Some characteristics of a generic common coaxial of the market such as RG -59 were correlated with the proposal of the work for comparative purposes, there are special coaxial cables designed for high powers and for satellite and military equipment which have been excluded for obvious reasons and do not contribute to the research. The characteristics for correlating are shown in the following table 2.",
+                "cite_spans": [],
+                "section": "CORRELATION",
+                "sec_num": "6"
+            },
+            {
+                "text": "The work presented is a new technology that is not in use today, nor does it exist in the market for the connection of equipment with dual or hybrid technologies.",
+                "cite_spans": [],
+                "section": "CONCLUSION",
+                "sec_num": "7"
+            },
+            {
+                "text": "This design allows this design to unify both data transmission technologies in a hybrid way in a single medium, improving their main characteristics such as attenuation in the dielectric, decrease in capacitive values, lower weight, greater flexibility or the incorporation of optical fiber without affecting the performance of the coaxial. It also provides security to the optical fiber.",
+                "cite_spans": [],
+                "section": "CONCLUSION",
+                "sec_num": "7"
+            },
+            {
+                "text": "This work is a means to an end, that is, to work on technologies that in the future will serve as a basis for the design and development of new technologies.",
+                "cite_spans": [],
+                "section": "CONCLUSION",
+                "sec_num": "7"
+            },
+            {
+                "text": "Its use makes it possible to eliminate separate connections of both media and strengthens the current trend towards the convergence of telecommunications equipment that requires the use of both types of lines.",
+                "cite_spans": [],
+                "section": "CONCLUSION",
+                "sec_num": "7"
+            },
+            {
+                "text": "It also allows as a practical example, to concentrate wireless internet connection equipment with cable TV tuners to improve their efficiency, use fiber optics for high-speed symmetrical connections and coaxial for the transmission of 255 multiplexed channels in 4K without considerable losses at high frequencies.",
+                "cite_spans": [],
+                "section": "CONCLUSION",
+                "sec_num": "7"
+            },
+            {
+                "text": "Another important aspect is to reduce the losses in the coaxial between the final amplifier and the antenna in the transmission and in the reception after the RF processing in the same antenna the connection with the optical fiber is made.",
+                "cite_spans": [],
+                "section": "CONCLUSION",
+                "sec_num": "7"
+            },
+            {
+                "text": "Unifying equipment decreases current consumption by the more efficient use of the power supply, services would no longer be contracted separately and that tends to decrease prices in the market. ",
+                "cite_spans": [],
+                "section": "CONCLUSION",
+                "sec_num": "7"
+            }
+        ],
+        "bib_entries": {
+            "BIBREF0": {
+                "ref_id": "b0",
+                "title": "Smart Transmission Grids -Benefits and Risks",
+                "authors": [],
+                "dblp_id": null,
+                "year": 2013,
+                "venue": "Ingenier\u00eda, Investigaci\u00f3n y Tecnolog\u00eda",
+                "volume": "14",
+                "issue": "1",
+                "pages": "81--88",
+                "other_ids": {
+                    "DOI": [
+                        "10.1016/S1405-7743(13)72227-3"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Smart Transmission Grids -Benefits and Risks. Ingenier\u00eda, Investigaci\u00f3n y Tec- nolog\u00eda. Volume 14, Issue 1, January-March 2013, Pages 81-88 https://doi.org/10. 1016/S1405-7743(13)72227-3",
+                "links": null
+            },
+            "BIBREF1": {
+                "ref_id": "b1",
+                "title": "Roadmap of optical communications",
+                "authors": [
+                    {
+                        "first": "E",
+                        "middle": [],
+                        "last": "Agrell",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "M",
+                        "middle": [],
+                        "last": "Karlsson",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "A",
+                        "middle": [
+                            "R"
+                        ],
+                        "last": "Chraplyvy",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "D",
+                        "middle": [
+                            "J"
+                        ],
+                        "last": "Richardson",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "P",
+                        "middle": [
+                            "M"
+                        ],
+                        "last": "Krummrich",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "P",
+                        "middle": [],
+                        "last": "Winzer",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "K",
+                        "middle": [],
+                        "last": "Roberts",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "J",
+                        "middle": [
+                            "K"
+                        ],
+                        "last": "Fischer",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "S",
+                        "middle": [
+                            "J"
+                        ],
+                        "last": "Savory",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "B",
+                        "middle": [
+                            "J"
+                        ],
+                        "last": "Eggleton",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "M",
+                        "middle": [],
+                        "last": "Secondini",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "F",
+                        "middle": [
+                            "R"
+                        ],
+                        "last": "Kschischang",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "A",
+                        "middle": [],
+                        "last": "Lord",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "J",
+                        "middle": [],
+                        "last": "Prat",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "I",
+                        "middle": [],
+                        "last": "Tomkos",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "J",
+                        "middle": [
+                            "E"
+                        ],
+                        "last": "Bowers",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "S",
+                        "middle": [],
+                        "last": "Srinivasan",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "M",
+                        "middle": [],
+                        "last": "Brandt-Pearce",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "N",
+                        "middle": [],
+                        "last": "Gisin",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2016,
+                "venue": "Journal of Optics",
+                "volume": "18",
+                "issue": "6",
+                "pages": "",
+                "other_ids": {
+                    "DOI": [
+                        "10.1088/2040-8978/18/6/063002"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Agrell, E., Karlsson, M., Chraplyvy, A. R., Richardson, D. J., Krummrich, P. M., Winzer, P., Roberts, K., Fischer, J. K., Savory, S. J., Eggleton, B. J., Secondini, M., Kschischang, F. R., Lord, A., Prat, J., Tomkos, I., Bowers, J. E., Srinivasan, S., Brandt-Pearce, M., & Gisin, N. (2016). Roadmap of optical communications. Journal of Optics, 18(6), 63002. https://doi.org/10.1088/2040-8978/18/6/063002",
+                "links": null
+            },
+            "BIBREF3": {
+                "ref_id": "b3",
+                "title": "Key technologies of ubiquitous power Internet of Things-aided smart grid",
+                "authors": [],
+                "dblp_id": null,
+                "year": 2019,
+                "venue": "Journal of Renewable and Sustainable Energy",
+                "volume": "11",
+                "issue": "",
+                "pages": "",
+                "other_ids": {
+                    "DOI": [
+                        "10.1063/1.5121856"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Key technologies of ubiquitous power Internet of Things-aided smart grid. Journal of Renewable and Sustainable Energy 11, 062702 (2019); https://doi.org/10.1063/ 1.5121856",
+                "links": null
+            },
+            "BIBREF4": {
+                "ref_id": "b4",
+                "title": "Evento Internacional: \"La Regulaci\u00f3n en la Era de la Convergencia",
+                "authors": [
+                    {
+                        "first": "",
+                        "middle": [],
+                        "last": "Osiptel",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2009,
+                "venue": "Convergencia: Nuevas Tecnolog\u00edas y Regulaci\u00f3n en Telecomunicaciones",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "OSIPTEL, \"Evento Internacional: \"La Regulaci\u00f3n en la Era de la Convergencia\", \" in Convergencia: Nuevas Tecnolog\u00edas y Regulaci\u00f3n en Telecomunicaciones, Lima, 2009.",
+                "links": null
+            },
+            "BIBREF5": {
+                "ref_id": "b5",
+                "title": "Sistemas de Telecomunicaci\u00f3n",
+                "authors": [
+                    {
+                        "first": "C",
+                        "middle": [],
+                        "last": "P\u00e9rez",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2007,
+                "venue": "",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "C. P\u00e9rez and et al., Sistemas de Telecomunicaci\u00f3n, Textos Universitarios Univer- sidad de Cantabria, 2007.",
+                "links": null
+            },
+            "BIBREF6": {
+                "ref_id": "b6",
+                "title": "Fields and waves in comunication electronics",
+                "authors": [
+                    {
+                        "first": "S",
+                        "middle": [],
+                        "last": "Ramo",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 1994,
+                "venue": "",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "S. Ramo and et al., Fields and waves in comunication electronics, USA: Jhon Wiley & Sons, Inc., 1994.",
+                "links": null
+            },
+            "BIBREF7": {
+                "ref_id": "b7",
+                "title": "Analisis fisicomatematico de redes electricas",
+                "authors": [
+                    {
+                        "first": "G",
+                        "middle": [],
+                        "last": "Talavera",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 1998,
+                "venue": "Editorial Limusa S.A",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "G. Talavera, \"Analisis fisicomatematico de redes electricas, \" Editorial Limusa S.A., 1998, p. 177.",
+                "links": null
+            },
+            "BIBREF8": {
+                "ref_id": "b8",
+                "title": "La geometr\u00eda fractal de la naturaleza",
+                "authors": [
+                    {
+                        "first": "B",
+                        "middle": [],
+                        "last": "Mandelbrot",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 1997,
+                "venue": "",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "B. Mandelbrot, La geometr\u00eda fractal de la naturaleza, Barcelona. Espa\u00f1a: Tusquets Editores S.A., 1997.",
+                "links": null
+            },
+            "BIBREF9": {
+                "ref_id": "b9",
+                "title": "Medio de transmisi\u00f3nde alta velocidad h\u00edbrida de fibra m\u00e1s coaxial",
+                "authors": [
+                    {
+                        "first": "S",
+                        "middle": [],
+                        "last": "Mart\u00ednez",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2020,
+                "venue": "Per\u00fa Patent RV",
+                "volume": "719",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "S. Mart\u00ednez, \"Medio de transmisi\u00f3nde alta velocidad h\u00edbrida de fibra m\u00e1s coaxial\". Per\u00fa Patent RV 719, 30 agosto 2020.",
+                "links": null
+            },
+            "BIBREF10": {
+                "ref_id": "b10",
+                "title": "C\u00e1lculo de la permitividad diel\u00e9ctrica compleja de los materiales absorbentes con p\u00e9rdidas",
+                "authors": [
+                    {
+                        "first": "D",
+                        "middle": [],
+                        "last": "Ortega",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2018,
+                "venue": "RIELAC -Revista de ingeneier\u00eda electr\u00f3nica, autom\u00e1tica y comunicaciones",
+                "volume": "39",
+                "issue": "1",
+                "pages": "35--48",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "D. Ortega and et al., \"C\u00e1lculo de la permitividad diel\u00e9ctrica compleja de los materiales absorbentes con p\u00e9rdidas, \" RIELAC -Revista de ingeneier\u00eda electr\u00f3nica, autom\u00e1tica y comunicaciones, vol. 39, no. 1, pp. 35-48, january-april 2018.",
+                "links": null
+            },
+            "BIBREF11": {
+                "ref_id": "b11",
+                "title": "Conectores N Male para medios de transmisi\u00f3n hibrido coaxialfibra optica",
+                "authors": [
+                    {
+                        "first": "S",
+                        "middle": [],
+                        "last": "Mart\u00ednez",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2020,
+                "venue": "Per\u00fa Patent RV",
+                "volume": "1071",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "S. Mart\u00ednez, \"Conectores N Male para medios de transmisi\u00f3n hibrido coaxial - fibra optica\". Per\u00fa Patent RV-1071, august 2020.",
+                "links": null
+            },
+            "BIBREF12": {
+                "ref_id": "b12",
+                "title": "Conectores Female para medios de transmisi\u00f3n hibrido coaxialfibra optica",
+                "authors": [
+                    {
+                        "first": "S",
+                        "middle": [],
+                        "last": "Mart\u00ednez",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": null,
+                "venue": "Per\u00fa Patent RV",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "S. Mart\u00ednez, \"Conectores Female para medios de transmisi\u00f3n hibrido coaxial - fibra optica\". Per\u00fa Patent RV-1096, august 2020.",
+                "links": null
+            }
+        }
+    }
+}

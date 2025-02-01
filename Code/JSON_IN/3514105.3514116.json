@@ -1,0 +1,1142 @@
+{
+    "paper_id": "3514105",
+    "header": {
+        "generated_with": "S2ORC 1.0.0",
+        "date_generated": "2024-03-20T17:52:49.680908Z"
+    },
+    "title": "A Novel Resource Sharing Scheme for Full Duplex D2D Communication Underlaying Cellular Network",
+    "authors": [
+        {
+            "first": "Fukang",
+            "middle": [],
+            "last": "Li",
+            "suffix": "",
+            "affiliation": {
+                "laboratory": "",
+                "institution": "Beijing University of Posts and Telecommunications",
+                "location": {
+                    "country": "China"
+                }
+            },
+            "email": ""
+        },
+        {
+            "first": "Yang",
+            "middle": [],
+            "last": "Liu",
+            "suffix": "",
+            "affiliation": {
+                "laboratory": "",
+                "institution": "Beijing University of Posts and Telecommunications",
+                "location": {
+                    "country": "China"
+                }
+            },
+            "email": ""
+        }
+    ],
+    "year": "",
+    "venue": null,
+    "identifiers": {},
+    "abstract": "In this paper, we propose a novel resource sharing scheme for full duplex device-to-device (D2D) communication underlaying cellular network. In the considered scenario, two D2D users share the downlink spectrum resource with two cellular users. When the two D2D users transmit signals to each other, they also act as relays between the base station (BS) and the cellular users so that the cellular users can leverage the redundant capacity of the two full duplex D2D users. To optimize the performance of the scheme, the power allocation is optimized by considering the impact of residual self-interference at full duplex radios and the quality of services (QoS) requirement for both cellular users and D2D users. The simulation results show that, compared to the existing research scheme, the proposed scheme can achieve larger sum channel capacity for the transmission of cellular users, and it can also achieve larger average system throughput at high signal to interference plus noise ratio (SINR) region.",
+    "pdf_parse": {
+        "abstract": [
+            {
+                "text": "In this paper, we propose a novel resource sharing scheme for full duplex device-to-device (D2D) communication underlaying cellular network. In the considered scenario, two D2D users share the downlink spectrum resource with two cellular users. When the two D2D users transmit signals to each other, they also act as relays between the base station (BS) and the cellular users so that the cellular users can leverage the redundant capacity of the two full duplex D2D users. To optimize the performance of the scheme, the power allocation is optimized by considering the impact of residual self-interference at full duplex radios and the quality of services (QoS) requirement for both cellular users and D2D users. The simulation results show that, compared to the existing research scheme, the proposed scheme can achieve larger sum channel capacity for the transmission of cellular users, and it can also achieve larger average system throughput at high signal to interference plus noise ratio (SINR) region.",
+                "cite_spans": [],
+                "section": "Abstract",
+                "sec_num": null
+            }
+        ],
+        "body_text": [
+            {
+                "text": "With the continuous evolution of wireless communication systems, the number of smart terminals has risen sharply, and the demand for mobile broadband continues to increase. For network system, to meet service quality requirements means that users must achieve a higher signal-to-interference ratio, a smaller interruption probability, and a larger throughput and access rate. In order to make more reasonable use of the precious spectrum resources, device-to-device (D2D) communication is proposed because of its short-distance communication and can alleviate the burden on the base station (BS) [1, 2] . In addition, due to the breakthrough of self-interference cancellation technology, scholars have begun to pay attention to the full duplex D2D communication [3] - [5] .",
+                "cite_spans": [
+                    {
+                        "start": 596,
+                        "end": 599,
+                        "text": "[1,",
+                        "ref_id": "BIBREF0"
+                    },
+                    {
+                        "start": 600,
+                        "end": 602,
+                        "text": "2]",
+                        "ref_id": "BIBREF1"
+                    },
+                    {
+                        "start": 762,
+                        "end": 765,
+                        "text": "[3]",
+                        "ref_id": "BIBREF2"
+                    },
+                    {
+                        "start": 768,
+                        "end": 771,
+                        "text": "[5]",
+                        "ref_id": "BIBREF4"
+                    }
+                ],
+                "section": "INTRODUCTION",
+                "sec_num": "1"
+            },
+            {
+                "text": "So far, there are mainly two modes for D2D communication underlaying cellular networks: dedicated mode [6] and reuse mode [7, 8] . In the dedicated mode, D2D users and cellular users are allocated different orthogonal spectrum resources, which reduces the utilization of spectrum resources. In the reuse mode, the D2D users share non-orthogonal resources with cellular users. In [9] , a D2D user is utilized as a relay to help the downlink transmission. In [10] , a cooperative N-mode has been proposed. The N-mode uses three time slots to complete the transmission of two cellular signals and two D2D signals, wherein D2D users act as relays of cellular users, thus solving the problem of co-channel interference by power allocation and achieving the purpose of frequency reuse. But this scheme increases the complexity of the system. In [11] , a new model in which full duplex D2D transmitter as the relay of fixed cellular user was proposed, but it does not consider the interference of cellular users. In [12] , an effective resource allocation scheme was proposed aiming to mitigate the interference between D2D communication and cellular networks. However, these papers don't fully utilize the capability of the full duplex radio.",
+                "cite_spans": [
+                    {
+                        "start": 103,
+                        "end": 106,
+                        "text": "[6]",
+                        "ref_id": "BIBREF5"
+                    },
+                    {
+                        "start": 122,
+                        "end": 125,
+                        "text": "[7,",
+                        "ref_id": "BIBREF6"
+                    },
+                    {
+                        "start": 126,
+                        "end": 128,
+                        "text": "8]",
+                        "ref_id": "BIBREF7"
+                    },
+                    {
+                        "start": 379,
+                        "end": 382,
+                        "text": "[9]",
+                        "ref_id": "BIBREF8"
+                    },
+                    {
+                        "start": 457,
+                        "end": 461,
+                        "text": "[10]",
+                        "ref_id": "BIBREF9"
+                    },
+                    {
+                        "start": 839,
+                        "end": 843,
+                        "text": "[11]",
+                        "ref_id": "BIBREF10"
+                    },
+                    {
+                        "start": 1009,
+                        "end": 1013,
+                        "text": "[12]",
+                        "ref_id": "BIBREF11"
+                    }
+                ],
+                "section": "INTRODUCTION",
+                "sec_num": "1"
+            },
+            {
+                "text": "Even though the channel quality of D2D link is very high, the capacity of D2D link cannot be fully utilized because of the restriction of practical modulation and coding scheme. The unused channel capacity can be defined as redundant capacity.",
+                "cite_spans": [],
+                "section": "INTRODUCTION",
+                "sec_num": "1"
+            },
+            {
+                "text": "In this paper, to fully leverage the capability of the full duplex D2D users, each D2D user can be used to cooperate with a cellular user. we only use one time slot to complete the transmission of two cellular signals and two D2D signals through appropriate power allocation, and at the same time, the two D2D users act as relays for the two cellular users. And we consider a more general scenario to deal with the interference of D2D users and cellular users. Compared with exiting works, the main contribution of this paper can be summarized as:",
+                "cite_spans": [],
+                "section": "INTRODUCTION",
+                "sec_num": "1"
+            },
+            {
+                "text": "1) A new resource sharing model is proposed. In this model, not only the transmission of both cellular signals and D2D signals can be finished in one time slot, but also a general interference processing is considered.",
+                "cite_spans": [],
+                "section": "INTRODUCTION",
+                "sec_num": "1"
+            },
+            {
+                "text": "2) To optimize the performance of the scheme, optimal power allocation is conducted by considering the impact of residual selfinterference at full duplex radios and the QoS requirement for both cellular users and D2D users.",
+                "cite_spans": [],
+                "section": "INTRODUCTION",
+                "sec_num": "1"
+            },
+            {
+                "text": "3) Simulation results show that the proposed scheme can achieve better performance than existing scheme. The remainder of this paper is organized as follows. Section 2 presents the system model considered in this work while in Section 3 the optimal power allocation problem is formulated. In Section 4, the proposed scheme is evaluated by simulations, followed by the conclusions in Section 5.",
+                "cite_spans": [],
+                "section": "INTRODUCTION",
+                "sec_num": "1"
+            },
+            {
+                "text": "The system model depicts a single cell scenario, where D2D communication underlays cellular infrastructure. The inter-cell interference is omitted. As shown in Figure 1 , one BS equipped with two antennas, a pair of D2D users (DU a and DU b ) equipped with separate transmitting and receiving antennas, and two cellular users (CU 1 and CU 2 ) considered with one antenna. We consider the D2D users sharing the downlink resources with two nearby cellular users. In addition, D2D users apply full duplex communication while acting as relays for cellular users, and the transmission between the BS and cellular users is half duplex communication.",
+                "cite_spans": [],
+                "section": "SYSTEM DESCRIPTION",
+                "sec_num": "2"
+            },
+            {
+                "text": "In the \u03c4th slot, the cellular signals transmitted from the BS to DU a and DU b are respectively denoted as x 1 (\u03c4 ) and x 2 (\u03c4 ), and the transmission power are P 1 and P 2 respectively. The D2D signal from DU a to DU b is x a and the D2D signal from DU b to DU a is x b , in which the transmission power is expressed as P a andP b respectively. The cellular data relayed by DU a to CU 1 and DU b to CU 2 is respectively denoted asx 1 (\u03c4 -1) and x 2 (\u03c4 -1), which are received from the BS in the previous time slot, and the allocated powers are denoted asP 3 andP 4 respectively. It should be noted that the one time slot we are talking about corresponds to the three time slots in the literature [10] that the cellular signals take three time slots to complete the transmission, non-continuously. In our scheme, even though the cellular signals need two time slots from the BS to the cellular users, the cellular signals are transmitted continuously, which is the same as a time slot in effect. So, we can say that the cellular signals can be transmitted in one time slot.",
+                "cite_spans": [
+                    {
+                        "start": 697,
+                        "end": 701,
+                        "text": "[10]",
+                        "ref_id": "BIBREF9"
+                    }
+                ],
+                "section": "SYSTEM DESCRIPTION",
+                "sec_num": "2"
+            },
+            {
+                "text": "The channels between BS and DU a , DU b are denoted as h 1 = [h 11 , h 12 ] and h 2 = [h 21 , h 22 ], respectively. The channel between DU a and CU 1 , CU 2 is denoted ash a1 , h a2 and the channel between DU b and CU 1 , CU 2 is denoted ash b1 , h b2 . We assume that the channels between the D2D users are symmetric and denote it as h d . In the performance evaluations, the Log-distance path loss model plus Rayleigh fading is applied to the channel model. We assume there is a dedicated control channel to collect the channel information and send the control information so that perfect channel state information is assumed. The variance of the zero-mean additive white Gaussian noise is denoted as \u03c3 2 . The self-interference cancellation capability of full duplex communication is denoted by a factor \u03b1. \u03b1 = 0means perfect self-interference cancellation.",
+                "cite_spans": [],
+                "section": "SYSTEM DESCRIPTION",
+                "sec_num": "2"
+            },
+            {
+                "text": "The detailed process of signal is analyzed as follows. The BS leverages Multi-User Multiple-Input Multiple-Output (MU-MIMO) technology to transmit data x 1 (\u03c4 )andx 2 (\u03c4 ) to DU a and DU b , respectively. To make sure DU a only receives x 1 (\u03c4 ) and DU b only receives x 2 (\u03c4 ), Zero-Forcing (ZF) [13] precoding is used at BS and can also suppress the interference when there are two receivers. The precoding vectors for x 1 (\u03c4 ) and x 2 (\u03c4 ) are denoted as u 1 and u 2 , respectively. And the transmit power is P 1 and P 2 , respectively. Thus, the signal transmitted from the BS is",
+                "cite_spans": [
+                    {
+                        "start": 297,
+                        "end": 301,
+                        "text": "[13]",
+                        "ref_id": "BIBREF12"
+                    }
+                ],
+                "section": "SYSTEM DESCRIPTION",
+                "sec_num": "2"
+            },
+            {
+                "text": "EQUATION",
+                "cite_spans": [],
+                "section": "SYSTEM DESCRIPTION",
+                "sec_num": "2"
+            },
+            {
+                "text": "At the same time, the D2D users not only transmit signals to each other, but also act as relays between BS and cellular users to forward data. DU a sent x a to DU b and DU b send x b to DU a , and the transmit power is P a and P b respectively. In addition, DU a forward the cellular data x 1 (\u03c4 -1) decoded in the previous time slot to CU 1 , DU b forward the cellular data x 2 (\u03c4 -1) decoded in the previous time slot to CU 2 . The transmit power is P 3 and P 4 respectively. Thus, the signals received at DU a and DU b are",
+                "cite_spans": [],
+                "section": "SYSTEM DESCRIPTION",
+                "sec_num": "2"
+            },
+            {
+                "text": "EQUATION",
+                "cite_spans": [],
+                "section": "SYSTEM DESCRIPTION",
+                "sec_num": "2"
+            },
+            {
+                "text": "y DU b = \u221a P 2 h 2 u 2 x 2 (\u03c4 ) + \u221a P a h d x a + \u221a P 3 h d x 1 (\u03c4 -1) + \u03b1P b x b + \u221a \u03b1P 4 x 2 (\u03c4 -1) + n .",
+                "cite_spans": [],
+                "section": "SYSTEM DESCRIPTION",
+                "sec_num": "2"
+            },
+            {
+                "text": "(3) where x 1 (\u03c4 -1), x 2 (\u03c4 -1), is co-channel interference signal for DU b and DU a respectively, \u221a \u03b1P a x a , \u221a \u03b1P 3 x 1 (\u03c4 -1), and \u03b1P b x b , \u221a \u03b1P 4 x 2 (\u03c4 -1), are residual self-interference at DU a and DU b , and n represents the noise.",
+                "cite_spans": [],
+                "section": "SYSTEM DESCRIPTION",
+                "sec_num": "2"
+            },
+            {
+                "text": "By proper transmit power allocation, the signals received by DU a are x 1 (\u03c4 ), x b and x 2 (\u03c4 -1), among which the power of x b is the strongest, x 2 (\u03c4 -1) is the second and x 1 (\u03c4 ) is the weakest. Thus, x b is decoded first, then x 2 (\u03c4 -1) is decoded, and finally x 1 (\u03c4 ) is decoded by using successive interference cancellation (SIC) technology. The residual seif-interference is treated as noise.",
+                "cite_spans": [],
+                "section": "SYSTEM DESCRIPTION",
+                "sec_num": "2"
+            },
+            {
+                "text": "When DU a decodes the signal x b , it treats all other signals as noise. Thus, the signal to interference plus noise ratio (SINR) of data x b is",
+                "cite_spans": [],
+                "section": "SYSTEM DESCRIPTION",
+                "sec_num": "2"
+            },
+            {
+                "text": "EQUATION",
+                "cite_spans": [],
+                "section": "SYSTEM DESCRIPTION",
+                "sec_num": "2"
+            },
+            {
+                "text": "After decoding x b and x 2 (\u03c4 -1), DU a will use SIC to decode x 1 (\u03c4 ). Thus, the SINR of signal x 1 (\u03c4 ) is",
+                "cite_spans": [],
+                "section": "SYSTEM DESCRIPTION",
+                "sec_num": "2"
+            },
+            {
+                "text": "\u03b3 1 (\u03c4 ) = P 1 |h 1 u 1 | 2 \u03b1P a + \u03b1P 3 + \u03c3 2 .",
+                "cite_spans": [],
+                "section": "SYSTEM DESCRIPTION",
+                "sec_num": "2"
+            },
+            {
+                "text": "(5)",
+                "cite_spans": [],
+                "section": "SYSTEM DESCRIPTION",
+                "sec_num": "2"
+            },
+            {
+                "text": "In the same way, we can get the SINR of signal x a and x 2 (\u03c4 ):",
+                "cite_spans": [],
+                "section": "SYSTEM DESCRIPTION",
+                "sec_num": "2"
+            },
+            {
+                "text": "EQUATION",
+                "cite_spans": [],
+                "section": "SYSTEM DESCRIPTION",
+                "sec_num": "2"
+            },
+            {
+                "text": "EQUATION",
+                "cite_spans": [],
+                "section": "SYSTEM DESCRIPTION",
+                "sec_num": "2"
+            },
+            {
+                "text": "For CU 1 and CU 2 , while they receive the signal forwarded by the corresponding D2D user, they will also be interfered by another D2D user. The signals received by CU 1 and CU 2 are y CU 1 = P a h a1 x a + P 3 h a1 x 1 (\u03c4 -1)+ P b h b1 x b + P 4 h b1 x 2 (\u03c4 -1)+n,",
+                "cite_spans": [],
+                "section": "SYSTEM DESCRIPTION",
+                "sec_num": "2"
+            },
+            {
+                "text": "y CU 2 = P a h a2 x a + P 3 h a2 x 1 (\u03c4 -1)+ P b h b2 x b + P 4 h b2 x 2 (\u03c4 -1)+n. (9) Because the D2D data is allocated with higher power than the cellular data, so the signals x a and x b can be decoded first. And then through proper transmission power allocation, x 1 (\u03c4 -1) can be decoded, x 2 (\u03c4 -1) is finally decoded by using SIC technology. Therefore, the SINR of x 1 (\u03c4 -1) and x 2 (\u03c4 -1) are",
+                "cite_spans": [],
+                "section": "SYSTEM DESCRIPTION",
+                "sec_num": "2"
+            },
+            {
+                "text": "EQUATION",
+                "cite_spans": [],
+                "section": "SYSTEM DESCRIPTION",
+                "sec_num": "2"
+            },
+            {
+                "text": ")",
+                "cite_spans": [],
+                "section": "SYSTEM DESCRIPTION",
+                "sec_num": "2"
+            },
+            {
+                "text": "EQUATION",
+                "cite_spans": [],
+                "section": "SYSTEM DESCRIPTION",
+                "sec_num": "2"
+            },
+            {
+                "text": ")",
+                "cite_spans": [],
+                "section": "SYSTEM DESCRIPTION",
+                "sec_num": "2"
+            },
+            {
+                "text": "Based on the above analysis, we know that the performance of the scheme depends on power allocation for each link. Thus, optimal power allocation to maximize the total transmission rate is critical.",
+                "cite_spans": [],
+                "section": "SYSTEM DESCRIPTION",
+                "sec_num": "2"
+            },
+            {
+                "text": "We use Shannon capacity to characterize the transmission rate, i.e., the transmission rate of each link is given by R = log 2 (1 +\u03b3 ), where \u03b3 is the SINR. Thus, the sum rate between D2D users is expressed as",
+                "cite_spans": [],
+                "section": "OPTIMAL POWER ALLOCATION",
+                "sec_num": "3"
+            },
+            {
+                "text": "EQUATION",
+                "cite_spans": [],
+                "section": "OPTIMAL POWER ALLOCATION",
+                "sec_num": "3"
+            },
+            {
+                "text": ")",
+                "cite_spans": [],
+                "section": "OPTIMAL POWER ALLOCATION",
+                "sec_num": "3"
+            },
+            {
+                "text": "Due to D2D users performing Decode-and-Forward (DF) on cellular data, so the rate of each cellular user depends on the lower rate of the two links. The rate of cellular data is expressed as",
+                "cite_spans": [],
+                "section": "OPTIMAL POWER ALLOCATION",
+                "sec_num": "3"
+            },
+            {
+                "text": "EQUATION",
+                "cite_spans": [],
+                "section": "OPTIMAL POWER ALLOCATION",
+                "sec_num": "3"
+            },
+            {
+                "text": ")",
+                "cite_spans": [],
+                "section": "OPTIMAL POWER ALLOCATION",
+                "sec_num": "3"
+            },
+            {
+                "text": "And the sum rate of two cellular user is expressed as",
+                "cite_spans": [],
+                "section": "OPTIMAL POWER ALLOCATION",
+                "sec_num": "3"
+            },
+            {
+                "text": "EQUATION",
+                "cite_spans": [],
+                "section": "OPTIMAL POWER ALLOCATION",
+                "sec_num": "3"
+            },
+            {
+                "text": ")",
+                "cite_spans": [],
+                "section": "OPTIMAL POWER ALLOCATION",
+                "sec_num": "3"
+            },
+            {
+                "text": "Thus, the sum rate of the system can be expressed as",
+                "cite_spans": [],
+                "section": "OPTIMAL POWER ALLOCATION",
+                "sec_num": "3"
+            },
+            {
+                "text": "EQUATION",
+                "cite_spans": [],
+                "section": "OPTIMAL POWER ALLOCATION",
+                "sec_num": "3"
+            },
+            {
+                "text": ")",
+                "cite_spans": [],
+                "section": "OPTIMAL POWER ALLOCATION",
+                "sec_num": "3"
+            },
+            {
+                "text": "Our goal of using power allocation control is to achieve the maximum sum rate of cellular transmissions and D2D transmissions. Thus, we formulate sum rate maximization problem, denoted as P:",
+                "cite_spans": [],
+                "section": "OPTIMAL POWER ALLOCATION",
+                "sec_num": "3"
+            },
+            {
+                "text": "EQUATION",
+                "cite_spans": [],
+                "section": "OPTIMAL POWER ALLOCATION",
+                "sec_num": "3"
+            },
+            {
+                "text": ")",
+                "cite_spans": [],
+                "section": "OPTIMAL POWER ALLOCATION",
+                "sec_num": "3"
+            },
+            {
+                "text": "To avoid starvation in frequency sharing, we set the minimum transmission rate for each link to provide QoS requirement. Different QoS requirements for cellular users and D2D users are considered that \u03b3 d for each D2D link and \u03b3 c for cellular users. And \u03b3 h is the maximum required SINR depends on the highest modulation and coding scheme. In addition, P m is the maximum power limit of BS, and P m is the maximum power limit of D2D users.",
+                "cite_spans": [],
+                "section": "OPTIMAL POWER ALLOCATION",
+                "sec_num": "3"
+            },
+            {
+                "text": "For problem P, it is a non-convex problem, so it is difficult to find the optimal solution. However, we can formulate some constraints to simplify our problem. Firstly, due to D2D users performing DF to forward cellular data, the rate of cellular user is determined by the link with a lower rate. In order to avoid waste of power, we can finally getR 1 (\u03c4 ) = R 1 (\u03c4 -1)andR 2 (\u03c4 ) = R 2 (\u03c4 -1), i.e.,\u03b3 1 (\u03c4 ) = \u03b3 1 (\u03c4 -1)and \u03b3 2 (\u03c4 ) = \u03b3 2 (\u03c4 -1). Secondly, in general case, the D2D users should use the maximum power P m to fully leverage the redundant capacity of D2D links so that the sum rate of D2D link and cellular link can reach maximum value. The key is how to divide P m to D2D data and cellular data. Thus, we can relax the residual self-interference to a fix value \u03b1P m in the optimization. In addition, in this paper, we consider the high SINR region due to QoS requirements. The function log 2 (1 + \u03b3 )can be approximated with log 2 \u03b3 at high SINR region. Thus, the sum rate of the system can be expressed as",
+                "cite_spans": [],
+                "section": "OPTIMAL POWER ALLOCATION",
+                "sec_num": "3"
+            },
+            {
+                "text": "R S = R a + R b + R 1 + R 2 = log 2 (\u03b3 a \u03b3 b \u03b3 1 (\u03c4 -1)\u03b3 2 (\u03c4 -1)). (17)",
+                "cite_spans": [],
+                "section": "OPTIMAL POWER ALLOCATION",
+                "sec_num": "3"
+            },
+            {
+                "text": "Because the function log 2 (\u2022) is monotonically increasing function, we can treat {\u03b3 a , \u03b3 b , \u03b3 1 (\u03c4 -1), \u03b3 2 (\u03c4 -1)}as the optimizing variables and max \u03b3 a \u03b3 b \u03b3 1 (\u03c4 -1)\u03b3 2 (\u03c4 -1) as the objective function. Thus, the problem P can be converted to problem P1.",
+                "cite_spans": [],
+                "section": "OPTIMAL POWER ALLOCATION",
+                "sec_num": "3"
+            },
+            {
+                "text": "EQUATION",
+                "cite_spans": [],
+                "section": "OPTIMAL POWER ALLOCATION",
+                "sec_num": "3"
+            },
+            {
+                "text": ")",
+                "cite_spans": [],
+                "section": "OPTIMAL POWER ALLOCATION",
+                "sec_num": "3"
+            },
+            {
+                "text": "Where \u03b3 H 1 = min{",
+                "cite_spans": [],
+                "section": "OPTIMAL POWER ALLOCATION",
+                "sec_num": "3"
+            },
+            {
+                "text": "P m |h 1 u 1 | 2 \u03b1 P m +\u03c3 2 , \u03b3 h } and \u03b3 H 2 = min{ P m |h 2 u 2 | 2 \u03b1 P m +\u03c3 2 , \u03b3 h } represent the upper limits of \u03b3 1 (\u03c4 -1)",
+                "cite_spans": [],
+                "section": "OPTIMAL POWER ALLOCATION",
+                "sec_num": "3"
+            },
+            {
+                "text": "and \u03b3 2 (\u03c4 -1). The problem P1 is a geometric programming problem, which can be transformed to a convex optimization problem [14] . Thus, we can get {\u03b3 a , \u03b3 b , \u03b3 1 (\u03c4 -1), \u03b3 2 (\u03c4 -1)} by solving a convex optimization problem and then get the corresponding power {P 1 , P 2 , P 3 , P 4 , P a , P b }.",
+                "cite_spans": [
+                    {
+                        "start": 125,
+                        "end": 129,
+                        "text": "[14]",
+                        "ref_id": "BIBREF13"
+                    }
+                ],
+                "section": "OPTIMAL POWER ALLOCATION",
+                "sec_num": "3"
+            },
+            {
+                "text": "In this section, the system performance of the proposed cooperative model with the optimal power allocation is analyzed, and the simulation is done on MATLAB. A single-cell scenario is considered, in the general scenario study, we model the channel as the Log-distance path loss model plus Rayleigh fading to reflect large scale attenuation and small scale fading, respectively. The Rayleigh fading is set with unit variance. We set \u03b3 h = 21dB, \u03b3 d = 5dB, and mainly evaluate the performance that changes with \u03b3 c . Other system parameters for performance evaluation are given in Table 1 Figure 3 : The average throughput in proposed scheme and N-mode.",
+                "cite_spans": [],
+                "section": "PERFORMANCE ANALYSIS",
+                "sec_num": "4"
+            },
+            {
+                "text": "Figure 2 shows the sum rate of R S for varying required SINR of cellular users. We compare the proposed scheme with the dedicated mode proposed in [7] and the N-mode proposed in [10] . It can be seen that the proposed scheme can achieve better performance than other schemes for sharing the downlink spectrum resource and completing the signal transmission in one time slot. At the same time, under the same channel environment, all schemes show a downward trend with \u03b3 c increasing, and the dedicated mode tends to stabilize because of the QoS requirements of D2D users. As \u03b3 c increases, the power allocated to cellular users increases, so the interference between D2D users and cellular users also increases. Since we only use one time slot to complete the signal transmission, the interference cannot be well suppressed. As a result, the sum rate of the proposed scheme decreases faster than the N-mode, but the performance improvement is still more than 5%.",
+                "cite_spans": [
+                    {
+                        "start": 147,
+                        "end": 150,
+                        "text": "[7]",
+                        "ref_id": "BIBREF6"
+                    },
+                    {
+                        "start": 178,
+                        "end": 182,
+                        "text": "[10]",
+                        "ref_id": "BIBREF9"
+                    }
+                ],
+                "section": "PERFORMANCE ANALYSIS",
+                "sec_num": "4"
+            },
+            {
+                "text": "Figure 3 shows the average throughput in proposed scheme and N-mode. We set different positions of D2D users and cellular users by random and uniform distribution, and evenly to obtain the average throughput. It can be seen that in proposed scheme, the average throughput of the system increases with the increase of \u03b3 c within the range of our simulation. However, in N-mode the situation is just the opposite. There are two reasons to explain it. One is because the function R = log 2 (1 + \u03b3 )is a function with a decreasing growth rate, so cellular users can obtain higher benefits from the allocated power. Another reason is that as the cellular link is allocated more power, the average throughput of D2D link decreases and the average throughput of cellular link increases. But the proposed scheme can obtain more gains from cellular users than N-mode, because the transmission of cellular signals only requires one time slot. And the increase in average throughput of the system is considerable, it can reach 55% when \u03b3 c is 14 dB.",
+                "cite_spans": [],
+                "section": "PERFORMANCE ANALYSIS",
+                "sec_num": "4"
+            },
+            {
+                "text": "CONCLUSIONIn this paper, we propose a new resource sharing scheme. In this case, the D2D users and the cellular users can share the same resources, and the D2D users act as relay for cellular users when transmitting to each other. Thus, the proposed scheme not only can leverage the redundant capacity of D2D links, but also can improve the performance of cellular users. To optimize the performance of the scheme, optimal power allocation is conducted by considering the impact of residual self-interference at full duplex radios and the QoS requirement for both cellular users and D2D users. Simulation results show that although the interference cannot be suppressed well, the proposed scheme can achieve larger sum channel capacity for the transmission of cellular users, and it can also achieve larger average system throughput at high SINR region.",
+                "cite_spans": [],
+                "section": "",
+                "sec_num": null
+            }
+        ],
+        "bib_entries": {
+            "BIBREF0": {
+                "ref_id": "b0",
+                "title": "Performance Evaluation of D2D Communications for Next Generation Cellular Networks",
+                "authors": [
+                    {
+                        "first": "A",
+                        "middle": [],
+                        "last": "Alquhali",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "M",
+                        "middle": [],
+                        "last": "Alhammadi",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "M",
+                        "middle": [
+                            "Y"
+                        ],
+                        "last": "Roslee",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "F",
+                        "middle": [],
+                        "last": "Alias",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "",
+                        "middle": [],
+                        "last": "Nizam",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2021,
+                "venue": "IEEE Asia Pacific Conference on Wireless and Mobile (APWiMob)",
+                "volume": "",
+                "issue": "",
+                "pages": "15--18",
+                "other_ids": {
+                    "DOI": [
+                        "10.1109/APWiMob51111.2021.9435211"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Alquhali, A. Alhammadi, M. Roslee, M. Y. Alias and F. Nizam, \"Performance Evaluation of D2D Communications for Next Generation Cellular Networks,\" 2021 IEEE Asia Pacific Conference on Wireless and Mobile (APWiMob), 2021, pp. 15-18, doi: 10.1109/APWiMob 51111.2021. 9435211.",
+                "links": null
+            },
+            "BIBREF1": {
+                "ref_id": "b1",
+                "title": "Device-to-Device Communications Underlaying Cellular Networks",
+                "authors": [
+                    {
+                        "first": "D",
+                        "middle": [],
+                        "last": "Feng",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "L",
+                        "middle": [],
+                        "last": "Lu",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Y",
+                        "middle": [],
+                        "last": "Yuan-Wu",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "G",
+                        "middle": [
+                            "Y"
+                        ],
+                        "last": "Li",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "G",
+                        "middle": [],
+                        "last": "Feng",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "S",
+                        "middle": [],
+                        "last": "Li",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "journals/tcom/FengLYLFL13",
+                "year": 2013,
+                "venue": "IEEE Transactions on Communications",
+                "volume": "61",
+                "issue": "8",
+                "pages": "3541--3551",
+                "other_ids": {
+                    "DOI": [
+                        "10.1109/TCOMM.2013.071013.120787"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "D. Feng, L. Lu, Y. Yuan-Wu, G. Y. Li, G. Feng and S. Li, \"Device-to- Device Communications Underlaying Cellular Networks,\" in IEEE Transac- tions on Communications, vol. 61, no. 8, pp. 3541-3551, August 2013, doi: 10.1109/TCOMM.2013.071013.120787.",
+                "links": null
+            },
+            "BIBREF2": {
+                "ref_id": "b2",
+                "title": "Exploiting full duplex for device-to-device communications in heterogeneous networks",
+                "authors": [
+                    {
+                        "first": "L",
+                        "middle": [],
+                        "last": "Wang",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "F",
+                        "middle": [],
+                        "last": "Tian",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "T",
+                        "middle": [],
+                        "last": "Svensson",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "D",
+                        "middle": [],
+                        "last": "Feng",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "M",
+                        "middle": [],
+                        "last": "Song",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "S",
+                        "middle": [],
+                        "last": "Li",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "journals/cm/WangTSFSL15",
+                "year": 2015,
+                "venue": "IEEE Communications Magazine",
+                "volume": "53",
+                "issue": "5",
+                "pages": "146--152",
+                "other_ids": {
+                    "DOI": [
+                        "10.1109/MCOM.2015.7105653"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "L. Wang, F. Tian, T. Svensson, D. Feng, M. Song and S. Li, \"Exploiting full duplex for device-to-device communications in heterogeneous networks,\" in IEEE Communications Magazine, vol. 53, no. 5, pp. 146-152, May 2015, doi: 10.1109/MCOM.2015.7105653.",
+                "links": null
+            },
+            "BIBREF3": {
+                "ref_id": "b3",
+                "title": "Full-Duplex Decode and Forward Relay-Aided Device-to-Device Communication",
+                "authors": [
+                    {
+                        "first": "S",
+                        "middle": [
+                            "H A"
+                        ],
+                        "last": "Samy",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "E",
+                        "middle": [
+                            "A"
+                        ],
+                        "last": "Maher",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "A",
+                        "middle": [],
+                        "last": "El-Mahdy",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/spa/SamyME19",
+                "year": 2019,
+                "venue": "Signal Processing: Algorithms, Architectures, Arrangements, and Applications",
+                "volume": "",
+                "issue": "",
+                "pages": "131--136",
+                "other_ids": {
+                    "DOI": [
+                        "10.23919/SPA.2019.8936713"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "S. H. A. Samy, E. A. Maher and A. El-Mahdy, \"Full-Duplex Decode and Forward Relay-Aided Device-to-Device Communication,\" 2019 Signal Processing: Algo- rithms, Architectures, Arrangements, and Applications (SPA), 2019, pp. 131-136, doi: 10.23919/SPA.2019.8936713.",
+                "links": null
+            },
+            "BIBREF4": {
+                "ref_id": "b4",
+                "title": "Optimal power allocation for full-duplex D2D communications over wireless cellular networks",
+                "authors": [
+                    {
+                        "first": "W",
+                        "middle": [],
+                        "last": "Cheng",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "X",
+                        "middle": [],
+                        "last": "Zhang",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "H",
+                        "middle": [],
+                        "last": "Zhang",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/globecom/ChengZZ14a",
+                "year": 2014,
+                "venue": "IEEE Global Communications Conference",
+                "volume": "",
+                "issue": "",
+                "pages": "4764--4769",
+                "other_ids": {
+                    "DOI": [
+                        "10.1109/GLO-COM.2014.7037560"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "W. Cheng, X. Zhang and H. Zhang, \"Optimal power allocation for full-duplex D2D communications over wireless cellular networks, \" 2014 IEEE Global Commu- nications Conference, 2014, pp. 4764-4769, doi: 10.1109/GLO-COM.2014.7037560.",
+                "links": null
+            },
+            "BIBREF5": {
+                "ref_id": "b5",
+                "title": "Full duplex device-to-device communication in cellular networks",
+                "authors": [
+                    {
+                        "first": "S",
+                        "middle": [],
+                        "last": "Ali",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "N",
+                        "middle": [],
+                        "last": "Rajatheva",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "M",
+                        "middle": [],
+                        "last": "Latva-Aho",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/eucnc/AliRL14",
+                "year": 2014,
+                "venue": "European Conference on Networks and Communications (EuCNC)",
+                "volume": "",
+                "issue": "",
+                "pages": "1--5",
+                "other_ids": {
+                    "DOI": [
+                        "10.1109/EuCNC.2014.6882650"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "S. Ali, N. Rajatheva and M. Latva-aho, \"Full duplex device-to-device commu- nication in cellular networks,\" 2014 European Conference on Networks and Communications (EuCNC), 2014, pp. 1-5, doi: 10.1109/EuCNC. 2014.6882650.",
+                "links": null
+            },
+            "BIBREF6": {
+                "ref_id": "b6",
+                "title": "Resource Sharing Optimization for Device-to-Device Communication Underlaying Cellular Networks",
+                "authors": [
+                    {
+                        "first": "K",
+                        "middle": [],
+                        "last": "Yu",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "C",
+                        "middle": [
+                            "B"
+                        ],
+                        "last": "Doppler",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "O",
+                        "middle": [],
+                        "last": "Ribeiro",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "",
+                        "middle": [],
+                        "last": "Tirkkonen",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "journals/twc/YuDRT11",
+                "year": 2011,
+                "venue": "IEEE Transactions on Wireless Communications",
+                "volume": "10",
+                "issue": "8",
+                "pages": "2752--2763",
+                "other_ids": {
+                    "DOI": [
+                        "10.1109/TWC.2011.060811.102120"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Yu, K. Doppler, C. B. Ribeiro and O. Tirkkonen, \"Resource Sharing Optimization for Device-to-Device Communication Underlaying Cellular Networks, \" in IEEE Transactions on Wireless Communications, vol. 10, no. 8, pp. 2752-2763, August 2011, doi: 10.1109/TWC. 2011.060811.102120.",
+                "links": null
+            },
+            "BIBREF7": {
+                "ref_id": "b7",
+                "title": "Joint Mode Selection and Resource Allocation for Device-to-Device Communications",
+                "authors": [
+                    {
+                        "first": "G",
+                        "middle": [],
+                        "last": "Yu",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "L",
+                        "middle": [],
+                        "last": "Xu",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "D",
+                        "middle": [],
+                        "last": "Feng",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "R",
+                        "middle": [],
+                        "last": "Yin",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "G",
+                        "middle": [
+                            "Y"
+                        ],
+                        "last": "Li",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Y",
+                        "middle": [],
+                        "last": "Jiang",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "journals/tcom/YuXFYLJ14",
+                "year": 2014,
+                "venue": "IEEE Transactions on Communications",
+                "volume": "62",
+                "issue": "11",
+                "pages": "3814--3824",
+                "other_ids": {
+                    "DOI": [
+                        "10.1109/TCOMM.2014.2363092"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "G. Yu, L. Xu, D. Feng, R. Yin, G. Y. Li and Y. Jiang, \"Joint Mode Selection and Resource Allocation for Device-to-Device Communications,\" in IEEE Trans- actions on Communications, vol. 62, no. 11, pp. 3814-3824, Nov. 2014, doi: 10.1109/TCOMM. 2014.2363092.",
+                "links": null
+            },
+            "BIBREF8": {
+                "ref_id": "b8",
+                "title": "Cooperative device-to-device communications in the downlink of cellular networks",
+                "authors": [
+                    {
+                        "first": "S",
+                        "middle": [],
+                        "last": "Shalmashi",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "S",
+                        "middle": [],
+                        "last": "Ben Slimane",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/wcnc/ShalmashiS14",
+                "year": 2014,
+                "venue": "IEEE Wireless Communications and Networking Conference (WCNC)",
+                "volume": "",
+                "issue": "",
+                "pages": "2265--2270",
+                "other_ids": {
+                    "DOI": [
+                        "10.1109/WCNC.2014.6952682"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "S. Shalmashi and S. Ben Slimane, \"Cooperative device-to-device comm- unications in the downlink of cellular networks,\" 2014 IEEE Wireless Com- munications and Networking Conference (WCNC), 2014, pp. 2265-2270, doi: 10.1109/WCNC.2014.6952682.",
+                "links": null
+            },
+            "BIBREF9": {
+                "ref_id": "b9",
+                "title": "Cooperative Full Duplex Device to Device Communication Underlaying Cellular Networks",
+                "authors": [
+                    {
+                        "first": "A",
+                        "middle": [],
+                        "last": "Tang",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "X",
+                        "middle": [],
+                        "last": "Wang",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "C",
+                        "middle": [],
+                        "last": "Zhang",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "journals/twc/TangWZ17",
+                "year": 2017,
+                "venue": "IEEE Transactions on Wireless Communications",
+                "volume": "16",
+                "issue": "12",
+                "pages": "7800--7815",
+                "other_ids": {
+                    "DOI": [
+                        "10.1109/TWC.2017.2753785"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "A.Tang, X. Wang and C. Zhang, \"Cooperative Full Duplex Device to De- vice Communication Underlaying Cellular Networks,\" in IEEE Transactions on Wireless Communications, vol. 16, no. 12, pp. 7800-7815, Dec. 2017, doi: 10.1109/TWC.2017.2753785.",
+                "links": null
+            },
+            "BIBREF10": {
+                "ref_id": "b10",
+                "title": "A Novel Cooperative Full Duplex Device to Device Communication Underlaying Cellular Networks",
+                "authors": [
+                    {
+                        "first": "Y",
+                        "middle": [],
+                        "last": "Zhang",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "F",
+                        "middle": [],
+                        "last": "Liu",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2019,
+                "venue": "IEEE International Conference on Energy Internet (ICEI)",
+                "volume": "",
+                "issue": "",
+                "pages": "548--553",
+                "other_ids": {
+                    "DOI": [
+                        "10.1109/ICEI.2019.00103"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Y. Zhang and F. Liu, \"A Novel Cooperative Full Duplex Device to Device Commu- nication Underlaying Cellular Networks, \" 2019 IEEE International Conference on Energy Internet (ICEI), 2019, pp. 548-553, doi: 10.1109/ICEI.2019.00103.",
+                "links": null
+            },
+            "BIBREF11": {
+                "ref_id": "b11",
+                "title": "Downlink resource allocation for Device-to-Device communication underlaying cellular networks",
+                "authors": [
+                    {
+                        "first": "X",
+                        "middle": [],
+                        "last": "Chen",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "L",
+                        "middle": [],
+                        "last": "Chen",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "M",
+                        "middle": [],
+                        "last": "Zeng",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "X",
+                        "middle": [],
+                        "last": "Zhang",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "D",
+                        "middle": [],
+                        "last": "Yang",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/pimrc/ChenCZZY12",
+                "year": 2012,
+                "venue": "IEEE 23rd International Symposium on Personal, Indoor and Mobile Radio Communications -(PIMRC)",
+                "volume": "",
+                "issue": "",
+                "pages": "232--237",
+                "other_ids": {
+                    "DOI": [
+                        "10.1109/PIMRC.2012.6362746"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "X. Chen, L. Chen, M. Zeng, X. Zhang and D. Yang, \"Downlink resource allocation for Device-to-Device communication underlaying cellular networks, \" 2012 IEEE 23rd International Symposium on Personal, Indoor and Mobile Radio Communi- cations -(PIMRC), 2012, pp. 232-237, doi: 10.1109/PIMRC. 2012.6362746.",
+                "links": null
+            },
+            "BIBREF12": {
+                "ref_id": "b12",
+                "title": "Zero-forcing methods for downlink spatial multiplexing in multiuser MIMO channels",
+                "authors": [
+                    {
+                        "first": "Q",
+                        "middle": [
+                            "H"
+                        ],
+                        "last": "Spencer",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "A",
+                        "middle": [
+                            "L"
+                        ],
+                        "last": "Swindlehurst",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "M",
+                        "middle": [],
+                        "last": "Haardt",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "journals/tsp/SpencerSH04",
+                "year": 2004,
+                "venue": "IEEE Transactions on Signal Processing",
+                "volume": "52",
+                "issue": "2",
+                "pages": "461--471",
+                "other_ids": {
+                    "DOI": [
+                        "10.1109/TSP.2003.821107"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Q. H. Spencer, A. L. Swindlehurst and M. Haardt, \"Zero-forcing methods for downlink spatial multiplexing in multiuser MIMO channels,\" in IEEE Transactions on Signal Processing, vol. 52, no. 2, pp. 461-471, Feb. 2004, doi: 10.1109/TSP.2003.821107.",
+                "links": null
+            },
+            "BIBREF13": {
+                "ref_id": "b13",
+                "title": "Convex Optimization",
+                "authors": [
+                    {
+                        "first": "S",
+                        "middle": [],
+                        "last": "Boyd",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "L",
+                        "middle": [],
+                        "last": "Vandenberghe",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2004,
+                "venue": "",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "S. Boyd and L. Vandenberghe, Convex Optimization. Cambridge, U.K.: Cambridge Univ. Press, 2004.",
+                "links": null
+            }
+        }
+    }
+}

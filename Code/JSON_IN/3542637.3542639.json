@@ -1,0 +1,1967 @@
+{
+    "paper_id": "3542637",
+    "header": {
+        "generated_with": "S2ORC 1.0.0",
+        "date_generated": "2024-03-20T17:52:56.365183Z"
+    },
+    "title": "Locality Matters! Traffic Demand Modeling in Datacenter Networks",
+    "authors": [
+        {
+            "first": "Zhiwen",
+            "middle": [],
+            "last": "Liu",
+            "suffix": "",
+            "affiliation": {
+                "laboratory": "",
+                "institution": "Tsinghua University",
+                "location": {
+                    "settlement": "Beijing",
+                    "country": "China"
+                }
+            },
+            "email": ""
+        },
+        {
+            "first": "Mowei",
+            "middle": [],
+            "last": "Wang",
+            "suffix": "",
+            "affiliation": {
+                "laboratory": "",
+                "institution": "Tsinghua University",
+                "location": {
+                    "settlement": "Beijing",
+                    "country": "China"
+                }
+            },
+            "email": "wang.mowei@outlook.com"
+        },
+        {
+            "first": "Yong",
+            "middle": [],
+            "last": "Cui",
+            "suffix": "",
+            "affiliation": {
+                "laboratory": "",
+                "institution": "Tsinghua University",
+                "location": {
+                    "settlement": "Beijing",
+                    "country": "China"
+                }
+            },
+            "email": "cuiyong@tsinghua.edu.cn"
+        }
+    ],
+    "year": "",
+    "venue": null,
+    "identifiers": {},
+    "abstract": "Understanding and modeling traffic demand characteristics in datacenter networks is of great importance for datacenter network optimization. However, prior traffic models are over-simplified and insufficient in capturing the complex locality properties of traffic demand. We analyze real-world traffic traces and discover strong dependency between the spatial attributes (source, destination) and non-spatial attributes (interarrival time, flow size) of traffic demand. We propose Lomas to model the joint distribution of multi-dimensional traffic demand attributes and generate synthetic traces. Lomas is a novel extension of hierarchical Bayes model that can represent the relationships among these attributes as a dependency graph. We validate Lomas by showing its ability to recreate the flow-level traffic demand patterns of real-world traffic traces. Our approach can be easily adapted to different datacenters with heterogeneous traffic demand patterns, making it a convenient tool for practitioners to utilize.\n\u2022",
+    "pdf_parse": {
+        "abstract": [
+            {
+                "text": "Understanding and modeling traffic demand characteristics in datacenter networks is of great importance for datacenter network optimization. However, prior traffic models are over-simplified and insufficient in capturing the complex locality properties of traffic demand. We analyze real-world traffic traces and discover strong dependency between the spatial attributes (source, destination) and non-spatial attributes (interarrival time, flow size) of traffic demand. We propose Lomas to model the joint distribution of multi-dimensional traffic demand attributes and generate synthetic traces. Lomas is a novel extension of hierarchical Bayes model that can represent the relationships among these attributes as a dependency graph. We validate Lomas by showing its ability to recreate the flow-level traffic demand patterns of real-world traffic traces. Our approach can be easily adapted to different datacenters with heterogeneous traffic demand patterns, making it a convenient tool for practitioners to utilize.",
+                "cite_spans": [],
+                "section": "Abstract",
+                "sec_num": null
+            },
+            {
+                "text": "\u2022",
+                "cite_spans": [],
+                "section": "Abstract",
+                "sec_num": null
+            }
+        ],
+        "body_text": [
+            {
+                "text": "There is a battery of prior works focused on analyzing traffic patterns, dating back to the 1990s. Some researchers developed a number of models to capture the statistical temporal traffic patterns (burstiness on different time scales) based on Poisson or 'self-similar' assumptions [14, 16, 27, 34, 39] . Others focused on statistical spatial traffic patterns (skewness of traffic matrix) and studied how to measure and estimate the traffic matrix [31, 41] . However, most of these models revolve around the statistical characteristics of entire traffic matrices, which are deficient in accuracy and granularity. Recently, an enlightening work was proposed to model the temporal and nontemporal traffic characteristics simultaneously, the problem is that it is on the packet level and it excludes well-concerned information like packet size [6] .",
+                "cite_spans": [
+                    {
+                        "start": 283,
+                        "end": 287,
+                        "text": "[14,",
+                        "ref_id": "BIBREF13"
+                    },
+                    {
+                        "start": 288,
+                        "end": 291,
+                        "text": "16,",
+                        "ref_id": "BIBREF15"
+                    },
+                    {
+                        "start": 292,
+                        "end": 295,
+                        "text": "27,",
+                        "ref_id": "BIBREF26"
+                    },
+                    {
+                        "start": 296,
+                        "end": 299,
+                        "text": "34,",
+                        "ref_id": "BIBREF33"
+                    },
+                    {
+                        "start": 300,
+                        "end": 303,
+                        "text": "39]",
+                        "ref_id": "BIBREF38"
+                    },
+                    {
+                        "start": 449,
+                        "end": 453,
+                        "text": "[31,",
+                        "ref_id": "BIBREF30"
+                    },
+                    {
+                        "start": 454,
+                        "end": 457,
+                        "text": "41]",
+                        "ref_id": "BIBREF40"
+                    },
+                    {
+                        "start": 842,
+                        "end": 845,
+                        "text": "[6]",
+                        "ref_id": "BIBREF5"
+                    }
+                ],
+                "section": "",
+                "sec_num": null
+            },
+            {
+                "text": "In datacenter optimization scenarios, systematically understanding the multi-dimensional patterns of flow-level traffic demand is more important, given that every attribute of traffic demand can affect datacenter performance, e.g., Flow-Completion Time (FCT ) has a strong dependence on flow size [15] . Flow-level traffic demand refers to the need to transfer data from one end-host to another with arbitrary flow-size and interarrival-time attributes. By analyzing traffic demand, researchers can learn traffic patterns exclude the bias introduced by network protocols and algorithms (e.g., load balancing) used during data collection.",
+                "cite_spans": [
+                    {
+                        "start": 297,
+                        "end": 301,
+                        "text": "[15]",
+                        "ref_id": "BIBREF14"
+                    }
+                ],
+                "section": "",
+                "sec_num": null
+            },
+            {
+                "text": "Lacking an ideal model to help understand the flow-level traffic demand patterns, researchers concede to the all-to-all communication pattern with equal interarrival-time and flow-size distribution as a common practice [1-4, 8, 18, 23, 25, 28, 33] , which is an easy-touse solution inspired by [1, 4, 18] . The assumption behind this approach is that spatial attributes (source, destination) and non-spatial attributes (interarrival time, flow size) are independent, which is contrary to the widely believed locality properties [6, 9, 37] . Besides, even though the all-to-all pattern may be a good representation for MapReduce/Hadoop applications [2] , it's unsuitable to be used as a universal-adapted model considering the heterogeneous mix of services across datacenters. Besides, an all-to-all pattern could hardly be the worst case for scenarios like load balancing, where unbalanced demand patterns are of greater concern. To address this problem, researchers propose many other communicating patterns to simulate real-world scenarios, such as stride for HPC applications and staggered-prob for intra, inter-rack differentiation [2] . However, all these common practices are over simplified.",
+                "cite_spans": [
+                    {
+                        "start": 219,
+                        "end": 247,
+                        "text": "[1-4, 8, 18, 23, 25, 28, 33]",
+                        "ref_id": null
+                    },
+                    {
+                        "start": 294,
+                        "end": 297,
+                        "text": "[1,",
+                        "ref_id": "BIBREF0"
+                    },
+                    {
+                        "start": 298,
+                        "end": 300,
+                        "text": "4,",
+                        "ref_id": "BIBREF3"
+                    },
+                    {
+                        "start": 301,
+                        "end": 304,
+                        "text": "18]",
+                        "ref_id": "BIBREF17"
+                    },
+                    {
+                        "start": 528,
+                        "end": 531,
+                        "text": "[6,",
+                        "ref_id": "BIBREF5"
+                    },
+                    {
+                        "start": 532,
+                        "end": 534,
+                        "text": "9,",
+                        "ref_id": "BIBREF8"
+                    },
+                    {
+                        "start": 535,
+                        "end": 538,
+                        "text": "37]",
+                        "ref_id": "BIBREF36"
+                    },
+                    {
+                        "start": 648,
+                        "end": 651,
+                        "text": "[2]",
+                        "ref_id": "BIBREF1"
+                    },
+                    {
+                        "start": 1136,
+                        "end": 1139,
+                        "text": "[2]",
+                        "ref_id": "BIBREF1"
+                    }
+                ],
+                "section": "",
+                "sec_num": null
+            },
+            {
+                "text": "In order to systematically understand the requirements for traffic demand modeling, we carry out a comprehensive analysis of realworld traces [9] . We find strong dependency between spatial attributes (source, destination) and non-spatial attributes (interarrival time, flow size) of flow-level traffic demand, resulting in complex multivariate distribution and various locality properties. Traffic demand within different src-dst pairs is quantitatively imbalanced and behaviorally heterogeneous, e.g., traffic demand among some end-hosts is composed of dense elephant flows, while among others are consist of sparse mice flows. These locality properties should be considered in earnest when designing a traffic demand model. Our findings show that independently modeling the marginal distribution of multi-dimensional traffic demand is unsuitable, and they also reveal that the traffic demand modeling problem is complicated and challenging ( \u00a7 2).",
+                "cite_spans": [
+                    {
+                        "start": 142,
+                        "end": 145,
+                        "text": "[9]",
+                        "ref_id": "BIBREF8"
+                    }
+                ],
+                "section": "",
+                "sec_num": null
+            },
+            {
+                "text": "In this paper, we propose an approach (named Lomas) to model and recreate the complex traffic demand patterns. Lomas is a generative model capable of learning the joint distribution of multidimensional traffic demand attributes (source, destination, interarrival time, flow size). Instead of assuming that all variables are dependent on all other variables, which tend to overfit observed data and be computationally infeasible, our approach represents the complex probabilistic relationships among these attributes as a commom-sensical and expressive dependency graph [35] . We extend the hierarchical Bayes model utilizing a latent functional space to capture the distribution of non-spatial attributes (interarrival time, flow size) for each src-dst pair, which simplifies the traffic demand modeling problem by relating traffic demand patterns to the latent functionalities of both sending-node and receiving-node ( \u00a7 3).",
+                "cite_spans": [
+                    {
+                        "start": 569,
+                        "end": 573,
+                        "text": "[35]",
+                        "ref_id": "BIBREF34"
+                    }
+                ],
+                "section": "",
+                "sec_num": null
+            },
+            {
+                "text": "We evaluate Lomas using two real-world traffic traces [9] . The evaluation results prove Lomas can capture the complex locality properties, and generate synthetic traces with closer distribution distance to the ground truth compared with common practice ( \u00a7 4). Lomas can be adapted to different datacenters to discover the flowlevel traffic demand patterns as well as the skewness of traffic matrics, which is of great importance in designing network protocols, algorithms, and datacenter topologies. Lomas is also useful to generate synthetic benchmarks considering the limited amount of publicly available traces ( \u00a7 5). We hope that our approach can serve as a \"handy tool\" to the research community for better design and evaluation before deployment.",
+                "cite_spans": [
+                    {
+                        "start": 54,
+                        "end": 57,
+                        "text": "[9]",
+                        "ref_id": "BIBREF8"
+                    }
+                ],
+                "section": "",
+                "sec_num": null
+            },
+            {
+                "text": "In this section, we first describe the fine-grained locality properties existing in real-world traces and the deficiency of common practice. Then, we analyze the requirements for a traffic-demand model to capture these locality properties.",
+                "cite_spans": [],
+                "section": "MOTIVATION",
+                "sec_num": "2"
+            },
+            {
+                "text": "We derive the flow-level traffic demand from two publicly available real-world packet traces (named EDU1 and EDU2) [9] . The term flow in the context of this paper means the observed 4-tuple (src, dst, interarrival time, flow size) with a chosen long inactivity timeout to determine when a flow starts or ends [4] , and the 4-tuple represents the sending node, the receiving node, flow interarrival time, and flow size respectively. Because of space constraints, we take EDU1 as an example to illustrate our analysis results, and EDU2 has similar results. Figure 1a visualizes a fraction of the trace within 16 representative src-dst pairs. In Figure 1a , each row represents one src-dst pair with a corresponding color, and each rectangle represents a flow-arrival event (a flow) within the given source and destination. The width of each rectangle represents the flow size, and the blank between two adjacent rectangles represents the interarrival time. We observe significant difference in interarrival-time (Figure 1b ) and flow-size (Figure 1c ) distributions across src-dst pairs. Besides, we sum up the entries over the entire trace file, resulting in the total demand distribution within these 16 src-dst pairs (Figure 1d ), which reveals the skewness of total demand [6] , i.e., some src-dst pairs transfer more data than others. Finally, we investigate the degree (indegree plus outdegree) of each node in EDU1 (we plot a subset in Figure 1e for space constraints), and the result shows that the degree distribution is also highly skewed. We observe that the majority of nodes have low degree but a few have relatively high degree, indicating the degree distribution is right-skewed in this case.",
+                "cite_spans": [
+                    {
+                        "start": 115,
+                        "end": 118,
+                        "text": "[9]",
+                        "ref_id": "BIBREF8"
+                    },
+                    {
+                        "start": 310,
+                        "end": 313,
+                        "text": "[4]",
+                        "ref_id": "BIBREF3"
+                    },
+                    {
+                        "start": 1276,
+                        "end": 1279,
+                        "text": "[6]",
+                        "ref_id": "BIBREF5"
+                    }
+                ],
+                "section": "Locality Properties in Real-world Datacenter Traffic Traces",
+                "sec_num": "2.1"
+            },
+            {
+                "text": "Conventionally, flows are generated assuming that the source and the destination are chosen randomly. The interarrival time is independently sampled from a \ud835\udc43\ud835\udc5c\ud835\udc56\ud835\udc60\ud835\udc60\ud835\udc5c\ud835\udc5b process with parameter \ud835\udf06 equal to the empirical full-sample mean, and flow size is independently sampled from the empirical cumulative distribution function (CDF) [1-4, 8, 18, 23, 25, 28, 33] . These simple assumptions are contrary to the fact that the multi-dimensional attributes of traffic demand have heterogenous probability distributions across different src-dst pairs. As a result, the traffic demand generated by common practice fails to capture the locality properties in real-world traffic traces. Comparing Figure 2a to Figure 1a we can find obvious and intuitive difference in interarrival-time and flow-size patterns. And comparing Figures 2b, 2c , 2d and 2e with their counterparts in Figures 1 respectively we can see the huge difference between the common practice and the ground truth, which proves that the common practice is unsuitable to model the complexities of real-world traffic demand in datacenter networks.",
+                "cite_spans": [
+                    {
+                        "start": 327,
+                        "end": 355,
+                        "text": "[1-4, 8, 18, 23, 25, 28, 33]",
+                        "ref_id": null
+                    }
+                ],
+                "section": "Locality Properties in Real-world Datacenter Traffic Traces",
+                "sec_num": "2.1"
+            },
+            {
+                "text": "Considering the complex and heterogeneous traffic demand patterns in datacenter networks, we conclude that an ideal trafficdemand model should have the ability to capture the following locality properties:",
+                "cite_spans": [],
+                "section": "Requirements and Methodology for Traffic Demand Modeling",
+                "sec_num": "2.2"
+            },
+            {
+                "text": "(1). Heterogeneous arrival patterns within differenct src-dst pairs: traffic demand within different source nodes and destination nodes presents different interarrival-time and flow-size distributions. (2) . Imbalanced total demand across different src-dst pairs: some end-hosts tend to transfer more data to certain peers than others. (3). Asymmetric node degree distribution in datacenter networks: some of the nodes have low degree while the other nodes have relatively high degree.",
+                "cite_spans": [],
+                "section": "Requirements and Methodology for Traffic Demand Modeling",
+                "sec_num": "2.2"
+            },
+            {
+                "text": "These locality properties motivate us to consider the intrinsic characteristics of source nodes and destination nodes in datacenters. The difference of traffic demand patterns across src-dst pairs can be related to the latent functionalities of both sending-nodes and receiving-nodes. For example, inside the social-network datacenters, the size of network flows sending from cache nodes are significantly Based on our observations, we utilize a hierarchical Bayes method to learn the latent functionalities distribution of each src-dst pair (a combination of sending-node and receiving-node) as well as the distribution over the traffic demand patterns of each latent functionality. In our model, a src-dst pair is represented by a distribution of functionalities, and a functionality is featured by a distribution of flow types. As a result, our model can inference the interarrivaltime and flow-size distribution for each src-dst pair based on the latent functionalities, thus capturing the heterogeneous locality properties. And introducing the latent space brings in the following advantages:",
+                "cite_spans": [],
+                "section": "Requirements and Methodology for Traffic Demand Modeling",
+                "sec_num": "2.2"
+            },
+            {
+                "text": "(1). Dimensionality reduction. We can use latent functionalities as low-dimensional representations of a huge number of src-dst pairs (proportional to the square of the number of nodes), which makes it possible to tackle the scale of modern datacenters. (2). Transferability. The latent functionality distributions in datacenters are tied to the datacenter services. Therefore, a traffic demand model with latent functionality layer can be transferable to other datacenters provided no significant variation in datacenter services. Besides, we are not the first to use hierarchical Bayes method to model the multivariable dependencies. Similar methodologies have been applied to natural language processing, e.g., Latent Dirichlet Allocation (LDA) is a three-level Bayes model mainly used for document classification [11] . However, to the best of our knowledge, such approaches have not been used in the context of traffic demand modeling in datacenter networks.",
+                "cite_spans": [
+                    {
+                        "start": 817,
+                        "end": 821,
+                        "text": "[11]",
+                        "ref_id": "BIBREF10"
+                    }
+                ],
+                "section": "Requirements and Methodology for Traffic Demand Modeling",
+                "sec_num": "2.2"
+            },
+            {
+                "text": "In this section, we first formulate the traffic demand modeling problem. Then, we go into details of our model (named Lomas) design and training. Finally, we illustrate the generative process using the trained model to get synthetic traces.",
+                "cite_spans": [],
+                "section": "DESIGN",
+                "sec_num": "3"
+            },
+            {
+                "text": "We organize the flow-level traffic demand as flow sequences (denoted by A) according to flow arrival time. Each flow is a 4-tuple (src, dst, interarrival time, flow size). Both src and dst are discrete variables, while interarrival time and flow size are continuous variables. Before we utilize Bayes method to build our model, we have to address several challenges: \ud835\udc56) how to infer the latent functionalities of each src-dst pair using observed flow sequences; \ud835\udc56\ud835\udc56) how to deal with discrete and continuous variables simultaneously in one model. All the notations used in this paper are summarized in Table 1 .",
+                "cite_spans": [],
+                "section": "Problem Formulation",
+                "sec_num": "3.1"
+            },
+            {
+                "text": "Table 1 In order to infer the latent functionality distributions of corresponding src-dst pairs, we divide the entire trace A into subgroups according to the src and dst attributes of every flow. We assume the number of nodes in a datacenter is \ud835\udc40, and the number of src-dst pairs is \ud835\udc40 2 . For each src-dst pair (denoted by \ud835\udc5f , \ud835\udc5f = 1, 2, . . . , \ud835\udc45, and \ud835\udc45 = \ud835\udc40 2 ), we observe a collection of sending flows (denoted by A \ud835\udc5f , a subset of A) which are sent from \ud835\udc60\ud835\udc5f\ud835\udc50 \ud835\udc5f to \ud835\udc51\ud835\udc60\ud835\udc61 \ud835\udc5f . Considering the sending flows in A \ud835\udc5f share the same src and dst attributes, we can use a 2-tuple (interarrival time, flow size) to represent each sending flow in A \ud835\udc5f . By doing so, we relate functionality distribution of each src-dst pair to its sending flows, and therefor the sending flows can be used for latent functionalities inference.",
+                "cite_spans": [],
+                "section": "Problem Formulation",
+                "sec_num": "3.1"
+            },
+            {
+                "text": "In order to deal with continuous variables, we discretize interarrival time and flow size attributes of every sending flow by creating sets of contiguous quantile-based bins for computational simplification, considering that minor fluctuations in these two variables do not really make much difference in traffic demand patterns. We index all the non-repeating discretized sending flows in A with {1, . . . , \ud835\udc49 }1 , and we take each sending flow as a distinct type of flow (i.e., a certain size of flow that need to be sent at some interarrival time). Based on the finite flow types resulted by discretization, we can represent sending flows using one-hot vectors. Thus, the n-th sending flow in A \ud835\udc5f with flow-type \ud835\udc63 is represented by a V-vector \ud835\udc4e \ud835\udc5f,\ud835\udc5b such that \ud835\udc4e \ud835\udc63 \ud835\udc5f,\ud835\udc5b = 1 and \ud835\udc4e \ud835\udc62 \ud835\udc5f,\ud835\udc5b = 0 for \ud835\udc62 \u2260 \ud835\udc63.",
+                "cite_spans": [],
+                "section": "Problem Formulation",
+                "sec_num": "3.1"
+            },
+            {
+                "text": "Using the functionality-based hierarchical Bayes analysis framework, the goal of Lomas is to find the probability distribution of src-dst pairs in the latent functional space (\ud835\udf03 ) that can best explain the observed traffic demand patterns. Assuming the dimensionality of the latent space is K (K is a hyperparameter), the modeling procedure can be defined as follows, \ud835\udc56) modeling the heterogeneous mix of \ud835\udc3e types of functionalities for each src-dst pair; \ud835\udc56\ud835\udc56) revealing the distribution of sending flow types for each functionality.",
+                "cite_spans": [],
+                "section": "Functionality-Based Modeling",
+                "sec_num": "3.2"
+            },
+            {
+                "text": "Assuming the dimensionality of latent space (K) is known and fixed, the functional probability distributions for a datacenter with R src-dst pairs are parameterized by a \ud835\udc45 \u00d7 \ud835\udc3e matrix \ud835\udf03 , and \ud835\udf03 \ud835\udc5f (r-th row of \ud835\udf03 ) is a K-dimensional vector with \ud835\udc3e \ud835\udc58=1 \ud835\udf03 \ud835\udc58 \ud835\udc5f = 1, (\ud835\udc5f = 1, 2, . . . , \ud835\udc45). If there is no sending flows within src-dst pair \ud835\udc5f , we set \ud835\udf03 \ud835\udc5f to \u00ec 0. For each sending flow \ud835\udc4e \ud835\udc5f,\ud835\udc5b of A \ud835\udc5f , our model assumes it belongs to a latent functionality \ud835\udc67 \ud835\udc5f,\ud835\udc5b where \ud835\udc67 \ud835\udc5f,\ud835\udc5b follows a Multinominal distribution with parameter \ud835\udf03 \ud835\udc5f . And \ud835\udc67 \ud835\udc5f,\ud835\udc5b is a \ud835\udc3e-dimension onehot vector with \ud835\udc67 \ud835\udc58 \ud835\udc5f,\ud835\udc5b = 1 and \ud835\udc67 \ud835\udc57 \ud835\udc5f,\ud835\udc5b = 0 for \ud835\udc57 \u2260 \ud835\udc58, which means the functionality index of \ud835\udc67 \ud835\udc5f,\ud835\udc5b is \ud835\udc58. Besides, the probability distributions of sending flow types are parameterized by a \ud835\udc3e \u00d7 \ud835\udc49 matrix \ud835\udefd where",
+                "cite_spans": [],
+                "section": "Functionality-Based Modeling",
+                "sec_num": "3.2"
+            },
+            {
+                "text": "\ud835\udefd \ud835\udc58,\ud835\udc63 \u221d \ud835\udc45 \ud835\udc5f =1 \ud835\udc41 \ud835\udc5f \ud835\udc5b=1 \ud835\udc5d (\ud835\udc4e \ud835\udc63 \ud835\udc5f,\ud835\udc5b = 1, \ud835\udc67 \ud835\udc58 \ud835\udc5f,\ud835\udc5b = 1)",
+                "cite_spans": [],
+                "section": "Functionality-Based Modeling",
+                "sec_num": "3.2"
+            },
+            {
+                "text": ". Both \ud835\udf03 and \ud835\udefd are probability matrices to be estimated.",
+                "cite_spans": [],
+                "section": "Functionality-Based Modeling",
+                "sec_num": "3.2"
+            },
+            {
+                "text": "And we use two hyperparameters \ud835\udefc and \ud835\udf02 to specify our prior beliefs about functionality sparsity for each src-dst pair \ud835\udc5f and flowtype sparsity for each functionality \ud835\udc58. Both \ud835\udefc and \ud835\udf02 are associated with Dirichlet distributions [38] and their values will influence the way the Dirichlets generate Multinominal distributions of \ud835\udf03 and \ud835\udefd. A higher \ud835\udefc value will lead to distributions that center around averages for \ud835\udf03 , indicating src-dst pairs are made up of more functionalities. While lower \ud835\udefc values will lead to distributions that are more dispersed. Parameter \ud835\udf02 works in an analogous way for \ud835\udefd. Conditional on the \ud835\udefc and \ud835\udf02 parameters, the likelihood for \ud835\udc41 \ud835\udc5f sending flows (A \ud835\udc5f ) of a src-dst pair r is:",
+                "cite_spans": [
+                    {
+                        "start": 226,
+                        "end": 230,
+                        "text": "[38]",
+                        "ref_id": "BIBREF37"
+                    }
+                ],
+                "section": "Functionality-Based Modeling",
+                "sec_num": "3.2"
+            },
+            {
+                "text": "\ud835\udc5d (A \ud835\udc5f , \ud835\udc67, \ud835\udf03, \ud835\udefd |\ud835\udefc, \ud835\udf02) = \u222c \ud835\udc5d (\ud835\udefd |\ud835\udf02)\ud835\udc5d (\ud835\udf03 |\ud835\udefc)( \ud835\udc41 \ud835\udc5f \ud835\udc5b=1 \u2211\ufe01 \ud835\udc67 \ud835\udc5f,\ud835\udc5b \ud835\udc5d (\ud835\udc67 \ud835\udc5f,\ud835\udc5b |\ud835\udf03 )\ud835\udc5d (\ud835\udc4e \ud835\udc5f,\ud835\udc5b |\ud835\udc67 \ud835\udc5f,\ud835\udc5b , \ud835\udefd))\ud835\udc51\ud835\udf03\ud835\udc51\ud835\udefd",
+                "cite_spans": [],
+                "section": "Functionality-Based Modeling",
+                "sec_num": "3.2"
+            },
+            {
+                "text": "For model training, we utilize the approximate inference technique named Gibbs Sampling [19] to estimate parameter \ud835\udf03 and \ud835\udefd. Gibbs Sampling is a special case of the Markov Chain Monte Carlo method [12, 17] . And there are other approximate techniques ready for use, like variational inference [24] . We choose Gibbs Sampling for its flexibility and simpleness.",
+                "cite_spans": [
+                    {
+                        "start": 88,
+                        "end": 92,
+                        "text": "[19]",
+                        "ref_id": "BIBREF18"
+                    },
+                    {
+                        "start": 196,
+                        "end": 200,
+                        "text": "[12,",
+                        "ref_id": "BIBREF11"
+                    },
+                    {
+                        "start": 201,
+                        "end": 204,
+                        "text": "17]",
+                        "ref_id": "BIBREF16"
+                    },
+                    {
+                        "start": 292,
+                        "end": 296,
+                        "text": "[24]",
+                        "ref_id": "BIBREF23"
+                    }
+                ],
+                "section": "Functionality-Based Modeling",
+                "sec_num": "3.2"
+            },
+            {
+                "text": "The generative process using our trained model is shown in Algorithm 1. Lomas allows researchers to synthesize traces in different settings (e.g., time windows, number of nodes), which is particularly useful given the limited and nonflexible historical traces. For example, when a larger \ud835\udc40 is chosen, our model will pad the original \ud835\udc45 \u00d7 \ud835\udc3e matrix \ud835\udf03 into a larger \ud835\udc45 \u2032 \u00d7 \ud835\udc3e matrix \ud835\udf03 \u2032 . Besides, our model can be used to simulate different levels of traffic demand (e.g., demand peaks in e-commerce datacenters during Shopping Festival) by adjusting the interarrival time probability distribution function.",
+                "cite_spans": [],
+                "section": "Generating Synthetic Traces",
+                "sec_num": "3.3"
+            },
+            {
+                "text": "Algorithm 1: Generative process of Lomas output : a synthetic trace with the time window from 0 to \ud835\udc61 .",
+                "cite_spans": [],
+                "section": "Generating Synthetic Traces",
+                "sec_num": "3.3"
+            },
+            {
+                "text": "In generating process, we iteratively generate R subgroups of sending flow A \ud835\udc5f to get the synthetic trace A. For the n-th sending flow ( \u00e2\ud835\udc5f,\ud835\udc5b ) in A \ud835\udc5f , we first sample its functionality index \ud835\udc67 \ud835\udc5f,\ud835\udc5b from the Multinominal distribution with parameter \ud835\udf03 \ud835\udc5f , and then the sending flow \u00e2\ud835\udc5f,\ud835\udc5b can be chosen conditioned on \ud835\udc67 \ud835\udc5f,\ud835\udc5b and \ud835\udefd (line 7-8). After that, we convert the discretized interarrival time bins and flow size bins to continuous values by assuming these variables are distributed evenly within each bin (line 9), and this method was also used in [10] . Finally, we accumulate the interarrival time within each A \ud835\udc5f and move on to the next src-dst pair when the accumulated time overran the given time window (line 10).",
+                "cite_spans": [
+                    {
+                        "start": 551,
+                        "end": 555,
+                        "text": "[10]",
+                        "ref_id": "BIBREF9"
+                    }
+                ],
+                "section": "Generating Synthetic Traces",
+                "sec_num": "3.3"
+            },
+            {
+                "text": "In this section, we first describe the evaluation setups and our model (Lomas) implementation. Then, we present the preliminary evaluation results with different settings.",
+                "cite_spans": [],
+                "section": "EVALUATION",
+                "sec_num": "4"
+            },
+            {
+                "text": "Datasets. We evaluate Lomas using two real-world traces (EDU1, EDU2) [9] . We extract over 0.2 million flows from EDU1 and over 1 million flows from EDU2 ( \u00a7 2). Metric. We choose Kolmogorov-Smirnov (KS) statistic [30] as a preliminary metric to quantify the distance between the empirical distribution function of the ground truth A and the synthetic trace A. If distributions are identical, the KS-distance is 0, and its maximum possible value is 1. For interarrival time and flow size attributes, we calculate their average KS-distance across all src-dst pairs respectively. Implementation. Our model is implemented in Python using Gensim [36] . We use 8 different \ud835\udc3e values (number of latent functionalities) to test the performance of Lomas. And we set both \ud835\udefc and \ud835\udf02 to 'auto', which is a feature of Gensim that enable automatically parameter learning. Baseline. We compare Lomas with the common practice (abbreviated to 'CP'), where the parameter \ud835\udf06 for interarrival time equals to the empirical full-sample average values, and the flow size follows the empirical full-sample CDF.",
+                "cite_spans": [
+                    {
+                        "start": 69,
+                        "end": 72,
+                        "text": "[9]",
+                        "ref_id": "BIBREF8"
+                    },
+                    {
+                        "start": 214,
+                        "end": 218,
+                        "text": "[30]",
+                        "ref_id": "BIBREF29"
+                    },
+                    {
+                        "start": 642,
+                        "end": 646,
+                        "text": "[36]",
+                        "ref_id": "BIBREF35"
+                    }
+                ],
+                "section": "Setups",
+                "sec_num": "4.1"
+            },
+            {
+                "text": "Figure 3 visualizes the generated flow-level traffic demand using Lomas. Each row in Figure 3a represent the same src-dst pair as Figure 1a , and we can see clearly from Figure 3a that our synthetic trace has similar interarrival-time distribution and flow-size distribution (Figure 3b and 3c ) to the ground truth. And statisticaly, the total demand within each src-dst pair and the degree of each node (Figure 3d and 3e ) are also similar to the ground truth.",
+                "cite_spans": [],
+                "section": "Results",
+                "sec_num": "4.2"
+            },
+            {
+                "text": "The evaluation results using KS-distance in Figure 4 show two main observations: \ud835\udc56) The distributions of generated traces by Lomas are closer to the ground truth (with lower KS values) compared with common practice (CP), and the KS-distance decreases with higher \ud835\udc3e. We notice that the average KS-distance for flow size is higher than interarrival time, and the reason is that our discretization method underfits the irregular flow size distributions and therefore causes high discretization error. We will optimize it in future work. \ud835\udc56\ud835\udc56) A relatively small \ud835\udc3e (e.g., \ud835\udc3e = 25) is sufficient to model the traffic demand generated by thousands of nodes, which proves the applicability of Lomas to large scale datacenters. ",
+                "cite_spans": [],
+                "section": "Results",
+                "sec_num": "4.2"
+            },
+            {
+                "text": "Lomas is a generative model capable of learning the complex locality properties of flow-level traffic demand in datacenter networks.",
+                "cite_spans": [],
+                "section": "APPLICATION AND FUTURE WORK",
+                "sec_num": "5"
+            },
+            {
+                "text": "Given the limited amount of publicly available datasets, Lomas can be particularly useful to generate synthetic benchmarks and recreat representative traffic demand patterns. First, our approach can help understand the flow-level locality properties and facilitate the design of datacenter network protocols and algorithms. Second, Lomas can discover the skewness of traffic matrices, which is helpful for optimizing the datacenter topologies to ensure high bandwidth utilization. Finally, our trained models can generate synthetic traces retaining the traffic demand patterns, and these synthetic benchmarks can be used by researchers to evaluate their designs in different settings (e.g., for longer traces or higher level of traffic demand).. Besides, there are several future directions we wish to explore. First, we plan to reevaluate the existing datacenter optimization proposals [2-4, 8, 18, 29, 33] using our synthetic benchmarks to understand the robustness and applicability of these popular designs. Second, we will explore the possibilities to introduce new techniques to enhance our model performance, e.g., a recurrent neural networks (RNN ) module to capture inter-flow correlations. Finally, we want to apply our approach to model more real-world traffic traces (e.g., traces from Facebook [37] ) and release our trained and desensitized models to facilitate future research.",
+                "cite_spans": [
+                    {
+                        "start": 887,
+                        "end": 907,
+                        "text": "[2-4, 8, 18, 29, 33]",
+                        "ref_id": null
+                    },
+                    {
+                        "start": 1307,
+                        "end": 1311,
+                        "text": "[37]",
+                        "ref_id": "BIBREF36"
+                    }
+                ],
+                "section": "APPLICATION AND FUTURE WORK",
+                "sec_num": "5"
+            },
+            {
+                "text": "We present Lomas, an approach for traffic demand modeling in datacenter networks. Preliminary evaluation results have shown that Lomas holds promise for capturing the flow-level locality properties in traffic demand as well as synthesizing traces. Besides, Lomas can be easily adapted to different datacenters with heterogeneous traffic demand patterns.",
+                "cite_spans": [],
+                "section": "CONCLUSION",
+                "sec_num": "6"
+            },
+            {
+                "text": "\ud835\udc49 = (number of interarrival-time bins) \u00d7 (number of flow-size bins).",
+                "cite_spans": [],
+                "section": "",
+                "sec_num": null
+            }
+        ],
+        "bib_entries": {
+            "BIBREF0": {
+                "ref_id": "b0",
+                "title": "A scalable, commodity data center network architecture",
+                "authors": [
+                    {
+                        "first": "Mohammad",
+                        "middle": [],
+                        "last": "Al-Fares",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Alexander",
+                        "middle": [],
+                        "last": "Loukissas",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Amin",
+                        "middle": [],
+                        "last": "Vahdat",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/sigcomm/Al-FaresLV08",
+                "year": 2008,
+                "venue": "SIGCOMM. ACM",
+                "volume": "",
+                "issue": "",
+                "pages": "63--74",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Mohammad Al-Fares, Alexander Loukissas, and Amin Vahdat. 2008. A scalable, commodity data center network architecture. In SIGCOMM. ACM, 63-74.",
+                "links": null
+            },
+            "BIBREF1": {
+                "ref_id": "b1",
+                "title": "Hedera: Dynamic Flow Scheduling for Data Center Networks",
+                "authors": [
+                    {
+                        "first": "Mohammad",
+                        "middle": [],
+                        "last": "Al-Fares",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Sivasankar",
+                        "middle": [],
+                        "last": "Radhakrishnan",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "",
+                        "middle": [],
+                        "last": "Barath Raghavan",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/nsdi/Al-FaresRRHV10",
+                "year": 2010,
+                "venue": "NSDI. USENIX Association",
+                "volume": "",
+                "issue": "",
+                "pages": "281--296",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Mohammad Al-Fares, Sivasankar Radhakrishnan, Barath Raghavan, et al. 2010. Hedera: Dynamic Flow Scheduling for Data Center Networks. In NSDI. USENIX Association, 281-296.",
+                "links": null
+            },
+            "BIBREF2": {
+                "ref_id": "b2",
+                "title": "CONGA: distributed congestion-aware load balancing for datacenters",
+                "authors": [
+                    {
+                        "first": "Mohammad",
+                        "middle": [],
+                        "last": "Alizadeh",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Tom",
+                        "middle": [],
+                        "last": "Edsall",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Sarang",
+                        "middle": [],
+                        "last": "Dharmapurikar",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/sigcomm/AlizadehEDVCFLMPYV14",
+                "year": 2014,
+                "venue": "SIGCOMM. ACM",
+                "volume": "",
+                "issue": "",
+                "pages": "503--514",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Mohammad Alizadeh, Tom Edsall, Sarang Dharmapurikar, et al. 2014. CONGA: distributed congestion-aware load balancing for datacenters. In SIGCOMM. ACM, 503-514.",
+                "links": null
+            },
+            "BIBREF3": {
+                "ref_id": "b3",
+                "title": "Data center TCP (DCTCP)",
+                "authors": [
+                    {
+                        "first": "Mohammad",
+                        "middle": [],
+                        "last": "Alizadeh",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Albert",
+                        "middle": [
+                            "G"
+                        ],
+                        "last": "Greenberg",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "David",
+                        "middle": [
+                            "A"
+                        ],
+                        "last": "Maltz",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/sigcomm/AlizadehGMPPPSS10",
+                "year": 2010,
+                "venue": "SIGCOMM. ACM",
+                "volume": "",
+                "issue": "",
+                "pages": "63--74",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Mohammad Alizadeh, Albert G. Greenberg, David A. Maltz, et al. 2010. Data center TCP (DCTCP). In SIGCOMM. ACM, 63-74.",
+                "links": null
+            },
+            "BIBREF4": {
+                "ref_id": "b4",
+                "title": "pFabric: minimal near-optimal datacenter transport",
+                "authors": [
+                    {
+                        "first": "Mohammad",
+                        "middle": [],
+                        "last": "Alizadeh",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Shuang",
+                        "middle": [],
+                        "last": "Yang",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Milad",
+                        "middle": [],
+                        "last": "Sharif",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/sigcomm/AlizadehYSKMPS13",
+                "year": 2013,
+                "venue": "SIGCOMM. ACM",
+                "volume": "",
+                "issue": "",
+                "pages": "435--446",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Mohammad Alizadeh, Shuang Yang, Milad Sharif, et al. 2013. pFabric: minimal near-optimal datacenter transport. In SIGCOMM. ACM, 435-446.",
+                "links": null
+            },
+            "BIBREF5": {
+                "ref_id": "b5",
+                "title": "On the Complexity of Traffic Traces and Implications",
+                "authors": [
+                    {
+                        "first": "Chen",
+                        "middle": [],
+                        "last": "Avin",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Manya",
+                        "middle": [],
+                        "last": "Ghobadi",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Chen",
+                        "middle": [],
+                        "last": "Griner",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/sigmetrics/AvinGG020",
+                "year": 2020,
+                "venue": "SIGMETRICS. ACM",
+                "volume": "",
+                "issue": "",
+                "pages": "47--48",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Chen Avin, Manya Ghobadi, Chen Griner, et al. 2020. On the Complexity of Traffic Traces and Implications. In SIGMETRICS. ACM, 47-48.",
+                "links": null
+            },
+            "BIBREF6": {
+                "ref_id": "b6",
+                "title": "PIAS: Practical Information-Agnostic Flow Scheduling for Data Center Networks",
+                "authors": [
+                    {
+                        "first": "Wei",
+                        "middle": [],
+                        "last": "Bai",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Li",
+                        "middle": [],
+                        "last": "Chen",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Kai",
+                        "middle": [],
+                        "last": "Chen",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/hotnets/BaiC0HTS14",
+                "year": 2014,
+                "venue": "HotNets. ACM",
+                "volume": "25",
+                "issue": "1-25",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Wei Bai, Li Chen, Kai Chen, et al. 2014. PIAS: Practical Information-Agnostic Flow Scheduling for Data Center Networks. In HotNets. ACM, 25:1-25:7.",
+                "links": null
+            },
+            "BIBREF7": {
+                "ref_id": "b7",
+                "title": "Sirius: A Flat Datacenter Network with Nanosecond Optical Switching",
+                "authors": [
+                    {
+                        "first": "Hitesh",
+                        "middle": [],
+                        "last": "Ballani",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Paolo",
+                        "middle": [],
+                        "last": "Costa",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Raphael",
+                        "middle": [],
+                        "last": "Behrendt",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/sigcomm/BallaniCBCHJKLS20",
+                "year": 2020,
+                "venue": "SIGCOMM. ACM",
+                "volume": "",
+                "issue": "",
+                "pages": "782--797",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Hitesh Ballani, Paolo Costa, Raphael Behrendt, et al. 2020. Sirius: A Flat Datacen- ter Network with Nanosecond Optical Switching. In SIGCOMM. ACM, 782-797.",
+                "links": null
+            },
+            "BIBREF8": {
+                "ref_id": "b8",
+                "title": "Network traffic characteristics of data centers in the wild",
+                "authors": [
+                    {
+                        "first": "Theophilus",
+                        "middle": [],
+                        "last": "Benson",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Aditya",
+                        "middle": [],
+                        "last": "Akella",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "David",
+                        "middle": [
+                            "A"
+                        ],
+                        "last": "Maltz",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/imc/BensonAM10",
+                "year": 2010,
+                "venue": "IMC. ACM",
+                "volume": "",
+                "issue": "",
+                "pages": "267--280",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Theophilus Benson, Aditya Akella, and David A. Maltz. 2010. Network traffic characteristics of data centers in the wild. In IMC. ACM, 267-280.",
+                "links": null
+            },
+            "BIBREF9": {
+                "ref_id": "b9",
+                "title": "Generating Complex, Realistic Cloud Workloads using Recurrent Neural Networks",
+                "authors": [
+                    {
+                        "first": "Shane",
+                        "middle": [],
+                        "last": "Bergsma",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Timothy",
+                        "middle": [],
+                        "last": "Zeyl",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Arik",
+                        "middle": [],
+                        "last": "Senderovich",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/sosp/BergsmaZSB21",
+                "year": 2021,
+                "venue": "SOSP. ACM",
+                "volume": "",
+                "issue": "",
+                "pages": "376--391",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Shane Bergsma, Timothy Zeyl, Arik Senderovich, et al. 2021. Generating Complex, Realistic Cloud Workloads using Recurrent Neural Networks. In SOSP. ACM, 376-391.",
+                "links": null
+            },
+            "BIBREF10": {
+                "ref_id": "b10",
+                "title": "Latent dirichlet allocation",
+                "authors": [
+                    {
+                        "first": "Andrew",
+                        "middle": [
+                            "Y"
+                        ],
+                        "last": "David M Blei",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Michael",
+                        "middle": [
+                            "I"
+                        ],
+                        "last": "Ng",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "",
+                        "middle": [],
+                        "last": "Jordan",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/nips/BleiNJ01",
+                "year": 2003,
+                "venue": "JMLR",
+                "volume": "3",
+                "issue": "",
+                "pages": "993--1022",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "David M Blei, Andrew Y Ng, and Michael I Jordan. 2003. Latent dirichlet allocation. JMLR 3, Jan (2003), 993-1022.",
+                "links": null
+            },
+            "BIBREF11": {
+                "ref_id": "b11",
+                "title": "Markov chain monte carlo and gibbs sampling",
+                "authors": [
+                    {
+                        "first": "Chain",
+                        "middle": [],
+                        "last": "Monte",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Carlo",
+                        "middle": [],
+                        "last": "",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2004,
+                "venue": "Lecture notes for EEB",
+                "volume": "581",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Chain Monte Carlo. 2004. Markov chain monte carlo and gibbs sampling. Lecture notes for EEB 581 (2004), 540.",
+                "links": null
+            },
+            "BIBREF12": {
+                "ref_id": "b12",
+                "title": "Scheduling Mix-flows in Commodity Datacenters with Karuna",
+                "authors": [
+                    {
+                        "first": "Li",
+                        "middle": [],
+                        "last": "Chen",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Kai",
+                        "middle": [],
+                        "last": "Chen",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Wei",
+                        "middle": [],
+                        "last": "Bai",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/sigcomm/Chen00A16",
+                "year": 2016,
+                "venue": "SIGCOMM. ACM",
+                "volume": "",
+                "issue": "",
+                "pages": "174--187",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Li Chen, Kai Chen, Wei Bai, et al. 2016. Scheduling Mix-flows in Commodity Datacenters with Karuna. In SIGCOMM. ACM, 174-187.",
+                "links": null
+            },
+            "BIBREF13": {
+                "ref_id": "b13",
+                "title": "Self-similarity in World Wide Web traffic: evidence and possible causes",
+                "authors": [
+                    {
+                        "first": "Mark",
+                        "middle": [],
+                        "last": "Crovella",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Azer",
+                        "middle": [],
+                        "last": "Bestavros",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 1997,
+                "venue": "IEEE/ACM Trans. Netw",
+                "volume": "5",
+                "issue": "6",
+                "pages": "835--846",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Mark Crovella and Azer Bestavros. 1997. Self-similarity in World Wide Web traffic: evidence and possible causes. IEEE/ACM Trans. Netw. 5, 6 (1997), 835-846.",
+                "links": null
+            },
+            "BIBREF14": {
+                "ref_id": "b14",
+                "title": "Why flow-completion time is the right metric for congestion control",
+                "authors": [
+                    {
+                        "first": "Nandita",
+                        "middle": [],
+                        "last": "Dukkipati",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Nick",
+                        "middle": [],
+                        "last": "Mckeown",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2006,
+                "venue": "SIGCOMM Comput. Commun. Rev",
+                "volume": "36",
+                "issue": "1",
+                "pages": "59--62",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Nandita Dukkipati and Nick McKeown. 2006. Why flow-completion time is the right metric for congestion control. SIGCOMM Comput. Commun. Rev. 36, 1 (2006), 59-62.",
+                "links": null
+            },
+            "BIBREF15": {
+                "ref_id": "b15",
+                "title": "Analysis, Modeling and Generation of Self-Similar VBR Video Traffic",
+                "authors": [
+                    {
+                        "first": "Mark",
+                        "middle": [
+                            "W"
+                        ],
+                        "last": "Garrett",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Walter",
+                        "middle": [],
+                        "last": "Willinger",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/sigcomm/GarrettW94",
+                "year": 1994,
+                "venue": "SIGCOMM. ACM",
+                "volume": "",
+                "issue": "",
+                "pages": "269--280",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Mark W. Garrett and Walter Willinger. 1994. Analysis, Modeling and Generation of Self-Similar VBR Video Traffic. In SIGCOMM. ACM, 269-280.",
+                "links": null
+            },
+            "BIBREF16": {
+                "ref_id": "b16",
+                "title": "Practical markov chain monte carlo",
+                "authors": [
+                    {
+                        "first": "J",
+                        "middle": [],
+                        "last": "Charles",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "",
+                        "middle": [],
+                        "last": "Geyer",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 1992,
+                "venue": "JSTOR",
+                "volume": "7",
+                "issue": "4",
+                "pages": "473--483",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Charles J Geyer. 1992. Practical markov chain monte carlo. JSTOR 7, 4 (1992), 473-483.",
+                "links": null
+            },
+            "BIBREF17": {
+                "ref_id": "b17",
+                "title": "VL2: a scalable and flexible data center network",
+                "authors": [
+                    {
+                        "first": "Albert",
+                        "middle": [
+                            "G"
+                        ],
+                        "last": "Greenberg",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "James",
+                        "middle": [
+                            "R"
+                        ],
+                        "last": "Hamilton",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Navendu",
+                        "middle": [],
+                        "last": "Jain",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/sigcomm/GreenbergHJKKLMPS09",
+                "year": 2009,
+                "venue": "SIGCOMM. ACM",
+                "volume": "",
+                "issue": "",
+                "pages": "51--62",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Albert G. Greenberg, James R. Hamilton, Navendu Jain, et al. 2009. VL2: a scalable and flexible data center network. In SIGCOMM. ACM, 51-62.",
+                "links": null
+            },
+            "BIBREF18": {
+                "ref_id": "b18",
+                "title": "Finding scientific topics",
+                "authors": [
+                    {
+                        "first": "L",
+                        "middle": [],
+                        "last": "Thomas",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Mark",
+                        "middle": [],
+                        "last": "Griffiths",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "",
+                        "middle": [],
+                        "last": "Steyvers",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2004,
+                "venue": "Proceedings of the National academy of Sciences",
+                "volume": "101",
+                "issue": "suppl 1",
+                "pages": "5228--5235",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Thomas L Griffiths and Mark Steyvers. 2004. Finding scientific topics. Proceedings of the National academy of Sciences 101, suppl 1 (2004), 5228-5235.",
+                "links": null
+            },
+            "BIBREF19": {
+                "ref_id": "b19",
+                "title": "BCube: a high performance, server-centric network architecture for modular data centers",
+                "authors": [
+                    {
+                        "first": "Chuanxiong",
+                        "middle": [],
+                        "last": "Guo",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Guohan",
+                        "middle": [],
+                        "last": "Lu",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Dan",
+                        "middle": [],
+                        "last": "Li",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/sigcomm/GuoLLWZSTZL09",
+                "year": 2009,
+                "venue": "SIGCOMM. ACM",
+                "volume": "",
+                "issue": "",
+                "pages": "63--74",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Chuanxiong Guo, Guohan Lu, Dan Li, et al. 2009. BCube: a high performance, server-centric network architecture for modular data centers. In SIGCOMM. ACM, 63-74.",
+                "links": null
+            },
+            "BIBREF20": {
+                "ref_id": "b20",
+                "title": "Dcell: a scalable and faulttolerant network structure for data centers",
+                "authors": [
+                    {
+                        "first": "Chuanxiong",
+                        "middle": [],
+                        "last": "Guo",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Haitao",
+                        "middle": [],
+                        "last": "Wu",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Kun",
+                        "middle": [],
+                        "last": "Tan",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/sigcomm/GuoWTSZL08",
+                "year": 2008,
+                "venue": "SIGCOMM. ACM",
+                "volume": "",
+                "issue": "",
+                "pages": "75--86",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Chuanxiong Guo, Haitao Wu, Kun Tan, et al. 2008. Dcell: a scalable and fault- tolerant network structure for data centers. In SIGCOMM. ACM, 75-86.",
+                "links": null
+            },
+            "BIBREF21": {
+                "ref_id": "b21",
+                "title": "Re-architecting datacenter networks and stacks for low latency and high performance",
+                "authors": [
+                    {
+                        "first": "Mark",
+                        "middle": [],
+                        "last": "Handley",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Costin",
+                        "middle": [],
+                        "last": "Raiciu",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Alexandru",
+                        "middle": [],
+                        "last": "Agache",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/sigcomm/HandleyRAV0AW17",
+                "year": 2017,
+                "venue": "SIGCOMM. ACM",
+                "volume": "",
+                "issue": "",
+                "pages": "29--42",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Mark Handley, Costin Raiciu, Alexandru Agache, et al. 2017. Re-architecting dat- acenter networks and stacks for low latency and high performance. In SIGCOMM. ACM, 29-42.",
+                "links": null
+            },
+            "BIBREF22": {
+                "ref_id": "b22",
+                "title": "Presto: Edge-based Load Balancing for Fast Datacenter Networks",
+                "authors": [
+                    {
+                        "first": "Keqiang",
+                        "middle": [],
+                        "last": "He",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Eric",
+                        "middle": [],
+                        "last": "Rozner",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Kanak",
+                        "middle": [],
+                        "last": "Agarwal",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/sigcomm/HeRAFCA15",
+                "year": 2015,
+                "venue": "SIGCOMM. ACM",
+                "volume": "",
+                "issue": "",
+                "pages": "465--478",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Keqiang He, Eric Rozner, Kanak Agarwal, et al. 2015. Presto: Edge-based Load Balancing for Fast Datacenter Networks. In SIGCOMM. ACM, 465-478.",
+                "links": null
+            },
+            "BIBREF23": {
+                "ref_id": "b23",
+                "title": "Stochastic variational inference",
+                "authors": [
+                    {
+                        "first": "Matthew",
+                        "middle": [
+                            "D"
+                        ],
+                        "last": "Hoffman",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "David",
+                        "middle": [
+                            "M"
+                        ],
+                        "last": "Blei",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Chong",
+                        "middle": [],
+                        "last": "Wang",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2013,
+                "venue": "JMLR",
+                "volume": "14",
+                "issue": "1",
+                "pages": "1303--1347",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Matthew D. Hoffman, David M. Blei, Chong Wang, et al. 2013. Stochastic varia- tional inference. JMLR 14, 1 (2013), 1303-1347.",
+                "links": null
+            },
+            "BIBREF24": {
+                "ref_id": "b24",
+                "title": "Beyond fat-trees without antennae, mirrors, and disco-balls",
+                "authors": [
+                    {
+                        "first": "Simon",
+                        "middle": [],
+                        "last": "Kassing",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Asaf",
+                        "middle": [],
+                        "last": "Valadarsky",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Gal",
+                        "middle": [],
+                        "last": "Shahaf",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/sigcomm/KassingVSSS17",
+                "year": 2017,
+                "venue": "SIGCOMM. ACM",
+                "volume": "",
+                "issue": "",
+                "pages": "281--294",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Simon Kassing, Asaf Valadarsky, Gal Shahaf, et al. 2017. Beyond fat-trees without antennae, mirrors, and disco-balls. In SIGCOMM. ACM, 281-294.",
+                "links": null
+            },
+            "BIBREF25": {
+                "ref_id": "b25",
+                "title": "Swift: Delay is Simple and Effective for Congestion Control in the Datacenter",
+                "authors": [
+                    {
+                        "first": "Gautam",
+                        "middle": [],
+                        "last": "Kumar",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Nandita",
+                        "middle": [],
+                        "last": "Dukkipati",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Keon",
+                        "middle": [],
+                        "last": "Jang",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/sigcomm/KumarDJWWMWSARW20",
+                "year": 2020,
+                "venue": "SIGCOMM. ACM",
+                "volume": "",
+                "issue": "",
+                "pages": "514--528",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Gautam Kumar, Nandita Dukkipati, Keon Jang, et al. 2020. Swift: Delay is Simple and Effective for Congestion Control in the Datacenter. In SIGCOMM. ACM, 514-528.",
+                "links": null
+            },
+            "BIBREF26": {
+                "ref_id": "b26",
+                "title": "On the Self-Similar Nature of Ethernet Traffic",
+                "authors": [
+                    {
+                        "first": "Will",
+                        "middle": [
+                            "E"
+                        ],
+                        "last": "Leland",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Murad",
+                        "middle": [
+                            "S"
+                        ],
+                        "last": "Taqqu",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Walter",
+                        "middle": [],
+                        "last": "Willinger",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/sigcomm/LelandTWW93",
+                "year": 1993,
+                "venue": "SIGCOMM. ACM",
+                "volume": "",
+                "issue": "",
+                "pages": "183--193",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Will E. Leland, Murad S. Taqqu, Walter Willinger, et al. 1993. On the Self-Similar Nature of Ethernet Traffic. In SIGCOMM. ACM, 183-193.",
+                "links": null
+            },
+            "BIBREF27": {
+                "ref_id": "b27",
+                "title": "HPCC: high precision congestion control",
+                "authors": [
+                    {
+                        "first": "Yuliang",
+                        "middle": [],
+                        "last": "Li",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Rui",
+                        "middle": [],
+                        "last": "Miao",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Hongqiang",
+                        "middle": [],
+                        "last": "Harry Liu",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/sigcomm/LiMLZFTCZKAY19",
+                "year": 2019,
+                "venue": "SIGCOMM. ACM",
+                "volume": "",
+                "issue": "",
+                "pages": "44--58",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Yuliang Li, Rui Miao, Hongqiang Harry Liu, et al. 2019. HPCC: high precision congestion control. In SIGCOMM. ACM, 44-58.",
+                "links": null
+            },
+            "BIBREF28": {
+                "ref_id": "b28",
+                "title": "Learning scheduling algorithms for data processing clusters",
+                "authors": [
+                    {
+                        "first": "Hongzi",
+                        "middle": [],
+                        "last": "Mao",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Malte",
+                        "middle": [],
+                        "last": "Schwarzkopf",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Shaileshh",
+                        "middle": [],
+                        "last": "Bojja Venkatakrishnan",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/sigcomm/MaoSVMA19",
+                "year": 2019,
+                "venue": "SIGCOMM. ACM",
+                "volume": "",
+                "issue": "",
+                "pages": "270--288",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Hongzi Mao, Malte Schwarzkopf, Shaileshh Bojja Venkatakrishnan, et al. 2019. Learning scheduling algorithms for data processing clusters. In SIGCOMM. ACM, 270-288.",
+                "links": null
+            },
+            "BIBREF29": {
+                "ref_id": "b29",
+                "title": "The Kolmogorov-Smirnov test for goodness of fit",
+                "authors": [
+                    {
+                        "first": "J",
+                        "middle": [],
+                        "last": "Frank",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "",
+                        "middle": [],
+                        "last": "Massey",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 1951,
+                "venue": "JASA",
+                "volume": "46",
+                "issue": "",
+                "pages": "68--78",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Frank J Massey Jr. 1951. The Kolmogorov-Smirnov test for goodness of fit. JASA 46, 253 (1951), 68-78.",
+                "links": null
+            },
+            "BIBREF30": {
+                "ref_id": "b30",
+                "title": "Traffic matrix estimation: existing techniques and new directions",
+                "authors": [
+                    {
+                        "first": "Alberto",
+                        "middle": [],
+                        "last": "Medina",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Nina",
+                        "middle": [],
+                        "last": "Taft",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Kav\u00e9",
+                        "middle": [],
+                        "last": "Salamatian",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/sigcomm/MedinaTSBD02",
+                "year": 2002,
+                "venue": "SIGCOMM. ACM",
+                "volume": "",
+                "issue": "",
+                "pages": "161--174",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Alberto Medina, Nina Taft, Kav\u00e9 Salamatian, et al. 2002. Traffic matrix estimation: existing techniques and new directions. In SIGCOMM. ACM, 161-174.",
+                "links": null
+            },
+            "BIBREF31": {
+                "ref_id": "b31",
+                "title": "TIMELY: RTTbased Congestion Control for the Datacenter",
+                "authors": [
+                    {
+                        "first": "Radhika",
+                        "middle": [],
+                        "last": "Mittal",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "The",
+                        "middle": [],
+                        "last": "Vinh",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Nandita",
+                        "middle": [],
+                        "last": "Lam",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "",
+                        "middle": [],
+                        "last": "Dukkipati",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/sigcomm/MittalLDBWGVWWZ15",
+                "year": 2015,
+                "venue": "SIGCOMM. ACM",
+                "volume": "",
+                "issue": "",
+                "pages": "537--550",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Radhika Mittal, Vinh The Lam, Nandita Dukkipati, et al. 2015. TIMELY: RTT- based Congestion Control for the Datacenter. In SIGCOMM. ACM, 537-550.",
+                "links": null
+            },
+            "BIBREF32": {
+                "ref_id": "b32",
+                "title": "Homa: a receiverdriven low-latency transport protocol using network priorities",
+                "authors": [
+                    {
+                        "first": "Yilong",
+                        "middle": [],
+                        "last": "Behnam Montazeri",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Mohammad",
+                        "middle": [],
+                        "last": "Li",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "",
+                        "middle": [],
+                        "last": "Alizadeh",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/sigcomm/MontazeriLAO18",
+                "year": 2018,
+                "venue": "SIGCOMM. ACM",
+                "volume": "",
+                "issue": "",
+                "pages": "221--235",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Behnam Montazeri, Yilong Li, Mohammad Alizadeh, et al. 2018. Homa: a receiver- driven low-latency transport protocol using network priorities. In SIGCOMM. ACM, 221-235.",
+                "links": null
+            },
+            "BIBREF33": {
+                "ref_id": "b33",
+                "title": "Wide-Area Traffic: The Failure of Poisson Modeling",
+                "authors": [
+                    {
+                        "first": "Vern",
+                        "middle": [],
+                        "last": "Paxson",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Sally",
+                        "middle": [],
+                        "last": "Floyd",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/sigcomm/PaxsonF94",
+                "year": 1994,
+                "venue": "SIGCOMM. ACM",
+                "volume": "",
+                "issue": "",
+                "pages": "257--268",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Vern Paxson and Sally Floyd. 1994. Wide-Area Traffic: The Failure of Poisson Modeling. In SIGCOMM. ACM, 257-268.",
+                "links": null
+            },
+            "BIBREF34": {
+                "ref_id": "b34",
+                "title": "The Logic of Representing Dependencies by Directed Graphs",
+                "authors": [
+                    {
+                        "first": "Judea",
+                        "middle": [],
+                        "last": "Pearl",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Thomas",
+                        "middle": [],
+                        "last": "Verma",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/aaai/PearlV87",
+                "year": 1987,
+                "venue": "AAAI",
+                "volume": "",
+                "issue": "",
+                "pages": "374--379",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Judea Pearl and Thomas Verma. 1987. The Logic of Representing Dependencies by Directed Graphs. In AAAI. Morgan Kaufmann, 374-379.",
+                "links": null
+            },
+            "BIBREF35": {
+                "ref_id": "b35",
+                "title": "Software Framework for Topic Modelling with Large Corpora",
+                "authors": [
+                    {
+                        "first": "Radim",
+                        "middle": [],
+                        "last": "\u0158eh\u016f\u0159ek",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Petr",
+                        "middle": [],
+                        "last": "Sojka",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2010,
+                "venue": "Proceedings of the LREC 2010 Workshop on New Challenges for NLP Frameworks",
+                "volume": "",
+                "issue": "",
+                "pages": "45--50",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Radim \u0158eh\u016f\u0159ek and Petr Sojka. 2010. Software Framework for Topic Modelling with Large Corpora. In Proceedings of the LREC 2010 Workshop on New Challenges for NLP Frameworks. ELRA, 45-50.",
+                "links": null
+            },
+            "BIBREF36": {
+                "ref_id": "b36",
+                "title": "Inside the Social Network's (Datacenter) Network",
+                "authors": [
+                    {
+                        "first": "Arjun",
+                        "middle": [],
+                        "last": "Roy",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Hongyi",
+                        "middle": [],
+                        "last": "Zeng",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Jasmeet",
+                        "middle": [],
+                        "last": "Bagga",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/sigcomm/RoyZBPS15",
+                "year": 2015,
+                "venue": "SIGCOMM. ACM",
+                "volume": "",
+                "issue": "",
+                "pages": "123--137",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Arjun Roy, Hongyi Zeng, Jasmeet Bagga, et al. 2015. Inside the Social Network's (Datacenter) Network. In SIGCOMM. ACM, 123-137.",
+                "links": null
+            },
+            "BIBREF37": {
+                "ref_id": "b37",
+                "title": "A constructive definition of Dirichlet priors",
+                "authors": [
+                    {
+                        "first": "Jayaram",
+                        "middle": [],
+                        "last": "Sethuraman",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 1994,
+                "venue": "Statistica sinica",
+                "volume": "",
+                "issue": "",
+                "pages": "639--650",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Jayaram Sethuraman. 1994. A constructive definition of Dirichlet priors. Statistica sinica (1994), 639-650.",
+                "links": null
+            },
+            "BIBREF38": {
+                "ref_id": "b38",
+                "title": "Proof of a fundamental result in self-similar traffic modeling",
+                "authors": [
+                    {
+                        "first": "S",
+                        "middle": [],
+                        "last": "Murad",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Walter",
+                        "middle": [],
+                        "last": "Taqqu",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Robert",
+                        "middle": [],
+                        "last": "Willinger",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "",
+                        "middle": [],
+                        "last": "Sherman",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 1997,
+                "venue": "SIGCOMM Comput. Commun. Rev",
+                "volume": "27",
+                "issue": "2",
+                "pages": "5--23",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Murad S. Taqqu, Walter Willinger, and Robert Sherman. 1997. Proof of a funda- mental result in self-similar traffic modeling. SIGCOMM Comput. Commun. Rev. 27, 2 (1997), 5-23.",
+                "links": null
+            },
+            "BIBREF39": {
+                "ref_id": "b39",
+                "title": "A Tale of Two Topologies: Exploring Convertible Data Center Network Architectures with Flat-tree",
+                "authors": [
+                    {
+                        "first": "Yiting",
+                        "middle": [],
+                        "last": "Xia",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Xiaoye",
+                        "middle": [],
+                        "last": "Steven Sun",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Simbarashe",
+                        "middle": [],
+                        "last": "Dzinamarira",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/sigcomm/XiaSD0HN17",
+                "year": 2017,
+                "venue": "SIGCOMM. ACM",
+                "volume": "",
+                "issue": "",
+                "pages": "295--308",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Yiting Xia, Xiaoye Steven Sun, Simbarashe Dzinamarira, et al. 2017. A Tale of Two Topologies: Exploring Convertible Data Center Network Architectures with Flat-tree. In SIGCOMM. ACM, 295-308.",
+                "links": null
+            },
+            "BIBREF40": {
+                "ref_id": "b40",
+                "title": "Fast accurate computation of large-scale IP traffic matrices from link loads",
+                "authors": [
+                    {
+                        "first": "Yin",
+                        "middle": [],
+                        "last": "Zhang",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Matthew",
+                        "middle": [],
+                        "last": "Roughan",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Nick",
+                        "middle": [
+                            "G"
+                        ],
+                        "last": "Duffield",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/sigmetrics/ZhangRDG03",
+                "year": 2003,
+                "venue": "SIGMETRICS. ACM",
+                "volume": "",
+                "issue": "",
+                "pages": "206--217",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Yin Zhang, Matthew Roughan, Nick G. Duffield, et al. 2003. Fast accurate compu- tation of large-scale IP traffic matrices from link loads. In SIGMETRICS. ACM, 206-217.",
+                "links": null
+            },
+            "BIBREF41": {
+                "ref_id": "b41",
+                "title": "Congestion Control for Large-Scale RDMA Deployments",
+                "authors": [
+                    {
+                        "first": "Yibo",
+                        "middle": [],
+                        "last": "Zhu",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Haggai",
+                        "middle": [],
+                        "last": "Eran",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Daniel",
+                        "middle": [],
+                        "last": "Firestone",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/sigcomm/ZhuEFGLLPRYZ15",
+                "year": 2015,
+                "venue": "SIGCOMM. ACM",
+                "volume": "",
+                "issue": "",
+                "pages": "523--536",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Yibo Zhu, Haggai Eran, Daniel Firestone, et al. 2015. Congestion Control for Large-Scale RDMA Deployments. In SIGCOMM. ACM, 523-536.",
+                "links": null
+            }
+        }
+    }
+}

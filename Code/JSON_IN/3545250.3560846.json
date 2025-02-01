@@ -1,0 +1,1538 @@
+{
+    "paper_id": "3545250",
+    "header": {
+        "generated_with": "S2ORC 1.0.0",
+        "date_generated": "2024-03-20T17:52:54.934661Z"
+    },
+    "title": "Multicast Routing and Virtual Network Function Placement in NFV-SDN Networks: A Genetic Algorithms Approach",
+    "authors": [
+        {
+            "first": "Germ\u00e1n",
+            "middle": [],
+            "last": "Garc\u00eda",
+            "suffix": "",
+            "affiliation": {},
+            "email": "germangarcia.py@gmail.com"
+        },
+        {
+            "first": "Diego",
+            "middle": [
+                "P"
+            ],
+            "last": "Pinto-Roa",
+            "suffix": "",
+            "affiliation": {},
+            "email": ""
+        }
+    ],
+    "year": "",
+    "venue": null,
+    "identifiers": {},
+    "abstract": "Communication trends demand services that require flexible multicast transmission with requirements for data processing functions at the network nodes. This challenge is achieved with softwaredefined networking (SDN) and network functions virtualization (NFV) technologies. In the multicast routing problem in NFV-SDN networks, the goal is to compute a multicast tree and the location of virtual network functions (VNFs) at nodes, satisfying the traffic demand and processing functions with the least possible resource. The traffic flow must pass through a VNF node before reaching a destination node. Since the problem has high computational complexity and current proposals consider only one type of virtual function in all demands, the development of scalable solutions for multiple sessions with different virtual functions is necessary. This paper addresses the multicast session routing and VNF placement (MSVNFP) problem in NFV-SDN networks as a joint optimization problem. In this context, we propose an approach based on Genetic Algorithms (GA) called MSVNFP-GA. Given a set of multicast demands, the proposed algorithm calculates for each demand a tree and the location of VNFs seeking to minimize the total cost of links and node activation. Numerical simulations on different network topologies and traffic loads show that MSVNFP-GA is promising compared to the state-of-the-art competitive algorithms.",
+    "pdf_parse": {
+        "abstract": [
+            {
+                "text": "Communication trends demand services that require flexible multicast transmission with requirements for data processing functions at the network nodes. This challenge is achieved with softwaredefined networking (SDN) and network functions virtualization (NFV) technologies. In the multicast routing problem in NFV-SDN networks, the goal is to compute a multicast tree and the location of virtual network functions (VNFs) at nodes, satisfying the traffic demand and processing functions with the least possible resource. The traffic flow must pass through a VNF node before reaching a destination node. Since the problem has high computational complexity and current proposals consider only one type of virtual function in all demands, the development of scalable solutions for multiple sessions with different virtual functions is necessary. This paper addresses the multicast session routing and VNF placement (MSVNFP) problem in NFV-SDN networks as a joint optimization problem. In this context, we propose an approach based on Genetic Algorithms (GA) called MSVNFP-GA. Given a set of multicast demands, the proposed algorithm calculates for each demand a tree and the location of VNFs seeking to minimize the total cost of links and node activation. Numerical simulations on different network topologies and traffic loads show that MSVNFP-GA is promising compared to the state-of-the-art competitive algorithms.",
+                "cite_spans": [],
+                "section": "Abstract",
+                "sec_num": null
+            }
+        ],
+        "body_text": [
+            {
+                "text": "Multicast information transmission has been widely used on the Internet, such as in the live video, multimedia streaming, and multiplayer games. Multicast is also widely used in modern data centers, file sharing, and distributed parallel processing [4] .",
+                "cite_spans": [
+                    {
+                        "start": 249,
+                        "end": 252,
+                        "text": "[4]",
+                        "ref_id": "BIBREF3"
+                    }
+                ],
+                "section": "INTRODUCTION",
+                "sec_num": "1"
+            },
+            {
+                "text": "Since Internet Protocol (IP) Multicast has been available for several years, the adoption of IP Multicast in data centers is natural [4] . However, concerns about security, path diversity usage, and routing tree formation still make adopting IP Multicast a challenge [5] . Also, many multicast services require network functionalities such as firewall, load balancer, network address translation, flow monitor, and others. These functionalities can be implemented through the middle-boxes [15] . However, current networking approaches based on the manual configuration of proprietary devices are tedious and error-prone, limiting the capacity of the physical network infrastructure [11] . These problems can be solved by combining the Software-Defined Networks (SDN) [11] and Network Function Virtualization (NFV) [15] technologies.",
+                "cite_spans": [
+                    {
+                        "start": 133,
+                        "end": 136,
+                        "text": "[4]",
+                        "ref_id": "BIBREF3"
+                    },
+                    {
+                        "start": 267,
+                        "end": 270,
+                        "text": "[5]",
+                        "ref_id": "BIBREF4"
+                    },
+                    {
+                        "start": 489,
+                        "end": 493,
+                        "text": "[15]",
+                        "ref_id": "BIBREF14"
+                    },
+                    {
+                        "start": 682,
+                        "end": 686,
+                        "text": "[11]",
+                        "ref_id": "BIBREF10"
+                    },
+                    {
+                        "start": 767,
+                        "end": 771,
+                        "text": "[11]",
+                        "ref_id": "BIBREF10"
+                    },
+                    {
+                        "start": 814,
+                        "end": 818,
+                        "text": "[15]",
+                        "ref_id": "BIBREF14"
+                    }
+                ],
+                "section": "INTRODUCTION",
+                "sec_num": "1"
+            },
+            {
+                "text": "SDN decouples the control layer from the data layer, thus achieving centralized monitoring and control of the network. The controller can perform efficient solution calculations through optimization algorithms in this context, and this feature is fundamental given that multicast tree computation is a complex problem [11] .",
+                "cite_spans": [
+                    {
+                        "start": 318,
+                        "end": 322,
+                        "text": "[11]",
+                        "ref_id": "BIBREF10"
+                    }
+                ],
+                "section": "INTRODUCTION",
+                "sec_num": "1"
+            },
+            {
+                "text": "NFV provide multicast traffic with more flexible network functionalities through Virtual Network Function (VNF) [8] .",
+                "cite_spans": [
+                    {
+                        "start": 112,
+                        "end": 115,
+                        "text": "[8]",
+                        "ref_id": "BIBREF7"
+                    }
+                ],
+                "section": "INTRODUCTION",
+                "sec_num": "1"
+            },
+            {
+                "text": "As an alternative to multicast transmission in traditional networks, multicast transmission in NFV-SDN networks emerged to solve the problems of scalability and flexibility through the benefits of NFV and efficient SDN management. However, this scenario of good prospects comes with challenges from the computational viewpoint since the SDN-NFV multicast problem is more complex due to the addition of the VNF location problem. This joint problem is named Multicast Sessions Virtual Network Function Placement (MSVNFP) [18] .",
+                "cite_spans": [
+                    {
+                        "start": 519,
+                        "end": 523,
+                        "text": "[18]",
+                        "ref_id": "BIBREF17"
+                    }
+                ],
+                "section": "INTRODUCTION",
+                "sec_num": "1"
+            },
+            {
+                "text": "The literature has reported several approaches that address the MSVNFP problem [10, 13, 14, [16] [17] [18] . However, those studies have considered a partial version of the problem by imposing a single type of VNF for all multicast requests (homogeneous placement) and not controlling the maximum capacities of the links and the computational capacities of the nodes where the VNFs are located, so as not to overload them. In more realistic problems, each request could require a different type of VNF, impacting a higher complexity of the MSVNFP problem. Developing efficient strategies that address the problem posed is fundamental for the success of the problem and the purpose of this work. Genetic Algorithms (GA) are recognized for their efficiency for optimization problems, so their application to the MSVNFP problem is of current research interest [3] .",
+                "cite_spans": [
+                    {
+                        "start": 79,
+                        "end": 83,
+                        "text": "[10,",
+                        "ref_id": "BIBREF9"
+                    },
+                    {
+                        "start": 84,
+                        "end": 87,
+                        "text": "13,",
+                        "ref_id": "BIBREF12"
+                    },
+                    {
+                        "start": 88,
+                        "end": 91,
+                        "text": "14,",
+                        "ref_id": "BIBREF13"
+                    },
+                    {
+                        "start": 92,
+                        "end": 96,
+                        "text": "[16]",
+                        "ref_id": "BIBREF15"
+                    },
+                    {
+                        "start": 97,
+                        "end": 101,
+                        "text": "[17]",
+                        "ref_id": "BIBREF16"
+                    },
+                    {
+                        "start": 102,
+                        "end": 106,
+                        "text": "[18]",
+                        "ref_id": "BIBREF17"
+                    },
+                    {
+                        "start": 857,
+                        "end": 860,
+                        "text": "[3]",
+                        "ref_id": "BIBREF2"
+                    }
+                ],
+                "section": "INTRODUCTION",
+                "sec_num": "1"
+            },
+            {
+                "text": "The main contribution of this work is the development of efficient GA-based algorithms for the MSVNFP problem with heterogeneous VNFs aiming to minimize the total cost of using link resources and virtual nodes with limited capacity.",
+                "cite_spans": [],
+                "section": "INTRODUCTION",
+                "sec_num": "1"
+            },
+            {
+                "text": "The remainder of this paper is organized as follows: in Section 2, we present the related work; in Section 3, we provide the formulation to the stated problem; in Section 4, we present the proposed algorithms to solve the problem; in Sections 5 and 6 we evaluate the algorithms and provide numerical results, respectively. Finally, conclusions and future work are given in Section 7.",
+                "cite_spans": [],
+                "section": "INTRODUCTION",
+                "sec_num": "1"
+            },
+            {
+                "text": "Multicast is an NP-complete problem [9] in which several mechanisms and algorithms have been proposed in NVF, SDN, and NFV-SDN. This revision only considers studies in the NFV-SDN context, i.e., the MSVNFP problem. In this context, this section classifies these works according to the algorithm, traffic, and design criteria.",
+                "cite_spans": [
+                    {
+                        "start": 36,
+                        "end": 39,
+                        "text": "[9]",
+                        "ref_id": "BIBREF8"
+                    }
+                ],
+                "section": "RELATED WORK",
+                "sec_num": "2"
+            },
+            {
+                "text": "The literature reports algorithms based on exact, heuristic, and meta-heuristic approaches. Exact algorithms are based on approximate algorithms [1, 12, 16, 17] and mathematical programming [1, 2, 10, 13, 14, 17, 18] , and a high computational cost mainly characterizes these algorithms. Alternatively, low-quality solution characteris to heuristic approaches when the complexity of the problem increases [1, 2, 7, 13, 14, 16, 18] . An intermediate approach between quality and computational time is meta-heuristic algorithms [10] .",
+                "cite_spans": [
+                    {
+                        "start": 145,
+                        "end": 148,
+                        "text": "[1,",
+                        "ref_id": "BIBREF0"
+                    },
+                    {
+                        "start": 149,
+                        "end": 152,
+                        "text": "12,",
+                        "ref_id": "BIBREF11"
+                    },
+                    {
+                        "start": 153,
+                        "end": 156,
+                        "text": "16,",
+                        "ref_id": "BIBREF15"
+                    },
+                    {
+                        "start": 157,
+                        "end": 160,
+                        "text": "17]",
+                        "ref_id": "BIBREF16"
+                    },
+                    {
+                        "start": 190,
+                        "end": 193,
+                        "text": "[1,",
+                        "ref_id": "BIBREF0"
+                    },
+                    {
+                        "start": 194,
+                        "end": 196,
+                        "text": "2,",
+                        "ref_id": "BIBREF1"
+                    },
+                    {
+                        "start": 197,
+                        "end": 200,
+                        "text": "10,",
+                        "ref_id": "BIBREF9"
+                    },
+                    {
+                        "start": 201,
+                        "end": 204,
+                        "text": "13,",
+                        "ref_id": "BIBREF12"
+                    },
+                    {
+                        "start": 205,
+                        "end": 208,
+                        "text": "14,",
+                        "ref_id": "BIBREF13"
+                    },
+                    {
+                        "start": 209,
+                        "end": 212,
+                        "text": "17,",
+                        "ref_id": "BIBREF16"
+                    },
+                    {
+                        "start": 213,
+                        "end": 216,
+                        "text": "18]",
+                        "ref_id": "BIBREF17"
+                    },
+                    {
+                        "start": 405,
+                        "end": 408,
+                        "text": "[1,",
+                        "ref_id": "BIBREF0"
+                    },
+                    {
+                        "start": 409,
+                        "end": 411,
+                        "text": "2,",
+                        "ref_id": "BIBREF1"
+                    },
+                    {
+                        "start": 412,
+                        "end": 414,
+                        "text": "7,",
+                        "ref_id": "BIBREF6"
+                    },
+                    {
+                        "start": 415,
+                        "end": 418,
+                        "text": "13,",
+                        "ref_id": "BIBREF12"
+                    },
+                    {
+                        "start": 419,
+                        "end": 422,
+                        "text": "14,",
+                        "ref_id": "BIBREF13"
+                    },
+                    {
+                        "start": 423,
+                        "end": 426,
+                        "text": "16,",
+                        "ref_id": "BIBREF15"
+                    },
+                    {
+                        "start": 427,
+                        "end": 430,
+                        "text": "18]",
+                        "ref_id": "BIBREF17"
+                    },
+                    {
+                        "start": 526,
+                        "end": 530,
+                        "text": "[10]",
+                        "ref_id": "BIBREF9"
+                    }
+                ],
+                "section": "RELATED WORK",
+                "sec_num": "2"
+            },
+            {
+                "text": "MSVNFP algorithms are also designed according to the type of traffic, which can be static or dynamic. In static traffic, algorithms are mainly applied for network planning [1, 10, 13, 14] . In dynamic traffic, solutions assume an already designed network where requests arrive and depart at any time [7, 12, 14, 16, 17] .",
+                "cite_spans": [
+                    {
+                        "start": 172,
+                        "end": 175,
+                        "text": "[1,",
+                        "ref_id": "BIBREF0"
+                    },
+                    {
+                        "start": 176,
+                        "end": 179,
+                        "text": "10,",
+                        "ref_id": "BIBREF9"
+                    },
+                    {
+                        "start": 180,
+                        "end": 183,
+                        "text": "13,",
+                        "ref_id": "BIBREF12"
+                    },
+                    {
+                        "start": 184,
+                        "end": 187,
+                        "text": "14]",
+                        "ref_id": "BIBREF13"
+                    },
+                    {
+                        "start": 300,
+                        "end": 303,
+                        "text": "[7,",
+                        "ref_id": "BIBREF6"
+                    },
+                    {
+                        "start": 304,
+                        "end": 307,
+                        "text": "12,",
+                        "ref_id": "BIBREF11"
+                    },
+                    {
+                        "start": 308,
+                        "end": 311,
+                        "text": "14,",
+                        "ref_id": "BIBREF13"
+                    },
+                    {
+                        "start": 312,
+                        "end": 315,
+                        "text": "16,",
+                        "ref_id": "BIBREF15"
+                    },
+                    {
+                        "start": 316,
+                        "end": 319,
+                        "text": "17]",
+                        "ref_id": "BIBREF16"
+                    }
+                ],
+                "section": "RELATED WORK",
+                "sec_num": "2"
+            },
+            {
+                "text": "The solution design criteria considered were mainly VNF activation cost [1, 2, 13, 17, 18] , computational consumption cost [13] , network link usage cost [1, 2, 7, 12, 14, 16, 17] , delay [10] , and traffic load balancing [7, 18] .",
+                "cite_spans": [
+                    {
+                        "start": 72,
+                        "end": 75,
+                        "text": "[1,",
+                        "ref_id": "BIBREF0"
+                    },
+                    {
+                        "start": 76,
+                        "end": 78,
+                        "text": "2,",
+                        "ref_id": "BIBREF1"
+                    },
+                    {
+                        "start": 79,
+                        "end": 82,
+                        "text": "13,",
+                        "ref_id": "BIBREF12"
+                    },
+                    {
+                        "start": 83,
+                        "end": 86,
+                        "text": "17,",
+                        "ref_id": "BIBREF16"
+                    },
+                    {
+                        "start": 87,
+                        "end": 90,
+                        "text": "18]",
+                        "ref_id": "BIBREF17"
+                    },
+                    {
+                        "start": 124,
+                        "end": 128,
+                        "text": "[13]",
+                        "ref_id": "BIBREF12"
+                    },
+                    {
+                        "start": 155,
+                        "end": 158,
+                        "text": "[1,",
+                        "ref_id": "BIBREF0"
+                    },
+                    {
+                        "start": 159,
+                        "end": 161,
+                        "text": "2,",
+                        "ref_id": "BIBREF1"
+                    },
+                    {
+                        "start": 162,
+                        "end": 164,
+                        "text": "7,",
+                        "ref_id": "BIBREF6"
+                    },
+                    {
+                        "start": 165,
+                        "end": 168,
+                        "text": "12,",
+                        "ref_id": "BIBREF11"
+                    },
+                    {
+                        "start": 169,
+                        "end": 172,
+                        "text": "14,",
+                        "ref_id": "BIBREF13"
+                    },
+                    {
+                        "start": 173,
+                        "end": 176,
+                        "text": "16,",
+                        "ref_id": "BIBREF15"
+                    },
+                    {
+                        "start": 177,
+                        "end": 180,
+                        "text": "17]",
+                        "ref_id": "BIBREF16"
+                    },
+                    {
+                        "start": 189,
+                        "end": 193,
+                        "text": "[10]",
+                        "ref_id": "BIBREF9"
+                    },
+                    {
+                        "start": 223,
+                        "end": 226,
+                        "text": "[7,",
+                        "ref_id": "BIBREF6"
+                    },
+                    {
+                        "start": 227,
+                        "end": 230,
+                        "text": "18]",
+                        "ref_id": "BIBREF17"
+                    }
+                ],
+                "section": "RELATED WORK",
+                "sec_num": "2"
+            },
+            {
+                "text": "This study focuses on the MSVNFP problem for static traffic. Given the complexity of the MSVNFP, the previously mentioned approaches are mono-objective, sequential, and homogeneous VNF. These studies did not consider the impact of improving one criterion over the others. They solve each request sequentially without considering the impact of the order of the requests on the quality of the total solution. Such approaches require that the requests only consider a single type of VNF.",
+                "cite_spans": [],
+                "section": "RELATED WORK",
+                "sec_num": "2"
+            },
+            {
+                "text": "Based on the above, this paper proposes a meta-heuristic solution based on Genetic Algorithms that seek the best solution that simultaneously minimizes the cost of the multicast trees and VNFs activating considering a set of MSVNFP requests with different VNFs. As a strategy, this algorithm searches for an optimal sequence of requests to be processed sequentially.",
+                "cite_spans": [],
+                "section": "RELATED WORK",
+                "sec_num": "2"
+            },
+            {
+                "text": "For a correct understanding of the MSVNFP formulation, Table 1 presents the symbology used in this work.",
+                "cite_spans": [],
+                "section": "PROBLEM STATEMENT 3.1 Explanation of Symbols",
+                "sec_num": "3"
+            },
+            {
+                "text": "Let \ud835\udc3a = (\ud835\udc49 , \ud835\udc38) be a graph representing the NFV-SDN network consisting of a set of \ud835\udc49 nodes and \ud835\udc38 undirected links, \ud835\udc3b \u2286 \ud835\udc49 the set of candidate nodes where a VNF can be deployed, \ud835\udc39 the set of available VNF technologies, and \ud835\udc40 the set of VNF multicast requests.",
+                "cite_spans": [],
+                "section": "PROBLEM STATEMENT 3.1 Explanation of Symbols",
+                "sec_num": "3"
+            },
+            {
+                "text": "Each request \ud835\udc5a \u2208 \ud835\udc40 can be describe by a tuple \ud835\udc5a = (\ud835\udc60 \ud835\udc5a , \ud835\udc37 \ud835\udc5a , \ud835\udc64 \ud835\udc64 , \ud835\udc53 \ud835\udc5a ) where \ud835\udc60 \ud835\udc5a \u2208 \ud835\udc49 is the source node, \ud835\udc37 \ud835\udc5a \u2282 \ud835\udc49 is the set of destination, \ud835\udc64 \ud835\udc5a \u2208 \u211c + is the set of bandwidth of the traffic to be transmitted from the source node, and \ud835\udc53 \ud835\udc5a \u2208 \ud835\udc39 is the VNF technology that the request needed. The traffic data flows from \ud835\udc60 \ud835\udc5a to each destination \ud835\udc51 \u2208 \ud835\udc37 \ud835\udc5a uses the node \u210e \u2208 \ud835\udc3b which has installed a \ud835\udc53 \ud835\udc5a .",
+                "cite_spans": [],
+                "section": "PROBLEM STATEMENT 3.1 Explanation of Symbols",
+                "sec_num": "3"
+            },
+            {
+                "text": "Depending of the VNF technology installed in node \u210e, the bandwidth at its output will be \ud835\udefc \u00d7 \ud835\udc64 \ud835\udc5a where \ud835\udefc \u2208 [0,\ud835\udc47 ] and \ud835\udc64 \ud835\udc5a is the bandwidth in the input of \u210e.",
+                "cite_spans": [],
+                "section": "PROBLEM STATEMENT 3.1 Explanation of Symbols",
+                "sec_num": "3"
+            },
+            {
+                "text": "Each link \ud835\udc52 has a non-negative cost \ud835\udc54\ud835\udc64 \ud835\udc52 and a traffic capacity \ud835\udc54\ud835\udc50 \ud835\udc52 . The activation cost and computational capacity of nodes with VNF is defined by \ud835\udc36\ud835\udc5c\ud835\udc60\ud835\udc61 \u210e and \ud835\udc36\ud835\udc4e\ud835\udc5d \u210e .",
+                "cite_spans": [],
+                "section": "PROBLEM STATEMENT 3.1 Explanation of Symbols",
+                "sec_num": "3"
+            },
+            {
+                "text": "In the problem addressed, different VNF instances may be implemented in each session and may have different virtual network function processing costs per session.",
+                "cite_spans": [],
+                "section": "PROBLEM STATEMENT 3.1 Explanation of Symbols",
+                "sec_num": "3"
+            },
+            {
+                "text": "Given the data rates required for each session, the MSVNFP problem determines the solution that minimizes the total cost of links used and the activation cost of the VNF nodes of all sessions. The solution comprises a multicast tree of each session and location of the VNFs at the nodes. The path from the source to a destination must pass through the requested VNF. The total traffic flow on each link must not exceed the link capacity, and the amount of VNF computation processed by each candidate node must not exceed the processing capacity of the node.",
+                "cite_spans": [],
+                "section": "PROBLEM STATEMENT 3.1 Explanation of Symbols",
+                "sec_num": "3"
+            },
+            {
+                "text": "Given the symbols introduced in the Section 3.1, we proposes the following formulation:",
+                "cite_spans": [],
+                "section": "MSVNFP Problem Formulation",
+                "sec_num": "3.2"
+            },
+            {
+                "text": "\u2022 Objective function:",
+                "cite_spans": [],
+                "section": "MSVNFP Problem Formulation",
+                "sec_num": "3.2"
+            },
+            {
+                "text": "EQUATION",
+                "cite_spans": [],
+                "section": "MSVNFP Problem Formulation",
+                "sec_num": "3.2"
+            },
+            {
+                "text": "where the cost of links and node activation with VNF are calculated as follows:",
+                "cite_spans": [],
+                "section": "MSVNFP Problem Formulation",
+                "sec_num": "3.2"
+            },
+            {
+                "text": "EQUATION",
+                "cite_spans": [],
+                "section": "MSVNFP Problem Formulation",
+                "sec_num": "3.2"
+            },
+            {
+                "text": "EQUATION",
+                "cite_spans": [],
+                "section": "MSVNFP Problem Formulation",
+                "sec_num": "3.2"
+            },
+            {
+                "text": "subject to: \u2022 Existence of path from source to destinations: The flow of each request must go from the source node to each destination.",
+                "cite_spans": [],
+                "section": "MSVNFP Problem Formulation",
+                "sec_num": "3.2"
+            },
+            {
+                "text": "EQUATION",
+                "cite_spans": [],
+                "section": "MSVNFP Problem Formulation",
+                "sec_num": "3.2"
+            },
+            {
+                "text": "\u2022 Maximum capacity used on a link: The total flow through a link must not exceed its maximum capacity:",
+                "cite_spans": [],
+                "section": "MSVNFP Problem Formulation",
+                "sec_num": "3.2"
+            },
+            {
+                "text": "EQUATION",
+                "cite_spans": [],
+                "section": "MSVNFP Problem Formulation",
+                "sec_num": "3.2"
+            },
+            {
+                "text": "\u2022 Maximum processing capacity: The amount of VNF demand processed by each node \u210e must not exceed the processing ",
+                "cite_spans": [],
+                "section": "MSVNFP Problem Formulation",
+                "sec_num": "3.2"
+            },
+            {
+                "text": "EQUATION",
+                "cite_spans": [],
+                "section": "MSVNFP Problem Formulation",
+                "sec_num": "3.2"
+            },
+            {
+                "text": "\u2022 VNF node pass-through constraint: The flow of each request must be processed by a VNF node implemented at some node \u210e before reaching the destination:",
+                "cite_spans": [],
+                "section": "MSVNFP Problem Formulation",
+                "sec_num": "3.2"
+            },
+            {
+                "text": "EQUATION",
+                "cite_spans": [],
+                "section": "MSVNFP Problem Formulation",
+                "sec_num": "3.2"
+            },
+            {
+                "text": "Figure 1 presents a topology with three multicast request whose data are presented in Table 2 . The link costs are the weights given in Figure 1 , while each link's capacities are 50 Mbps. The candidate nodes \u210e 1 and \u210e 2 to implement VNF are nodes 8 and 12. The capacities \ud835\udc36\ud835\udc4e\ud835\udc5d \u210e of the candidate nodes are 4, and the \ud835\udc36\ud835\udc5c\ud835\udc60\ud835\udc61 \u210e cost of activating each VNF node is equal to 20. ",
+                "cite_spans": [],
+                "section": "Numerical Example",
+                "sec_num": "3.3"
+            },
+            {
+                "text": "The algorithm starts with the creation of the initial population at random. The best solutions are found over several generations. The evolutionary operator's selection, crossover, and mutation endow the algorithm with the capabilities of exploring other possible solutions. In the approach, not all individuals are viable solutions; therefore, additional constraint handling procedures are required. The algorithm returns a relatively good solution when the stopping criterion is met.",
+                "cite_spans": [],
+                "section": "General Outline of MSVNFP-GA",
+                "sec_num": "4.1"
+            },
+            {
+                "text": "The algorithm aims to determine the sort of processing request. Depending on the network characteristics and request, deploying the first trees impacts the available resources and, thus, the structure of the following trees. This sequence can lead to costly solution structures.",
+                "cite_spans": [],
+                "section": "General Outline of MSVNFP-GA",
+                "sec_num": "4.1"
+            },
+            {
+                "text": "Each solution component consists of a multicast tree, and VNF nodes, which are constructed using a deterministic method explained below. The MSVNFP-GA algorithm essentially seeks a solution that minimizes the total cost of the links used and the activation cost of the VNF nodes while meeting the capacity constraints of each link and the computational capacity of each candidate node to implement a VNF.",
+                "cite_spans": [],
+                "section": "General Outline of MSVNFP-GA",
+                "sec_num": "4.1"
+            },
+            {
+                "text": "In line 1, InitilizePopulation creates the initial population while in line 2, FitnessCalculation calculates the fitness of the individuals in the population. In line 3, GetBestIndividual returns the best solution of the first population.",
+                "cite_spans": [],
+                "section": "General Outline of MSVNFP-GA",
+                "sec_num": "4.1"
+            },
+            {
+                "text": "A convergence counter ConvergenceCounter determines the stopping criterion. This counter determines whether the algorithm can no longer advance by converging to the global optimum or is stuck at a local optimum. The algorithm starts the counter at zero (in line 4) and increments by one unit in line 15. The increment is performed when the global best solution is not improved. Conversely, if the global best solution is improved, the counter is reset to zero again.",
+                "cite_spans": [],
+                "section": "General Outline of MSVNFP-GA",
+                "sec_num": "4.1"
+            },
+            {
+                "text": "In order to prevent the algorithm be stuck at local optima, the mutation rate MutationRate is increased when the best solution does not improve by \ud835\udc4e\ud835\udc59\ud835\udc5d\u210e\ud835\udc4e units. This increment is performed in line 16. In line 7, Evolution generates a new population by applying the evolutionary operators. FitnessCalculation performs the fitness calculation of the new individuals in line 8. After the stopping criterion is reached, the algorithm returns the best solution in line 20.",
+                "cite_spans": [],
+                "section": "General Outline of MSVNFP-GA",
+                "sec_num": "4.1"
+            },
+            {
+                "text": "An MSVNFP-GA solution encodes the sequence of requests to be served and the list of VNF-capable nodes. In this sense, the \ud835\udc3d chromosome is composed of two genes: \ud835\udc45 request sequence and \ud835\udc3f VNFs location. The \ud835\udc45 request gene is a permutation vector whose length equals the number of M request. Each number \ud835\udc45 \ud835\udc5f is an index to the table of requests to be served. The VNFs location gene \ud835\udc3f is a binary vector of length equal to the number of nodes H . Each \ud835\udc3f \ud835\udc59 is associated with the candidate node \u210e \ud835\udc59 capable of hosting a VNFs service. If \ud835\udc3f \ud835\udc59 = 1, node \u210e \ud835\udc59 hosts a VNF node.",
+                "cite_spans": [],
+                "section": "Chromosome",
+                "sec_num": "4.2"
+            },
+            {
+                "text": "As an example consider Figures 2 to 4 whose corresponding chromosome is \ud835\udc3d = [\ud835\udc45, \ud835\udc3f] where \ud835\udc45 = (\ud835\udc35, \ud835\udc34, \ud835\udc36) and \ud835\udc3f = (1, 1). This chromosome indicates that nodes 8 and 12 have VNF installed, and the tree calculation follows the next sequence B, A, and C.",
+                "cite_spans": [],
+                "section": "Chromosome",
+                "sec_num": "4.2"
+            },
+            {
+                "text": "The function InitilizePopulation receives as parameters the population size (\ud835\udc47 \ud835\udc43), the number of multicast requests (\ud835\udc5a\ud835\udc4e\ud835\udc61\u210e\ud835\udc50\ud835\udc4e\ud835\udc59\ud835\udc40), the list of nodes enabled to implement VNF (\ud835\udc5a\ud835\udc4e\ud835\udc61\u210e\ud835\udc50\ud835\udc4e\ud835\udc59\ud835\udc3b ), and the disturbance rate (\ud835\udc47 \ud835\udc40).",
+                "cite_spans": [],
+                "section": "Population Initialization",
+                "sec_num": "4.3"
+            },
+            {
+                "text": "The first individual created has the sequence gene equal to the order of arrival of the requests \ud835\udc45=(1,2,3,...M), while the location gene is set all to one \ud835\udc3f=(1,...,1). The sequence genes of other individuals are generated by randomly un-ordering the first gene, and the location gene is randomly modified according to the rate \ud835\udc47 \ud835\udc40.",
+                "cite_spans": [],
+                "section": "Population Initialization",
+                "sec_num": "4.3"
+            },
+            {
+                "text": "Since the proposal is based on genetic algorithms, the evolutionary process is based on selection, crossover, and mutation operators. In line 7, Evolution applies these operators, which are explained below.",
+                "cite_spans": [],
+                "section": "Evolutionary Operators",
+                "sec_num": "4.4"
+            },
+            {
+                "text": "Selection Operator. The tournament procedure is used for selecting individuals, in which three opponents are randomly selected from the population, and a winner is chosen [3] . The tournament is performed twice in order to obtain two parent individuals.",
+                "cite_spans": [
+                    {
+                        "start": 171,
+                        "end": 174,
+                        "text": "[3]",
+                        "ref_id": "BIBREF2"
+                    }
+                ],
+                "section": "Evolutionary Operators",
+                "sec_num": "4.4"
+            },
+            {
+                "text": "Crossover Operator. The crossover between the selected individuals has two parts: the crossover for sequence gene and the crossover for location gene. For both genes, the one-point Order Crossover (OX) is used for the permutation vector and the binary vector [3] .",
+                "cite_spans": [
+                    {
+                        "start": 259,
+                        "end": 262,
+                        "text": "[3]",
+                        "ref_id": "BIBREF2"
+                    }
+                ],
+                "section": "Evolutionary Operators",
+                "sec_num": "4.4"
+            },
+            {
+                "text": "Mutation Operator. A mutation is performed after a crossover with an initial probability \ud835\udc43 .\ud835\udc5a\ud835\udc62\ud835\udc61=20%. It has two parts: mutation for permutation and binary mutation. The first is applied on \ud835\udc45 while the second on \ud835\udc3f. Mutation on \ud835\udc45 consists of exchanging the values of two randomly taken positions. The binary mutation takes a position randomly and performs a flip.",
+                "cite_spans": [],
+                "section": "Evolutionary Operators",
+                "sec_num": "4.4"
+            },
+            {
+                "text": "GetBestIndividual calculates the fitness of each individual on lines 2 and 8 of Algorithm 20. GetBestIndividual has essentially two parts: first, getTrees calculates the multicast trees sequentially according to the \ud835\udc45 gene; then, getCosts performs the cost calculation. Algorithm 21 presents the multicast tree calculation scheme.",
+                "cite_spans": [],
+                "section": "Fitness Calculation",
+                "sec_num": "4.5"
+            },
+            {
+                "text": "For each multicast session, getTrees computes a least-cost path to each destination. That is, the multicast tree is built progressively. getTrees initializes the data and resource structures on line 1. Each tree is built in lines 3 to 17. Each time the algorithm computes a tree, the resources allocated to the tree reduce the available resources, as seen in line 18. The procedure LessCostlyPath1 constructs a least-cost path connecting the source node to the first destination and passing through a node \u210e (line 3). Subsequently, the algorithm searches for least-cost paths added to the partial tree for each remaining destination. This process ends when all destinations have been processed. Between lines 6 to 10, the algorithm searches for least-cost paths using LessCostlyPath3 that connect the destination node \ud835\udc51 \ud835\udc56 to a node \ud835\udc63 of the partial tree. The node \ud835\udc63 is on a segment of the partial tree that connects an active node \u210e and terminates at a destination node \ud835\udc51 \ud835\udc57 . The algorithm also searches for the least-cost path that passes through some active \u210e node that is not in the partial tree (see lines 12 to 15). Among these paths, the least-cost path is selected and added to the partial tree (lines 16 and 17). After the tree calculation, getCosts goes through all the tree links to sum up, the link costs. Then, it traverses all nodes and adds the cost if any multicast tree uses the active \u210e \ud835\udc59 node (\ud835\udc3f \ud835\udc59 =1). If the active \u210e \ud835\udc59 node is not used then \ud835\udc3f \ud835\udc59 =0 is deactivated.",
+                "cite_spans": [],
+                "section": "Fitness Calculation",
+                "sec_num": "4.5"
+            },
+            {
+                "text": "The performance of MSVNFP-GA will be compared to the stateof-the-art competitive algorithms UMF, IMF, and RMF [18] . It is worth noting that if \ud835\udefc = 1, \ud835\udefc > 1, or \ud835\udefc < 1 then UMF, IMF, or RMF is applied, respectively. At this point, it is worth recalling that MSVNFP-GA was designed for any VNF technologies, while the state-of-the-art proposals are specific.",
+                "cite_spans": [
+                    {
+                        "start": 110,
+                        "end": 114,
+                        "text": "[18]",
+                        "ref_id": "BIBREF17"
+                    }
+                ],
+                "section": "NUMERICAL SIMULATIONS",
+                "sec_num": "5"
+            },
+            {
+                "text": "The performance of the MSVNFP-GA will be studied considering the order of destination processing of each request: Ascending Sort (MSVNFP-GA A), Descending Sort (MSVNFP-GA D), and Random (MSVNFP-GA R). The destinations are sorted based on the cost of the least cost path connecting source to destination. The input file of the set of destinations \ud835\udc37 \ud835\udc5a is re-sorted before starting the MSVNFP-GA. In this context, MSVNFP-GA will operate transparently for any destination ordering scheme.",
+                "cite_spans": [],
+                "section": "NUMERICAL SIMULATIONS",
+                "sec_num": "5"
+            },
+            {
+                "text": "The tests were performed considering the network topologies [6] described in Figure 5 with different traffic loads, varying the number of destinations and VNF nodes, also varying the number of requests demanded and the bandwidth passing through a VNF node, thus trying to replicate several possible scenarios for the problem. The weights in the links of the topologies indicate the distances in kilometers used as the cost of links. The traffic loads used were generated uniformly. For each test, the demand bandwidth rates were defined for each request considering \ud835\udc64 and \ud835\udefc \u2022 \ud835\udc64.",
+                "cite_spans": [
+                    {
+                        "start": 60,
+                        "end": 63,
+                        "text": "[6]",
+                        "ref_id": "BIBREF5"
+                    }
+                ],
+                "section": "NUMERICAL SIMULATIONS",
+                "sec_num": "5"
+            },
+            {
+                "text": "The scenarios were designed based on the three network topologies in Figure 5 yielding four types of scenarios:",
+                "cite_spans": [],
+                "section": "NUMERICAL SIMULATIONS",
+                "sec_num": "5"
+            },
+            {
+                "text": "(1) Scenario 1. Varying the number of requests with bandwidth remaining the same after passing through a VNF node: \ud835\udefc = 1. In this scenario, the NSFnet topology was considered. (2) Scenario 2. Varying the number of requests with a bandwidth that increases after passing through a VNF node: \ud835\udefc = 2. In this scenario, the EON topology was considered. (3) Scenario 3. Varying the number of requests with a bandwidth that decreases after passing through a VNF node: \ud835\udefc = 0.5. In this scenario, the USA topology was considered.",
+                "cite_spans": [],
+                "section": "NUMERICAL SIMULATIONS",
+                "sec_num": "5"
+            },
+            {
+                "text": "(4) Scenario 4. Varying the number of destinations and VNF candidate nodes with bandwidth remaining the same after passing through a VNF node: \ud835\udefc = 1. This scenario was implemented in all three topologies. Table 3 presents the evolutionary parameter settings. MSVNFP-GA is a stochastic algorithm, so each run performed may present different results. Then, the simulation considered several independent runs for each scenario. The final results of the MSVNFP-GA implementations are the average values obtained from all runs of each scenario. In terms of computational time, the proposal requires a much longer computational time than the state-of-the-art proposals. The time difference is a ratio of 244 to 1 on average. This difference occurs because UMF, RMF, and IMF are heuristics, and MSVNFP-GA is a meta-heuristic.",
+                "cite_spans": [],
+                "section": "NUMERICAL SIMULATIONS",
+                "sec_num": "5"
+            },
+            {
+                "text": "Latin America Networking Conference -LANC 2022 -ISBN: 978-1-4503-9429-1 Armenia, Colombia, October 19-20, 2022",
+                "cite_spans": [],
+                "section": "",
+                "sec_num": null
+            }
+        ],
+        "bib_entries": {
+            "BIBREF0": {
+                "ref_id": "b0",
+                "title": "On the Orchestration and Provisioning of NFV-enabled Multicast Services",
+                "authors": [
+                    {
+                        "first": "Omar",
+                        "middle": [],
+                        "last": "Alhussein",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2020,
+                "venue": "",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Omar Alhussein. 2020. On the Orchestration and Provisioning of NFV-enabled Multicast Services. (2020).",
+                "links": null
+            },
+            "BIBREF1": {
+                "ref_id": "b1",
+                "title": "VNF Deployment and Routing for NFV-enabled Multicast: A Steiner Tree-based Approach",
+                "authors": [
+                    {
+                        "first": "Yulun",
+                        "middle": [],
+                        "last": "Cheng",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Longxiang",
+                        "middle": [],
+                        "last": "Yang",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/wcsp/ChengY17",
+                "year": 2017,
+                "venue": "2017 9th International Conference on Wireless Communications and Signal Processing (WCSP)",
+                "volume": "",
+                "issue": "",
+                "pages": "1--4",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Yulun Cheng and Longxiang Yang. 2017. VNF Deployment and Routing for NFV-enabled Multicast: A Steiner Tree-based Approach. In 2017 9th International Conference on Wireless Communications and Signal Processing (WCSP). IEEE, 1-4.",
+                "links": null
+            },
+            "BIBREF2": {
+                "ref_id": "b2",
+                "title": "Evolutionary Algorithms for Solving Multi-objective Problems",
+                "authors": [
+                    {
+                        "first": "Carlos A Coello",
+                        "middle": [],
+                        "last": "Coello",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Gary",
+                        "middle": [
+                            "B"
+                        ],
+                        "last": "Lamont",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "David",
+                        "middle": [
+                            "A"
+                        ],
+                        "last": "Van Veldhuizen",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2007,
+                "venue": "",
+                "volume": "5",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Carlos A Coello Coello, Gary B Lamont, David A Van Veldhuizen, et al. 2007. Evolutionary Algorithms for Solving Multi-objective Problems. Vol. 5. Springer.",
+                "links": null
+            },
+            "BIBREF3": {
+                "ref_id": "b3",
+                "title": "RFC1112: Host Extensions for IP Multicasting",
+                "authors": [
+                    {
+                        "first": "Steve",
+                        "middle": [
+                            "E"
+                        ],
+                        "last": "Deering",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 1989,
+                "venue": "",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Steve E Deering. 1989. RFC1112: Host Extensions for IP Multicasting.",
+                "links": null
+            },
+            "BIBREF4": {
+                "ref_id": "b4",
+                "title": "Avalanche: Data Center Multicast using Software Defined Networking",
+                "authors": [
+                    {
+                        "first": "Aakash",
+                        "middle": [],
+                        "last": "Iyer",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Praveen",
+                        "middle": [],
+                        "last": "Kumar",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Vijay",
+                        "middle": [],
+                        "last": "Mann",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/comsnets/IyerKM14",
+                "year": 2014,
+                "venue": "2014 sixth international conference on communication systems and networks (COMSNETS)",
+                "volume": "",
+                "issue": "",
+                "pages": "1--8",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Aakash Iyer, Praveen Kumar, and Vijay Mann. 2014. Avalanche: Data Center Mul- ticast using Software Defined Networking. In 2014 sixth international conference on communication systems and networks (COMSNETS). IEEE, 1-8.",
+                "links": null
+            },
+            "BIBREF5": {
+                "ref_id": "b5",
+                "title": "Solving Routing and Spectrum Allocation Problems in Flexgrid Optical Networks using Pre-computing Strategies",
+                "authors": [
+                    {
+                        "first": "Fernando",
+                        "middle": [],
+                        "last": "Lezama",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Alberto",
+                        "middle": [
+                            "F"
+                        ],
+                        "last": "Mart\u00ednez-Herrera",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Gerardo",
+                        "middle": [],
+                        "last": "Casta\u00f1\u00f3n",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Carolina",
+                        "middle": [],
+                        "last": "Del-Valle-Soto",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Ana",
+                        "middle": [
+                            "Maria"
+                        ],
+                        "last": "Sarmiento",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Enrique Mu\u00f1oz De",
+                        "middle": [],
+                        "last": "Cote",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2021,
+                "venue": "Photonic Network Communications",
+                "volume": "41",
+                "issue": "1",
+                "pages": "17--35",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Fernando Lezama, Alberto F Mart\u00ednez-Herrera, Gerardo Casta\u00f1\u00f3n, Carolina Del- Valle-Soto, Ana Maria Sarmiento, and Enrique Mu\u00f1oz de Cote. 2021. Solving Routing and Spectrum Allocation Problems in Flexgrid Optical Networks using Pre-computing Strategies. Photonic Network Communications 41, 1 (2021), 17-35.",
+                "links": null
+            },
+            "BIBREF6": {
+                "ref_id": "b6",
+                "title": "NFVbased Scalable Guaranteed-Bandwidth Multicast Service for Software Defined ISP Networks",
+                "authors": [
+                    {
+                        "first": "Hardik",
+                        "middle": [],
+                        "last": "Soni",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Walid",
+                        "middle": [],
+                        "last": "Dabbous",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Thierry",
+                        "middle": [],
+                        "last": "Turletti",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Hitoshi",
+                        "middle": [],
+                        "last": "Asaeda",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2017,
+                "venue": "IEEE Transactions on Network and Service Management",
+                "volume": "14",
+                "issue": "4",
+                "pages": "1157--1170",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Hardik Soni, Walid Dabbous, Thierry Turletti, and Hitoshi Asaeda. 2017. NFV- based Scalable Guaranteed-Bandwidth Multicast Service for Software Defined ISP Networks. IEEE Transactions on Network and Service Management 14, 4 (2017), 1157-1170.",
+                "links": null
+            },
+            "BIBREF7": {
+                "ref_id": "b7",
+                "title": "A Survey on the Placement of Virtual Network Functions",
+                "authors": [
+                    {
+                        "first": "Jie",
+                        "middle": [],
+                        "last": "Sun",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Yi",
+                        "middle": [],
+                        "last": "Zhang",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Feng",
+                        "middle": [],
+                        "last": "Liu",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Huandong",
+                        "middle": [],
+                        "last": "Wang",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Xiaojian",
+                        "middle": [],
+                        "last": "Xu",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Yong",
+                        "middle": [],
+                        "last": "Li",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "journals/jnca/SunZLWXL22",
+                "year": 2022,
+                "venue": "Journal of Network and Computer Applications",
+                "volume": "202",
+                "issue": "",
+                "pages": "",
+                "other_ids": {
+                    "DOI": [
+                        "10.1016/j.jnca.2022.103361"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Jie Sun, Yi Zhang, Feng Liu, Huandong Wang, Xiaojian Xu, and Yong Li. 2022. A Survey on the Placement of Virtual Network Functions. Journal of Network and Computer Applications 202 (2022), 103361. https://doi.org/10.1016/j.jnca.2022. 103361",
+                "links": null
+            },
+            "BIBREF8": {
+                "ref_id": "b8",
+                "title": "Steiner Tree Compilation of Multicast under Differentiated Services Constraints",
+                "authors": [
+                    {
+                        "first": "Stavros",
+                        "middle": [],
+                        "last": "Vrontis",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Stavros",
+                        "middle": [],
+                        "last": "Xynogalas",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Efstathios",
+                        "middle": [],
+                        "last": "Sykas",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2007,
+                "venue": "Journal of Communications and Networks",
+                "volume": "9",
+                "issue": "1",
+                "pages": "84--92",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Stavros Vrontis, Stavros Xynogalas, and Efstathios Sykas. 2007. Steiner Tree Compilation of Multicast under Differentiated Services Constraints. Journal of Communications and Networks 9, 1 (2007), 84-92.",
+                "links": null
+            },
+            "BIBREF9": {
+                "ref_id": "b9",
+                "title": "On Multicast-oriented Virtual Network Function Placement: A Modified Genetic Algorithm",
+                "authors": [
+                    {
+                        "first": "Xinhan",
+                        "middle": [],
+                        "last": "Wang",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Huanlai",
+                        "middle": [],
+                        "last": "Xing",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Hai",
+                        "middle": [],
+                        "last": "Yang",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2018,
+                "venue": "International Conference On Signal And Information Processing, Networking And Computers",
+                "volume": "",
+                "issue": "",
+                "pages": "420--428",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Xinhan Wang, Huanlai Xing, and Hai Yang. 2018. On Multicast-oriented Virtual Network Function Placement: A Modified Genetic Algorithm. In International Conference On Signal And Information Processing, Networking And Computers. Springer, 420-428.",
+                "links": null
+            },
+            "BIBREF10": {
+                "ref_id": "b10",
+                "title": "A Survey on Software-Defined Networking",
+                "authors": [
+                    {
+                        "first": "Wenfeng",
+                        "middle": [],
+                        "last": "Xia",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Yonggang",
+                        "middle": [],
+                        "last": "Wen",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Chuan",
+                        "middle": [],
+                        "last": "Heng Foh",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Dusit",
+                        "middle": [],
+                        "last": "Niyato",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Haiyong",
+                        "middle": [],
+                        "last": "Xie",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2014,
+                "venue": "IEEE Communications Surveys & Tutorials",
+                "volume": "17",
+                "issue": "1",
+                "pages": "27--51",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Wenfeng Xia, Yonggang Wen, Chuan Heng Foh, Dusit Niyato, and Haiyong Xie. 2014. A Survey on Software-Defined Networking. IEEE Communications Surveys & Tutorials 17, 1 (2014), 27-51.",
+                "links": null
+            },
+            "BIBREF11": {
+                "ref_id": "b11",
+                "title": "Approximation and Online Algorithms for NFV-enabled Multicasting in SDNs",
+                "authors": [
+                    {
+                        "first": "Zichuan",
+                        "middle": [],
+                        "last": "Xu",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Weifa",
+                        "middle": [],
+                        "last": "Liang",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Meitian",
+                        "middle": [],
+                        "last": "Huang",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Mike",
+                        "middle": [],
+                        "last": "Jia",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Song",
+                        "middle": [],
+                        "last": "Guo",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Alex",
+                        "middle": [],
+                        "last": "Galis",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/icdcs/XuLHJGG17",
+                "year": 2017,
+                "venue": "2017 IEEE 37th International Conference on Distributed Computing Systems (ICDCS)",
+                "volume": "",
+                "issue": "",
+                "pages": "625--634",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Zichuan Xu, Weifa Liang, Meitian Huang, Mike Jia, Song Guo, and Alex Galis. 2017. Approximation and Online Algorithms for NFV-enabled Multicasting in SDNs. In 2017 IEEE 37th International Conference on Distributed Computing Systems (ICDCS). IEEE, 625-634.",
+                "links": null
+            },
+            "BIBREF12": {
+                "ref_id": "b12",
+                "title": "A Multi-stage Solution for NFV-enabled Multicast over the Hybrid Infrastructure",
+                "authors": [
+                    {
+                        "first": "Bo",
+                        "middle": [],
+                        "last": "Yi",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Xingwei",
+                        "middle": [],
+                        "last": "Wang",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Min",
+                        "middle": [],
+                        "last": "Huang",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Anwei",
+                        "middle": [],
+                        "last": "Dong",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2017,
+                "venue": "IEEE Communications Letters",
+                "volume": "21",
+                "issue": "9",
+                "pages": "2061--2064",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Bo Yi, Xingwei Wang, Min Huang, and Anwei Dong. 2017. A Multi-stage Solution for NFV-enabled Multicast over the Hybrid Infrastructure. IEEE Communications Letters 21, 9 (2017), 2061-2064.",
+                "links": null
+            },
+            "BIBREF13": {
+                "ref_id": "b13",
+                "title": "SDN and NFV Enabled Service Function Multicast Mechanisms over Hybrid Infrastructure",
+                "authors": [
+                    {
+                        "first": "Bo",
+                        "middle": [],
+                        "last": "Yi",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Xingwei",
+                        "middle": [],
+                        "last": "Wang",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Min",
+                        "middle": [],
+                        "last": "Huang",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Lianbo",
+                        "middle": [],
+                        "last": "Ma",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2019,
+                "venue": "Peer-to-Peer Networking and Applications",
+                "volume": "12",
+                "issue": "2",
+                "pages": "405--421",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Bo Yi, Xingwei Wang, Min Huang, and Lianbo Ma. 2019. SDN and NFV Enabled Service Function Multicast Mechanisms over Hybrid Infrastructure. Peer-to-Peer Networking and Applications 12, 2 (2019), 405-421.",
+                "links": null
+            },
+            "BIBREF14": {
+                "ref_id": "b14",
+                "title": "A Comprehensive Survey of Network Function Virtualization",
+                "authors": [
+                    {
+                        "first": "Bo",
+                        "middle": [],
+                        "last": "Yi",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Xingwei",
+                        "middle": [],
+                        "last": "Wang",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Keqin",
+                        "middle": [],
+                        "last": "Li",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Min",
+                        "middle": [],
+                        "last": "Huang",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2018,
+                "venue": "Computer Networks",
+                "volume": "133",
+                "issue": "",
+                "pages": "212--262",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Bo Yi, Xingwei Wang, Keqin Li, Min Huang, et al. 2018. A Comprehensive Survey of Network Function Virtualization. Computer Networks 133 (2018), 212-262.",
+                "links": null
+            },
+            "BIBREF15": {
+                "ref_id": "b15",
+                "title": "Joint NFV Placement and Routing for Multicast Service on SDN",
+                "authors": [
+                    {
+                        "first": "Ali",
+                        "middle": [],
+                        "last": "Sai Qian Zhang",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Byungchul",
+                        "middle": [],
+                        "last": "Tizghadam",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Hadi",
+                        "middle": [],
+                        "last": "Park",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Alberto",
+                        "middle": [],
+                        "last": "Bannazadeh",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "",
+                        "middle": [],
+                        "last": "Leon-Garcia",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/noms/ZhangTPBL16",
+                "year": 2016,
+                "venue": "NOMS 2016-2016 IEEE/IFIP Network Operations and Management Symposium",
+                "volume": "",
+                "issue": "",
+                "pages": "333--341",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Sai Qian Zhang, Ali Tizghadam, Byungchul Park, Hadi Bannazadeh, and Alberto Leon-Garcia. 2016. Joint NFV Placement and Routing for Multicast Service on SDN. In NOMS 2016-2016 IEEE/IFIP Network Operations and Management Symposium. IEEE, 333-341.",
+                "links": null
+            },
+            "BIBREF16": {
+                "ref_id": "b16",
+                "title": "Network Function Virtualization Enabled Multicast Routing on SDN",
+                "authors": [
+                    {
+                        "first": "Qi",
+                        "middle": [],
+                        "last": "Sai Qian Zhang",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Hadi",
+                        "middle": [],
+                        "last": "Zhang",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Alberto",
+                        "middle": [],
+                        "last": "Bannazadeh",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "",
+                        "middle": [],
+                        "last": "Leon-Garcia",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/icc/ZhangZBL15",
+                "year": 2015,
+                "venue": "2015 IEEE International Conference on Communications (ICC)",
+                "volume": "",
+                "issue": "",
+                "pages": "5595--5601",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Sai Qian Zhang, Qi Zhang, Hadi Bannazadeh, and Alberto Leon-Garcia. 2015. Network Function Virtualization Enabled Multicast Routing on SDN. In 2015 IEEE International Conference on Communications (ICC). IEEE, 5595-5601.",
+                "links": null
+            },
+            "BIBREF17": {
+                "ref_id": "b17",
+                "title": "Routing Algorithms for Network Function Virtualization Enabled Multicast Topology on SDN",
+                "authors": [
+                    {
+                        "first": "Qi",
+                        "middle": [],
+                        "last": "Sai Qian Zhang",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Hadi",
+                        "middle": [],
+                        "last": "Zhang",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Alberto",
+                        "middle": [],
+                        "last": "Bannazadeh",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "",
+                        "middle": [],
+                        "last": "Leon-Garcia",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2015,
+                "venue": "IEEE Transactions on Network and Service Management",
+                "volume": "12",
+                "issue": "4",
+                "pages": "580--594",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Sai Qian Zhang, Qi Zhang, Hadi Bannazadeh, and Alberto Leon-Garcia. 2015. Routing Algorithms for Network Function Virtualization Enabled Multicast Topol- ogy on SDN. IEEE Transactions on Network and Service Management 12, 4 (2015), 580-594.",
+                "links": null
+            }
+        }
+    }
+}

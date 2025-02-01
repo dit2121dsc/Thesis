@@ -1,0 +1,582 @@
+{
+  "paper_id" : "3514105",
+  "header" : {
+    "generated_with" : "S2ORC 1.0.0",
+    "date_generated" : "2024-03-20T17:53:12.243290Z"
+  },
+  "title" : "Research on Network Architecture Design Based on Artificial Intelligence Application Technology",
+  "authors" : [
+    {
+      "first" : "Jing",
+      "middle" : [],
+      "last" : "Guo",
+      "suffix" : "",
+      "affiliation" : {
+        "laboratory" : "",
+        "institution" : "Lanzhou Vocational Technical College",
+        "location" : {
+          "postCode" : "730070",
+          "settlement" : "Lanzhou",
+          "country" : "China"
+        }
+      },
+      "email" : "120839127@qq.com"
+    }
+  ],
+  "year" : "",
+  "venue" : null,
+  "identifiers" : {},
+  "abstract" : "With the continuous development of AI technology, the training of massive data and the emergence of large-scale models have made stand-alone model training increasingly unable to meet the needs of AI applications. Distributed machine learning technologies (such as data parallelism and model parallelism) have appeared at historic moments and will have extreme large-scale application scenarios. At present, the training speed of distributed machine learning models is slow, and the scale of model parameters is still the main problem in this field. From the perspective of model parallelism, this article aims to design the optimal division method for different models under model parallelism by analyzing the structure of the existing AI application model. According to the framework structure of artificial intelligence application model, design the model optimization partition strategy and model based on parallelism. A network architecture suitable for accelerating AI application training, focusing on solving technical problems, such as network architecture design based on AI applications and model optimization and partitioning under model parallelization.",
+  "pdf_parse" : {
+    "abstract" : [
+      {
+        "text" : "With the continuous development of AI technology, the training of massive data and the emergence of large-scale models have made stand-alone model training increasingly unable to meet the needs of AI applications. Distributed machine learning technologies (such as data parallelism and model parallelism) have appeared at historic moments and will have extreme large-scale application scenarios. At present, the training speed of distributed machine learning models is slow, and the scale of model parameters is still the main problem in this field. From the perspective of model parallelism, this article aims to design the optimal division method for different models under model parallelism by analyzing the structure of the existing AI application model. According to the framework structure of artificial intelligence application model, design the model optimization partition strategy and model based on parallelism. A network architecture suitable for accelerating AI application training, focusing on solving technical problems, such as network architecture design based on AI applications and model optimization and partitioning under model parallelization.",
+        "cite_spans" : [],
+        "section" : "Abstract",
+        "sec_num" : null
+      }
+    ],
+    "body_text" : [
+      {
+        "text" : "can imitate and execute human learning, thinking and decisionmaking. With the rapid development of technologies such as mobile Internet, cloud computing, and Internet of Things (IoT), the amount of global data has surged, and the era of big data has arrived. The emergence of a large amount of data provides the basis of training information for training large models. Therefore, in recent years, ultra-large-scale machine learning models with millions or even billions of parameters have emerged. However, as the scale of the model increases, the training speed of distributed machine learning models is currently slow, and the scale of model parameters is still a major issue in this field. For large models that cannot be accommodated in the memory of a single machine, the design based on the data parallelism and model parallelism flow characteristics is suitable for the network architecture that accelerates the training of AI applications, so it has better performance than traditional typical applications when running AI applications. Better performance and network architecture this will be the only way to solve the computing and storage bottlenecks.",
+        "cite_spans" : [],
+        "section" : "",
+        "sec_num" : null
+      },
+      {
+        "text" : "Beginning in 2010, artificial intelligence has entered an explosive development stage. Its main driving force is the maturity of deep learning technology and the arrival of the era of big data. At present, artificial intelligence has been widely used in people's lives and has shown strong dominance in many fields. In the field of computer In order to effectively train machine learning models, strike a balance between training speed and training accuracy, and integrate sub-models to obtain a global machine learning model, it is necessary to use data parallel mode to train many small and medium-sized machine learning models. The model parallelism is the only way to solve the computational and storage bottlenecks, but the slow training speed due to too much training data is still a major problem in the field of distributed machine learning.",
+        "cite_spans" : [],
+        "section" : "RESEARCH STATUS AT HOME AND ABROAD",
+        "sec_num" : "2"
+      },
+      {
+        "text" : "When performing distributed cluster acceleration training, it is mainly to optimize parallel algorithms for cluster acceleration in the training process. The second is to design distributed cluster architecture and computing units to achieve acceleration. The third is to combine the communication between working nodes and working nodes. Optimize this mechanism to improve the performance of the entire cluster network. Therefore, when performing distributed machine learning, coordinating the resources of cluster working nodes and improving the communication efficiency between working nodes are important factors that need to be considered when accelerating distributed machine learning clusters. However, the service transmission speed in a distributed system is usually affected by network bandwidth and communication mechanisms. Therefore, when training on a large-scale cluster, the communication efficiency between working nodes usually becomes the bottleneck of the performance of the distributed cluster training machine learning model. Therefore, optimizing the cluster communication strategy and achieving fast and efficient communication between working nodes can also reduce the training time of the machine learning model. Currently, the data center network platform has many network architectures, such as the classic Fat-Tree architecture, the opticalelectric hybrid architecture C-Through, Helios, etc., and the Torus in HPC .In the face of AI applications, these architectures are not very adaptable and cannot accelerate the training speed of AI applications .Therefore, this paper summarizes and analyzes the flow characteristics, working process and data flow transmission characteristics of AI applications, and summarizes the development of AI flow models and designs the fit of the network architecture E-Cube suitable for AI applications.",
+        "cite_spans" : [],
+        "section" : "DISTRIBUTED AI ACCELERATION NETWORK ARCHITECTURE",
+        "sec_num" : "3"
+      },
+      {
+        "text" : "3.2.1 Topological Structure. The one-dimensional 4-element Pod structure of E-Cube is shown in Figure 1 . Each Pod includes 8 topof-rack switches and 16 host servers. These switches are arranged in order. In Figure 1 , the dark blue rack top switch group is called a groupG a , and the light blue rack top switch group is called a group G b .Each switch is connected to four server nodes. Specific to the interconnect structure, each rack-top switch uses four downstream ports to connect four servers. In general, the dark blue top-of-rack switches G a and servers form a direct interconnection structure, ",
+        "cite_spans" : [],
+        "section" : "Module architecture design",
+        "sec_num" : "3.2"
+      },
+      {
+        "text" : "Addressing. In the N-dimensional k-element E-Cube architecture, its address can be represented by an array vector 3k + 2 in the specific form (a 3k +1 a 3k a 2k +1 a 2k • sa 1 a 0 ). Among them, the lowest bit is a 0 , a 2k • sa k+1 is used to identify the position a 0 ∈ [0, k 2 -1] of the server in the local rack. a k • sa 1 is used to identify the position a 2k • sa 1 ∈ [1, 2k] . A single server node a 3k • sa 2k+1 is connected to the two switches on the top-of-rack switch to mark the position of the server in the pod of the dark blue top-of-rack switch rack. Used a 3k • sa 3k -k /2 to mark the position of the rack of the light blue top-of-rack switch where the server is located in the Pod. a 2k +k /2 • sa 2k is used to mark the position a 3k • sa 2k +1 ∈ [1, k] of the core switch connected to the node server in the network. It indicates the address of the core switch connecting the core switch and the dark blue switch, and indicates the core switch number connecting the core switch and the light blue switch site. It represents the Pod number a 3k +1 where the server node is located a 3k +1 a 3k a 2k +1 a 2k • sa 1 , that is which identifies the top-of-rack switch number that the server node is connected to in the network, and a 0 is used to determine the location of the server in the rack. Therefore, the entire network can determine the source address and destination address of the communication node through ToR (Top of Rack) coordinates or numbers a 3k +1 a 3k a 2k+1 a 2k • sa 1 .",
+        "cite_spans" : [
+          {
+            "start" : 375,
+            "end" : 382,
+            "text" : "[1, 2k]",
+            "ref_id" : null
+          }
+        ],
+        "section" : "Node",
+        "sec_num" : "3.2.2"
+      },
+      {
+        "text" : "Rules. In the N-dimensional k-element E-Cube network architecture, the connections between servers and switches, and switches and switches have strong regularity. The top-of-rack switches are divided into two types of switches according to different interconnection modes, the dark blue topof-rack switch group Called a group G a , the light blue top-of-rack switch group is called a group G b , and each switch is connected to k server nodes. Specific to the interconnection structure, each top-of-rack switch uses k downstream ports to connect to k servers. On the whole, the dark blue top-of-rack switches and servers form a tree-like interconnection structure, which can be called a rack group G a , while the light blue top-of-rack switches G b are respectively connected to the servers with the same number connected under the switch G a .The port connection relationship between the topof-rack switch and the server can be defined using rule 1.",
+        "cite_spans" : [],
+        "section" : "Network Connection",
+        "sec_num" : "3.2.3"
+      },
+      {
+        "text" : "• Rule 1: The top-of-rack switch has 3k -k 2 ports, and these ports are numbered 0, 1, 2, ..., 3k -k 2 -1. In the order from left to right and top to bottom. Among them, the top-of-rack switches use ports 0 to k -1 to connect to the host server nodes in sequence, and the top-of-rack switches in the group G a are connected with adjacently numbered host server nodes, and their connections with the host nodes do not conflict. The switches in the group G b use ports 0 to k -1 to connect to the server node with the same number mod(k) in the Pod. In order to strengthen the connection relationship of the top-of-rack switches in the E-Cube network, the topof-rack switches are also connected to each other, and the connection relationship can be defined by Rule 2.",
+        "cite_spans" : [],
+        "section" : "Network Connection",
+        "sec_num" : "3.2.3"
+      },
+      {
+        "text" : "• Rule 2: In the same top-of-rack switch group G a , G b . For example, the top-of-rack switches inside can use the k to Port 2k -1. It is connected to the top-of-rack switches in the same group, and they are fully interconnected. The connection relationship between the top-of-rack switches and the core switches in the E-Cube network can be defined using Rule 3. • Rule 3: The top-of-rack switches in the group G a and G b use the 2k port to (3k -k/2-1) ports respectively connect with k/2 core switches, the number of the core switches connected between the two top-of-rack switch groups is different Repeat, the top-of-rack switches in the same group are connected to the same k/2 core switches. The top-of-rack switches in the group use the port 2k to the port 3k -k 2 -1 to connect to the core switch numbered 0 • s k 2 -1 respectively, and the top-of-rack switches in the group G b use the 2k port to the first port to connect to the core switch numbered respectively. The connection relationship between core layer switches 3k -k 2 -1 between different pods k 2 • sk -1 in the N-dimensional k-element E-Cube network can be defined using Rule 4.",
+        "cite_spans" : [],
+        "section" : "Network Connection",
+        "sec_num" : "3.2.3"
+      },
+      {
+        "text" : "• Rule 4: The core switch has a total of Nk ports, among which the 0th port to the k -1 port are connected to the top-ofrack switches in the top-of-rack switch group in turn, and the k port to the Nk -1 port are respectively connected to the core layer responsible for different Pods The switches are interconnected to increase the reliability and path diversity of the network. At this point, the interconnection rules of the E-Cube architecture have been designed, and interconnections need to be carried out in this way as the scale increases. In such an interconnection mode, the network architecture has better scalability and larger bisecting bandwidth, thereby ensuring the performance advantages of the network architecture.",
+        "cite_spans" : [],
+        "section" : "Network Connection",
+        "sec_num" : "3.2.3"
+      },
+      {
+        "text" : "The E-Cube network is comprehensively analyzed from the aspects of network diameter, scalability, average distance, and equipment overhead. The topologies compared here include N-dimensional K-element Torus topology, Full-mesh topology, Fat-Tree topology, Hypercube topology, and B-Cube topology. Table 1 shows the parameter comparison of various topologies.",
+        "cite_spans" : [],
+        "section" : "ARCHITECTURE EVALUATION COMPARISON 4.1 Comparison of parameters of various topologies",
+        "sec_num" : "4"
+      },
+      {
+        "text" : "In terms of network scalability, full mesh topology is not suitable for large-scale interconnection structures, because with the expansion of the network, the network diameter and average distance of the ring topology will show a linear growth trend. Communication delay will become a bottleneck problem in large networks. The full mesh topology needs to connect all switching nodes in the network. The wiring complexity increases with the increase of the network scale. Therefore, network cost will limit the deployment of Full-mesh topology. Fat tree, B-Cube, Hypercube, and N-Torus [54] all have exponential scalability, so they can use ordinary base (or low base) switches to support large-scale network expansion, so the scalability of these networks is better than that of Full-mesh. From the perspective of bisecting bandwidth, the bisecting bandwidth of a common ring network is very low. With the expansion of the network, the traffic carried by a single link has doubled, and network congestion has become more serious. The K-element N-dimensional Torus network equally divides the bandwidth depending on the values of K and N. Table 2 shows the qualitative analysis of network topology.",
+        "cite_spans" : [],
+        "section" : "Qualitative analysis of network topology",
+        "sec_num" : "4.2"
+      },
+      {
+        "text" : "In the model parallel mode, during the model training process, different model segmentation methods lead to different communication modes and ratios between the working nodes of the distributed platform. In the horizontal layer-by-layer model, when the model is trained, the communication between working nodes has linear dependence, that is, the input of the sub-model assigned to one working node is the output node of the assigned sub-model of another working node. Based on this, start with the VggNet 16 model, and when the input data size is 224 * 224 * 3, it is suitable for traffic transmission between VggNet 16 layers, and then VggNet 16 is divided into 16 layers according to the division. When the node scale is 16 working nodes, the performance comparison of different network architectures will be carried out. The histogram in Figure 2 indicates the proportion of data that needs to be transferred between the model layer and the layer when the input data ratio is 224*224*3 images. The dotted line indicates the size of the data transmitted from a working node. The time used by another working node, the size of the data to be tranmitted is different, and different transmission paths will eventually lead to different times. It can be seen from the figure that under the same data scale, the transmission time between the layers of the three architectures in the network transmission process is basically the same and has similar performance. Figure 3 shows the changes in flow completion time in different architectures as the network load scale increases. It can be seen from the figure that in the Fat-tree architecture, when the network load reaches 0. but the E-Cube architecture is slightly better than the B-Cube. This is mainly because B-Cube and E-Cube architecture servers are connected to top-of-rack switches in a similar way, and the server nodes are similar to other nodes. Communication is not only carried out through a single switching node, but basically only two-hop routing is required between end-to-end, and the E-Cube architecture has a larger bisecting bandwidth and many redundant links, so the performance will be better when performing traffic transmission.",
+        "cite_spans" : [],
+        "section" : "Qualitative analysis of network topology",
+        "sec_num" : "4.2"
+      },
+      {
+        "text" : "With the development of AI applications, machine learning technology has achieved great success in many AI applications. Generally speaking, a large amount of training data can make machine learning models have better feature representation, but large-scale machine learning models and large-scale training data require a lot of computing and storage resources. In this article, current network architecture platforms that carry AI applications currently have problems such as slow training speed and excessive pressure on platforms that carry traffic in data parallelism and model parallelism. This paper designs the E-Cube architecture to speed up model training and reduce the capacity of the model in the architecture. The E-Cube architecture has sufficient network split bandwidth and end-to-end transmission path, which can reduce the link bottleneck in the network while carrying large-scale traffic.",
+        "cite_spans" : [],
+        "section" : "CONCLUSION",
+        "sec_num" : "5"
+      },
+      {
+        "text" : "According to the simulation analysis in the parallel mode, compared with the B-Cube architecture and the Fat-Tree architecture, E-Cube shows good performance in these parallel modes. Compared with the Fat-tree architecture, the E Cube architecture reduces the flow completion time by about 40% and realizes the acceleration of the network architecture in AI application communication.",
+        "cite_spans" : [],
+        "section" : "CONCLUSION",
+        "sec_num" : "5"
+      }
+    ],
+    "bib_entries" : {
+      "BIBREF0" : {
+        "ref_id" : "b0",
+        "title" : "Deep speech 2: end-to-end speech recognition in English and mandarin",
+        "authors" : [
+          {
+            "first" : "D",
+            "middle" : [],
+            "last" : "Amodei",
+            "suffix" : ""
+          },
+          {
+            "first" : "S",
+            "middle" : [],
+            "last" : "Ananthanarayanan",
+            "suffix" : ""
+          },
+          {
+            "first" : "R",
+            "middle" : [],
+            "last" : "Anubhai",
+            "suffix" : ""
+          }
+        ],
+        "dblp_id" : "conf/icml/AmodeiABCCCCCCD16",
+        "year" : 2016,
+        "venue" : "international conference on machine learning (ICML)",
+        "volume" : "",
+        "issue" : "",
+        "pages" : "",
+        "other_ids" : {},
+        "num" : null,
+        "urls" : [],
+        "raw_text" : "Amodei D, Ananthanarayanan S, Anubhai R, et al. Deep speech 2: end-to-end speech recognition in English and mandarin. New York City, NY, USA, interna- tional conference on machine learning (ICML), 2016.",
+        "links" : null
+      },
+      "BIBREF1" : {
+        "ref_id" : "b1",
+        "title" : "Neural Machine Translation by Jointly Learning to Align and Translate. San Diego, CA, international conference on learning representations",
+        "authors" : [
+          {
+            "first" : "D",
+            "middle" : [],
+            "last" : "Bahdanau",
+            "suffix" : ""
+          },
+          {
+            "first" : "K",
+            "middle" : [],
+            "last" : "Cho",
+            "suffix" : ""
+          },
+          {
+            "first" : "Y",
+            "middle" : [],
+            "last" : "Bengio",
+            "suffix" : ""
+          }
+        ],
+        "dblp_id" : null,
+        "year" : 2015,
+        "venue" : "",
+        "volume" : "",
+        "issue" : "",
+        "pages" : "",
+        "other_ids" : {},
+        "num" : null,
+        "urls" : [],
+        "raw_text" : "Bahdanau D, Cho K, Bengio Y, et al. Neural Machine Translation by Jointly Learning to Align and Translate. San Diego, CA, international conference on learning representations (ICLR), 2015.",
+        "links" : null
+      },
+      "BIBREF2" : {
+        "ref_id" : "b2",
+        "title" : "Rethinking the Inception Architecture for Computer Vision",
+        "authors" : [
+          {
+            "first" : "C",
+            "middle" : [],
+            "last" : "Szegedy",
+            "suffix" : ""
+          },
+          {
+            "first" : "V",
+            "middle" : [],
+            "last" : "Vanhoucke",
+            "suffix" : ""
+          },
+          {
+            "first" : "S",
+            "middle" : [],
+            "last" : "Ioffe",
+            "suffix" : ""
+          }
+        ],
+        "dblp_id" : "conf/cvpr/SzegedyVISW16",
+        "year" : 2016,
+        "venue" : "IEEE Conference on Computer Vision and Pattern Recognition (CVPR)",
+        "volume" : "",
+        "issue" : "",
+        "pages" : "",
+        "other_ids" : {},
+        "num" : null,
+        "urls" : [],
+        "raw_text" : "C. Szegedy, V. Vanhoucke, S. Ioffe, et al. Rethinking the Inception Architecture for Computer Vision, Las Vegas, NV, 2016 IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2016",
+        "links" : null
+      },
+      "BIBREF3" : {
+        "ref_id" : "b3",
+        "title" : "Inception-v4, Inception-ResNet and the Impact of Residual Connections on Learning",
+        "authors" : [
+          {
+            "first" : "C",
+            "middle" : [],
+            "last" : "Szegedy",
+            "suffix" : ""
+          },
+          {
+            "first" : "S",
+            "middle" : [],
+            "last" : "Ioffe",
+            "suffix" : ""
+          },
+          {
+            "first" : "V",
+            "middle" : [],
+            "last" : "Vanhoucke",
+            "suffix" : ""
+          }
+        ],
+        "dblp_id" : "conf/aaai/SzegedyIVA17",
+        "year" : 2016,
+        "venue" : "national conference on artificial intelligence",
+        "volume" : "",
+        "issue" : "",
+        "pages" : "",
+        "other_ids" : {},
+        "num" : null,
+        "urls" : [],
+        "raw_text" : "Szegedy C, Ioffe S, Vanhoucke V, et al. Inception-v4, Inception-ResNet and the Impact of Residual Connections on Learning. Phoenix, Arizona, USA, national conference on artificial intelligence, 2016.",
+        "links" : null
+      },
+      "BIBREF4" : {
+        "ref_id" : "b4",
+        "title" : "Deep Residual Learning for Image Recognition",
+        "authors" : [
+          {
+            "first" : "K",
+            "middle" : [],
+            "last" : "He",
+            "suffix" : ""
+          },
+          {
+            "first" : "X",
+            "middle" : [],
+            "last" : "Zhang",
+            "suffix" : ""
+          },
+          {
+            "first" : "S",
+            "middle" : [],
+            "last" : "Ren",
+            "suffix" : ""
+          }
+        ],
+        "dblp_id" : "conf/cvpr/HeZRS16",
+        "year" : 2016,
+        "venue" : "LAS VEGAS, computer vision and pattern recognition",
+        "volume" : "",
+        "issue" : "",
+        "pages" : "",
+        "other_ids" : {},
+        "num" : null,
+        "urls" : [],
+        "raw_text" : "He K, Zhang X, Ren S, et al. Deep Residual Learning for Image Recognition. LAS VEGAS, computer vision and pattern recognition (CVPR), 2016.",
+        "links" : null
+      },
+      "BIBREF5" : {
+        "ref_id" : "b5",
+        "title" : "AMC: AutoML for Model Compression and Acceleration on Mobile Devices",
+        "authors" : [
+          {
+            "first" : "Y",
+            "middle" : [],
+            "last" : "He",
+            "suffix" : ""
+          },
+          {
+            "first" : "J",
+            "middle" : [],
+            "last" : "Lin",
+            "suffix" : ""
+          },
+          {
+            "first" : "Z",
+            "middle" : [],
+            "last" : "Liu",
+            "suffix" : ""
+          }
+        ],
+        "dblp_id" : "conf/eccv/HeLLWLH18",
+        "year" : 2018,
+        "venue" : "European conference on computer vision (ECCV)",
+        "volume" : "",
+        "issue" : "",
+        "pages" : "",
+        "other_ids" : {},
+        "num" : null,
+        "urls" : [],
+        "raw_text" : "He Y, Lin J, Liu Z, et al. AMC: AutoML for Model Compression and Acceleration on Mobile Devices. Munich, Germany, European conference on computer vision (ECCV), 2018.",
+        "links" : null
+      },
+      "BIBREF6" : {
+        "ref_id" : "b6",
+        "title" : "Learning Transferable Architectures for Scalable Image Recognition",
+        "authors" : [
+          {
+            "first" : "B",
+            "middle" : [],
+            "last" : "Oph",
+            "suffix" : ""
+          },
+          {
+            "first" : "V",
+            "middle" : [],
+            "last" : "Vasudevan",
+            "suffix" : ""
+          },
+          {
+            "first" : "J",
+            "middle" : [],
+            "last" : "Shlens",
+            "suffix" : ""
+          }
+        ],
+        "dblp_id" : "conf/cvpr/ZophVSL18",
+        "year" : 2018,
+        "venue" : "Computer vision and pattern recognition (CVPR)",
+        "volume" : "",
+        "issue" : "",
+        "pages" : "",
+        "other_ids" : {},
+        "num" : null,
+        "urls" : [],
+        "raw_text" : "Oph B, Vasudevan V, Shlens J, et al. Learning Transferable Architectures for Scalable Image Recognition. Salt Lake City, Utah. Computer vision and pattern recognition (CVPR), 2018.",
+        "links" : null
+      },
+      "BIBREF7" : {
+        "ref_id" : "b7",
+        "title" : "Accelerating recurrent neural networks in analytics servers: Comparison of FPGA, CPU, GPU, and ASIC",
+        "authors" : [
+          {
+            "first" : "E",
+            "middle" : [],
+            "last" : "Nurvitadhi",
+            "suffix" : ""
+          },
+          {
+            "first" : "Jaewoong",
+            "middle" : [],
+            "last" : "Sim",
+            "suffix" : ""
+          },
+          {
+            "first" : "D",
+            "middle" : [],
+            "last" : "Sheffield",
+            "suffix" : ""
+          }
+        ],
+        "dblp_id" : "conf/fpl/NurvitadhiSSMKM16",
+        "year" : 2016,
+        "venue" : "26th International Conference on Field Programmable Logic and Applications (FPL)",
+        "volume" : "",
+        "issue" : "",
+        "pages" : "",
+        "other_ids" : {},
+        "num" : null,
+        "urls" : [],
+        "raw_text" : "E. Nurvitadhi, Jaewoong Sim, D. Sheffield, et al. Accelerating recurrent neural networks in analytics servers: Comparison of FPGA, CPU, GPU, and ASIC, Lau- sanne, 2016 26th International Conference on Field Programmable Logic and Applications (FPL), 2016.",
+        "links" : null
+      },
+      "BIBREF8" : {
+        "ref_id" : "b8",
+        "title" : "Fat-trees: Universal networks for hardware-efficient supercomputing",
+        "authors" : [
+          {
+            "first" : "C",
+            "middle" : [
+              "E"
+            ],
+            "last" : "Leiserson",
+            "suffix" : ""
+          }
+        ],
+        "dblp_id" : "conf/icpp/Leiserson85",
+        "year" : 1985,
+        "venue" : "IEEE Transactions on Computers",
+        "volume" : "34",
+        "issue" : "10",
+        "pages" : "892--901",
+        "other_ids" : {},
+        "num" : null,
+        "urls" : [],
+        "raw_text" : "Leiserson C E. Fat-trees: Universal networks for hardware-efficient supercom- puting. IEEE Transactions on Computers, 1985, 34(10): 892-901.",
+        "links" : null
+      },
+      "BIBREF9" : {
+        "ref_id" : "b9",
+        "title" : "B-Cube: a high performance, server-centric network architecture for modular data centers",
+        "authors" : [
+          {
+            "first" : "C",
+            "middle" : [],
+            "last" : "Guo",
+            "suffix" : ""
+          },
+          {
+            "first" : "G",
+            "middle" : [],
+            "last" : "Lu",
+            "suffix" : ""
+          },
+          {
+            "first" : "D",
+            "middle" : [],
+            "last" : "Li",
+            "suffix" : ""
+          }
+        ],
+        "dblp_id" : "conf/sigcomm/GuoLLWZSTZL09",
+        "year" : 2009,
+        "venue" : "ACM special interest group on data communication",
+        "volume" : "39",
+        "issue" : "4",
+        "pages" : "63--74",
+        "other_ids" : {},
+        "num" : null,
+        "urls" : [],
+        "raw_text" : "Guo C, Lu G, Li D, et al. B-Cube: a high performance, server-centric network architecture for modular data centers. ACM special interest group on data com- munication, 2009, 39(4): 63-74.",
+        "links" : null
+      },
+      "BIBREF10" : {
+        "ref_id" : "b10",
+        "title" : "c-Through: part-time optics in data centers",
+        "authors" : [
+          {
+            "first" : "G",
+            "middle" : [],
+            "last" : "Wang",
+            "suffix" : ""
+          },
+          {
+            "first" : "D G",
+            "middle" : [],
+            "last" : "Andersen",
+            "suffix" : ""
+          },
+          {
+            "first" : "M",
+            "middle" : [],
+            "last" : "Kaminsky",
+            "suffix" : ""
+          }
+        ],
+        "dblp_id" : "conf/sigcomm/WangAKPNKR10",
+        "year" : 2010,
+        "venue" : "ACM special interest group on data communication",
+        "volume" : "40",
+        "issue" : "4",
+        "pages" : "327--338",
+        "other_ids" : {},
+        "num" : null,
+        "urls" : [],
+        "raw_text" : "Wang G, Andersen D G, Kaminsky M, et al. c-Through: part-time optics in data centers. ACM special interest group on data communication, 2010, 40(4): 327-338.",
+        "links" : null
+      },
+      "BIBREF11" : {
+        "ref_id" : "b11",
+        "title" : "Helios: a hybrid electrical/optical switch architecture for modular data centers",
+        "authors" : [
+          {
+            "first" : "N",
+            "middle" : [],
+            "last" : "Farrington",
+            "suffix" : ""
+          },
+          {
+            "first" : "G",
+            "middle" : [],
+            "last" : "Porter",
+            "suffix" : ""
+          },
+          {
+            "first" : "S",
+            "middle" : [],
+            "last" : "Radhakrishnan",
+            "suffix" : ""
+          }
+        ],
+        "dblp_id" : "conf/sigcomm/FarringtonPRBSFPV10",
+        "year" : 2010,
+        "venue" : "ACM special interest group on data communication",
+        "volume" : "40",
+        "issue" : "4",
+        "pages" : "339--350",
+        "other_ids" : {},
+        "num" : null,
+        "urls" : [],
+        "raw_text" : "Farrington N, Porter G, Radhakrishnan S, et al. Helios: a hybrid electrical/optical switch architecture for modular data centers. ACM special interest group on data communication, 2010, 40(4): 339-350.",
+        "links" : null
+      },
+      "BIBREF12" : {
+        "ref_id" : "b12",
+        "title" : "Technology-Driven, Highly-Scalable Dragonfly Topology",
+        "authors" : [
+          {
+            "first" : "J",
+            "middle" : [],
+            "last" : "Kim",
+            "suffix" : ""
+          },
+          {
+            "first" : "W",
+            "middle" : [
+              "J"
+            ],
+            "last" : "Dally",
+            "suffix" : ""
+          },
+          {
+            "first" : "S",
+            "middle" : [],
+            "last" : "Scott",
+            "suffix" : ""
+          }
+        ],
+        "dblp_id" : "conf/isca/KimDSA08",
+        "year" : null,
+        "venue" : "Conference Name: ACM Woodstock conference",
+        "volume" : "",
+        "issue" : "",
+        "pages" : "",
+        "other_ids" : {},
+        "num" : null,
+        "urls" : [],
+        "raw_text" : "Kim J, Dally W J, Scott S, et al. Technology-Driven, Highly-Scalable Dragonfly Topology. Conference Name: ACM Woodstock conference.",
+        "links" : null
+      }
+    }
+  }
+}

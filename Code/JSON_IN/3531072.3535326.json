@@ -1,0 +1,398 @@
+{
+    "paper_id": "3531072",
+    "header": {
+        "generated_with": "S2ORC 1.0.0",
+        "date_generated": "2024-03-20T17:52:54.007610Z"
+    },
+    "title": "Teaching Data Management Concepts for Data in Files",
+    "authors": [],
+    "year": "",
+    "venue": null,
+    "identifiers": {},
+    "abstract": "A database management system offers mechanisms that support data management, such as access control, integrity preservation, schema documentation, durability, etc. When datasets are stored in files, as is common in many data science projects, these functionalities need to be done directly by the data owner. This paper proposes ways to teach data management principles for such filebased settings, and we report on some of the challenges students have faced.\n\u2022 Social and professional",
+    "pdf_parse": {
+        "abstract": [
+            {
+                "text": "A database management system offers mechanisms that support data management, such as access control, integrity preservation, schema documentation, durability, etc. When datasets are stored in files, as is common in many data science projects, these functionalities need to be done directly by the data owner. This paper proposes ways to teach data management principles for such filebased settings, and we report on some of the challenges students have faced.",
+                "cite_spans": [],
+                "section": "Abstract",
+                "sec_num": null
+            },
+            {
+                "text": "\u2022 Social and professional",
+                "cite_spans": [],
+                "section": "Abstract",
+                "sec_num": null
+            }
+        ],
+        "body_text": [
+            {
+                "text": "In the 1960s, enterprises shifted their data management practices from application programs accessing files, to the use of database management systems which encapsulate the data and also provide powerful management capabilities, such as crash recovery, access control, and indexing. In the ACM CS2013 curriculum, a tier 2 learning outcome is \"Explain the characteristics that distinguish the database approach from the approach of programming with data files\". The bulk of university teaching assumes that this shift has occurred, and indeed, the class is typically called \"databases\". However, the practices of data science are still often in the file-based approach, with datasets kept as files, and processing done through a mixture of Python scripts, R scripts, programs that are run under a framework like MapReduce, etc. Even when a declarative query language is available for programming, it is typically not used for all the processing. There is not usually a single system component higher than the file system, through which all the different accesses are channeled, and which could provide data-meaning-aware support for managing the data. This paper presents a view of what data management concepts are useful for students who will do data science work dealing with data stored in files. We have taught this material for the past four years in a class called data1002. Over that time, about 2500 first year students with diverse interests studied the class; we report here on the experience, especially focused on which concepts the students struggled with. The overall curriculum coverage of data-related issues (including our class as well as later ones covering other topics including relational and NoSQL databases) is described in Fekete et al [2] .",
+                "cite_spans": [
+                    {
+                        "start": 1761,
+                        "end": 1764,
+                        "text": "[2]",
+                        "ref_id": "BIBREF1"
+                    }
+                ],
+                "section": "INTRODUCTION",
+                "sec_num": "1"
+            },
+            {
+                "text": "A data science project faces several axes of choice when deciding how to store its datasets, even if a file-based approach is being used.",
+                "cite_spans": [],
+                "section": "DATA MANAGEMENT TOPICS 2.1 Storage choices",
+                "sec_num": "2"
+            },
+            {
+                "text": "One is the physical format for the files. Comma separated value (csv) format is very common, though there are variations in delimiter (eg tab rather than comma may separate fields within a line, there are variations in line-termination/separation, and choices for how to escape a field-separator when occurs within a field). JSON and even XML are also used, being better than uniform tables to represent data with internal variation in structure. Then there are datasets which come from tools in specialized formats (eg Excel spreadsheets, various gene sequence representations, etc).",
+                "cite_spans": [],
+                "section": "DATA MANAGEMENT TOPICS 2.1 Storage choices",
+                "sec_num": "2"
+            },
+            {
+                "text": "Another aspect lies in the representation of values within the file. Many of our students seem to struggle with non-ASCII characters in strings (they often have no idea that accents carry significance, that some languages use non-latin alphabets, etc). And they may be thrown by cultural variations in number and date presentation (eg European use of fullstop as a thousands-marker, and comma for decimal point, compared to the anglo-saxon reverse convention). Also, there are transformations that may have been applied to the datasets. Multiple files may be combined as a tape archive (.tar), files may be compressed in various ways, and/or encrypted.",
+                "cite_spans": [],
+                "section": "DATA MANAGEMENT TOPICS 2.1 Storage choices",
+                "sec_num": "2"
+            },
+            {
+                "text": "There are so many possibilities, that one can't cover them all in a class; rather we need to get students aware of the need to document the format (see discussion below of metadata) and how to find the appropriate tool to access data given knowledge of its format.",
+                "cite_spans": [],
+                "section": "DATA MANAGEMENT TOPICS 2.1 Storage choices",
+                "sec_num": "2"
+            },
+            {
+                "text": "We also need to teach students about choices for where the files can be kept. For my students, using a personal account on cloud-hosted storage seems natural, and most are also aware of the possibility to store files on a local personal machine, and send copies around in email. Fewer are familiar with having storage under an account on a shared organisationally-managed system. These file systems offer different capabilities for crash recovery, access control, etc, and so we consider that students should understand all of them. ",
+                "cite_spans": [],
+                "section": "DATA MANAGEMENT TOPICS 2.1 Storage choices",
+                "sec_num": "2"
+            },
+            {
+                "text": "Any data science project needs detailed understanding of the format and meaning of each data item; the datasets students find on the web are typically well-supplied with a data dictionary showing the field names, what units each is in, how it should be understood, etc. In our experience, it is less common to find clear statements about the encoding of missing data, default values used, and any constraints on the valid values. Provenance of the data is often incomplete, with many sets (even on government sites such as data.gov.au) showing only the organisational source (eg which government office supplied this dataset), rather than enough for replication to check the correctness, such as the full url or query terms sufficient to find the actual files obtained, and discussion of the path to the file from original data collection, including any processing and transformation steps.",
+                "cite_spans": [],
+                "section": "Metadata and its management",
+                "sec_num": "2.2"
+            },
+            {
+                "text": "The logical structure of the dataset is a crucial part of the metadata, but this is one topic where file-based storage has quite a wide difference from the situation with data held in a relational DBMS as taught in conventional database curriculum. At the simplest level, a traditional dbms expects the schema to be defined (including integrity constraints such as uniqueness or foreign keys), and then the platform enforces adherence to that. In contrast, files allow arbitrary data, and it is just a convention that the rows in a csv file should have the fields described in the header row. This makes for interesting issues in a processing workflow, deciding how often to check the conformance to schema, and what to do when a data item is differently structured, or violates an expected integrity property. We do not have any overall solution to guarantee datasets will keep their integrity during processing; our best guidance for students is to think about the issues, and to write scripts that will check data quality, including integrity adherence, and run these checks every time a file is produced or modified.",
+                "cite_spans": [],
+                "section": "Metadata and its management",
+                "sec_num": "2.2"
+            },
+            {
+                "text": "Another important topic arises from the fact that in many datasets, the attribute name is actually a meaningful compound, and one often wants to pivot the data between wide and long formats; eg sometimes a file has location, rainfall-January, rainfall-February, rainfall-March, etc as attributes, but for some processing, one wants to rearrange into location, month, rainfall. The tradeoffs between these structural alternatives makes for valuable discussion in class, including issues of sparse datasets and the different meaning for missing values.",
+                "cite_spans": [],
+                "section": "Metadata and its management",
+                "sec_num": "2.2"
+            },
+            {
+                "text": "With file-held datasets, it can be challenging to ensure that the metadata travels with the data, and gets updated appropriately. We we teach about including metadata as comments in a data file itself, or as a README file in the folder with the data file.",
+                "cite_spans": [],
+                "section": "Metadata and its management",
+                "sec_num": "2.2"
+            },
+            {
+                "text": "Enhancing the quality of one's data is crucial in real-world work even in enterprise settings with relational storage, though this kind of effort is often neglected in classes. In a data science curriculum, this must take center-stage. The initial checking and cleaning, during data acquisition, seems no different whether the data is headed for a dbms or staying in files. Once the data has been acquired, though, the issues diverge from a traditional setting.",
+                "cite_spans": [],
+                "section": "Data quality",
+                "sec_num": "2.3"
+            },
+            {
+                "text": "If data is held in files, there are many ways the data quality could be damaged during operations; a class for this setting needs to teach students about the dangers, and guide them in steps to mitigate the problems (while a dbms-centric class will instead teach the mechanisms the platform uses, but perhaps leave it out of a first application-focused class and delay to a subsequent class on internals). For example, crash recovery is provided by a dbms, and one can decide when to teach about the log and recovery algorithms; most users of the dbms can simply trust that the system does it properly. But a data scientist whose datasets are in a file system, really needs to worry about loss. The likelihood, and the ways of mitigating, vary depending on where the files are kept. Each year, a substantial fraction of students in my class admit to having lost valuable files from their own machine.; the cloud-hosted storage is less prone, but still imperfect. And then there is the issue of a crash during file modification, and the fact that most file systems do not guarantee a clean state afterwards. The issues of concurrent modification are less apparent to students (most of the datasets are rarely modified by more than the owner), but we try to show that this is another source of danger to the data.",
+                "cite_spans": [],
+                "section": "Data quality",
+                "sec_num": "2.3"
+            },
+            {
+                "text": "We teach students several ways to reduce the risks to their files. We advocate having immutable files, with each transformation producing a new version rather than modifying the former; and we stress the value of storing backup copies of each version on several different file systems with independent failure modes (eg local files, and also cloud-hosted copies). There is a challenging tradeoff about automatic synchronisation between systems: a synchronisation mechanism can spread corruption leaving no clean copy, but manual transfer can easily be forgotten when work gets urgent! As an alternative, we show how to use a version control system (git stored on github is popular for our students, though the complexity of this mental model is too great for the less technical among them).",
+                "cite_spans": [],
+                "section": "Data quality",
+                "sec_num": "2.3"
+            },
+            {
+                "text": "The SQL standard provides a really rich and powerful access control framework. This allows delegation and revocation, fine-grained and content-determined access via view definition, etc. In contrast, file-based storage typically sets permissions to each file as a whole; an extra complication for teaching is the variation in permission mechanisms between different platforms eg cloud storage often allows sharing to explicit lists of users, or \"anyone with the link\", or a Unix-model of permissions for (owner, group, everyone); Microsoft offers a much richer model for Windows.Even more difficult to manage, is the common case where files are stored on a personal machine where no-one else has an account. Then, typically, files are sent back and forth in email, when other team members or outsiders want to see or operate on the data. The security and privacy risks are evident here, and we can do little except stress for students the need to have established a policy on access rights, and then try to check that any sharing is within the permitted categories. Discussion of social engineering attacks, and the dangers of unjustified trust, can help raise awareness for students.",
+                "cite_spans": [],
+                "section": "Security and Privacy",
+                "sec_num": "2.4"
+            },
+            {
+                "text": "Another important topic related to privacy is information leaks through data summaries. This is very relevant with the discussions of differential privacy in the US Census, etc. However, the techniques of adding noise are essentially the same, whether the data is in a dbms or in files, so here we can teach data science students using material from a standard class.",
+                "cite_spans": [],
+                "section": "Security and Privacy",
+                "sec_num": "2.4"
+            },
+            {
+                "text": "We teach querying data which is stored in files (eg in CSV format), within the Python programming part of the subject. First, we teach students standard patterns of code, eg looping over the lines of the file, breaking the line into fields with split(), and conditionals to allow processing the lines in different ways depending on content, position, etc. Later we introduce modules such as csv and json for more powerful handling, and then we teach the dataframe abstraction and some of its methods, using the pandas module. This sequence of teaching is described in more detail in [1] . In our curriculum, students learn about SQL when they focus on data stored in a dbms, which happens in the second year; the way our department teaches SQL is described in [3] .",
+                "cite_spans": [
+                    {
+                        "start": 583,
+                        "end": 586,
+                        "text": "[1]",
+                        "ref_id": "BIBREF0"
+                    },
+                    {
+                        "start": 760,
+                        "end": 763,
+                        "text": "[3]",
+                        "ref_id": "BIBREF2"
+                    }
+                ],
+                "section": "Querying",
+                "sec_num": "2.5"
+            },
+            {
+                "text": "Since 2018, the author has covered these ideas within a first-year class called \"DATA1002 Informatics: Data and Computation\". This subject is one of two first-year core subjects in the university's Data Science major (the other first-year core for the major is an introduction to statistical thinking, taught computationally with R). The topics on data management occupy about 1/3 of the whole subject, which is itself 1/4 of a student's study load for a semester. The remainder of the time in DATA1002 is divided between introducing Python programming (as described in [1] ) and coverage of concepts of charting and machine learning (applied in practice using appropriate Python libraries).",
+                "cite_spans": [
+                    {
+                        "start": 570,
+                        "end": 573,
+                        "text": "[1]",
+                        "ref_id": "BIBREF0"
+                    }
+                ],
+                "section": "EXPERIENCE WITH TEACHING",
+                "sec_num": "3"
+            },
+            {
+                "text": "For each week of a 13-week semester, the students attend two hours of lecture, one hour of practical work in groups of 20 or so with a TA working through Python coding exercises, and one hour in a class of 25-30, which in the first weeks is given to a mixture of discussions and experience with datasets and tools, and from week 4 onwards, this hour is used for students to work in their group on project tasks, and get feedback from the TA on what they have achieved (or help if they are stuck or on a wrong path).",
+                "cite_spans": [],
+                "section": "Delivery",
+                "sec_num": "3.1"
+            },
+            {
+                "text": "We next describe the lectures where we have a focus on data management aspects.",
+                "cite_spans": [],
+                "section": "Delivery",
+                "sec_num": "3.1"
+            },
+            {
+                "text": "In week 1, we introduce the subject, including a discussion of the title \"Informatics: Data and Computation\", so we discuss data and point to why it is important and valuable. We also give an overview of the big ideas of the subject, among which is metadata and its importance. We introduce an example dataset (meteorology data) and show the data dictionary which explains the attributes and their meaning, the description of the data format (schema) and the provenance documentation. The following practical work includes exploring another dataset, showing employment and satisfaction outcomes of study in different fields and at different universities. Students are taken through the exploration of the metadata in this dataset, which includes detailed, and often unexpected issues that impact on interpretation of the data values: for example, when is graduate employment measured, and how are students in further study treated? In week 2, when spreadsheet tools are discussed, we discuss how the metadata can be stored, either in a separate file, or as text within the spreadsheet (including a header row that might describe the schema of any tabular data).",
+                "cite_spans": [],
+                "section": "Delivery",
+                "sec_num": "3.1"
+            },
+            {
+                "text": "Data format issues are spread out over several lectures, combined generally with discussion of the associated Python and spreadsheet operations and properties. A lecture in week 3 is about strings; this includes presentation about special characters, escaping special characters, and Unicode. This is also where we explain about the file system and directory structure, file compression, the different approaches for line separation and field separation, and selfdescribing semi-structured formats such as JSON. Similarly, number types are considered in a lecture of week 7, where students are shown unsigned and signed binary representation, of various width; this leads naturally to issues of representable values, overflow. We briefly mention IEEE 754 for floats. One aspect we stress is that the same bit-pattern can have different meaning, depending on the representation. The broader distinction between quantitative and categorical attributes, and the encodings that transform between these representations, are discussed both in lectures on charting (week 8) and machine learning (week 9).",
+                "cite_spans": [],
+                "section": "Delivery",
+                "sec_num": "3.1"
+            },
+            {
+                "text": "One hour of lecture in week 5 is devoted to data quality. We describe examples of various issues such as missing items, missing values, use of default values to hide missing ones, invalid values (out-of-range versus not easily detectable), and inconsistent capture of a single value (with special attention to names, addresses, dates). We discuss how these can arise in datasets from different origins such as surveys, sensors, or upstream processing. We then cover data cleaning and integration as steps in a data science workflow, with focus on various choices for how each kind of quality problem can be detected and handled. Finally, we describe how different responses can impact on the later outputs of the data science process, including how fairness can be threatened by cleaning that shifts the distribution of items.",
+                "cite_spans": [],
+                "section": "Delivery",
+                "sec_num": "3.1"
+            },
+            {
+                "text": "In a lecture of week 6, we deal with information-equivalent schemas, from simple transformations such as column order or scaling, to wide versus long format and even RDF. We also cover normalised versus denormalised storage. This lecture also looks at Python code for converting between equivalent formats, and at the choices for storing the data within a Python data structure (eg list-of-lists, dictionary-of-dictionaries, dictionary-of-tuples, tupleof-dictionaries, etc). In week 7, we introduce the Pandas library and the dataframe type, where data representation ideas are reinforced.",
+                "cite_spans": [],
+                "section": "Delivery",
+                "sec_num": "3.1"
+            },
+            {
+                "text": "Data handling procedures (including for security) are the topic in a lecture in week 11. We frame the discussion around the challenge of reproducible and replicable research (which also allows us to reiterate the value of provenance metadata). This lecture is where we articulate the choices for where to store data: on a personal device, on organisational system, or in the cloud. One big discussion is around immutable or mutable storage. We look at how to ensure files are backed up (and who is responsible for this in each setting), and how access control can be defined in each environment. Finally, we explain version control systems such as git.",
+                "cite_spans": [],
+                "section": "Delivery",
+                "sec_num": "3.1"
+            },
+            {
+                "text": "A small amount of the grade comes from weekly multichoice online quizzes (which can be repeated until the student gets everything correct, and really are just to encourage reading the lecture slides), and another small ampunt from frequent programming tasks, automatically graded, and repeatable until the code is correct (see [1] the coding tasks and the platform they run on).",
+                "cite_spans": [
+                    {
+                        "start": 327,
+                        "end": 330,
+                        "text": "[1]",
+                        "ref_id": "BIBREF0"
+                    }
+                ],
+                "section": "Assessment",
+                "sec_num": "3.2"
+            },
+            {
+                "text": "A staged project is done in groups, through the semester, taking students (in small groups) through the data science project lifecycle on a topic they choose themselves. The first stage, worth 5% of the grade, requires them to find a dataset, clean it (or check that it is clean, since many datasets they find are already carefully curated), and provide metadata to accompany the dataset. For higher levels of grade in this stage, the group should find several datasets of independent origin and integrate them, and provide metadata for the integrated data. In the second stage, worth 10%, the group calculates some appropriate data summaries and produces some charts to visualise some aspects of the data, and then in the third stage, worth 5%, they produce several different predictive models for one attribute from the other attributes, and they must evaluate the success of the models they have generated.",
+                "cite_spans": [],
+                "section": "Assessment",
+                "sec_num": "3.2"
+            },
+            {
+                "text": "The data management issues that arise in the project begin with consideration of the data format (perhaps converting .xlsx or .json to .csv). Then the students need to work with metadata: they find metadata that comes with datasets they obtain eg from government data sites, they may add more describing how/where they sourced the data and also the transformations they have performed in cleaning and integrating, and sometimes they need to interpret the data itself if the source does not adequately document aspects such as valid ranges of value, integrity constraints that connect attributes, etc. As well, data representation concepts play a big role in visualisation and predictive models; for example, the group may choose to bucketize a continuous attribute, or rescale one; also some of the library methods will often need the students to begin by reshaping the schema.",
+                "cite_spans": [],
+                "section": "Assessment",
+                "sec_num": "3.2"
+            },
+            {
+                "text": "By policy of our university, the final exam has a large weight in assessment (50% in this subject). The final exam is typically 2 hours long and it includes a variety of questions where students must write discussions of topics relating to data management. Here are some examples from recent years.",
+                "cite_spans": [],
+                "section": "Assessment",
+                "sec_num": "3.2"
+            },
+            {
+                "text": "In 2019, worth 5% of the exam: \"A data scientist needs to follow data management policies that are set by their organization and/or their client. Give one example of a data management policy that might apply to a data science project, and explain why this policy can be important. Also, describe a mechanism that can be used to help the data scientist in following this policy. \" Also worth 5% of the exam in 2019: \"One important piece of metadata about a dataset, is the description of the data format in which the data is stored. Give one example of some information that could be kept in two different formats and describe these formats. Also, explain one way in which this metadata about the data format can be recorded. \"",
+                "cite_spans": [],
+                "section": "Assessment",
+                "sec_num": "3.2"
+            },
+            {
+                "text": "From 2020, when this was worth 10% of the exam: \"In a data science activity, it is important to ensure that you work with good quality data. Write an explanation, intended for a student who plans to study data1002 next year, about what data quality means, and about why it is useful to know ways in which one can check or improve the quality of data before analysing it. \"",
+                "cite_spans": [],
+                "section": "Assessment",
+                "sec_num": "3.2"
+            },
+            {
+                "text": "Another question in 2020, also worth 10% of exam: \"When doing a data science activity, it is considered important to have metadata for the data one works with. Explain what metadata is, give examples of metadata that you found in relation to some dataset you looked at during this unit of study, and indicate how this metadata could be useful in working with this data. \"",
+                "cite_spans": [],
+                "section": "Assessment",
+                "sec_num": "3.2"
+            },
+            {
+                "text": "Factual knowledge from the class, such as what overflow or access control mean, are generally learned reasonably, and many students can offer adequate explanations of the importance of data quality or metadata (when answering the example exam questions above). However, a real understanding and willingness to adopt good practice is less evident.",
+                "cite_spans": [],
+                "section": "Reflections",
+                "sec_num": "3.3"
+            },
+            {
+                "text": "Even though we stress the importance of documenting provenance as extensively as possible, to allow checking the data from the source, when we require students to supply the metadata of the dataset they work with in the project, mostly do this poorly, not showing enough details of origin to allow us to re-obtain the data for checking. For example, they may simply say that the data sets came from kaggle.com, rather than identifying the precise URL, or the search terms they used to find the dataset. Similarly, they often do not include in the metadata, any clear detailed description of cleaning, transformation, or integration steps they performed. They may describe these calculations in a report (where we explicitly ask for it), but it is missed in the metadata that accompanies the data (we also explicitly ask for metadata)",
+                "cite_spans": [],
+                "section": "Reflections",
+                "sec_num": "3.3"
+            },
+            {
+                "text": "I have found that a substantial fraction of students don't really see the importance of integrity, unless they have come upon an example in their own work, where uncompliant data leads to seriously misleading output from some calculation. When describing their data, they rarely state restrictions more than limitations on the range of valid values. Uniqueness, even though often a feature of some attributes in the dataset, is rarely mentioned.",
+                "cite_spans": [],
+                "section": "Reflections",
+                "sec_num": "3.3"
+            },
+            {
+                "text": "We do not assess the access control or backup procedures each group uses for its datasets; anecdotal experiences suggest that this is not taken very seriously by many of the students.",
+                "cite_spans": [],
+                "section": "Reflections",
+                "sec_num": "3.3"
+            },
+            {
+                "text": "We have identified a variety of data management topics, which are important for students the learn if they will work on projects where the data is kept in disparate files. Many of these issues are analogous to content from a traditional database class, but often the owner of data in files needs to decide on practices and then carefully follow them, where a dbms can simply accept a declaration and do the enforcement. We have discussed how a data science class would make these issues explicit, and teach the students how to do for themselves, what a dbms would provide.",
+                "cite_spans": [],
+                "section": "CONCLUSION",
+                "sec_num": "4"
+            },
+            {
+                "text": "We are still seeking ways to get the students to put these ideas into practice when managing their own data. Another interesting question, is whether a different cohort of students who first learn data management in a dbms environment where integrity, reliability and security are provided for them, would be inspired by the experience, and then be more inclined to follow good procedures when exposed to a file-based setting lacking the platform support.",
+                "cite_spans": [],
+                "section": "CONCLUSION",
+                "sec_num": "4"
+            }
+        ],
+        "bib_entries": {
+            "BIBREF0": {
+                "ref_id": "b0",
+                "title": "Teaching Programming for First Year Data Science",
+                "authors": [
+                    {
+                        "first": "Joshua",
+                        "middle": [],
+                        "last": "Burridge",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Alan",
+                        "middle": [
+                            "D"
+                        ],
+                        "last": "Fekete",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/iticse/BurridgeF22",
+                "year": 2022,
+                "venue": "ITiCSE '22: Proceedings of the 2022 ACM Conference on Innovation and Technology in Computer Science Education",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Joshua Burridge and Alan D. Fekete. 2022. Teaching Programming for First Year Data Science. In ITiCSE '22: Proceedings of the 2022 ACM Conference on Innovation and Technology in Computer Science Education.",
+                "links": null
+            },
+            "BIBREF1": {
+                "ref_id": "b1",
+                "title": "A Data-centric Computing Curriculum for a Data Science Major",
+                "authors": [
+                    {
+                        "first": "Alan",
+                        "middle": [
+                            "D"
+                        ],
+                        "last": "Fekete",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Judy",
+                        "middle": [],
+                        "last": "Kay",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Uwe",
+                        "middle": [],
+                        "last": "R\u00f6hm",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/sigcse/FeketeKR21",
+                "year": 2021,
+                "venue": "SIGCSE '21: The 52nd ACM Technical Symposium on Computer Science Education",
+                "volume": "",
+                "issue": "",
+                "pages": "865--871",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Alan D. Fekete, Judy Kay, and Uwe R\u00f6hm. 2021. A Data-centric Computing Curriculum for a Data Science Major. In SIGCSE '21: The 52nd ACM Technical Symposium on Computer Science Education. 865-871.",
+                "links": null
+            },
+            "BIBREF2": {
+                "ref_id": "b2",
+                "title": "SQL for Data Scientists: Designing SQL Tutorials for Scalable Online Teaching",
+                "authors": [
+                    {
+                        "first": "Uwe",
+                        "middle": [],
+                        "last": "R\u00f6hm",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Lexi",
+                        "middle": [],
+                        "last": "Brent",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Tim",
+                        "middle": [],
+                        "last": "Dawborn",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Bryn",
+                        "middle": [],
+                        "last": "Jeffries",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2020,
+                "venue": "Proceedings of the VLDB (PVLDB)",
+                "volume": "13",
+                "issue": "",
+                "pages": "2989--2992",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Uwe R\u00f6hm, Lexi Brent, Tim Dawborn, and Bryn Jeffries. 2020. SQL for Data Scientists: Designing SQL Tutorials for Scalable Online Teaching. Proceedings of the VLDB (PVLDB) 13, 12 (2020), 2989-2992.",
+                "links": null
+            }
+        }
+    }
+}

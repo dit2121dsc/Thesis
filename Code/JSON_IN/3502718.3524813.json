@@ -1,0 +1,1938 @@
+{
+    "paper_id": "3502718",
+    "header": {
+        "generated_with": "S2ORC 1.0.0",
+        "date_generated": "2024-03-20T17:52:50.001708Z"
+    },
+    "title": "A Study of Worked Examples for SQL Programming",
+    "authors": [
+        {
+            "first": "Kamil",
+            "middle": [],
+            "last": "Akhuseyinoglu",
+            "suffix": "",
+            "affiliation": {},
+            "email": ""
+        },
+        {
+            "first": "Ryan",
+            "middle": [],
+            "last": "Hardt",
+            "suffix": "",
+            "affiliation": {},
+            "email": "ryan.hardt@stthomas.edu"
+        },
+        {
+            "first": "Jordan",
+            "middle": [],
+            "last": "Barria-Pineda",
+            "suffix": "",
+            "affiliation": {},
+            "email": ""
+        },
+        {
+            "first": "Peter",
+            "middle": [],
+            "last": "Brusilovsky",
+            "suffix": "",
+            "affiliation": {},
+            "email": "peterb@pitt.edu"
+        },
+        {
+            "first": "Kerttu",
+            "middle": [],
+            "last": "Pollari-Malmi",
+            "suffix": "",
+            "affiliation": {},
+            "email": ""
+        },
+        {
+            "first": "Teemu",
+            "middle": [],
+            "last": "Sirki\u00e4",
+            "suffix": "",
+            "affiliation": {},
+            "email": ""
+        },
+        {
+            "first": "Lauri",
+            "middle": [],
+            "last": "Malmi",
+            "suffix": "",
+            "affiliation": {},
+            "email": ""
+        }
+    ],
+    "year": "",
+    "venue": null,
+    "identifiers": {},
+    "abstract": "The paper focuses on a new type of interactive learning content for SQL programming -worked examples of SQL code. While worked examples are popular in learning programming, their application for learning SQL is limited. Using a novel tool for presenting interactive worked examples, Database Query Analyzer (DBQA), we performed a large-scale randomized controlled study assessing the value of worked examples as a new type of practice content in a database course. We report the results of the classroom study examining the usage and the impact of DBQA. Among other aspects, we explored the effect of textual step explanations provided by DBQA.",
+    "pdf_parse": {
+        "abstract": [
+            {
+                "text": "The paper focuses on a new type of interactive learning content for SQL programming -worked examples of SQL code. While worked examples are popular in learning programming, their application for learning SQL is limited. Using a novel tool for presenting interactive worked examples, Database Query Analyzer (DBQA), we performed a large-scale randomized controlled study assessing the value of worked examples as a new type of practice content in a database course. We report the results of the classroom study examining the usage and the impact of DBQA. Among other aspects, we explored the effect of textual step explanations provided by DBQA.",
+                "cite_spans": [],
+                "section": "Abstract",
+                "sec_num": null
+            }
+        ],
+        "body_text": [
+            {
+                "text": "Worked examples and problems are two key types of smart learning content for studying programming languages [5] . For learning programming languages like Java or Python, both types of learning content are well represented. However, for learning Structured Query Language (SQL), current work predominantly focuses on SQL problems with automatic assessment [6, 18, 22] . This paper attempts to bridge this gap by introducing and evaluating Database Query Analyzer (DBQA) [13] , an online learning tool for SQL worked examples that interactively illustrates and explains the stepby-step execution of SQL SELECT statements. We report the results of a large-scale randomized control study where DBQA examples were used by learners among other types of interactive learning content through an online SQL Practice System. In our analysis, we focus on the usage and the impact of DBQA, as well as the effect of textual step explanations provided by DBQA.",
+                "cite_spans": [
+                    {
+                        "start": 108,
+                        "end": 111,
+                        "text": "[5]",
+                        "ref_id": "BIBREF4"
+                    },
+                    {
+                        "start": 355,
+                        "end": 358,
+                        "text": "[6,",
+                        "ref_id": "BIBREF5"
+                    },
+                    {
+                        "start": 359,
+                        "end": 362,
+                        "text": "18,",
+                        "ref_id": "BIBREF17"
+                    },
+                    {
+                        "start": 363,
+                        "end": 366,
+                        "text": "22]",
+                        "ref_id": "BIBREF21"
+                    },
+                    {
+                        "start": 469,
+                        "end": 473,
+                        "text": "[13]",
+                        "ref_id": "BIBREF12"
+                    }
+                ],
+                "section": "INTRODUCTION",
+                "sec_num": "1"
+            },
+            {
+                "text": "Over the last 30 years, worked examples, also referred to as workedout examples [2] , have gradually emerged as an important instructional approach supported by learning technology. Worked examples are comprised of the presentation of a problem, the solution steps, and the final solution. Students use these examples as models of how to solve certain types of problems. A sizable body of research on the use of worked examples for acquiring cognitive skills has been accumulated in various domains, such as mathematics and physics [2, 27] . This research has consistently shown that in the early stages of skill acquisition when students typically have little or no domain knowledge, instruction that relies more heavily on studying worked examples is more effective for learning than the traditional approach of being focused on only problem-solving. Previous work has shown that early example-based instruction leads to better learning outcomes, which are reached in less time and with less effort [16, 28] .",
+                "cite_spans": [
+                    {
+                        "start": 80,
+                        "end": 83,
+                        "text": "[2]",
+                        "ref_id": "BIBREF1"
+                    },
+                    {
+                        "start": 532,
+                        "end": 535,
+                        "text": "[2,",
+                        "ref_id": "BIBREF1"
+                    },
+                    {
+                        "start": 536,
+                        "end": 539,
+                        "text": "27]",
+                        "ref_id": "BIBREF26"
+                    },
+                    {
+                        "start": 1001,
+                        "end": 1005,
+                        "text": "[16,",
+                        "ref_id": "BIBREF15"
+                    },
+                    {
+                        "start": 1006,
+                        "end": 1009,
+                        "text": "28]",
+                        "ref_id": "BIBREF27"
+                    }
+                ],
+                "section": "RELATED WORK",
+                "sec_num": "2"
+            },
+            {
+                "text": "In the domain of learning programming, the majority of research on worked examples has focused on animated code examples. Animated examples do not limit the example presentation to just showing students the code of example programs, but allow the students to see the code executed step-by-step using program visualization [26] . The use of step-wise program visualization enables students to see the internal state and intermediate results or program execution, which are usually hidden [11, 19, 25] , and thus better understand the behavior of program constructs [29] . More recently, there have been several attempts to develop other types of worked examples that focus on code exploration rather than code animation [8, 31] ",
+                "cite_spans": [
+                    {
+                        "start": 322,
+                        "end": 326,
+                        "text": "[26]",
+                        "ref_id": "BIBREF25"
+                    },
+                    {
+                        "start": 487,
+                        "end": 491,
+                        "text": "[11,",
+                        "ref_id": "BIBREF10"
+                    },
+                    {
+                        "start": 492,
+                        "end": 495,
+                        "text": "19,",
+                        "ref_id": "BIBREF18"
+                    },
+                    {
+                        "start": 496,
+                        "end": 499,
+                        "text": "25]",
+                        "ref_id": "BIBREF24"
+                    },
+                    {
+                        "start": 564,
+                        "end": 568,
+                        "text": "[29]",
+                        "ref_id": "BIBREF28"
+                    },
+                    {
+                        "start": 719,
+                        "end": 722,
+                        "text": "[8,",
+                        "ref_id": "BIBREF7"
+                    },
+                    {
+                        "start": 723,
+                        "end": 726,
+                        "text": "31]",
+                        "ref_id": "BIBREF30"
+                    }
+                ],
+                "section": "RELATED WORK",
+                "sec_num": "2"
+            },
+            {
+                "text": "In this study, SQL code examples were illustrated using Database Query Analyzer (DBQA) [13] , a learning tool that uses data-oriented visualizations to illustrate the effects that clauses and conditions have on SQL SELECT statements. DBQA illustrates intermediate data sets similar to those maintained by the database management system during the processing of the query (Figure 1 ). Upon query submission, DBQA processes clauses in an SQL SELECT statement in the following order (if present): FROM, WHERE, SELECT, GROUP BY, HAVING, and ORDER BY. For each clause and condition, DBQA highlights the query component being processed and updates the intermediate data set displayed to the student accordingly. \"Next\" and \"Previous\" buttons allow the student to step forward and backward in the query execution, allowing for procedural-like query execution and illustration. Students can highlight already executed clauses by checking the \"highlight previous steps\" checkbox. Additional features in DBQA allow the learner to view all tables, columns, and keys in a database, as well as view all data in those tables.",
+                "cite_spans": [
+                    {
+                        "start": 87,
+                        "end": 91,
+                        "text": "[13]",
+                        "ref_id": "BIBREF12"
+                    }
+                ],
+                "section": "PRESENTING SQL EXAMPLES WITH DBQA",
+                "sec_num": "3"
+            },
+            {
+                "text": "DBQA can be used as a learning tool as a stand-alone system allowing students to explore custom queries that they want to execute on a database, or as an interoperable service [12] DBQA would present the following steps to the student: (1) highlight the FROM clause and display all of the data in the instructor table, (2) highlight the condition in the WHERE clause and remove all rows in the intermediate data set that do not match the specified condition, and (3) highlight the SELECT clause and remove all columns in the intermediate data set that are not in the select list. Students should explore the three query step executions presented above to fully explore this particular SQL example.",
+                "cite_spans": [
+                    {
+                        "start": 176,
+                        "end": 180,
+                        "text": "[12]",
+                        "ref_id": "BIBREF11"
+                    }
+                ],
+                "section": "PRESENTING SQL EXAMPLES WITH DBQA",
+                "sec_num": "3"
+            },
+            {
+                "text": "To better convey the modifications on the intermediate data set by each query clause and condition, text-based query step explanations presented in Table 1 were added to DBQA for the purpose of this study. Figure 2D shows an instance where the textual explanation \"Retrieve all rows from: course\" was shown as a yellow-marked text for the current execution step FROM course.",
+                "cite_spans": [],
+                "section": "PRESENTING SQL EXAMPLES WITH DBQA",
+                "sec_num": "3"
+            },
+            {
+                "text": "We evaluated the impact of the SQL example tool in a large-scale empirical study where the tool was made available as a component of an SQL Practice System. In this section, we describe the course context, study design, and relevant parts of the practice system.",
+                "cite_spans": [],
+                "section": "CLASSROOM STUDY",
+                "sec_num": "4"
+            },
+            {
+                "text": "4.1.1 Open Learner Model Interface. The goal of the SQL Practice System is to provide access to four types of interactive learning content that can help students to practice SQL topics. Since the system was designed to be used in a free mode, i.e., students can choose when and how to practice, the interface of the practice system was designed to help students with monitoring their progress and choosing the most appropriate content to practice. The access to all four types of interactive learning content is organized by topics and augmented by an open learner model (OLM) [4, 9] . The goal of OLM is to increase students' awareness of their learning progress. As seen in Figure 2 , there is a topic-based (A) and concept-based (B) OLM. The grid (Fig. 2A me row) represents the average progress of a learner for each topic, which increases by completing activities within a topic (Fig. 2C ). The darker color of the cell indicates a higher level of completion in a topic or an activity. In parallel, as the student works with the problem-solving activities (i.e., Query Analysis and Query Execution), estimations of their knowledge level on the different SQL concepts are calculated based on their correct/incorrect attempts [30] . These estimations are shown through the length and the color of the concept bar chart shown in Fig. 2B , where each bar represents an SQL concept covered in the course. The longer and the greener the bar, the higher the estimated knowledge of this SQL concept. Students can explore the OLM by ( 1) mousing over the topics to get an overview of the concepts that are introduced in each of these topics, or also by ( 2) mousing over the learning activities to know which concepts can be practiced through each activity.",
+                "cite_spans": [
+                    {
+                        "start": 577,
+                        "end": 580,
+                        "text": "[4,",
+                        "ref_id": "BIBREF3"
+                    },
+                    {
+                        "start": 581,
+                        "end": 583,
+                        "text": "9]",
+                        "ref_id": "BIBREF8"
+                    },
+                    {
+                        "start": 1229,
+                        "end": 1233,
+                        "text": "[30]",
+                        "ref_id": "BIBREF29"
+                    }
+                ],
+                "section": "SQL Practice System",
+                "sec_num": "4.1"
+            },
+            {
+                "text": "4.1.2 Practice Content. Figure 2 shows four types of interactive content available in the SQL Practice System. Query Examples are annotated SQL examples served through the WebEx tool [8] , which allow students to interactively examine textual annotations for each SQL clause and condition, line by line. From the Query Demonstration row, students can access worked-out examples presented through DBQA. Query Analysis row provides access to SQL problems served through SQL-Tutor [22] , a constraint-based tutor for teaching SQL, where students have a structured SQL select query template to answer a given SQL problem. SQL-Tutor provides multiple support and feedback options such that students can see the errors associated with their queries based on well-defined constraints, and even ask for a partial solution. Finally, Query Execution activities are problems that assess learners' SQL knowledge and are solved by writing free-form SQL select statements for a given problem text. The submitted query is evaluated against a model solution using a sample database, and immediate correct/incorrect feedback is provided. These problems are served through SQL Assessment Tool (SAT) [6] and generated through pre-defined templates. Every time a student accesses a problem, the problem text is randomly selected from a predefined problem set. SAT has another unique feature, query build mode that allows learners to run their SQL queries multiple times and lets them see the actual query result before submitting it as an answer for assessment. Attempts to both SQL-Tutor and SAT are used by the student modeling component to update concept-level knowledge estimates. In this study, students had access to 63 annotated examples, 42 DBQA examples, 52 SQL-Tutor problems, and 55 SAT problems through the practice system.",
+                "cite_spans": [
+                    {
+                        "start": 183,
+                        "end": 186,
+                        "text": "[8]",
+                        "ref_id": "BIBREF7"
+                    },
+                    {
+                        "start": 478,
+                        "end": 482,
+                        "text": "[22]",
+                        "ref_id": "BIBREF21"
+                    },
+                    {
+                        "start": 1181,
+                        "end": 1184,
+                        "text": "[6]",
+                        "ref_id": "BIBREF5"
+                    }
+                ],
+                "section": "SQL Practice System",
+                "sec_num": "4.1"
+            },
+            {
+                "text": "The study was conducted from February to May 2021 on an undergraduate database management course at a major research university in Finland. The course is compulsory in two majors: Computer science, and Industrial engineering and management. It is also very popular among students from other bachelor's and master's programs, with 587 students starting the course in the spring of 2021. The course content covers relational modeling, relational algebra, UML modeling, SQL, and transaction management. The course material and related exercises were presented using the local course management system (CMS) [17] . To pass the course, students have to take a compulsory exam and implement a team project in which a small database is designed and implemented using SQLlite.",
+                "cite_spans": [
+                    {
+                        "start": 604,
+                        "end": 608,
+                        "text": "[17]",
+                        "ref_id": "BIBREF16"
+                    }
+                ],
+                "section": "Study Context",
+                "sec_num": "4.2"
+            },
+            {
+                "text": "Two groups of learning and assessment tools were provided for students to gain and practice their database knowledge: CMS exercises and SQL Practice System. Neither of the tools was mandatory for passing the class, but their use was incentivized through the mechanism of exercise points that play an important role in course grading. By collecting exercise points, students can improve their (passing) exam grade by up to 1.5 grades on a scale of 0-5, where 1 denotes a pass and 5 is the best grade. The opportunities to earn exercise points differed considerably between CMS exercises and the SQL Practice System, reflecting their role in the course. CMS exercises on various course topics were designed more as an assessment tool. Each solved exercise earned exercise points and was the means by which students could earn most of their points. In contrast, SQL Practice System was offered for additional practice for students who needed more support to gain SQL knowledge. It was accessible through a link from the CMS, and the incentives to use it were much weaker to avoid \"practicing for points\" rather than knowledge. While the practice system offered a large number of problems and worked examples for 11 SQL topics, only up to 22 exercise points (about 8.4% of the maximum available exercise points) could be earned through this system. More precisely, students could earn up to 2 points per topic by solving two SQL problems (1 for each type), and no points could be earned by working with examples. The status of the earned points was visible to students as shown in the top-left corner of Figure 2 (e.g., Extra Points Earned: 5/22).",
+                "cite_spans": [],
+                "section": "Study Context",
+                "sec_num": "4.2"
+            },
+            {
+                "text": "While the main goal of the study was to assess the DBQA tool in a realistic context, we also used it as an opportunity to find some optimal settings for the tool, namely, the presence of a concept-based open learner model (OLM) and the presence of textual explanations in the step-wise query execution. In our past work with other programming languages, we found that both concept-based OLM [10] and explanatory visualization [20] could make example exploration more valuable. We hoped that they could also be helpful in the context of learning SQL. To explore these two aspects, the study was designed as a two-by-two randomized control experiment with the following conditions: OLM Conditions:",
+                "cite_spans": [
+                    {
+                        "start": 391,
+                        "end": 395,
+                        "text": "[10]",
+                        "ref_id": "BIBREF9"
+                    },
+                    {
+                        "start": 426,
+                        "end": 430,
+                        "text": "[20]",
+                        "ref_id": "BIBREF19"
+                    }
+                ],
+                "section": "Study Design and Conditions",
+                "sec_num": "4.3"
+            },
+            {
+                "text": "(1) Topic-based OLM only (topic-OLM) (2) Topic-based OLM and concept-based OLM (concept-OLM) DBQA Conditions:",
+                "cite_spans": [],
+                "section": "Study Design and Conditions",
+                "sec_num": "4.3"
+            },
+            {
+                "text": "(1) Visual query execution steps (visual-DBQA) (2) Visual query execution steps and textual query step explanations (textual-DBQA) Students who were assigned to the concept-OLM condition used the SQL Practice System version shown in Figure 2A , and those who were assigned to the topic-OLM condition could only access the topic-based OLM without concept-level knowledge estimations. Similarly, students in the textual-DBQA condition explored worked examples in DBQA with textual support whereas the visual-DBQA condition had access to other visual demonstrations without the textual support. Students were assigned randomly to each of the four study conditions. Prior to the experiment, we hypothesized that augmenting query execution illustrations with textual explanations might improve the learners' understanding of visualization and raise learners' eagerness to explore more execution steps [20, 25] . Similarly, we expected that the concept-based OLM would provide additional navigational support and could potentially increase student engagement with the learning tools [7, 9] .",
+                "cite_spans": [
+                    {
+                        "start": 896,
+                        "end": 900,
+                        "text": "[20,",
+                        "ref_id": "BIBREF19"
+                    },
+                    {
+                        "start": 901,
+                        "end": 904,
+                        "text": "25]",
+                        "ref_id": "BIBREF24"
+                    },
+                    {
+                        "start": 1077,
+                        "end": 1080,
+                        "text": "[7,",
+                        "ref_id": "BIBREF6"
+                    },
+                    {
+                        "start": 1081,
+                        "end": 1083,
+                        "text": "9]",
+                        "ref_id": "BIBREF8"
+                    }
+                ],
+                "section": "Study Design and Conditions",
+                "sec_num": "4.3"
+            },
+            {
+                "text": "The dataset includes the interaction logs collected through the SQL Practice System. To assess the effectiveness of the practice system and its components, we also administered pre-and post-tests. The pre-test was administered before students started working with the SQL exercises. The post-test was administered at the end of the semester. Both tests had 10 problems, including 5 multiple-choice and 5 SQL fill-in-the-blank problems, which concentrated on SQL SELECT statements. Pre and post-test problems were isomorphic 1 .",
+                "cite_spans": [],
+                "section": "Dataset and Overall System Usage",
+                "sec_num": "4.4"
+            },
+            {
+                "text": "At the beginning of the course, we informed students about this research and asked them to give their consent for participation. In this paper, we considered only data from students who gave their consent. Table 2 presents the summary statistics about the practice system usage for students who attempted at least one problem and viewed at least one example (N=131). Specifically, students solved on average 28 unique problems in total considering both SQL-Tutor and SAT, which is beyond the limit for earning the extra exercise points in full (22 problems), and almost half of the students exceeded this limit. Beyond problems, students were also engaged with both types of worked-out examples and viewed on average 21 unique examples in total. It is evident that the students practiced with the SQL Practice System substantially and allowed us to investigate further both DBQA usage and effects of study conditions. ",
+                "cite_spans": [],
+                "section": "Dataset and Overall System Usage",
+                "sec_num": "4.4"
+            },
+            {
+                "text": "In this section, we present our results starting from a broader perspective and later share our findings from deeper analyses. First, we explore if practicing with the SQL Practice System is associated with student learning (Section 5.1). Then, we investigate the possible impact of practicing with worked examples on problemsolving activities within the practice system (Section 5.2). Next, we \ud835\udc5d \ud835\udc5d \ud835\udc5d inspect the effects of randomized experiment conditions (i.e., OLMcondition and DBQA-condition) on the usage of DBQA (Section 5.3). Finally, we analyze the effect of textual step explanations on DBQA usage over the course period (Section 5.4).",
+                "cite_spans": [],
+                "section": "RESULTS",
+                "sec_num": "5"
+            },
+            {
+                "text": "We started our analysis by checking the relationship between the practice system usage and student learning. Following our prior research findings [3] , we concentrated on success rate related features. We considered using the overall success rate and first-attempt success rate in both the SQL assessment tool (SAT) and SQL-Tutor as features. To test such connections, we can only consider students who had both pre/post-test scores and used the SAT and SQL-Tutor at least once (N=110). We performed a backward step-wise feature selection process to pick the important usage metrics. This process picked the overall success rate in SAT and pre-test scores as features. Then, we fitted a linear regression model to predict post-test scores using these features. We found a significant model (\ud835\udc39 (2, 107) = 14.8, \ud835\udc4e\ud835\udc51 \ud835\udc57.\ud835\udc45 2 = .20, \ud835\udc5d < .001) and the results indicated that the overall success rate was a statistically significant predictor (\ud835\udc35 = 7.50, \ud835\udc61 = 3.433, \ud835\udc5d < .001, \ud835\udf02 2 = .10) of post-test scores after controlling for pre-test scores (\ud835\udc35 = 9.15, \ud835\udc61 = 4.189, \ud835\udc5d < .001, \ud835\udf02 2 = .14), such that a 10% increase in success rate was associated with a 4.8% increase in post-test scores. We believe that given the intelligenttutoring-system nature of the SQL-Tutor and multiple feedback/hint options (e.g., partial solution request), the success rate in SQL-Tutor problems was not a significant factor in this analysis. Following these findings, we concentrated more on success rate related metrics in SAT in the following analyses to assess the value of the worked-out example tools.",
+                "cite_spans": [
+                    {
+                        "start": 147,
+                        "end": 150,
+                        "text": "[3]",
+                        "ref_id": "BIBREF2"
+                    }
+                ],
+                "section": "External Value of Practice System Usage",
+                "sec_num": "5.1"
+            },
+            {
+                "text": "Following the prior work on worked examples [14, 15] , we extended our analysis to see if practice with worked examples was associated with performance in problem-solving activities, specifically the success rate in SAT (see the previous section). As we discussed in Section 4.4, students used the practice system substantially. However, some students decided not to use some of the available learning tools. For this reason, we only considered students who practiced with all types of learning content (N=91) to assess the value of worked examples.",
+                "cite_spans": [
+                    {
+                        "start": 44,
+                        "end": 48,
+                        "text": "[14,",
+                        "ref_id": "BIBREF13"
+                    },
+                    {
+                        "start": 49,
+                        "end": 52,
+                        "text": "15]",
+                        "ref_id": "BIBREF14"
+                    }
+                ],
+                "section": "Internal Value of Worked Examples",
+                "sec_num": "5.2"
+            },
+            {
+                "text": "We have extracted multiple usage metrics for each example tool to summarize learners' engagement levels. But, since these metrics for each example tool were highly correlated (i.e., Pearson's r > .8), we can only use one for each example tool in our regression models. Thus, we selected the number of execution step views for DBQA and the number of annotated line views for Annotated Examples to summarize the learners' engagement with the example tools.",
+                "cite_spans": [],
+                "section": "Internal Value of Worked Examples",
+                "sec_num": "5.2"
+            },
+            {
+                "text": "We first fitted a linear regression model to predict the overall success rate in SAT using the features mentioned earlier. The regression model was statistically significant (\ud835\udc39 (2, 88 = 3 .65), \ud835\udc4e\ud835\udc51 \ud835\udc57 .\ud835\udc45 2 = .06, \ud835\udc5d = .030) 2 : viewing more execution steps in DBQA was significantly and positively associated with higher success rate in SAT problems (\ud835\udc35 = .07, \ud835\udc61 = 2.212, \ud835\udc5d = .029, \ud835\udf02 2 = .07). Viewing more annotated lines was not significant (\ud835\udc35 = -.03, \ud835\udc61 = -.978, \ud835\udc5d = .331). 2 The pre-test scores did not improve the model fit and were removed.",
+                "cite_spans": [],
+                "section": "Internal Value of Worked Examples",
+                "sec_num": "5.2"
+            },
+            {
+                "text": "In our prior work [1] , we found out that learners exhibited two divergent practice behaviors in a similar SQL Practice System. Some students tended to learn by exploring worked-out examples and then solving SQL problems. Others preferred to solve problems through multiple attempts and by executing SQL queries in the execution mode for exploration and debugging purposes. Hence, we further hypothesized that exploring worked examples might affect students' problem-solving behavior in this study as well. To test our hypothesis, we fitted negative binomial generalized linear models (due to over-dispersion) to predict the number of attempts using the query build mode in SAT. We controlled for prior knowledge and the number of distinct SQL problems attempted (i.e., students who practiced with more problems might need to use query build mode more). The model that used the number of execution steps viewed in DBQA as a feature improved the overall fit when compared to a model that did not use this feature (\ud835\udf12 2 (1) = 4.870, \ud835\udc5d = .027). However, the model that used the number of line views in Annotated Examples (AE) did not improve the overall fit (\ud835\udf12 2 (1) = .099, \ud835\udc5d = .753). To summarize, students who explored more execution steps in DBQA used the query build mode in SAT significantly fewer times, suggesting that they used DBQA to understand how SQL queries work and needed fewer query building attempts for debugging and exploring their mistakes.",
+                "cite_spans": [
+                    {
+                        "start": 18,
+                        "end": 21,
+                        "text": "[1]",
+                        "ref_id": "BIBREF0"
+                    }
+                ],
+                "section": "Internal Value of Worked Examples",
+                "sec_num": "5.2"
+            },
+            {
+                "text": "In the learning process, the persistence in problem-solving activities (i.e., not giving up after failing to solve a problem but keep trying to solve it) is constantly associated with better learning outcomes [21, 24] . In light of these research findings, we explored if work with examples affected student persistence in solving SQL problems in SAT. We calculated the ratio of problems that students abandoned (abandon-ratio) after their first failed attempt. Then, we fitted a linear regression model to predict abandon-ratio and added the number of execution step views in DBQA and line views in AE as features. The model was statistically significant (\ud835\udc39 (2, 88) = 5.427, \ud835\udc5d = .006). Both features related to example tools were significant predictors: viewing more execution steps was associated with lower abandon-ratio (\ud835\udc35 = -.05, \ud835\udc61 = -3.133, \ud835\udc5d = .002, \ud835\udf02 2 \ud835\udc5d = .07) while viewing more annotated lines was associated with higher abandon-ratio (\ud835\udc35 = .03, \ud835\udc61 = 2.042, \ud835\udc5d = .044, \ud835\udf02 2 \ud835\udc5d = .05). These findings suggest that DBQA might help students to be more persistent during problem-solving whereas AE might not be that beneficial.",
+                "cite_spans": [
+                    {
+                        "start": 209,
+                        "end": 213,
+                        "text": "[21,",
+                        "ref_id": "BIBREF20"
+                    },
+                    {
+                        "start": 214,
+                        "end": 217,
+                        "text": "24]",
+                        "ref_id": "BIBREF23"
+                    }
+                ],
+                "section": "Internal Value of Worked Examples",
+                "sec_num": "5.2"
+            },
+            {
+                "text": "In the preceding sections, we reported the benefit of the SQL Practice System and the worked-out example learning content on learning and problem-solving performance. As summarized in Section 4.3, in this study we had two by two study designs, i.e., OLM (topic-OLM/concept-OLM) and DBQA (textual/visual) conditions. In this section, we present the effect of these randomized experiment conditions on the usage of DBQA. We used the same set of learners from Section 5.2 (N=91).",
+                "cite_spans": [],
+                "section": "Effect of Textual Query Step Explanations",
+                "sec_num": "5.3"
+            },
+            {
+                "text": "We checked the effect of both OLM and DBQA conditions by conducting two separate two-way ANOVAs on the ratio of fully explored DBQA examples (i.e., exploring all the execution steps in a DBQA example) to the number of examples that at least one execution step was viewed (exploration-ratio); and the average number of explored execution steps per unique DBQA example, which is calculated by dividing the total number of explored steps by the total \ud835\udc5d \ud835\udc5d number of accessed DBQA examples. We also added the interaction effect of study conditions. We did not add the pre-test scores as the covariate due to the missing linear relationship between pre-test scores and the dependent variables.",
+                "cite_spans": [],
+                "section": "Effect of Textual Query Step Explanations",
+                "sec_num": "5.3"
+            },
+            {
+                "text": "ANOVA on exploration ratio found a significant interaction effect between study conditions (\ud835\udc39 (1, 87) = 5.172, \ud835\udc5d = .025) with small-to-medium effect size ( \ud835\udf02 2 = .06), and marginal main effect of OLM type (\ud835\udc39 (1, 87) = 3.252, \ud835\udc5d = .075), but no significant main effect of step explanations (\ud835\udc39 (1, 87) = 2.434, \ud835\udc5d = .122). Similarly, ANOVA on the average execution steps revealed a significant interaction effect (\ud835\udc39 (1, 8 7) = 7.357, \ud835\udc5d = .008) with small-to-medium effect size (\ud835\udf02 2 = .08), but no main effect of OLM type (\ud835\udc39 (1, 8 7) = .197, \ud835\udc5d = .659) and of step explanations (\ud835\udc39 (1, 87) = .938, \ud835\udc5d = .336). As shown in Figure 3 , post-hoc analyses on average step executions revealed that students who received textual step explanations explored significantly more steps ( \ud835\udc40 = 3.35) compared to students who did not have access to these explanations (\ud835\udc40 = 2.32), but only in conceptbased OLM condition (\ud835\udc39 (1, 87) = 6.6, \ud835\udc5d = .012). A similar conclusion was reached from the post-hoc analysis of the exploration ratio. Thus, the effect of textual explanations on both average step executions and exploration ratio depends on the type of OLM visualization. To summarize, students who had access to textual step execution explanations tended to view more steps on average and fully explore a higher number of examples. However, such an effect only exists when students had access to fine-grained OLM design. ",
+                "cite_spans": [],
+                "section": "Effect of Textual Query Step Explanations",
+                "sec_num": "5.3"
+            },
+            {
+                "text": "Following the interaction effect between study conditions on DBQA usage metrics, it is clear that students were engaged with DBQA at different levels of intensity, but we do not know if this was the case during the whole course period. Hence, in this section, we explore the effect of textual explanations throughout the course. We computed the average number of execution step views per week per student for the concept-based OLM condition. As shown in Figure 4 , students in textual explanation condition worked with DBQA much more at the beginning of the semester (i.e., during the first two weeks). Then, this gap between conditions disappeared for the 3rd week of the semester. After the 3rd week, students engaged with DBQA examples consistently more when represented with textual explanations. To confirm our visual inspection, we further conducted an ANOVA on the average step count with week number and DBQA condition as factors. The ANOVA revealed a significant main effect of the DBQA condition (\ud835\udc39 (1, 13) = 8.963, \ud835\udc5d = .010) with a large effect size (\ud835\udf02 2 \ud835\udc5d = .408) but the week number was not significant (\ud835\udc39 (1, 13) = .478, \ud835\udc5d = .501). ",
+                "cite_spans": [],
+                "section": "Time-based Effect of Step Explanations",
+                "sec_num": "5.4"
+            },
+            {
+                "text": "We presented an online learning tool for SQL programming that illustrates the step-by-step execution of SQL SELECT statements. The tool can also provide textual explanations for the SQL clauses and conditions. In this study, we evaluated DBQA in a large-scale randomized control experiment as a part of an online non-mandatory SQL Practice System with multiple open learner model features.",
+                "cite_spans": [],
+                "section": "CONCLUSION",
+                "sec_num": "6"
+            },
+            {
+                "text": "The findings showed that when working with the SQL Practice System, the success rate in the SQL Assessment Tool (SAT) was associated with higher post-test scores even after controlling for the pre-test scores. After observing a positive connection between the system usage and learning outcomes, we evaluated the impact of worked examples on problem-solving activities. Exploring more query execution steps in DBQA was associated with a higher success rate, fewer query building attempts, and higher persistence during problem-solving in SAT. Finally, we explored the effect of textual explanations and open learner model features on the usage of DBQA and found out that students who accessed textual explanations viewed more steps on average in DBQA and fully explored a higher number of examples. However, this effect was only observed for students who used the concept-based OLM design.",
+                "cite_spans": [],
+                "section": "CONCLUSION",
+                "sec_num": "6"
+            },
+            {
+                "text": "While bringing some interesting and promising results, our study had limitations. The main limitation originates from our intention to assess a tool in a realistic context -a semester-long classroom study. Even if we checked the effect of prior knowledge on our analyses, we could not control for other factors that might influence learners' usage behavior such as learning through other resources. Finally, given that the majority of the practice system usage was non-mandatory, our results might be subject to self-selection bias.",
+                "cite_spans": [],
+                "section": "CONCLUSION",
+                "sec_num": "6"
+            },
+            {
+                "text": "There were no significant differences in pre/post-test scores between study conditions.Session: Cybersecurity, data, and networks ITiCSE",
+                "cite_spans": [],
+                "section": "",
+                "sec_num": null
+            },
+            {
+                "text": "2022, July 8-13, 2022, Dublin, Ireland",
+                "cite_spans": [],
+                "section": "",
+                "sec_num": null
+            }
+        ],
+        "bib_entries": {
+            "BIBREF0": {
+                "ref_id": "b0",
+                "title": "Exploring Behavioral Patterns for Data-Driven Modeling of Learners' Individual Differences",
+                "authors": [
+                    {
+                        "first": "Kamil",
+                        "middle": [],
+                        "last": "Akhuseyinoglu",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Peter",
+                        "middle": [],
+                        "last": "Brusilovsky",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2022,
+                "venue": "Frontiers in Artificial Intelligence",
+                "volume": "5",
+                "issue": "",
+                "pages": "",
+                "other_ids": {
+                    "DOI": [
+                        "10.3389/frai.2022.807320"
+                    ],
+                    "ISSNe": [
+                        "2624-8212"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Kamil Akhuseyinoglu and Peter Brusilovsky. 2022. Exploring Behavioral Pat- terns for Data-Driven Modeling of Learners' Individual Differences. Frontiers in Artificial Intelligence 5 (2022). https://doi.org/10.3389/frai.2022.807320",
+                "links": null
+            },
+            "BIBREF1": {
+                "ref_id": "b1",
+                "title": "Learning from examples: Instructional principles from the worked examples research",
+                "authors": [
+                    {
+                        "first": "Sharon",
+                        "middle": [
+                            "J"
+                        ],
+                        "last": "Robert K Atkinson",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Alexander",
+                        "middle": [],
+                        "last": "Derry",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Donald",
+                        "middle": [],
+                        "last": "Renkl",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "",
+                        "middle": [],
+                        "last": "Wortham",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2000,
+                "venue": "Review of educational research",
+                "volume": "70",
+                "issue": "2",
+                "pages": "181--214",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Robert K Atkinson, Sharon J Derry, Alexander Renkl, and Donald Wortham. 2000. Learning from examples: Instructional principles from the worked examples research. Review of educational research 70, 2 (2000), 181-214.",
+                "links": null
+            },
+            "BIBREF2": {
+                "ref_id": "b2",
+                "title": "Explainable Recommendations in a Personalized Programming Practice System",
+                "authors": [
+                    {
+                        "first": "Jordan",
+                        "middle": [],
+                        "last": "Barria-Pineda",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Kamil",
+                        "middle": [],
+                        "last": "Akhuseyinoglu",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Stefan",
+                        "middle": [],
+                        "last": "\u017delem-\u0106elap",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Peter",
+                        "middle": [],
+                        "last": "Brusilovsky",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Aleksandra",
+                        "middle": [
+                            "Klasnja"
+                        ],
+                        "last": "Milicevic",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Mirjana",
+                        "middle": [],
+                        "last": "Ivanovic",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/aied/Barria-PinedaAZ21",
+                "year": 2021,
+                "venue": "Lecture Notes in Computer Science",
+                "volume": "",
+                "issue": "",
+                "pages": "64--76",
+                "other_ids": {
+                    "ORCID": [
+                        "0000-0002-4961-4818",
+                        "0000-0002-7761-9755",
+                        "0000-0002-2394-3445",
+                        "0000-0002-1902-1464",
+                        "0000-0002-8023-4776",
+                        "0000-0003-1946-0384"
+                    ],
+                    "DOI": [
+                        "10.1007/978-3-030-78292-4_6"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Jordan Barria-Pineda, Kamil Akhuseyinoglu, Stefan \u017delem-\u0106elap, Peter Brusilovsky, Aleksandra Klasnja Milicevic, and Mirjana Ivanovic. 2021. Ex- plainable Recommendations in a Personalized Programming Practice System. In Artificial Intelligence in Education, Ido Roll, Danielle McNamara, Sergey Sos- novsky, Rose Luckin, and Vania Dimitrova (Eds.). Springer International Publish- ing, Cham, 64-76.",
+                "links": null
+            },
+            "BIBREF3": {
+                "ref_id": "b3",
+                "title": "A Fine-Grained Open Learner Model for an Introductory Programming Course",
+                "authors": [
+                    {
+                        "first": "Jordan",
+                        "middle": [],
+                        "last": "Barria-Pineda",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Julio",
+                        "middle": [],
+                        "last": "Guerra-Hollstein",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Peter",
+                        "middle": [],
+                        "last": "Brusilovsky",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/um/Barria-PinedaHB18",
+                "year": 2018,
+                "venue": "Proceedings of the 26th Conference on User Modeling, Adaptation and Personalization",
+                "volume": "",
+                "issue": "",
+                "pages": "53--61",
+                "other_ids": {
+                    "DOI": [
+                        "10.1145/3209219.3209242"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Jordan Barria-Pineda, Julio Guerra-Hollstein, and Peter Brusilovsky. 2018. A Fine-Grained Open Learner Model for an Introductory Programming Course. In Proceedings of the 26th Conference on User Modeling, Adaptation and Personaliza- tion (Singapore, Singapore) (UMAP '18). Association for Computing Machinery, New York, NY, USA, 53-61. https://doi.org/10.1145/3209219.3209242",
+                "links": null
+            },
+            "BIBREF4": {
+                "ref_id": "b4",
+                "title": "Increasing Adoption of Smart Learning Content for Computer Science Education",
+                "authors": [
+                    {
+                        "first": "Peter",
+                        "middle": [],
+                        "last": "Brusilovsky",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Stephen",
+                        "middle": [],
+                        "last": "Edwards",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Amruth",
+                        "middle": [],
+                        "last": "Kumar",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Lauri",
+                        "middle": [],
+                        "last": "Malmi",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Luciana",
+                        "middle": [],
+                        "last": "Benotti",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Duane",
+                        "middle": [],
+                        "last": "Buck",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Petri",
+                        "middle": [],
+                        "last": "Ihantola",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Rikki",
+                        "middle": [],
+                        "last": "Prince",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Teemu",
+                        "middle": [],
+                        "last": "Sirki\u00e4",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Sergey",
+                        "middle": [],
+                        "last": "Sosnovsky",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Jaime",
+                        "middle": [],
+                        "last": "Urquiza",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Arto",
+                        "middle": [],
+                        "last": "Vihavainen",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Michael",
+                        "middle": [],
+                        "last": "Wollowski",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/iticse/BrusilovskyEKMB14",
+                "year": 2014,
+                "venue": "Proceedings of the Working Group Reports of the 2014 on Innovation & Technology in Computer Science Education Conference",
+                "volume": "",
+                "issue": "",
+                "pages": "31--57",
+                "other_ids": {
+                    "DOI": [
+                        "10.1145/2713609.2713611"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Peter Brusilovsky, Stephen Edwards, Amruth Kumar, Lauri Malmi, Luciana Benotti, Duane Buck, Petri Rikki Prince, Teemu Sirki\u00e4, Sergey Sos- novsky, Jaime Urquiza, Arto Vihavainen, and Michael Wollowski. 2014. Increas- ing Adoption of Smart Learning Content for Computer Science Education. In Proceedings of the Working Group Reports of the 2014 on Innovation and Technology in Computer Science Education Conference. ACM, 31-57.",
+                "links": null
+            },
+            "BIBREF5": {
+                "ref_id": "b5",
+                "title": "Learning SQL Programming with Interactive Tools",
+                "authors": [
+                    {
+                        "first": "Peter",
+                        "middle": [],
+                        "last": "Brusilovsky",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Sergey",
+                        "middle": [],
+                        "last": "Sosnovsky",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Michael",
+                        "middle": [
+                            "V"
+                        ],
+                        "last": "Yudelson",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Danielle",
+                        "middle": [
+                            "H"
+                        ],
+                        "last": "Lee",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Vladimir",
+                        "middle": [],
+                        "last": "Zadorozhny",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Xin",
+                        "middle": [],
+                        "last": "Zhou",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2010,
+                "venue": "ACM Transactions on Computing Education",
+                "volume": "9",
+                "issue": "4",
+                "pages": "1--15",
+                "other_ids": {
+                    "DOI": [
+                        "10.1145/1656255.1656257"
+                    ],
+                    "ISSNe": [
+                        "1946-6226"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Peter Brusilovsky, Sergey Sosnovsky, Danielle Lee, Michael Yudelson, Vladimir Zadorozhny, and Xin Zhou. 2010. Learning SQL programming with interactive tools: from integration to personalization. ACM Transactions on Computing Education 9, 4 (2010), Article No. 19, pp. 1-15. https://doi.org/10.1145.1656255. 1656257",
+                "links": null
+            },
+            "BIBREF6": {
+                "ref_id": "b6",
+                "title": "Addictive links: the motivational value of adaptive link annotation",
+                "authors": [
+                    {
+                        "first": "Peter",
+                        "middle": [],
+                        "last": "Brusilovsky",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Sergey",
+                        "middle": [],
+                        "last": "Sosnovsky",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Michael",
+                        "middle": [],
+                        "last": "Yudelson",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2009,
+                "venue": "New Review of Hypermedia and Multimedia",
+                "volume": "15",
+                "issue": "1",
+                "pages": "97--118",
+                "other_ids": {
+                    "DOI": [
+                        "10.1080/13614560902803570"
+                    ],
+                    "ISSN": [
+                        "1361-4568"
+                    ],
+                    "ISSNe": [
+                        "1740-7842"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Peter Brusilovsky, Sergey Sosnovsky, and Michael Yudelson. 2009. Addictive links: The motivational value of adaptive link annotation. New Review of Hypermedia and Multimedia 15, 1 (2009), 97-118. http://dx.doi.org/10.1080/ 13614560902803570",
+                "links": null
+            },
+            "BIBREF7": {
+                "ref_id": "b7",
+                "title": "From WebEx to NavEx: Interactive Access to Annotated Program Examples",
+                "authors": [
+                    {
+                        "first": "Peter",
+                        "middle": [],
+                        "last": "Brusilovsky",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Michael",
+                        "middle": [
+                            "V"
+                        ],
+                        "last": "Yudelson",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2008,
+                "venue": "Proceedings of the IEEE",
+                "volume": "96",
+                "issue": "6",
+                "pages": "990--999",
+                "other_ids": {
+                    "DOI": [
+                        "10.1109/jproc.2008.921611"
+                    ],
+                    "ISSN": [
+                        "0018-9219"
+                    ],
+                    "ISSNe": [
+                        "1558-2256"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Peter Brusilovsky and Michael Yudelson. 2008. From WebEx to NavEx: Interactive Access to Annotated Program Examples. Proc. IEEE 96, 6 (2008), 990-999.",
+                "links": null
+            },
+            "BIBREF8": {
+                "ref_id": "b8",
+                "title": "Open Learner Models",
+                "authors": [
+                    {
+                        "first": "Susan",
+                        "middle": [],
+                        "last": "Bull",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Judy",
+                        "middle": [],
+                        "last": "Kay",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2010,
+                "venue": "Studies in Computational Intelligence",
+                "volume": "",
+                "issue": "",
+                "pages": "301--322",
+                "other_ids": {
+                    "DOI": [
+                        "10.1007/978-3-642-14363-2_15"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Susan Bull and Judy Kay. 2010. Open Learner Models. In Advances in Intelligent Tutoring Systems, Roger Nkambou, Jacqueline Bourdeau, and Riichiro Mizoguchi (Eds.). Springer Berlin Heidelberg, Berlin, Heidelberg, 301-322.",
+                "links": null
+            },
+            "BIBREF9": {
+                "ref_id": "b9",
+                "title": "Fine-Grained Open Learner Models",
+                "authors": [
+                    {
+                        "first": "Julio",
+                        "middle": [],
+                        "last": "Guerra-Hollstein",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Jordan",
+                        "middle": [],
+                        "last": "Barria-Pineda",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Christian",
+                        "middle": [
+                            "D"
+                        ],
+                        "last": "Schunn",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Susan",
+                        "middle": [],
+                        "last": "Bull",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Peter",
+                        "middle": [],
+                        "last": "Brusilovsky",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/um/Guerra-Hollstein17",
+                "year": 2017,
+                "venue": "Proceedings of the 25th Conference on User Modeling, Adaptation and Personalization",
+                "volume": "",
+                "issue": "",
+                "pages": "41--49",
+                "other_ids": {
+                    "DOI": [
+                        "10.1145/3079628.3079682"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Julio Guerra-Hollstein, Jordan Barria-Pineda, Christian Schunn, Susan Bull, and Peter Brusilovsky. 2017. Fine-Grained Open Learner Models: Complexity Versus Support. In 25th Conference on User Modeling, Adaptation and Personalization. ACM, 41-49. https://doi.org/10.1145/3079628.3079682",
+                "links": null
+            },
+            "BIBREF10": {
+                "ref_id": "b10",
+                "title": "Online python tutor: embeddable web-based program visualization for cs education",
+                "authors": [
+                    {
+                        "first": "Philip",
+                        "middle": [],
+                        "last": "Guo",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/sigcse/HosseiniSGBM16",
+                "year": 2013,
+                "venue": "the 44th ACM technical symposium on Computer Science Education (SIGCSE 2016)",
+                "volume": "",
+                "issue": "",
+                "pages": "579--584",
+                "other_ids": {
+                    "DOI": [
+                        "10.1145/2839509.2844639"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Philip Guo. 2013. Online python tutor: embeddable web-based program visu- alization for cs education. In the 44th ACM technical symposium on Computer Science Education (SIGCSE 2016). ACM Press, 579-584. https://doi.org/10.1145/ 2839509.2844639",
+                "links": null
+            },
+            "BIBREF11": {
+                "ref_id": "b11",
+                "title": "Database Query Analyzer (DBQA)",
+                "authors": [
+                    {
+                        "first": "Ryan",
+                        "middle": [],
+                        "last": "Hardt",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Esther",
+                        "middle": [],
+                        "last": "Gutzmer",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/sigite/HardtG17",
+                "year": 2020,
+                "venue": "Proceedings of the 18th Annual Conference on Information Technology Education",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {
+                    "DOI": [
+                        "10.1145/3125659.3125688"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Ryan Hardt and Kamil Akhuseyinoglu. 2020. Database Query Analyzer Integra- tion. In Proceedings of SPLICE 2020 Workshop co-located with 7th ACM Conference on Learning at Scale.",
+                "links": null
+            },
+            "BIBREF12": {
+                "ref_id": "b12",
+                "title": "Database Query Analyzer (DBQA)",
+                "authors": [
+                    {
+                        "first": "Ryan",
+                        "middle": [],
+                        "last": "Hardt",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Esther",
+                        "middle": [],
+                        "last": "Gutzmer",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/sigite/HardtG17",
+                "year": 2017,
+                "venue": "Proceedings of the 18th Annual Conference on Information Technology Education",
+                "volume": "",
+                "issue": "",
+                "pages": "147--152",
+                "other_ids": {
+                    "DOI": [
+                        "10.1145/3125659.3125688"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Ryan Hardt and Esther Gutzmer. 2017. Database Query Analyzer (DBQA): A Data-Oriented SQL Clause Visualization Tool. In Proceedings of the 18th Annual Conference on Information Technology Education (Rochester, New York, USA) (SIGITE '17). Association for Computing Machinery, New York, NY, USA, 147-152. https://doi.org/10.1145/3125659.3125688",
+                "links": null
+            },
+            "BIBREF13": {
+                "ref_id": "b13",
+                "title": "Improving Engagement in Program Construction Examples for Learning Python Programming",
+                "authors": [
+                    {
+                        "first": "Roya",
+                        "middle": [],
+                        "last": "Hosseini",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Kamil",
+                        "middle": [],
+                        "last": "Akhuseyinoglu",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Peter",
+                        "middle": [],
+                        "last": "Brusilovsky",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Lauri",
+                        "middle": [],
+                        "last": "Malmi",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Kerttu",
+                        "middle": [],
+                        "last": "Pollari-Malmi",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Christian",
+                        "middle": [],
+                        "last": "Schunn",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Teemu",
+                        "middle": [],
+                        "last": "Sirki\u00e4",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2020,
+                "venue": "International Journal of Artificial Intelligence in Education",
+                "volume": "30",
+                "issue": "2",
+                "pages": "299--336",
+                "other_ids": {
+                    "ORCID": [
+                        "0000-0003-0531-5530",
+                        "0000-0002-7761-9755",
+                        "0000-0002-1902-1464",
+                        "0000-0003-1064-796X",
+                        "0000-0003-2635-255X",
+                        "0000-0003-3589-297X",
+                        "0000-0003-4415-6966"
+                    ],
+                    "DOI": [
+                        "10.1007/s40593-020-00197-0"
+                    ],
+                    "ISSN": [
+                        "1560-4292"
+                    ],
+                    "ISSNe": [
+                        "1560-4306"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Roya Hosseini, Kamil Akhuseyinoglu, Peter Brusilovsky, Lauri Malmi, Kerttu Pollari-Malmi, Christian Schunn, and Teemu Sirki\u00e4. 2020. Improving Engage- ment in Program Construction Examples for Learning Python Programming. International Journal of Artificial Intelligence in Education (2020).",
+                "links": null
+            },
+            "BIBREF14": {
+                "ref_id": "b14",
+                "title": "Animated Examples as Practice Content in a Java Programming Course",
+                "authors": [
+                    {
+                        "first": "Roya",
+                        "middle": [],
+                        "last": "Hosseini",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Teemu",
+                        "middle": [],
+                        "last": "Sirki\u00e4",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Julio",
+                        "middle": [],
+                        "last": "Guerra",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Peter",
+                        "middle": [],
+                        "last": "Brusilovsky",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Lauri",
+                        "middle": [],
+                        "last": "Malmi",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/sigcse/HosseiniSGBM16",
+                "year": 2016,
+                "venue": "Proceedings of the 47th ACM Technical Symposium on Computing Science Education",
+                "volume": "",
+                "issue": "",
+                "pages": "540--545",
+                "other_ids": {
+                    "DOI": [
+                        "10.1145/2839509.2844639"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Roya Hosseini, Teemu Sirki\u00e4, Julio Guerra, Peter Brusilovsky, and Lauri Malmi. 2016. Animated Examples as a Practice Content in Java Programming Course. In the 47th ACM technical symposium on Computer Science Education (SIGCSE 2016). ACM Press, 540-545. https://doi.org/10.1145/2839509.2844639",
+                "links": null
+            },
+            "BIBREF15": {
+                "ref_id": "b15",
+                "title": "When problem solving is superior to studying worked examples.",
+                "authors": [
+                    {
+                        "first": "Slava",
+                        "middle": [],
+                        "last": "Kalyuga",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Paul",
+                        "middle": [],
+                        "last": "Chandler",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Juhani",
+                        "middle": [],
+                        "last": "Tuovinen",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "John",
+                        "middle": [],
+                        "last": "Sweller",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2001,
+                "venue": "Journal of Educational Psychology",
+                "volume": "93",
+                "issue": "3",
+                "pages": "579--588",
+                "other_ids": {
+                    "DOI": [
+                        "10.1037//0022-0663.93.3.579"
+                    ],
+                    "ISSN": [
+                        "0022-0663"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Slava Kalyuga, Paul Chandler, Juhani Tuovinen, and John Sweller. 2001. When Problem Solving Is Superior to Studying Worked Examples. Journal of Educational Psychology 93, 3 (2001), 579-588.",
+                "links": null
+            },
+            "BIBREF16": {
+                "ref_id": "b16",
+                "title": "Service-Oriented Approach to Improve Interoperability of E-Learning Systems",
+                "authors": [
+                    {
+                        "first": "Ville",
+                        "middle": [],
+                        "last": "Karavirta",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Petri",
+                        "middle": [],
+                        "last": "Ihantola",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Teemu",
+                        "middle": [],
+                        "last": "Koskinen",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/icalt/KaravirtaIK13",
+                "year": 2013,
+                "venue": "2013 IEEE 13th International Conference on Advanced Learning Technologies",
+                "volume": "",
+                "issue": "",
+                "pages": "341--345",
+                "other_ids": {
+                    "DOI": [
+                        "10.1109/icalt.2013.105"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Ville Karavirta, Petri Ihantola, and Teemu Koskinen. 2013. Service-oriented approach to improve interoperability of e-learning systems. In 2013 IEEE 13th International Conference on Advanced Learning Technologies. IEEE, 341-345.",
+                "links": null
+            },
+            "BIBREF17": {
+                "ref_id": "b17",
+                "title": "Automated tutoring for a database skills training environment",
+                "authors": [
+                    {
+                        "first": "Claire",
+                        "middle": [],
+                        "last": "Kenny",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Claus",
+                        "middle": [],
+                        "last": "Pahl",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/sigcse/KennyP05",
+                "year": 2005,
+                "venue": "Proceedings of the 36th SIGCSE technical symposium on Computer science education",
+                "volume": "",
+                "issue": "",
+                "pages": "58--62",
+                "other_ids": {
+                    "DOI": [
+                        "10.1145/1047344.1047377"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Claire Kenny and Claus Pahl. 2005. Automated tutoring for a database skills training environments. In 36th SIGCSE Technical Symposium on Computer Science Education. 58-62.",
+                "links": null
+            },
+            "BIBREF18": {
+                "ref_id": "b18",
+                "title": "The jeliot 2000 Program Animation System",
+                "authors": [
+                    {
+                        "first": "Ronit",
+                        "middle": [],
+                        "last": "Ben",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "-Bassat",
+                        "middle": [],
+                        "last": "Levy",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Mordechai",
+                        "middle": [],
+                        "last": "Ben-Ari",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Pekka",
+                        "middle": [
+                            "A"
+                        ],
+                        "last": "Uronen",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2003,
+                "venue": "Computers and Education",
+                "volume": "40",
+                "issue": "1",
+                "pages": "1--15",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Ronit Ben-Bassat Levy, Mordechai Ben-Ari, and Pekka A. Uronen. 2003. The jeliot 2000 Program Animation System. Computers and Education 40, 1 (2003), 1-15.",
+                "links": null
+            },
+            "BIBREF19": {
+                "ref_id": "b19",
+                "title": "User-adaptive explanatory program visualization: evaluation and insights from eye movements",
+                "authors": [
+                    {
+                        "first": "Tomasz",
+                        "middle": [
+                            "D"
+                        ],
+                        "last": "Loboda",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Peter",
+                        "middle": [],
+                        "last": "Brusilovsky",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2010,
+                "venue": "User Modeling and User-Adapted Interaction",
+                "volume": "20",
+                "issue": "3",
+                "pages": "191--226",
+                "other_ids": {
+                    "DOI": [
+                        "10.1007/s11257-010-9077-1"
+                    ],
+                    "ISSN": [
+                        "0924-1868"
+                    ],
+                    "ISSNe": [
+                        "1573-1391"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Tomasz Loboda and Peter Brusilovsky. 2010. User-Adaptive Explanatory Program Visualization: Evaluation and Insights from Eye Movements. User Modeling and User-Adapted Interaction 20, 3 (2010), 191-226. https://doi.org/10.1007/s11257- 010-9077-1",
+                "links": null
+            },
+            "BIBREF20": {
+                "ref_id": "b20",
+                "title": "Grit, Growth Mindset, and Deliberate Practice in Online Learning",
+                "authors": [
+                    {
+                        "first": "Christie",
+                        "middle": [],
+                        "last": "Mcclendon",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Robin",
+                        "middle": [],
+                        "last": "Massey Neugebauer",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Amanda",
+                        "middle": [],
+                        "last": "King",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2017,
+                "venue": "Journal of Instructional Research",
+                "volume": "6",
+                "issue": "1",
+                "pages": "8--17",
+                "other_ids": {
+                    "DOI": [
+                        "10.9743/jir.2017.2"
+                    ],
+                    "ISSN": [
+                        "2159-0281"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Cristie McClendon, Robin Massey Neugebauer, and Amanda King. 2017. Grit, Growth Mindset, and Deliberate Practice in Online Learning. Journal of Instruc- tional Research 8 (2017), 8-17.",
+                "links": null
+            },
+            "BIBREF21": {
+                "ref_id": "b21",
+                "title": "Implementing CBM: SQL-Tutor After Fifteen Years",
+                "authors": [
+                    {
+                        "first": "Antonija",
+                        "middle": [],
+                        "last": "Mitrovic",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Stellan",
+                        "middle": [],
+                        "last": "Ohlsson",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2000,
+                "venue": "International Journal of Artificial Intelligence in Education",
+                "volume": "26",
+                "issue": "1",
+                "pages": "150--159",
+                "other_ids": {
+                    "DOI": [
+                        "10.1007/s40593-015-0049-9"
+                    ],
+                    "ISSN": [
+                        "1560-4292"
+                    ],
+                    "ISSNe": [
+                        "1560-4306"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Antonija Mitrovic and Kurt Hausler. 2000. An Intelligent SQL Tutor on the Web. In International Journal of Artificial Intelligence in Education. 37-44.",
+                "links": null
+            },
+            "BIBREF22": {
+                "ref_id": "b22",
+                "title": "Learning with intelligent tutors and worked examples: selecting learning activities adaptively leads to better learning outcomes than a fixed curriculum",
+                "authors": [
+                    {
+                        "first": "Antonija",
+                        "middle": [],
+                        "last": "Amir Shareghi Najar",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Bruce",
+                        "middle": [
+                            "M"
+                        ],
+                        "last": "Mitrovic",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "",
+                        "middle": [],
+                        "last": "Mclaren",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "journals/umuai/NajarMM16",
+                "year": 2016,
+                "venue": "User Modeling and User-Adapted Interaction",
+                "volume": "26",
+                "issue": "5",
+                "pages": "459--491",
+                "other_ids": {
+                    "DOI": [
+                        "10.1007/s11257-016-9181-y"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Amir Shareghi Najar, Antonija Mitrovic, and Bruce M. McLaren. 2016. Learn- ing with intelligent tutors and worked examples: selecting learning activities adaptively leads to better learning outcomes than a fixed curriculum. User Mod- eling and User-Adapted Interaction 26, 5 (2016), 459-491. https://doi.org/10.1007/ s11257-016-9181-y",
+                "links": null
+            },
+            "BIBREF23": {
+                "ref_id": "b23",
+                "title": "Investigating the Relationship Between Programming Experience and Debugging Behaviors in an Introductory Computer Science Course",
+                "authors": [
+                    {
+                        "first": "Juan",
+                        "middle": [
+                            "D"
+                        ],
+                        "last": "Pinto",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Qianhui",
+                        "middle": [],
+                        "last": "Liu",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Luc",
+                        "middle": [],
+                        "last": "Paquette",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Yingbin",
+                        "middle": [],
+                        "last": "Zhang",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Aysa",
+                        "middle": [
+                            "Xuemo"
+                        ],
+                        "last": "Fan",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2021,
+                "venue": "Communications in Computer and Information Science",
+                "volume": "",
+                "issue": "",
+                "pages": "125--139",
+                "other_ids": {
+                    "DOI": [
+                        "10.1007/978-3-031-47014-1_9"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Juan Pinto, Yingbin Zhang, Luc Paquette, and Aysa Fan. 2021. Investigating Elements of Student Persistence in an Introductory Computer Science Course.. In 5th Educational Data Mining in Computer Science Education (CSEDM) Workshop at EDM2021.",
+                "links": null
+            },
+            "BIBREF24": {
+                "ref_id": "b24",
+                "title": "Jsvee & Kelmu: Creating and tailoring program animations for computing education",
+                "authors": [
+                    {
+                        "first": "Teemu",
+                        "middle": [],
+                        "last": "Sirki\u00e4",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/vissoft/Sirkia16",
+                "year": 2018,
+                "venue": "Journal of Software: Evolution and Process",
+                "volume": "30",
+                "issue": "2",
+                "pages": "",
+                "other_ids": {
+                    "ORCID": [
+                        "0000-0003-4415-6966"
+                    ],
+                    "DOI": [
+                        "10.1002/smr.1924"
+                    ],
+                    "ISSN": [
+                        "2047-7473"
+                    ],
+                    "ISSNe": [
+                        "2047-7481"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Teemu Sirki\u00e4. 2018. Jsvee & Kelmu: Creating and tailoring program animations for computing education. Journal of Software: Evolution and Process 30, 2 (2018). https://onlinelibrary.wiley.com/doi/abs/10.1002/smr.1924",
+                "links": null
+            },
+            "BIBREF25": {
+                "ref_id": "b25",
+                "title": "A Review of Generic Program Visualization Systems for Introductory Programming Education",
+                "authors": [
+                    {
+                        "first": "Juha",
+                        "middle": [],
+                        "last": "Sorva",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Ville",
+                        "middle": [],
+                        "last": "Karavirta",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Lauri",
+                        "middle": [],
+                        "last": "Malmi",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2013,
+                "venue": "ACM Transactions on Computing Education",
+                "volume": "13",
+                "issue": "4",
+                "pages": "1--64",
+                "other_ids": {
+                    "DOI": [
+                        "10.1145/2490822"
+                    ],
+                    "ISSNe": [
+                        "1946-6226"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Juha Sorva, Ville Karavirta, and Lauri Malmi. 2013. A Review of Generic Program Visualization Systems for Introductory Programming Education. ACM Transac- tions on Computing Education 13, 4 (2013). https://doi.org/10.1145/2490822",
+                "links": null
+            },
+            "BIBREF26": {
+                "ref_id": "b26",
+                "title": "The Use of Worked Examples as a Substitute for Problem Solving in Learning Algebra",
+                "authors": [
+                    {
+                        "first": "John",
+                        "middle": [],
+                        "last": "Sweller",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Graham",
+                        "middle": [
+                            "A"
+                        ],
+                        "last": "Cooper",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 1985,
+                "venue": "Cognition and Instruction",
+                "volume": "2",
+                "issue": "1",
+                "pages": "59--89",
+                "other_ids": {
+                    "DOI": [
+                        "10.1207/s1532690xci0201_3"
+                    ],
+                    "ISSN": [
+                        "0737-0008"
+                    ],
+                    "ISSNe": [
+                        "1532-690X"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "John Sweller and Graham A Cooper. 1985. The use of worked examples as a substitute for problem solving in learning algebra. Cognition and instruction 2, 1 (1985), 59-89.",
+                "links": null
+            },
+            "BIBREF27": {
+                "ref_id": "b27",
+                "title": "Cognitive architecture and instructional design",
+                "authors": [
+                    {
+                        "first": "John",
+                        "middle": [],
+                        "last": "Sweller",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Jeroen",
+                        "middle": [
+                            "J G"
+                        ],
+                        "last": "Van Merrienboer",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Fred",
+                        "middle": [
+                            "G W C"
+                        ],
+                        "last": "Paas",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 1998,
+                "venue": "Educational Psychology Review",
+                "volume": "10",
+                "issue": "3",
+                "pages": "251--296",
+                "other_ids": {
+                    "DOI": [
+                        "10.1023/a:1022193728205"
+                    ],
+                    "ISSN": [
+                        "1040-726X"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "John Sweller, Jeroen JG Van Merrienboer, and Fred GWC Paas. 1998. Cognitive architecture and instructional design. Educational psychology review 10, 3 (1998), 251-296.",
+                "links": null
+            },
+            "BIBREF28": {
+                "ref_id": "b28",
+                "title": "A Survey of Successful Evaluations of Program Visualization and Algorithm Animation Systems",
+                "authors": [
+                    {
+                        "first": "Jaime",
+                        "middle": [],
+                        "last": "Urquiza-Fuentes",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "J",
+                        "middle": [
+                            "\u00c1ngel"
+                        ],
+                        "last": "Vel\u00e1zquez-Iturbide",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2009,
+                "venue": "ACM Transactions on Computing Education",
+                "volume": "9",
+                "issue": "2",
+                "pages": "1--21",
+                "other_ids": {
+                    "DOI": [
+                        "10.1145/1538234.1538236"
+                    ],
+                    "ISSNe": [
+                        "1946-6226"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Jaime Urquiza-Fuentes and J. \u00c1ngel Vel\u00e1zquez-Iturbide. 2009. A Survey of Suc- cessful Evaluations of Program Visualization and Algorithm Animation Systems. The ACM Transactions on Computing Education 9, 2 (2009), Article No. 9.",
+                "links": null
+            },
+            "BIBREF29": {
+                "ref_id": "b29",
+                "title": "A User Modeling Server for Contemporary Adaptive Hypermedia: An Evaluation of the Push Approach to Evidence Propagation",
+                "authors": [
+                    {
+                        "first": "Peter",
+                        "middle": [],
+                        "last": "Michael Yudelson",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Vladimir",
+                        "middle": [],
+                        "last": "Brusilovsky",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "",
+                        "middle": [],
+                        "last": "Zadorozhny",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/um/YudelsonBZ07",
+                "year": 2007,
+                "venue": "Proceedings of the 11th International Conference on User Modeling (UM '07)",
+                "volume": "",
+                "issue": "",
+                "pages": "27--36",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Michael Yudelson, Peter Brusilovsky, and Vladimir Zadorozhny. 2007. A User Modeling Server for Contemporary Adaptive Hypermedia: An Evaluation of the Push Approach to Evidence Propagation. In Proceedings of the 11th International Conference on User Modeling (UM '07), Cristina Conati, Kathleen McCoy, and Georgios Paliouras (Eds.). Springer Berlin Heidelberg, Berlin, Heidelberg, 27-36.",
+                "links": null
+            },
+            "BIBREF30": {
+                "ref_id": "b30",
+                "title": "Exploring the Impact of Worked Examples in a Novice Programming Environment",
+                "authors": [
+                    {
+                        "first": "Rui",
+                        "middle": [],
+                        "last": "Zhi",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Thomas",
+                        "middle": [
+                            "W"
+                        ],
+                        "last": "Price",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Samiha",
+                        "middle": [],
+                        "last": "Marwan",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Alexandra",
+                        "middle": [],
+                        "last": "Milliken",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Tiffany",
+                        "middle": [],
+                        "last": "Barnes",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Min",
+                        "middle": [],
+                        "last": "Chi",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/sigcse/ZhiPMMBC19",
+                "year": 2019,
+                "venue": "Proceedings of the 50th ACM Technical Symposium on Computer Science Education",
+                "volume": "",
+                "issue": "",
+                "pages": "98--104",
+                "other_ids": {
+                    "DOI": [
+                        "10.1145/3287324.3287385"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Rui Zhi, Thomas W. Price, Samiha Marwan, Alexandra Milliken, Tiffany Barnes, and Min Chi. 2019. Exploring the Impact of Worked Examples in a Novice Programming Environment. In Proceedings of the 50th ACM Technical Symposium on Computer Science Education (SIGCSE '19). ACM, 98-104. http://doi.acm.org/ 10.1145/3287324.3287385",
+                "links": null
+            }
+        }
+    }
+}

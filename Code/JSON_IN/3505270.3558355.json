@@ -1,0 +1,544 @@
+{
+    "paper_id": "3505270",
+    "header": {
+        "generated_with": "S2ORC 1.0.0",
+        "date_generated": "2024-03-20T17:52:48.575531Z"
+    },
+    "title": "Games and the Metaverse",
+    "authors": [
+        {
+            "first": "Pejman",
+            "middle": [],
+            "last": "Mirza-Babaei",
+            "suffix": "",
+            "affiliation": {},
+            "email": "pejman@uoit.ca"
+        },
+        {
+            "first": "Raquel",
+            "middle": [],
+            "last": "Robinson",
+            "suffix": "",
+            "affiliation": {},
+            "email": ""
+        },
+        {
+            "first": "Regan",
+            "middle": [],
+            "last": "Mandryk",
+            "suffix": "",
+            "affiliation": {},
+            "email": "regan.mandryk@usask.ca"
+        },
+        {
+            "first": "Johanna",
+            "middle": [],
+            "last": "Pirker",
+            "suffix": "",
+            "affiliation": {},
+            "email": "johanna.pirker@tugraz.at"
+        },
+        {
+            "first": "Carissa",
+            "middle": [],
+            "last": "Kang",
+            "suffix": "",
+            "affiliation": {},
+            "email": "ckang@roblox.com"
+        },
+        {
+            "first": "Andrea",
+            "middle": [],
+            "last": "Fletcher",
+            "suffix": "",
+            "affiliation": {},
+            "email": "afletcher@roblox.com"
+        }
+    ],
+    "year": "",
+    "venue": null,
+    "identifiers": {},
+    "abstract": "The metaverse has become a topic of interest in both industry and academic settings. Research and development that focus on the 'metaverse' explore the immersive future of the internet, where distributed people from around the world can connect through virtual social environments. Unsurprisingly, the term has gained traction in the digital gaming realm as many related games and play research topics directly contribute to the metaverse. We propose to host a panel at CHI PLAY 2022 which will facilitate discussion amongst researchers in the field regarding the current landscape of the metaverse in game research, and opportunities and challenges to propel the future evolution of research in this area.",
+    "pdf_parse": {
+        "abstract": [
+            {
+                "text": "The metaverse has become a topic of interest in both industry and academic settings. Research and development that focus on the 'metaverse' explore the immersive future of the internet, where distributed people from around the world can connect through virtual social environments. Unsurprisingly, the term has gained traction in the digital gaming realm as many related games and play research topics directly contribute to the metaverse. We propose to host a panel at CHI PLAY 2022 which will facilitate discussion amongst researchers in the field regarding the current landscape of the metaverse in game research, and opportunities and challenges to propel the future evolution of research in this area.",
+                "cite_spans": [],
+                "section": "Abstract",
+                "sec_num": null
+            }
+        ],
+        "body_text": [
+            {
+                "text": "In recent years, the metaverse has become a topic of interest in both industry and academic settings. Research and technology that focus on the 'metaverse' explore the immersive future of the internet, where distributed people from around the world can connect through 3D virtual social environments. Unsurprisingly, the term has gained traction in the digital gaming realm. Some gaming platforms let people create avatars and exist within an online virtual world where they can engage in a variety of ways-e.g., interacting with others, visiting customized worlds, and engaging with a virtual economy. Beyond technical infrastructure requirements, the subsistence of metaverse user experiences is reliant on two key fundamentals: 1) content experience and 2) content creation. Some companies focus on providing the virtual worlds as content for users to experience, and others are focused more toward platforms for building out the content. There are also companies that are situated at the intersection of content experience and content creation, providing a platform for developers to build out these virtual social worlds, and giving players access to them. While the metaverse is a broad field that encompasses a wide variety of research areas surrounding virtual worlds, we scope this panel discussion to focus on four key points: i) Content Creation (i.e. the creation of digital content and experiences for the metaverse) ii) Access and Social Connectedness (i.e. the interconnectedness of social worlds and the impact on society, including on health, education, and wellness) iii) Identity and Representation (i.e. how identity and representation matter, and must be supported in the metaverse) iv) Assessment, Validation, and User Research (i.e. how to assess the impacts of persistent and integrated digital social spaces on the social interactions we have within the material world). We will discuss these broader topics and explore some fundamental questions relating to each.",
+                "cite_spans": [],
+                "section": "INTRODUCTION",
+                "sec_num": "1"
+            },
+            {
+                "text": "Despite the heightened interest in the topic of the metaverse over the past few years, there remains no unification amongst industry professionals and academics working in this domain. Research on the metaverse is distributed throughout varying sub-domains of game research and HCI, thus bringing these groups together will help unify and provide a launching point for future progress in the field. We propose to create a panel of both industry professionals and academic researchers at CHI PLAY 2022, where panelists will discuss the current landscape of the metaverse in the field of games user research, and opportunities and challenges to propel the future evolution of research in this area. Our goals and action items for the panel are as follows: 1) Bring the industry and academic communities together to share their work on Metaverse research. 2) Identify directions for research and standards for collaboration with games communities. 3) Make metaverse research content from game communities more prominent to practitioners and other research communities. 4) Discuss and document community efforts beyond standard publications by extending existing work in metaverse-related research and development.",
+                "cite_spans": [],
+                "section": "PANEL OBJECTIVES",
+                "sec_num": "2"
+            },
+            {
+                "text": "Content Creation The creation of digital content and experiences are typically heavily reliant on skilled developers. However, the vast number of experiences and the variety of them required to form a metaverse means approaches such as exploring frameworks for enabling user-generated content and the use of automation to help create more content are already established tactics in game development. Some questions relating to these may include: How can integration of real-world data advance content creation? How can we better support and integrate user-generated content? How can we better use computer-aided development/design to support less skilled developers in content creation?",
+                "cite_spans": [],
+                "section": "TOPICS OF DISCUSSION",
+                "sec_num": "3"
+            },
+            {
+                "text": "Access and Social Connectedness The metaverse promises to involve everyone on a global scale, so the experiences in creation should be accessible in the most broad definition. We will discuss how the metaverse will incorporate topics relating to access and social good [2] and as users move seamlessly between work and play, how merging personas affects experience and how work-life boundaries can be protected within social digital spaces [1] . Some questions we will explore include: What are the societal benefits and impacts of the metaverse? What are some design guidelines we can use to support interconnectedness? How can work-life boundaries be protected within social digital spaces?",
+                "cite_spans": [
+                    {
+                        "start": 269,
+                        "end": 272,
+                        "text": "[2]",
+                        "ref_id": "BIBREF1"
+                    },
+                    {
+                        "start": 440,
+                        "end": 443,
+                        "text": "[1]",
+                        "ref_id": "BIBREF0"
+                    }
+                ],
+                "section": "TOPICS OF DISCUSSION",
+                "sec_num": "3"
+            },
+            {
+                "text": "Identity and Representation Representation of oneself in the digital realm has long been investigated by game researchers, including the effects of avatar design [3] (e.g., Proteus effect, customization effects [8] ), the exploration of multiple identities (e.g., mains/alts), the role of identification (e.g., similarity, ideal self, embodiment), and how appearance effects in-group collaboration [4, 5, 7] . More work is needed to support diversity of representation, including avatars that better represent people of varying ages, abilities, genders, and races; [6] (e.g., natural hair, non-white skin tones, wrinkles). We will discuss how identity and representation matter as users represent themselves in myriad contexts (e.g., work, play, domestic), and how personalization and tailoring influence representation and experience. Questions relating to this topic include: In what ways should we diversify and support avatar representation? How will personalization and tailoring influence representation and experience? What challenges will we face in terms of representation/customization? Assessment, Validation, and user Research People with a range of expertise and in a variety of contexts are expected to engage with content in the metaverse. It is also a priority to make sure that users have experiences tailored to their needs. Thus, evaluating these experiences is important for future progress in the field. We will discuss how to assess the impacts of persistent and integrated digital social spaces on the social interactions we have within the material world. Questions that arise might include: What methods are being used to evaluate technology created for the metaverse? How might behavior prediction play a role in evaluation? How will we assess the impacts of these digital social spaces on real life social interactions?",
+                "cite_spans": [
+                    {
+                        "start": 162,
+                        "end": 165,
+                        "text": "[3]",
+                        "ref_id": "BIBREF2"
+                    },
+                    {
+                        "start": 211,
+                        "end": 214,
+                        "text": "[8]",
+                        "ref_id": "BIBREF7"
+                    },
+                    {
+                        "start": 398,
+                        "end": 401,
+                        "text": "[4,",
+                        "ref_id": "BIBREF3"
+                    },
+                    {
+                        "start": 402,
+                        "end": 404,
+                        "text": "5,",
+                        "ref_id": "BIBREF4"
+                    },
+                    {
+                        "start": 405,
+                        "end": 407,
+                        "text": "7]",
+                        "ref_id": "BIBREF6"
+                    },
+                    {
+                        "start": 565,
+                        "end": 568,
+                        "text": "[6]",
+                        "ref_id": "BIBREF5"
+                    }
+                ],
+                "section": "TOPICS OF DISCUSSION",
+                "sec_num": "3"
+            },
+            {
+                "text": "Pejman Mirza-Babaei is an Associate Professor at Ontario Tech University. He is a co-editor of the Games User Research (2018) and a co-author of The Game Designer's Playbook: An Introduction to Game Interaction Design (2022). His research and professional work is carried out in collaboration with more than 25 companies spanning different sectors.",
+                "cite_spans": [],
+                "section": "PANELISTS",
+                "sec_num": "4"
+            },
+            {
+                "text": "Raquel Robinson is a postdoctoral fellow at Ontario Tech University. She obtained her PhD at the University of Saskatchewan in 2022. Her research interests broadly include socially connecting people over a distance using physiological signals.",
+                "cite_spans": [],
+                "section": "PANELISTS",
+                "sec_num": "4"
+            },
+            {
+                "text": "Regan Mandryk is a Tier 1 Canada Research Chair in Digital Gaming Technologies and Experiences and Professor of Computer Science at the University of Saskatchewan. She focuses on novel ways of understanding players and their experiences within games and esports, but also develops and evaluates games for recovery, health, and wellbeing, and social games that foster interpersonal relationships.",
+                "cite_spans": [],
+                "section": "PANELISTS",
+                "sec_num": "4"
+            },
+            {
+                "text": "Johanna Pirker is an Assistant Professor at TU Graz in Austria, leading the research group Game Lab Graz, and researches games with a focus on AI, HCI, data analysis, and VR technologies. She has lengthy experience in designing, developing, and evaluating games and VR experiences and believes in them as tools to support learning, collaboration, and solving real problems.",
+                "cite_spans": [],
+                "section": "PANELISTS",
+                "sec_num": "4"
+            },
+            {
+                "text": "Carissa Kang is a user experience researcher (UXR) with a PhD in Developmental Psychology. She has over 10 years of experience running research with children both in academia and industry. She was previously at YouTube working on the Kids & Families products. Carissa is currently a Senior Researcher at Roblox.",
+                "cite_spans": [],
+                "section": "PANELISTS",
+                "sec_num": "4"
+            },
+            {
+                "text": "Andrea Fletcher is a Senior Software Engineer at Roblox. She is experienced in app and web accessibility and now works to ensure that the design systems for Roblox are accessible and that developers are educated and enabled in making their experiences accessible.",
+                "cite_spans": [],
+                "section": "PANELISTS",
+                "sec_num": "4"
+            }
+        ],
+        "bib_entries": {
+            "BIBREF0": {
+                "ref_id": "b0",
+                "title": "Communication technology: Pros and cons of constant connection to work",
+                "authors": [
+                    {
+                        "first": "Ismael",
+                        "middle": [],
+                        "last": "Diaz",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Dan",
+                        "middle": [
+                            "S"
+                        ],
+                        "last": "Chiaburu",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Ryan",
+                        "middle": [
+                            "D"
+                        ],
+                        "last": "Zimmerman",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Wendy",
+                        "middle": [
+                            "R"
+                        ],
+                        "last": "Boswell",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2012,
+                "venue": "Journal of Vocational Behavior",
+                "volume": "80",
+                "issue": "2",
+                "pages": "500--508",
+                "other_ids": {
+                    "DOI": [
+                        "10.1016/j.jvb.2011.08.007"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Ismael Diaz, Dan S Chiaburu, Ryan D Zimmerman, and Wendy R Boswell. 2012. Communication technology: Pros and cons of constant connection to work. Journal of Vocational Behavior 80, 2 (2012), 500-508. https://doi.org/10.1016/j.jvb.2011.08. 007",
+                "links": null
+            },
+            "BIBREF1": {
+                "ref_id": "b1",
+                "title": "Metaverse for Social Good: A University Campus Prototype",
+                "authors": [
+                    {
+                        "first": "Haihan",
+                        "middle": [],
+                        "last": "Duan",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Jiaye",
+                        "middle": [],
+                        "last": "Li",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Sizheng",
+                        "middle": [],
+                        "last": "Fan",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Zhonghao",
+                        "middle": [],
+                        "last": "Lin",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Xiao",
+                        "middle": [],
+                        "last": "Wu",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Wei",
+                        "middle": [],
+                        "last": "Cai",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/mm/DuanLFLW021",
+                "year": 2021,
+                "venue": "MM 2021 -Proceedings of the 29th ACM International Conference on Multimedia",
+                "volume": "",
+                "issue": "",
+                "pages": "153--161",
+                "other_ids": {
+                    "DOI": [
+                        "10.1145/3474085.3479238"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Haihan Duan, Jiaye Li, Sizheng Fan, Zhonghao Lin, Xiao Wu, and Wei Cai. 2021. Metaverse for Social Good: A University Campus Prototype. MM 2021 -Proceedings of the 29th ACM International Conference on Multimedia (2021), 153-161. https: //doi.org/10.1145/3474085.3479238",
+                "links": null
+            },
+            "BIBREF2": {
+                "ref_id": "b2",
+                "title": "Body and mind: A study of avatar personalization in three virtual worlds",
+                "authors": [
+                    {
+                        "first": "Nicolas",
+                        "middle": [],
+                        "last": "Ducheneaut",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Ming",
+                        "middle": [],
+                        "last": "Hui",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Don",
+                        "middle": [],
+                        "last": "Wen",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Nicholas",
+                        "middle": [],
+                        "last": "Yee",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Greg",
+                        "middle": [],
+                        "last": "Wadley",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/chi/DucheneautWYW09",
+                "year": 2009,
+                "venue": "Conference on Human Factors in Computing Systems -Proceedings",
+                "volume": "",
+                "issue": "",
+                "pages": "1151--1160",
+                "other_ids": {
+                    "DOI": [
+                        "10.1145/1518701.1518877"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Nicolas Ducheneaut, Ming Hui Don Wen, Nicholas Yee, and Greg Wadley. 2009. Body and mind: A study of avatar personalization in three virtual worlds. Con- ference on Human Factors in Computing Systems -Proceedings (2009), 1151-1160. https://doi.org/10.1145/1518701.1518877",
+                "links": null
+            },
+            "BIBREF3": {
+                "ref_id": "b3",
+                "title": "Body, Avatar, and Me",
+                "authors": [
+                    {
+                        "first": "Guo",
+                        "middle": [],
+                        "last": "Freeman",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Divine",
+                        "middle": [],
+                        "last": "Maloney",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "journals/pacmhci/FreemanM20",
+                "year": 2021,
+                "venue": "Proceedings of the ACM on Human-Computer Interaction",
+                "volume": "4",
+                "issue": "",
+                "pages": "1--27",
+                "other_ids": {
+                    "DOI": [
+                        "10.1145/3432938"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Guo Freeman and Divine Maloney. 2021. Body, Avatar, and Me. Proceedings of the ACM on Human-Computer Interaction 4, CSCW3 (2021), 1-27. https://doi.org/10. 1145/3432938",
+                "links": null
+            },
+            "BIBREF4": {
+                "ref_id": "b4",
+                "title": "The impact of self-avatars on trust and collaboration in shared virtual environments",
+                "authors": [
+                    {
+                        "first": "Ye",
+                        "middle": [],
+                        "last": "Pan",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Anthony",
+                        "middle": [],
+                        "last": "Steed",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2017,
+                "venue": "PLoS ONE",
+                "volume": "12",
+                "issue": "12",
+                "pages": "1--20",
+                "other_ids": {
+                    "DOI": [
+                        "10.1371/journal.pone.0189078"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Ye Pan and Anthony Steed. 2017. The impact of self-avatars on trust and collaboration in shared virtual environments. PLoS ONE 12, 12 (2017), 1-20. https://doi.org/10.1371/journal.pone.0189078",
+                "links": null
+            },
+            "BIBREF5": {
+                "ref_id": "b5",
+                "title": "Racial diversity in indie games: Patterns, challenges, and opportunities",
+                "authors": [
+                    {
+                        "first": "J",
+                        "middle": [],
+                        "last": "Cale",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Rowan",
+                        "middle": [],
+                        "last": "Passmore",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Max",
+                        "middle": [
+                            "V"
+                        ],
+                        "last": "Yates",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Regan",
+                        "middle": [
+                            "L"
+                        ],
+                        "last": "Birk",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "",
+                        "middle": [],
+                        "last": "Mandryk",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/chiplay/PassmoreYBM17",
+                "year": 2017,
+                "venue": "CHI PLAY 2017 Extended Abstracts -Extended Abstracts Publication of the Annual Symposium on Computer-Human Interaction in Play",
+                "volume": "",
+                "issue": "",
+                "pages": "137--151",
+                "other_ids": {
+                    "DOI": [
+                        "10.1145/3130859.3131438"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Cale J. Passmore, Rowan Yates, Max V. Birk, and Regan L. Mandryk. 2017. Racial diversity in indie games: Patterns, challenges, and opportunities. CHI PLAY 2017 Extended Abstracts -Extended Abstracts Publication of the Annual Symposium on Computer-Human Interaction in Play October 2017 (2017), 137-151. https: //doi.org/10.1145/3130859.3131438",
+                "links": null
+            },
+            "BIBREF6": {
+                "ref_id": "b6",
+                "title": "Virtual Reality and Political Outgroup Contact: Can Avatar Customization and Common Ingroup Identity Reduce Social Distance?",
+                "authors": [
+                    {
+                        "first": "Jorge",
+                        "middle": [],
+                        "last": "Pe\u00f1a",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Grace",
+                        "middle": [],
+                        "last": "Wolff",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Magdalena",
+                        "middle": [],
+                        "last": "Wojcieszak",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2021,
+                "venue": "Social Media and Society",
+                "volume": "7",
+                "issue": "",
+                "pages": "",
+                "other_ids": {
+                    "DOI": [
+                        "10.1177/2056305121993765"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Jorge Pe\u00f1a, Grace Wolff, and Magdalena Wojcieszak. 2021. Virtual Reality and Political Outgroup Contact: Can Avatar Customization and Common Ingroup Identity Reduce Social Distance? Social Media and Society 7, 1 (2021). https: //doi.org/10.1177/2056305121993765",
+                "links": null
+            },
+            "BIBREF7": {
+                "ref_id": "b7",
+                "title": "The proteus effect: The effect of transformed self-representation on behavior",
+                "authors": [
+                    {
+                        "first": "Nick",
+                        "middle": [],
+                        "last": "Yee",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Jeremy",
+                        "middle": [],
+                        "last": "Bailenson",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2007,
+                "venue": "Human Communication Research",
+                "volume": "33",
+                "issue": "3",
+                "pages": "271--290",
+                "other_ids": {
+                    "DOI": [
+                        "10.1111/j.1468-2958.2007.00299.x"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Nick Yee and Jeremy Bailenson. 2007. The proteus effect: The effect of transformed self-representation on behavior. Human Communication Research 33, 3 (2007), 271-290. https://doi.org/10.1111/j.1468-2958.2007.00299.x",
+                "links": null
+            }
+        }
+    }
+}

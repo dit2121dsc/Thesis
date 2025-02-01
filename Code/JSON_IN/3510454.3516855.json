@@ -1,0 +1,1853 @@
+{
+    "paper_id": "3510454",
+    "header": {
+        "generated_with": "S2ORC 1.0.0",
+        "date_generated": "2024-03-20T17:52:50.656305Z"
+    },
+    "title": "ESBMC-solidity",
+    "authors": [
+        {
+            "first": "Kunjian",
+            "middle": [],
+            "last": "Song",
+            "suffix": "",
+            "affiliation": {
+                "laboratory": "",
+                "institution": "University of Manchester Manchester",
+                "location": {
+                    "country": "UK"
+                }
+            },
+            "email": "kunjian.song@postgrad.manchester.ac.uk"
+        },
+        {
+            "first": "Nedas",
+            "middle": [],
+            "last": "Matulevicius",
+            "suffix": "",
+            "affiliation": {
+                "laboratory": "",
+                "institution": "University of Manchester Manchester",
+                "location": {
+                    "country": "UK"
+                }
+            },
+            "email": "nedas.matulevicius@postgrad.manchester.ac.uk"
+        },
+        {
+            "first": "Eddie",
+            "middle": [
+                "B"
+            ],
+            "last": "De Lima Filho",
+            "suffix": "",
+            "affiliation": {},
+            "email": ""
+        },
+        {
+            "first": "Lucas",
+            "middle": [
+                "C"
+            ],
+            "last": "Cordeiro",
+            "suffix": "",
+            "affiliation": {
+                "laboratory": "",
+                "institution": "University of Manchester Manchester",
+                "location": {
+                    "country": "UK"
+                }
+            },
+            "email": "lucas.cordeiro@manchester.ac.uk"
+        }
+    ],
+    "year": "",
+    "venue": null,
+    "identifiers": {},
+    "abstract": "Smart contracts written in Solidity are programs used in blockchain networks, such as Etherium, for performing transactions. However, as with any piece of software, they are prone to errors and may present vulnerabilities, which malicious attackers could then use. This paper proposes a solidity frontend for the efficient SMT-based context-bounded model checker (ESBMC), named ESBMC-Solidity, which provides a way of verifying such contracts with its framework. A benchmark suite with vulnerable smart contracts was also developed for evaluation and comparison with other verification tools. The experiments performed here showed that ESBMC-Solidity detected all vulnerabilities, was the fastest tool and provided a counterexample for each benchmark. A demonstration is available at https://youtu.be/3UH8_1QAVN0.",
+    "pdf_parse": {
+        "abstract": [
+            {
+                "text": "Smart contracts written in Solidity are programs used in blockchain networks, such as Etherium, for performing transactions. However, as with any piece of software, they are prone to errors and may present vulnerabilities, which malicious attackers could then use. This paper proposes a solidity frontend for the efficient SMT-based context-bounded model checker (ESBMC), named ESBMC-Solidity, which provides a way of verifying such contracts with its framework. A benchmark suite with vulnerable smart contracts was also developed for evaluation and comparison with other verification tools. The experiments performed here showed that ESBMC-Solidity detected all vulnerabilities, was the fastest tool and provided a counterexample for each benchmark. A demonstration is available at https://youtu.be/3UH8_1QAVN0.",
+                "cite_spans": [],
+                "section": "Abstract",
+                "sec_num": null
+            }
+        ],
+        "body_text": [
+            {
+                "text": "is updated by those transactions, which indeed constitute state transitions.",
+                "cite_spans": [],
+                "section": "",
+                "sec_num": null
+            },
+            {
+                "text": "The transactions are performed by smart contracts, which are programs automatically executed on blockchain networks when specific conditions are met [1] , which encode business logic. For instance, such conditions can be an exchange of cryptocurrency or even a process of content unlocking if a digital rights management system is involved. Indeed, transactions act as stimuli to smart contracts. Nevertheless, such contracts must first be written in a given language. In the case of Etherium, smart contracts are written in Solidity, which is an object-oriented language for programs to be run on the Ethereum virtual machine (EVM) [2] .",
+                "cite_spans": [
+                    {
+                        "start": 149,
+                        "end": 152,
+                        "text": "[1]",
+                        "ref_id": "BIBREF0"
+                    },
+                    {
+                        "start": 633,
+                        "end": 636,
+                        "text": "[2]",
+                        "ref_id": "BIBREF1"
+                    }
+                ],
+                "section": "",
+                "sec_num": null
+            },
+            {
+                "text": "Once deployed, there is no way to update a smart contract except for deleting it entirely and re-deploying a new one. Even a smart contract's author cannot modify the corresponding source code or fix bugs after that [4] . Due to such immutability, it is critical to ensure that a smart contract is secure before its deployment on a blockchain network, such as Ethereum. However, as usually happens to software, smart contracts suffer from vulnerabilities, which represent a risk as malicious attackers often exploit them. As an example, the DAO attack, in 2016, resulted in a monetary loss of more than $50 million dollars, which forced Ethereum to be hard forked and then rolled back to a previous state [5] .",
+                "cite_spans": [
+                    {
+                        "start": 216,
+                        "end": 219,
+                        "text": "[4]",
+                        "ref_id": "BIBREF3"
+                    },
+                    {
+                        "start": 705,
+                        "end": 708,
+                        "text": "[5]",
+                        "ref_id": "BIBREF4"
+                    }
+                ],
+                "section": "",
+                "sec_num": null
+            },
+            {
+                "text": "If there can be vulnerabilities, software testing becomes paramount, and the community has already begun to tackle the related problems [6, 7] . However, most approaches target only a limited number of errors, which worsens as new applications appear and the need for specific aspects arises. Consequently, it is essential to employ mature and flexible verifiers, e.g., based on model checking and satisfiability modulo theories (SMT), to check smart contracts. This way, a myriad of problems is already handled, and consequent methodology advancements can be devised faster, including behavior models and specific properties [8] .",
+                "cite_spans": [
+                    {
+                        "start": 136,
+                        "end": 139,
+                        "text": "[6,",
+                        "ref_id": "BIBREF5"
+                    },
+                    {
+                        "start": 140,
+                        "end": 142,
+                        "text": "7]",
+                        "ref_id": "BIBREF6"
+                    },
+                    {
+                        "start": 626,
+                        "end": 629,
+                        "text": "[8]",
+                        "ref_id": "BIBREF7"
+                    }
+                ],
+                "section": "",
+                "sec_num": null
+            },
+            {
+                "text": "In that sense, the efficient SMT-based context-bounded model checker (ESBMC) is a good candidate [9, 10] . It is a state-of-the-art (SOTA) checker, which can be extended to support different programming languages and target systems, such as digital filters and controllers, even incorporating behavior models and companion tools [8, 11, 12] . In addition, it was initially devised as a C-language model checker and has been evaluated using standard benchmarks and embedded applications in the telecommunication industry [13] [14] [15] . Recent efforts include the development of a new frontend to verify the most recent C++ standard [16] .",
+                "cite_spans": [
+                    {
+                        "start": 97,
+                        "end": 100,
+                        "text": "[9,",
+                        "ref_id": "BIBREF8"
+                    },
+                    {
+                        "start": 101,
+                        "end": 104,
+                        "text": "10]",
+                        "ref_id": "BIBREF9"
+                    },
+                    {
+                        "start": 329,
+                        "end": 332,
+                        "text": "[8,",
+                        "ref_id": "BIBREF7"
+                    },
+                    {
+                        "start": 333,
+                        "end": 336,
+                        "text": "11,",
+                        "ref_id": "BIBREF10"
+                    },
+                    {
+                        "start": 337,
+                        "end": 340,
+                        "text": "12]",
+                        "ref_id": "BIBREF11"
+                    },
+                    {
+                        "start": 520,
+                        "end": 524,
+                        "text": "[13]",
+                        "ref_id": "BIBREF12"
+                    },
+                    {
+                        "start": 525,
+                        "end": 529,
+                        "text": "[14]",
+                        "ref_id": "BIBREF13"
+                    },
+                    {
+                        "start": 530,
+                        "end": 534,
+                        "text": "[15]",
+                        "ref_id": "BIBREF14"
+                    },
+                    {
+                        "start": 633,
+                        "end": 637,
+                        "text": "[16]",
+                        "ref_id": "BIBREF15"
+                    }
+                ],
+                "section": "",
+                "sec_num": null
+            },
+            {
+                "text": "This paper tackles the problem raised here, i.e., smart-contract verification, and proposes a frontend for ESBMC based on the newly developed Grammar-based Hybrid Conversion methodology explicitly developed for this work. It enables ESBMC to verify Solidity contracts, written in the Solidity language, using its available tools and techniques via two steps. First, we convert Solidity JavaScript object notation (JSON) abstract syntax trees (AST) into the ESBMC's intermediate representation (IR). Second, we integrate with ESBMC's infrastructure middleware and backend to reuse its existing SMTbased verification strategies (incremental and k-induction [17] ).",
+                "cite_spans": [
+                    {
+                        "start": 655,
+                        "end": 659,
+                        "text": "[17]",
+                        "ref_id": "BIBREF16"
+                    }
+                ],
+                "section": "",
+                "sec_num": null
+            },
+            {
+                "text": "In order to evaluate the proposed framework, named ESBMC-Solidity, a benchmark suite with vulnerable smart contracts was created and used as input for it and other SOTA Solidity verification tools: Smartcheck [18] , Slither [19] , Oyente [20] , and Mythril [21] . ESBMC-Solidity outperformed the mentioned verification tools in soundness and performance. Besides, it identified all vulnerabilities, with a counterexample for each, and proved the fastest approach.",
+                "cite_spans": [
+                    {
+                        "start": 209,
+                        "end": 213,
+                        "text": "[18]",
+                        "ref_id": "BIBREF17"
+                    },
+                    {
+                        "start": 224,
+                        "end": 228,
+                        "text": "[19]",
+                        "ref_id": "BIBREF18"
+                    },
+                    {
+                        "start": 238,
+                        "end": 242,
+                        "text": "[20]",
+                        "ref_id": "BIBREF19"
+                    },
+                    {
+                        "start": 257,
+                        "end": 261,
+                        "text": "[21]",
+                        "ref_id": "BIBREF20"
+                    }
+                ],
+                "section": "",
+                "sec_num": null
+            },
+            {
+                "text": "Fig. 1 illustrates the architecture of ESBMC-Solidity, where the gray box with solid border represents the new frontend, and the white ones constitute the existing ESBMC's components. The gray box with a dashed border indicates an external element for preprocessing smart contracts: the Solidity compiler. It is used for lexical analysis and parsing, taking a smart contract as input and then transforming it into JSON AST, which is done with the argument --ast-compact-json.",
+                "cite_spans": [],
+                "section": "TOOL DESCRIPTION 2.1 Tool Overview",
+                "sec_num": "2"
+            },
+            {
+                "text": "The proposed approach takes JSON AST and converts each Solidity AST of its nodes into an equivalent IR one, using the ESBMC's irept, a tree-structured IR that preserves a program's semantics. Next, each irept node is converted into the corresponding symbol and then added to a table, which is translated into a GOTO program. Then, the latter is processed by the symbolic execution engine (SymEx) to generate its static single assignment (SSA) form, which is used to generate verification conditions (VCs) \ud835\udc36 \u2227 \u00ac\ud835\udc43, where \ud835\udc36 represents constraints and \ud835\udc43 denotes a safety property. Lastly, ESBMC uses off-the-shelf SMT solvers to verify those VCs' satisfiability.",
+                "cite_spans": [],
+                "section": "TOOL DESCRIPTION 2.1 Tool Overview",
+                "sec_num": "2"
+            },
+            {
+                "text": "If a property is satisfiable, an execution path leads to a bug in an original Solidity smart contract. Then, when ESBMC detects it, a counterexample is provided, in the form of state traces, to allow its reproduction. It is worth noticing that ESBMC supports several SMT solvers, including Z3 [22] , Bitwuzla [23] , Boolector [24] , MathSAT [25] , CVC4 [26] , and Yices [27, 28] .",
+                "cite_spans": [
+                    {
+                        "start": 293,
+                        "end": 297,
+                        "text": "[22]",
+                        "ref_id": "BIBREF21"
+                    },
+                    {
+                        "start": 309,
+                        "end": 313,
+                        "text": "[23]",
+                        "ref_id": "BIBREF22"
+                    },
+                    {
+                        "start": 326,
+                        "end": 330,
+                        "text": "[24]",
+                        "ref_id": "BIBREF23"
+                    },
+                    {
+                        "start": 341,
+                        "end": 345,
+                        "text": "[25]",
+                        "ref_id": "BIBREF24"
+                    },
+                    {
+                        "start": 353,
+                        "end": 357,
+                        "text": "[26]",
+                        "ref_id": "BIBREF25"
+                    },
+                    {
+                        "start": 370,
+                        "end": 374,
+                        "text": "[27,",
+                        "ref_id": "BIBREF26"
+                    },
+                    {
+                        "start": 375,
+                        "end": 378,
+                        "text": "28]",
+                        "ref_id": null
+                    }
+                ],
+                "section": "TOOL DESCRIPTION 2.1 Tool Overview",
+                "sec_num": "2"
+            },
+            {
+                "text": "Given a smart contract as input, the goal of the proposed frontend is to populate the resulting symbol table, where each symbol is represented by the ESBMC's symbolt data structure [28] . Furthermore, it shall complete the type-checking procedure of Solidity AST nodes and transform each JSON AST node into its equivalent ESBMC's irept one while preserving the associated semantic information. To achieve this goal, we developed this frontend based on the Grammar-Based Hybrid Conversion methodology [29], as an approach specifically devised for that during the development of this work.",
+                "cite_spans": [
+                    {
+                        "start": 181,
+                        "end": 185,
+                        "text": "[28]",
+                        "ref_id": null
+                    }
+                ],
+                "section": "The Grammar-Based Hybrid Conversion Methodology",
+                "sec_num": "2.2"
+            },
+            {
+                "text": "Grammar-Based Conversion. The proposed frontend uses the library nlohmann/json1 to process Solidity ASTs in JSON format. When traversing Solidity AST nodes, it uses different functions to transform them into equivalent \ud835\udc56\ud835\udc5f\ud835\udc52\ud835\udc5d_\ud835\udc61 ones, e.g., get_var_decl_stmt, get_expr, and get_statement, for variable-declaration-statement, expression, and statement nodes, respectively. Besides, each AST node may contain multiple child ones, e.g., the AST node of a for loop contains four child nodes: initialisation, condition, increment, and loop body. So, during their conversion, the production rules in Solidity grammar documentation are followed [29], so that they are visited in correct order. For instance, the variable-initialisation node of a for loop must be visited before the body one, as it may be referenced by the latter. If the node for a body loop is converted before its variable initialisation, the type checker will fail to handle any reference to it; so, conversion order is guided by production rules.",
+                "cite_spans": [],
+                "section": "The Grammar-Based Hybrid Conversion Methodology",
+                "sec_num": "2.2"
+            },
+            {
+                "text": "Hybrid conversion. Three functions must be supported: (1) \ud835\udc4e\ud835\udc60\ud835\udc60\ud835\udc52\ud835\udc5f\ud835\udc61 () for defining safety properties; (2) \ud835\udc4e\ud835\udc60\ud835\udc60\ud835\udc62\ud835\udc5a\ud835\udc52 () for defining constraints; and (3) \ud835\udc5b\ud835\udc5c\ud835\udc5b\ud835\udc51\ud835\udc52\ud835\udc61 () for assigning non-deterministic values to variables. Consequently, they are implemented by ESBMC as C-style declarations. However, the new frontend works with JSON AST nodes. Besides, since there are more than 70 intrinsic declarations, e.g., forward declarations for nondeterministic types, we instantiate the existing ESBMC's clang frontend to convert those into irept nodes to avoid replication, hence generating the symbol table mentioned before. Finally, the latter is further merged with the symbol table generated from the original Solidity AST. Fig. 2 shows an example of smart-contract verification with ESBMC-Solidity. Indeed, developers can instrument code by adding the hooks, e.g., nondet for nondeterministic integers between 0 and 255 and __ESBMC_assume for additional constraints. Those help developers narrow down the scope for triggering a bug, hence identifying a set of breaking inputs. Function func_sat is the one we need to verify, where two state variables x and sum are defined in lines 4 and 5, respectively, while a safety property indicates that x + y should not be a multiple of 16. In addition, constraints are added using __ESBMC_assume, in lines 17, 18, and 19, which restrict \ud835\udc66 as any integer between 220 and 255, but 224. Then, ESBMC will check whether there exists an execution path that satisfies its negation. This way, the verification of func_sat becomes a satisfiability problem: given the binary operation expression \"sum = x + y\", where x is 0 and y is a constrained nondeterministic value, find an execution path where the negation of \"\ud835\udc60\ud835\udc62\ud835\udc5a%16! = 0\" is satisfied. ESBMC is then invoked with esbmc <JSON AST> --function func_sat \\ --contract <contract source code> --z3",
+                "cite_spans": [],
+                "section": "The Grammar-Based Hybrid Conversion Methodology",
+                "sec_num": "2.2"
+            },
+            {
+                "text": "For the smart contract in Fig. 2 , ESBMC generates the \ud835\udc36 and \ud835\udc43 equations as described in Eq. ( 1) for constraints and Eq. ( 2) for property. Eq. ( 1) shows a conjunction of the constraints represented by assignments. When generating its SSA form, ESBMC uses the temporary variable temp to represent the left-hand-side of the safety property specified in line 20, which corresponds to the assignment \ud835\udc61\ud835\udc52\ud835\udc5a\ud835\udc5d = \ud835\udc60\ud835\udc62\ud835\udc5a%16 in Eq. (1) .",
+                "cite_spans": [],
+                "section": "Illustrative Example",
+                "sec_num": "2.3"
+            },
+            {
+                "text": "\ud835\udc36 = \u23a1 \u23a2 \u23a2 \u23a2 \u23a2 \u23a2 \u23a2 \u23a3 \ud835\udc66 = \ud835\udc5b\ud835\udc5c\ud835\udc5b\ud835\udc51\ud835\udc52\ud835\udc61 () \u2227 \ud835\udc60\ud835\udc62\ud835\udc5a = \ud835\udc66 \u2227 \ud835\udc66 ! = 224 \u2227 \ud835\udc61\ud835\udc52\ud835\udc5a\ud835\udc5d = \ud835\udc60\ud835\udc62\ud835\udc5a%16 \u23a4 \u23a5 \u23a5 \u23a5 \u23a5 \u23a5 \u23a5 \u23a6 (1) \ud835\udc43 = \ud835\udc61\ud835\udc52\ud835\udc5a\ud835\udc5d ! = 0 (2)",
+                "cite_spans": [],
+                "section": "Illustrative Example",
+                "sec_num": "2.3"
+            },
+            {
+                "text": "The resulting VC for satisfiability verification, via SMT solver, is then formed by \ud835\udc36 \u2227 \u00ac\ud835\udc43. Consequently, ESBMC reports a property violation and provides a counterexample that contains a trace of states showing the set of assignments and the breaking values that trigger such violation, where \ud835\udc66 is set with a value 240 as illustrated in Fig. 3 . ------------------------------------------------- ------------------------------------------------- --------------------------------------------------- 13 Violated property : ",
+                "cite_spans": [],
+                "section": "Illustrative Example",
+                "sec_num": "2.3"
+            },
+            {
+                "text": "ESBMC-Solidity, though an early prototype, that yet covers all production rules, can detect vulnerabilities listed in the smart-contract weakness classification (SWC) registry [31] . So, our evaluation aims to answer three questions. EQ1 (soundness). Is our approach able to report a confirmed bug in a smart contract? EQ2 (performance). Does our approach find a bug in a reasonable amount of time? EQ3 (bug reproduction). Is our approach able to provide a counterexample to help reproduce a specific bug? -Yes No Yes Yes Total Time 1.160s 0.519s 1.116s 3.106s 0.183s",
+                "cite_spans": [
+                    {
+                        "start": 176,
+                        "end": 180,
+                        "text": "[31]",
+                        "ref_id": "BIBREF27"
+                    }
+                ],
+                "section": "EVALUATION AND BENCHMARKS",
+                "sec_num": "3"
+            },
+            {
+                "text": "A benchmark suite that contains bugs in smart contracts was developed to evaluate ESBMC-Solidity and compare it with other SOTA verification tools [32] . The design of each test case (TC) was guided by the SWC registry [31] , as shown in Table 2 , while Table 1 shows that all bugs in TCs were detected and confirmed by at least one of the non-ESBMC tools. The test suite and logs are publicly available in Zenodo. ",
+                "cite_spans": [
+                    {
+                        "start": 147,
+                        "end": 151,
+                        "text": "[32]",
+                        "ref_id": "BIBREF28"
+                    },
+                    {
+                        "start": 219,
+                        "end": 223,
+                        "text": "[31]",
+                        "ref_id": "BIBREF27"
+                    }
+                ],
+                "section": "Benchmark Suite Design",
+                "sec_num": "3.1"
+            },
+            {
+                "text": "Table 1 shows results for ESBMC-Solidity and other tools. The former found bugs in all TCs confirmed by Mythril, which affirms EQ1. SmartCheck and Slither were able to confirm TC5, which contains a vulnerability reported in the security considerations 3 , while detected none for the other TCs. Oyente did not find any bug. Mythril, a tool used in the service MythX TM [21] , also reported bugs in all TCs. Apart from TC5, Mythril and the other non-ESBMC tools failed to provide a counterexample for each TC. However, ESBMC-Solidity did, which affirms EQ3. For TC5, a counterexample is not needed, as a tool should only inform that authorization via \ud835\udc61\ud835\udc65.\ud835\udc5c\ud835\udc5f\ud835\udc56\ud835\udc54\ud835\udc56\ud835\udc5b must be avoided. One possible reason for the missing counterexamples could be loss of the original Solidity syntax, as tools either use EVM bytecode, e.g., Oyente and Mythril or rely on various forms of IR that do not preserve the original Solidity declaration references needed for state tracing, e.g., SmartCheck and Slither.",
+                "cite_spans": [
+                    {
+                        "start": 369,
+                        "end": 373,
+                        "text": "[21]",
+                        "ref_id": "BIBREF20"
+                    }
+                ],
+                "section": "Results",
+                "sec_num": "3.2"
+            },
+            {
+                "text": "2 https://doi.org/10.5281/zenodo.5721726 3 https://docs.soliditylang.org/en/v0.8.6/security-considerations.html ESBMC-Solidity is the fastest tool, as can be seen in the last line of Table 1 , which thus affirms EQ2. Oyente and Mythril work on EVM bytecode and employ simulation for execution path-exploration [33] , which might be the reason why they are slower than ESBMC-Solidity. Apart from bug detection, Slither also provides code optimization [19] , which might add to the total verification time. To the best of our knowledge, there is no option in Slither to disable the optimization. SmartCheck is implemented in Java, converts Solidity code into an XML-based IR, and uses XPath to query it, while ESBMC-Solidity is implemented purely in C++.",
+                "cite_spans": [
+                    {
+                        "start": 310,
+                        "end": 314,
+                        "text": "[33]",
+                        "ref_id": "BIBREF29"
+                    },
+                    {
+                        "start": 450,
+                        "end": 454,
+                        "text": "[19]",
+                        "ref_id": "BIBREF18"
+                    }
+                ],
+                "section": "Results",
+                "sec_num": "3.2"
+            },
+            {
+                "text": "Overall, ESBMC-Solidity presented the best results, reporting bug found in all test cases in 0.183 seconds, faster than other SOTA tools, which answers EQ1 nad EQ2. Regarding the counterexample, ESBMC was the only tool that successfully provided counterexamples for the applicable test cases in our experiment.",
+                "cite_spans": [],
+                "section": "Results",
+                "sec_num": "3.2"
+            },
+            {
+                "text": "Among the tools we evaluated, Mythril and Oyente use SMT-based symbolic execution to check EVM bytecode and also simulate a virtual machine for execution-path exploration, which might lead to performance degradation [33] . ESBMC-Solidity also uses SMT solvers as backends, but it processes ASTs, so there is no need for environment simulation.",
+                "cite_spans": [
+                    {
+                        "start": 216,
+                        "end": 220,
+                        "text": "[33]",
+                        "ref_id": "BIBREF29"
+                    }
+                ],
+                "section": "RELATED WORK",
+                "sec_num": "4"
+            },
+            {
+                "text": "A similar tool that also adopts SMT encoding and solvers to find satisfiability for a property violation is discussed by Alt and Reitwiessner [33] . They developed a component to translate programs into smtlib2 formulae to interface with SMT solvers via their C++ interfaces [33] . The main difference between it and ESBMC-Solidity is that the latter supports code instrumentation, using special functions, which narrows down the scope of inputs that trigger violations. In addition, ESBMC-Solidity can also be extended on top of various existing verification strategies and reasoning techniques provided by ESBMC, such as k-induction [17] .",
+                "cite_spans": [
+                    {
+                        "start": 142,
+                        "end": 146,
+                        "text": "[33]",
+                        "ref_id": "BIBREF29"
+                    },
+                    {
+                        "start": 275,
+                        "end": 279,
+                        "text": "[33]",
+                        "ref_id": "BIBREF29"
+                    },
+                    {
+                        "start": 635,
+                        "end": 639,
+                        "text": "[17]",
+                        "ref_id": "BIBREF16"
+                    }
+                ],
+                "section": "RELATED WORK",
+                "sec_num": "4"
+            },
+            {
+                "text": "We presented ESBMC-Solidity that checks memory safety and userdefined properties in smart contracts written in the Solidity programming language. We evaluated ESBMC-Solidity against other SOTA verification tools and overcame them, confirming all presented bugs and providing the associated counterexamples. Other SOTA tools for Solidity cannot provide such a counterexample for the violated properties. Although ESBMC-Solidity is an early prototype, it shows promising results. Our current focus is on providing 100% coverage for the language Solidity, including polymorphism, inheritance, special crypto functions, such as Keccak256 and sha256, and multiple returns.",
+                "cite_spans": [],
+                "section": "CONCLUSIONS",
+                "sec_num": "5"
+            },
+            {
+                "text": "JSON for Modern C++ -https://github.com/nlohmann/json",
+                "cite_spans": [],
+                "section": "",
+                "sec_num": null
+            }
+        ],
+        "bib_entries": {
+            "BIBREF0": {
+                "ref_id": "b0",
+                "title": "Varney, Sir David (Robert), (born 11 May 1946), Chairman, Packt Ltd, since 2012",
+                "authors": [
+                    {
+                        "first": "Imran",
+                        "middle": [],
+                        "last": "Bashir",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2017,
+                "venue": "",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {
+                    "DOI": [
+                        "10.1093/ww/9780199540884.013.u41004"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Imran Bashir. 2017. Mastering blockchain. Packt Publishing Ltd.",
+                "links": null
+            },
+            "BIBREF1": {
+                "ref_id": "b1",
+                "title": "Hands-on Smart Contract Development with Solidity and Ethereum: From Fundamentals to Deployment",
+                "authors": [
+                    {
+                        "first": "Kevin",
+                        "middle": [],
+                        "last": "Solorio",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Randall",
+                        "middle": [],
+                        "last": "Kanna",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Dave",
+                        "middle": [
+                            "H"
+                        ],
+                        "last": "Hoover",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2019,
+                "venue": "",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Kevin Solorio, Randall Kanna, and Dave H Hoover. 2019. Hands-on Smart Contract Development with Solidity and Ethereum: From Fundamentals to Deployment. O'Reilly Media, Incorporated.",
+                "links": null
+            },
+            "BIBREF2": {
+                "ref_id": "b2",
+                "title": "Blockchain technology overview",
+                "authors": [
+                    {
+                        "first": "Dylan",
+                        "middle": [],
+                        "last": "Yaga",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Peter",
+                        "middle": [],
+                        "last": "Mell",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Nik",
+                        "middle": [],
+                        "last": "Roby",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Karen",
+                        "middle": [],
+                        "last": "Scarfone",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2019,
+                "venue": "",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {
+                    "ORCID": [
+                        "0000-0003-2938-897X",
+                        "0000-0001-6334-9486"
+                    ],
+                    "DOI": [
+                        "10.6028/nist.ir.8202"
+                    ],
+                    "arXiv": [
+                        "arXiv:1906.11078"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Dylan Yaga, Peter Mell, Nik Roby, and Karen Scarfone. 2019. Blockchain technol- ogy overview. arXiv preprint arXiv:1906.11078 (2019).",
+                "links": null
+            },
+            "BIBREF3": {
+                "ref_id": "b3",
+                "title": "Mastering ethereum: building smart contracts and dapps",
+                "authors": [
+                    {
+                        "first": "Andreas",
+                        "middle": [
+                            "M"
+                        ],
+                        "last": "",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Antonopoulos",
+                        "middle": [],
+                        "last": "",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Gavin",
+                        "middle": [],
+                        "last": "Wood",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2018,
+                "venue": "O'reilly Media",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Andreas M Antonopoulos and Gavin Wood. 2018. Mastering ethereum: building smart contracts and dapps. O'reilly Media.",
+                "links": null
+            },
+            "BIBREF4": {
+                "ref_id": "b4",
+                "title": "Understanding a revolutionary and flawed grand experiment in blockchain: the DAO attack",
+                "authors": [
+                    {
+                        "first": "Muhammad",
+                        "middle": [],
+                        "last": "Izhar Mehar",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Charles",
+                        "middle": [
+                            "Louis"
+                        ],
+                        "last": "Shier",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Alana",
+                        "middle": [],
+                        "last": "Giambattista",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Elgar",
+                        "middle": [],
+                        "last": "Gong",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Gabrielle",
+                        "middle": [],
+                        "last": "Fletcher",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Ryan",
+                        "middle": [],
+                        "last": "Sanayhie",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Henry",
+                        "middle": [
+                            "M"
+                        ],
+                        "last": "Kim",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Marek",
+                        "middle": [],
+                        "last": "Laskowski",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2019,
+                "venue": "Journal of Cases on Information Technology (JCIT)",
+                "volume": "21",
+                "issue": "1",
+                "pages": "19--32",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Muhammad Izhar Mehar, Charles Louis Shier, Alana Giambattista, Elgar Gong, Gabrielle Fletcher, Ryan Sanayhie, Henry M Kim, and Marek Laskowski. 2019. Understanding a revolutionary and flawed grand experiment in blockchain: the DAO attack. Journal of Cases on Information Technology (JCIT) 21, 1 (2019), 19-32.",
+                "links": null
+            },
+            "BIBREF5": {
+                "ref_id": "b5",
+                "title": "solc-verify: A Modular Verifier for Solidity Smart Contracts",
+                "authors": [
+                    {
+                        "first": "\u00c1kos",
+                        "middle": [],
+                        "last": "Hajdu",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Dejan",
+                        "middle": [],
+                        "last": "Jovanovi\u0107",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/vstte/HajduJ19",
+                "year": 2019,
+                "venue": "Lecture Notes in Computer Science",
+                "volume": "",
+                "issue": "",
+                "pages": "161--179",
+                "other_ids": {
+                    "DOI": [
+                        "10.1007/978-3-030-41600-3_11"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "\u00c1kos Hajdu and Dejan Jovanovi\u0107. 2019. solc-verify: A modular verifier for solidity smart contracts. In Working Conference on Verified Software: Theories, Tools, and Experiments. Springer, 161-179.",
+                "links": null
+            },
+            "BIBREF6": {
+                "ref_id": "b6",
+                "title": "A Survey on Formal Verification for Solidity Smart Contracts",
+                "authors": [
+                    {
+                        "first": "Ikram",
+                        "middle": [],
+                        "last": "Garfatta",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Kais",
+                        "middle": [],
+                        "last": "Klai",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Walid",
+                        "middle": [],
+                        "last": "Gaaloul",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Mohamed",
+                        "middle": [],
+                        "last": "Graiet",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/acsw/GarfattaKGG21",
+                "year": 2021,
+                "venue": "2021 Australasian Computer Science Week Multiconference",
+                "volume": "",
+                "issue": "",
+                "pages": "1--10",
+                "other_ids": {
+                    "DOI": [
+                        "10.1145/3437378.3437879"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Ikram Garfatta, Kais Klai, Walid Gaaloul, and Mohamed Graiet. 2021. A survey on formal verification for solidity smart contracts. In 2021 Australasian Computer Science Week Multiconference. 1-10.",
+                "links": null
+            },
+            "BIBREF7": {
+                "ref_id": "b7",
+                "title": "Survey on automated symbolic verification and its application for synthesising cyber-physical systems",
+                "authors": [
+                    {
+                        "first": "Eddie",
+                        "middle": [
+                            "B"
+                        ],
+                        "last": "Lucas C Cordeiro",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Iury",
+                        "middle": [
+                            "V"
+                        ],
+                        "last": "De Lima Filho",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "",
+                        "middle": [],
+                        "last": "Bessa",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2020,
+                "venue": "IET Cyber-Physical Systems: Theory & Applications",
+                "volume": "5",
+                "issue": "1",
+                "pages": "1--24",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Lucas C Cordeiro, Eddie B de Lima Filho, and Iury V Bessa. 2020. Survey on auto- mated symbolic verification and its application for synthesising cyber-physical systems. IET Cyber-Physical Systems: Theory & Applications 5, 1 (2020), 1-24.",
+                "links": null
+            },
+            "BIBREF8": {
+                "ref_id": "b8",
+                "title": "ESBMC 5.0: an industrial-strength C model checker",
+                "authors": [
+                    {
+                        "first": "Felipe",
+                        "middle": [
+                            "R"
+                        ],
+                        "last": "Mikhail R Gadelha",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Jeremy",
+                        "middle": [],
+                        "last": "Monteiro",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Lucas",
+                        "middle": [
+                            "C"
+                        ],
+                        "last": "Morse",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Bernd",
+                        "middle": [],
+                        "last": "Cordeiro",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Denis",
+                        "middle": [
+                            "A"
+                        ],
+                        "last": "Fischer",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "",
+                        "middle": [],
+                        "last": "Nicole",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/kbse/GadelhaMMC0N18",
+                "year": 2018,
+                "venue": "Proceedings of the 33rd ACM/IEEE International Conference on Automated Software Engineering",
+                "volume": "",
+                "issue": "",
+                "pages": "888--891",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Mikhail R Gadelha, Felipe R Monteiro, Jeremy Morse, Lucas C Cordeiro, Bernd Fischer, and Denis A Nicole. 2018. ESBMC 5.0: an industrial-strength C model checker. In Proceedings of the 33rd ACM/IEEE International Conference on Auto- mated Software Engineering. 888-891.",
+                "links": null
+            },
+            "BIBREF9": {
+                "ref_id": "b9",
+                "title": "ESBMC 6.1: automated test case generation using bounded model checking",
+                "authors": [
+                    {
+                        "first": "Mikhail",
+                        "middle": [
+                            "R"
+                        ],
+                        "last": "Gadelha",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Rafael",
+                        "middle": [
+                            "S"
+                        ],
+                        "last": "Menezes",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Lucas",
+                        "middle": [
+                            "C"
+                        ],
+                        "last": "Cordeiro",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2021,
+                "venue": "International Journal on Software Tools for Technology Transfer",
+                "volume": "23",
+                "issue": "6",
+                "pages": "857--861",
+                "other_ids": {
+                    "DOI": [
+                        "10.1007/s10009-020-00571-2"
+                    ],
+                    "ISSN": [
+                        "1433-2779"
+                    ],
+                    "ISSNe": [
+                        "1433-2787"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Mikhail R. Gadelha, Rafael S. Menezes, and Lucas C. Cordeiro. 2021. ESBMC 6.1: automated test case generation using bounded model checking. Int. J. Softw. Tools Technol. Transf. 23, 6 (2021), 857-861. https://doi.org/10.1007/s10009-020-00571-2",
+                "links": null
+            },
+            "BIBREF10": {
+                "ref_id": "b10",
+                "title": "Verification and refutation of C programs based on k-induction and invariant inference",
+                "authors": [
+                    {
+                        "first": "Herbert",
+                        "middle": [],
+                        "last": "Omar M Alhawi",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Mikhail",
+                        "middle": [
+                            "R"
+                        ],
+                        "last": "Rocha",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Lucas",
+                        "middle": [
+                            "C"
+                        ],
+                        "last": "Gadelha",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Eddie",
+                        "middle": [],
+                        "last": "Cordeiro",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "",
+                        "middle": [],
+                        "last": "Batista",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2021,
+                "venue": "International Journal on Software Tools for Technology Transfer",
+                "volume": "23",
+                "issue": "2",
+                "pages": "115--135",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Omar M Alhawi, Herbert Rocha, Mikhail R Gadelha, Lucas C Cordeiro, and Eddie Batista. 2021. Verification and refutation of C programs based on k-induction and invariant inference. International Journal on Software Tools for Technology Transfer 23, 2 (2021), 115-135.",
+                "links": null
+            },
+            "BIBREF11": {
+                "ref_id": "b11",
+                "title": "Verifying fragility in digital systems with uncertainties using DSVerifier v2. 0",
+                "authors": [
+                    {
+                        "first": "",
+                        "middle": [],
+                        "last": "Lennon C Chaves",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "I",
+                        "middle": [],
+                        "last": "Hussama",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Iury",
+                        "middle": [
+                            "V"
+                        ],
+                        "last": "Ismail",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Lucas",
+                        "middle": [
+                            "C"
+                        ],
+                        "last": "Bessa",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Eddie",
+                        "middle": [
+                            "B"
+                        ],
+                        "last": "Cordeiro",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "",
+                        "middle": [],
+                        "last": "De Lima Filho",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2019,
+                "venue": "Journal of Systems and Software",
+                "volume": "153",
+                "issue": "",
+                "pages": "22--43",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Lennon C Chaves, Hussama I Ismail, Iury V Bessa, Lucas C Cordeiro, and Eddie B de Lima Filho. 2019. Verifying fragility in digital systems with uncertainties using DSVerifier v2. 0. Journal of Systems and Software 153 (2019), 22-43.",
+                "links": null
+            },
+            "BIBREF12": {
+                "ref_id": "b12",
+                "title": "SMT-Based Bounded Model Checking for Embedded ANSI-C Software",
+                "authors": [
+                    {
+                        "first": "Lucas",
+                        "middle": [],
+                        "last": "Cordeiro",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Bernd",
+                        "middle": [],
+                        "last": "Fischer",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Joao",
+                        "middle": [],
+                        "last": "Marques-Silva",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/kbse/CordeiroFM09",
+                "year": 2011,
+                "venue": "IEEE Transactions on Software Engineering",
+                "volume": "38",
+                "issue": "4",
+                "pages": "957--974",
+                "other_ids": {
+                    "DOI": [
+                        "10.1109/tse.2011.59"
+                    ],
+                    "ISSN": [
+                        "0098-5589"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Lucas Cordeiro, Bernd Fischer, and Joao Marques-Silva. 2011. SMT-based bounded model checking for embedded ANSI-C software. IEEE Transactions on Software Engineering 38, 4 (2011), 957-974.",
+                "links": null
+            },
+            "BIBREF13": {
+                "ref_id": "b13",
+                "title": "Context-Bounded Model Checking of LTL Properties for ANSI-C Software",
+                "authors": [
+                    {
+                        "first": "Jeremy",
+                        "middle": [],
+                        "last": "Morse",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Lucas",
+                        "middle": [
+                            "C"
+                        ],
+                        "last": "Cordeiro",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Denis",
+                        "middle": [
+                            "A"
+                        ],
+                        "last": "Nicole",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Bernd",
+                        "middle": [],
+                        "last": "Fischer",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/sefm/MorseCNF11",
+                "year": 2011,
+                "venue": "Software Engineering and Formal Methods",
+                "volume": "7041",
+                "issue": "",
+                "pages": "302--317",
+                "other_ids": {
+                    "DOI": [
+                        "10.1007/978-3-642-24690-6_21"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Jeremy Morse, Lucas C. Cordeiro, Denis A. Nicole, and Bernd Fischer. 2011. Context-Bounded Model Checking of LTL Properties for ANSI-C Software. In Software Engineering and Formal Methods -9th International Conference, SEFM 2011, Montevideo, Uruguay, November 14-18, 2011. Proceedings (Lecture Notes in Computer Science, Vol. 7041), Gilles Barthe, Alberto Pardo, and Gerardo Schneider (Eds.). Springer, 302-317. https://doi.org/10.1007/978-3-642-24690-6_21",
+                "links": null
+            },
+            "BIBREF14": {
+                "ref_id": "b14",
+                "title": "SMT\u2010based context\u2010bounded model checking for CUDA programs",
+                "authors": [
+                    {
+                        "first": "Phillipe",
+                        "middle": [
+                            "A"
+                        ],
+                        "last": "Pereira",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Higo",
+                        "middle": [
+                            "F"
+                        ],
+                        "last": "Albuquerque",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Isabela",
+                        "middle": [],
+                        "last": "Da\u00a0silva",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Hendrio",
+                        "middle": [],
+                        "last": "Marques",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Felipe",
+                        "middle": [
+                            "R"
+                        ],
+                        "last": "Monteiro",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Ricardo",
+                        "middle": [],
+                        "last": "Ferreira",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Lucas",
+                        "middle": [
+                            "C"
+                        ],
+                        "last": "Cordeiro",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2017,
+                "venue": "Concurrency and Computation: Practice and Experience",
+                "volume": "29",
+                "issue": "22",
+                "pages": "",
+                "other_ids": {
+                    "DOI": [
+                        "10.1002/cpe.3934"
+                    ],
+                    "ISSN": [
+                        "1532-0626"
+                    ],
+                    "ISSNe": [
+                        "1532-0634"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Phillipe A. Pereira, Higo F. Albuquerque, Isabela da Silva, Hendrio Marques, Felipe R. Monteiro, Ricardo Ferreira, and Lucas C. Cordeiro. 2017. SMT-based context-bounded model checking for CUDA programs. Concurr. Comput. Pract. Exp. 29, 22 (2017). https://doi.org/10.1002/cpe.3934",
+                "links": null
+            },
+            "BIBREF15": {
+                "ref_id": "b15",
+                "title": "Model checking C++ programs",
+                "authors": [
+                    {
+                        "first": "Felipe",
+                        "middle": [
+                            "R"
+                        ],
+                        "last": "Monteiro",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Mikhail",
+                        "middle": [
+                            "R"
+                        ],
+                        "last": "Gadelha",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Lucas",
+                        "middle": [
+                            "C"
+                        ],
+                        "last": "Cordeiro",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2022,
+                "venue": "Software Testing, Verification and Reliability",
+                "volume": "32",
+                "issue": "1",
+                "pages": "",
+                "other_ids": {
+                    "ORCID": [
+                        "0000-0001-9420-9056",
+                        "0000-0001-6540-6587",
+                        "0000-0002-6235-4272"
+                    ],
+                    "DOI": [
+                        "10.1002/stvr.1793"
+                    ],
+                    "ISSN": [
+                        "0960-0833"
+                    ],
+                    "ISSNe": [
+                        "1099-1689"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Felipe R. Monteiro, Mikhail R. Gadelha, and Lucas C. Cordeiro. 2022. Model checking C++ programs. Softw. Test. Verification Reliab. 32, 1 (2022). https: //doi.org/10.1002/stvr.1793",
+                "links": null
+            },
+            "BIBREF16": {
+                "ref_id": "b16",
+                "title": "Handling loops in bounded model checking of C programs via k-induction",
+                "authors": [
+                    {
+                        "first": "Y",
+                        "middle": [
+                            "R"
+                        ],
+                        "last": "Mikhail",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "",
+                        "middle": [],
+                        "last": "Gadelha",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Ibrahim",
+                        "middle": [],
+                        "last": "Hussama",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Lucas",
+                        "middle": [
+                            "C"
+                        ],
+                        "last": "Ismail",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "",
+                        "middle": [],
+                        "last": "Cordeiro",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "journals/sttt/GadelhaIC17",
+                "year": 2017,
+                "venue": "Int. J. Softw. Tools Technol. Transf",
+                "volume": "19",
+                "issue": "1",
+                "pages": "97--114",
+                "other_ids": {
+                    "DOI": [
+                        "10.1007/s10009-015-0407-9"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Mikhail Y. R. Gadelha, Hussama Ibrahim Ismail, and Lucas C. Cordeiro. 2017. Handling loops in bounded model checking of C programs via k-induction. Int. J. Softw. Tools Technol. Transf. 19, 1 (2017), 97-114. https://doi.org/10.1007/s10009- 015-0407-9",
+                "links": null
+            },
+            "BIBREF17": {
+                "ref_id": "b17",
+                "title": "SmartCheck",
+                "authors": [
+                    {
+                        "first": "Sergei",
+                        "middle": [],
+                        "last": "Tikhomirov",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Ekaterina",
+                        "middle": [],
+                        "last": "Voskresenskaya",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Ivan",
+                        "middle": [],
+                        "last": "Ivanitskiy",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Ramil",
+                        "middle": [],
+                        "last": "Takhaviev",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Evgeny",
+                        "middle": [],
+                        "last": "Marchenko",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Yaroslav",
+                        "middle": [],
+                        "last": "Alexandrov",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/icse/TikhomirovVITMA18",
+                "year": 2018,
+                "venue": "Proceedings of the 1st International Workshop on Emerging Trends in Software Engineering for Blockchain",
+                "volume": "",
+                "issue": "",
+                "pages": "9--16",
+                "other_ids": {
+                    "DOI": [
+                        "10.1145/3194113.3194115"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Sergei Tikhomirov, Ekaterina Voskresenskaya, Ivan Ivanitskiy, Ramil Takhaviev, Evgeny Marchenko, and Yaroslav Alexandrov. 2018. Smartcheck: Static analysis of ethereum smart contracts. In Proceedings of the 1st International Workshop on Emerging Trends in Software Engineering for Blockchain. 9-16.",
+                "links": null
+            },
+            "BIBREF18": {
+                "ref_id": "b18",
+                "title": "Slither: A Static Analysis Framework for Smart Contracts",
+                "authors": [
+                    {
+                        "first": "Josselin",
+                        "middle": [],
+                        "last": "Feist",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Gustavo",
+                        "middle": [],
+                        "last": "Grieco",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Alex",
+                        "middle": [],
+                        "last": "Groce",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/icse/FeistGG19",
+                "year": 2019,
+                "venue": "2019 IEEE/ACM 2nd International Workshop on Emerging Trends in Software Engineering for Blockchain (WETSEB)",
+                "volume": "",
+                "issue": "",
+                "pages": "8--15",
+                "other_ids": {
+                    "DOI": [
+                        "10.1109/wetseb.2019.00008"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Josselin Feist, Gustavo Grieco, and Alex Groce. 2019. Slither: a static analysis framework for smart contracts. In 2019 IEEE/ACM 2nd International Workshop on Emerging Trends in Software Engineering for Blockchain (WETSEB). IEEE, 8-15.",
+                "links": null
+            },
+            "BIBREF19": {
+                "ref_id": "b19",
+                "title": "Making Smart Contracts Smarter",
+                "authors": [
+                    {
+                        "first": "Loi",
+                        "middle": [],
+                        "last": "Luu",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Duc-Hiep",
+                        "middle": [],
+                        "last": "Chu",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Hrishi",
+                        "middle": [],
+                        "last": "Olickel",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Prateek",
+                        "middle": [],
+                        "last": "Saxena",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Aquinas",
+                        "middle": [],
+                        "last": "Hobor",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/ccs/LuuCOSH16",
+                "year": 2016,
+                "venue": "Proceedings of the 2016 ACM SIGSAC Conference on Computer and Communications Security",
+                "volume": "",
+                "issue": "",
+                "pages": "254--269",
+                "other_ids": {
+                    "DOI": [
+                        "10.1145/2976749.2978309"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Loi Luu, Duc-Hiep Chu, Hrishi Olickel, Prateek Saxena, and Aquinas Hobor. 2016. Making smart contracts smarter. In Proceedings of the 2016 ACM SIGSAC conference on computer and communications security. 254-269.",
+                "links": null
+            },
+            "BIBREF20": {
+                "ref_id": "b20",
+                "title": "Introduction to GitHub Actions",
+                "authors": [
+                    {
+                        "first": "Chaminda",
+                        "middle": [],
+                        "last": "Chandrasekara",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Pushpa",
+                        "middle": [],
+                        "last": "Herath",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2021,
+                "venue": "Hands-on GitHub Actions",
+                "volume": "",
+                "issue": "",
+                "pages": "1--8",
+                "other_ids": {
+                    "DOI": [
+                        "10.1007/978-1-4842-6464-5_1"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "ConsenSys/mythril. v0.22.1. Github. Retrieved Nov 24, 2021 from https://github. com/ConsenSys/mythril",
+                "links": null
+            },
+            "BIBREF21": {
+                "ref_id": "b21",
+                "title": "Z3: An efficient SMT solver",
+                "authors": [
+                    {
+                        "first": "Leonardo",
+                        "middle": [],
+                        "last": "De",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Moura",
+                        "middle": [],
+                        "last": "",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Nikolaj",
+                        "middle": [],
+                        "last": "Bj\u00f8rner",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/tacas/MouraB08",
+                "year": 2008,
+                "venue": "International conference on Tools and Algorithms for the Construction and Analysis of Systems",
+                "volume": "",
+                "issue": "",
+                "pages": "337--340",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Leonardo de Moura and Nikolaj Bj\u00f8rner. 2008. Z3: An efficient SMT solver. In International conference on Tools and Algorithms for the Construction and Analysis of Systems. Springer, 337-340.",
+                "links": null
+            },
+            "BIBREF22": {
+                "ref_id": "b22",
+                "title": "Bitwuzla at the SMT-COMP 2020",
+                "authors": [
+                    {
+                        "first": "Aina",
+                        "middle": [],
+                        "last": "Niemetz",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Mathias",
+                        "middle": [],
+                        "last": "Preiner",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2020,
+                "venue": "",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {
+                    "arXiv": [
+                        "arXiv:2006.01621"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Aina Niemetz and Mathias Preiner. 2020. Bitwuzla at the SMT-COMP 2020. arXiv preprint arXiv:2006.01621 (2020).",
+                "links": null
+            },
+            "BIBREF23": {
+                "ref_id": "b23",
+                "title": "Boolector: An Efficient SMT Solver for Bit-Vectors and Arrays",
+                "authors": [
+                    {
+                        "first": "Robert",
+                        "middle": [],
+                        "last": "Brummayer",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Armin",
+                        "middle": [],
+                        "last": "Biere",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/tacas/BrummayerB09",
+                "year": 2009,
+                "venue": "Tools and Algorithms for the Construction and Analysis of Systems",
+                "volume": "",
+                "issue": "",
+                "pages": "174--177",
+                "other_ids": {
+                    "DOI": [
+                        "10.1007/978-3-642-00768-2_16"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Robert Brummayer and Armin Biere. 2009. Boolector: An efficient SMT solver for bit-vectors and arrays. In International Conference on Tools and Algorithms for the Construction and Analysis of Systems. Springer, 174-177.",
+                "links": null
+            },
+            "BIBREF24": {
+                "ref_id": "b24",
+                "title": "The MathSAT 4 SMT Solver",
+                "authors": [
+                    {
+                        "first": "Roberto",
+                        "middle": [],
+                        "last": "Bruttomesso",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Alessandro",
+                        "middle": [],
+                        "last": "Cimatti",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Anders",
+                        "middle": [],
+                        "last": "Franz\u00e9n",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Alberto",
+                        "middle": [],
+                        "last": "Griggio",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Roberto",
+                        "middle": [],
+                        "last": "Sebastiani",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/cav/BruttomessoCFGS08",
+                "year": 2008,
+                "venue": "Computer Aided Verification",
+                "volume": "",
+                "issue": "",
+                "pages": "299--303",
+                "other_ids": {
+                    "DOI": [
+                        "10.1007/978-3-540-70545-1_28"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Roberto Bruttomesso, Alessandro Cimatti, Anders Franz\u00e9n, Alberto Griggio, and Roberto Sebastiani. 2008. The mathsat 4 smt solver. In International Conference on Computer Aided Verification. Springer, 299-303.",
+                "links": null
+            },
+            "BIBREF25": {
+                "ref_id": "b25",
+                "title": "CVC4",
+                "authors": [
+                    {
+                        "first": "Clark",
+                        "middle": [],
+                        "last": "Barrett",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Christopher",
+                        "middle": [
+                            "L"
+                        ],
+                        "last": "Conway",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Morgan",
+                        "middle": [],
+                        "last": "Deters",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Liana",
+                        "middle": [],
+                        "last": "Hadarean",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Dejan",
+                        "middle": [],
+                        "last": "Jovanovi\u0107",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Tim",
+                        "middle": [],
+                        "last": "King",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Andrew",
+                        "middle": [],
+                        "last": "Reynolds",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Cesare",
+                        "middle": [],
+                        "last": "Tinelli",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/cav/BarrettCDHJKRT11",
+                "year": 2011,
+                "venue": "Computer Aided Verification",
+                "volume": "",
+                "issue": "",
+                "pages": "171--177",
+                "other_ids": {
+                    "DOI": [
+                        "10.1007/978-3-642-22110-1_14"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Clark Barrett, Christopher L Conway, Morgan Deters, Liana Hadarean, Dejan Jovanovi\u0107, Tim King, Andrew Reynolds, and Cesare Tinelli. 2011. Cvc4. In International Conference on Computer Aided Verification. Springer, 171-177.",
+                "links": null
+            },
+            "BIBREF26": {
+                "ref_id": "b26",
+                "title": "Yices 2.2",
+                "authors": [
+                    {
+                        "first": "Bruno",
+                        "middle": [],
+                        "last": "Dutertre",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/cav/Dutertre14",
+                "year": 2014,
+                "venue": "Computer Aided Verification",
+                "volume": "",
+                "issue": "",
+                "pages": "737--744",
+                "other_ids": {
+                    "DOI": [
+                        "10.1007/978-3-319-08867-9_49"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Bruno Dutertre. 2014. Yices 2.2. In International Conference on Computer Aided Verification. Springer, 737-744.",
+                "links": null
+            },
+            "BIBREF27": {
+                "ref_id": "b27",
+                "title": "Figure 24 from: Esteves FA, Fisher BL (2021) \ufeffCorrieopone nouragues gen. nov., sp. nov., a new Ponerinae from French Guiana (Hymenoptera, Formicidae). ZooKeys 1074: 83-173. https://doi.org/10.3897/zookeys.1074.75551",
+                "authors": [
+                    {
+                        "first": "Flavia",
+                        "middle": [
+                            "A"
+                        ],
+                        "last": "Esteves",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Brian",
+                        "middle": [
+                            "L"
+                        ],
+                        "last": "Fisher",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2020,
+                "venue": "",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {
+                    "DOI": [
+                        "10.3897/zookeys.1074.75551.figure24"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "SWC Registry. 2020. SmartContractSecurity. Retrieved Nov 24, 2021 from https://swcregistry.io/",
+                "links": null
+            },
+            "BIBREF28": {
+                "ref_id": "b28",
+                "title": "Verifying Security Vulnerabilities for Blockchain-based Smart Contracts",
+                "authors": [
+                    {
+                        "first": "Nedas",
+                        "middle": [],
+                        "last": "Matulevicius",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Lucas",
+                        "middle": [
+                            "C"
+                        ],
+                        "last": "Cordeiro",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/sbesc/MatuleviciusC21",
+                "year": 2021,
+                "venue": "2021 XI Brazilian Symposium on Computing Systems Engineering (SBESC)",
+                "volume": "",
+                "issue": "",
+                "pages": "1--8",
+                "other_ids": {
+                    "DOI": [
+                        "10.1109/sbesc53686.2021.9628229"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Nedas Matulevicius and Lucas C. Cordeiro. 2021. Verifying Security Vulner- abilities for Blockchain-based Smart Contracts. In XI Brazilian Symposium on Computing Systems Engineering, SBESC 2021, Florianopolis, Brazil, November 22-26, 2021. IEEE, 1-8. https://doi.org/10.1109/SBESC53686.2021.9628229",
+                "links": null
+            },
+            "BIBREF29": {
+                "ref_id": "b29",
+                "title": "SMT-Based Verification of Solidity Smart Contracts",
+                "authors": [
+                    {
+                        "first": "Leonardo",
+                        "middle": [],
+                        "last": "Alt",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Christian",
+                        "middle": [],
+                        "last": "Reitwiessner",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/isola/AltR18",
+                "year": 2018,
+                "venue": "Lecture Notes in Computer Science",
+                "volume": "",
+                "issue": "",
+                "pages": "376--388",
+                "other_ids": {
+                    "DOI": [
+                        "10.1007/978-3-030-03427-6_28"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Leonardo Alt and Christian Reitwiessner. 2018. SMT-based verification of solidity smart contracts. In International Symposium on Leveraging Applications of Formal Methods. Springer, 376-388.",
+                "links": null
+            }
+        }
+    }
+}

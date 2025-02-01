@@ -1,0 +1,1327 @@
+{
+    "paper_id": "3524273",
+    "header": {
+        "generated_with": "S2ORC 1.0.0",
+        "date_generated": "2024-03-20T17:52:49.621965Z"
+    },
+    "title": "CGD: A Cloud Gaming Dataset with Gameplay Video and Network Recordings",
+    "authors": [
+        {
+            "first": "Ivan",
+            "middle": [],
+            "last": "Slivar",
+            "suffix": "",
+            "affiliation": {
+                "laboratory": "",
+                "institution": "University of Zagreb",
+                "location": {
+                    "settlement": "Zagreb",
+                    "country": "Croatia"
+                }
+            },
+            "email": "ivan.slivar@fer.hr"
+        },
+        {
+            "first": "Kresimir",
+            "middle": [],
+            "last": "Bacic",
+            "suffix": "",
+            "affiliation": {
+                "laboratory": "",
+                "institution": "University of Zagreb",
+                "location": {
+                    "settlement": "Zagreb",
+                    "country": "Croatia"
+                }
+            },
+            "email": "kresimir.bacic@fer.hr"
+        },
+        {
+            "first": "Irena",
+            "middle": [],
+            "last": "Orsolic",
+            "suffix": "",
+            "affiliation": {
+                "laboratory": "",
+                "institution": "University of Zagreb",
+                "location": {
+                    "settlement": "Zagreb",
+                    "country": "Croatia"
+                }
+            },
+            "email": "irena.orsolic@fer.hr"
+        },
+        {
+            "first": "Lea",
+            "middle": [],
+            "last": "Skorin-Kapov",
+            "suffix": "",
+            "affiliation": {
+                "laboratory": "",
+                "institution": "University of Zagreb",
+                "location": {
+                    "settlement": "Zagreb",
+                    "country": "Croatia"
+                }
+            },
+            "email": "lea.skorin-kapov@fer.hr"
+        },
+        {
+            "first": "Mirko",
+            "middle": [],
+            "last": "Suznjevic",
+            "suffix": "",
+            "affiliation": {
+                "laboratory": "",
+                "institution": "University of Zagreb",
+                "location": {
+                    "settlement": "Zagreb",
+                    "country": "Croatia"
+                }
+            },
+            "email": "mirko.suznjevic@fer.hr"
+        }
+    ],
+    "year": "",
+    "venue": null,
+    "identifiers": {},
+    "abstract": "With advances in network capabilities, the gaming industry is increasingly turning towards offering \"gaming on demand\" solutions, with cloud gaming services such as Sony PlayStation Now, Google Stadia, and NVIDIA GeForce NOW expanding their market offerings. Similar to adaptive video streaming services, cloud gaming services typically adapt the quality of game streams (e.g., bitrate, resolution, frame rate) in accordance with current network conditions. To select the most appropriate video encoding parameters given certain conditions, it is important to understand their impact on Quality of Experience (QoE). On the other hand, network operators are interested in understanding the relationships between parameters measurable in the network and cloud gaming QoE, to be able to invoke QoE-aware network management mechanisms. To encourage developments in these areas, comprehensive datasets are crucial, including both network and application layer data. This paper presents CGD, a dataset consisting of 600 game streaming sessions corresponding to 10 games of different genres being played and streamed using the following encoding parameters: bitrate (5, 10, 20 Mbps), resolution (720p, 1080p), and frame rate (30, 60 fps). For every combination repeated five times for each game, the dataset includes: 1) gameplay video recordings, 2) network traffic traces, 3) user input logs (mouse and keyboard), and 4) streaming performance logs.",
+    "pdf_parse": {
+        "abstract": [
+            {
+                "text": "With advances in network capabilities, the gaming industry is increasingly turning towards offering \"gaming on demand\" solutions, with cloud gaming services such as Sony PlayStation Now, Google Stadia, and NVIDIA GeForce NOW expanding their market offerings. Similar to adaptive video streaming services, cloud gaming services typically adapt the quality of game streams (e.g., bitrate, resolution, frame rate) in accordance with current network conditions. To select the most appropriate video encoding parameters given certain conditions, it is important to understand their impact on Quality of Experience (QoE). On the other hand, network operators are interested in understanding the relationships between parameters measurable in the network and cloud gaming QoE, to be able to invoke QoE-aware network management mechanisms. To encourage developments in these areas, comprehensive datasets are crucial, including both network and application layer data. This paper presents CGD, a dataset consisting of 600 game streaming sessions corresponding to 10 games of different genres being played and streamed using the following encoding parameters: bitrate (5, 10, 20 Mbps), resolution (720p, 1080p), and frame rate (30, 60 fps). For every combination repeated five times for each game, the dataset includes: 1) gameplay video recordings, 2) network traffic traces, 3) user input logs (mouse and keyboard), and 4) streaming performance logs.",
+                "cite_spans": [],
+                "section": "Abstract",
+                "sec_num": null
+            }
+        ],
+        "body_text": [
+            {
+                "text": "Cloud gaming has been recognized as a promising shift in the online game industry, with the aim of implementing the \"on demand\" service concept that has achieved market success in other areas of digital entertainment such as movies and TV shows. The concepts of cloud computing are leveraged to render the game scene as a video stream which is then delivered to players in real-time. Such a concept allows users to play video games on remote hosts, as if the game was running on their own PC, often with the aim of making use of the host's superior hardware. The service is conceived as a cyclical process which consists of sending the user's inputs to the host and reproducing them, and displaying audio and video received from the host on the client PC. Ideally, the service would offer performance akin to playing directly on the host and the user would experience no audiovisual or temporal issues emerging from client-host communication.",
+                "cite_spans": [],
+                "section": "INTRODUCTION",
+                "sec_num": "1"
+            },
+            {
+                "text": "The main advantage of this approach is the capability of delivering high-quality graphics games to any type of end user device, however at the cost of high bandwidth consumption and strict latency requirements. Despite attracting significant media attention, early commercial cloud gaming solutions such as OnLive [7] met with failure due to relatively low availability of high-speed Internet access required for the system to function without noticeable visual artifacts and input delay [23] . The aforementioned drawbacks were, however, largely remedied in recent years and cloud gaming has once again emerged as an attractive alternative to traditional gaming [1] [2] [3] 8] , further exacerbated by the ongoing global GPU shortage [18] . A number of industry leaders have been expanding their services by implementing their own game streaming solutions (e.g., Sony's Playstation Now service [3] , Xbox service [2] and Amazon Luna [1] ), with Sony operating the one of the world's most widespread cloud gaming platforms with more than 3.2 million subscribers [4] . Moreover, some game companies provide in-home game streaming that includes the streaming of video games from a local server to other devices in a local network. This approach is applied in Sony's Remote Play service [5] and Valve's Remote play service [6] for the PC gaming platform Steam.",
+                "cite_spans": [
+                    {
+                        "start": 314,
+                        "end": 317,
+                        "text": "[7]",
+                        "ref_id": "BIBREF6"
+                    },
+                    {
+                        "start": 488,
+                        "end": 492,
+                        "text": "[23]",
+                        "ref_id": "BIBREF22"
+                    },
+                    {
+                        "start": 663,
+                        "end": 666,
+                        "text": "[1]",
+                        "ref_id": null
+                    },
+                    {
+                        "start": 667,
+                        "end": 670,
+                        "text": "[2]",
+                        "ref_id": "BIBREF1"
+                    },
+                    {
+                        "start": 671,
+                        "end": 674,
+                        "text": "[3]",
+                        "ref_id": "BIBREF2"
+                    },
+                    {
+                        "start": 675,
+                        "end": 677,
+                        "text": "8]",
+                        "ref_id": "BIBREF7"
+                    },
+                    {
+                        "start": 735,
+                        "end": 739,
+                        "text": "[18]",
+                        "ref_id": null
+                    },
+                    {
+                        "start": 895,
+                        "end": 898,
+                        "text": "[3]",
+                        "ref_id": "BIBREF2"
+                    },
+                    {
+                        "start": 914,
+                        "end": 917,
+                        "text": "[2]",
+                        "ref_id": "BIBREF1"
+                    },
+                    {
+                        "start": 934,
+                        "end": 937,
+                        "text": "[1]",
+                        "ref_id": null
+                    },
+                    {
+                        "start": 1062,
+                        "end": 1065,
+                        "text": "[4]",
+                        "ref_id": "BIBREF3"
+                    },
+                    {
+                        "start": 1284,
+                        "end": 1287,
+                        "text": "[5]",
+                        "ref_id": "BIBREF4"
+                    },
+                    {
+                        "start": 1320,
+                        "end": 1323,
+                        "text": "[6]",
+                        "ref_id": "BIBREF5"
+                    }
+                ],
+                "section": "INTRODUCTION",
+                "sec_num": "1"
+            },
+            {
+                "text": "Recent ITU-T standardization efforts [15] present an opinion model for cloud gaming QoE. The model was developed based on the work reported in Recommendations ITU-T G.1032 and ITU-T P.809, and it uses an impairment factor approach to estimate MOS based on the impact of network parameters (delay, packet loss) and video encoding parameters (video resolution, bitrate, and frame rate) on video and input quality. A key challenge thus faced by cloud game providers lies in configuring the video encoding parameters so as to maximize player QoE while meeting bandwidth availability and low latency constraints. Previous studies have addressed ways in which to categorize games, going beyond traditional genres and incorporating various video metrics, for the purpose of assigning appropriate video encoding adaptation strategies [14, 21, 22, 26] . On the other hand, considering the network provider perspective, QoEdriven resource management mechanisms can be applied. However, with widespread use of traffic encryption and a lack of insights into app-level data, methods for traffic classification and Key Performance Indicator (KPI) estimation from encrypted traffic are a potential way forward [20] .",
+                "cite_spans": [
+                    {
+                        "start": 37,
+                        "end": 41,
+                        "text": "[15]",
+                        "ref_id": null
+                    },
+                    {
+                        "start": 826,
+                        "end": 830,
+                        "text": "[14,",
+                        "ref_id": "BIBREF13"
+                    },
+                    {
+                        "start": 831,
+                        "end": 834,
+                        "text": "21,",
+                        "ref_id": "BIBREF20"
+                    },
+                    {
+                        "start": 835,
+                        "end": 838,
+                        "text": "22,",
+                        "ref_id": "BIBREF21"
+                    },
+                    {
+                        "start": 839,
+                        "end": 842,
+                        "text": "26]",
+                        "ref_id": "BIBREF25"
+                    },
+                    {
+                        "start": 1195,
+                        "end": 1199,
+                        "text": "[20]",
+                        "ref_id": "BIBREF19"
+                    }
+                ],
+                "section": "INTRODUCTION",
+                "sec_num": "1"
+            },
+            {
+                "text": "In an effort to contribute to ongoing research efforts addressing challenges related to characterization of cloud gaming video streams, in terms of video coding parameters, spatial and temporal parameters, different game genres, traffic characteristics, and player input rate, we present CGD, a large dataset of gameplay recordings, application logs, and network traces corresponding to various game genres. The collected dataset consists of raw video data and a variety of objective metrics collected through the use of Steam's Remote Play cloud gaming platform [6] in a controlled environment by an experienced player. The dataset features 10 games from different game genres to diversify the objective game characteristics that we collected. Each game's data was recorded in 12 distinct scenarios defined by combinations of video bitrate, resolution and frame rate parameters of cloud gaming video stream. Furthermore, for each game we recorded 60 cloud gaming video sessions, as we repeated each scenario 5 times in an effort to capture characteristic game scenes for each game. Overall, the dataset contains 600 different cloud gaming gameplay videos, together with the captured network traffic and user inputs.",
+                "cite_spans": [
+                    {
+                        "start": 563,
+                        "end": 566,
+                        "text": "[6]",
+                        "ref_id": "BIBREF5"
+                    }
+                ],
+                "section": "INTRODUCTION",
+                "sec_num": "1"
+            },
+            {
+                "text": "In recent years, several gaming video datasets have been published. Table 1 provides an overview of available gaming video datasets that contain gameplay video recordings. Each dataset in the table is denoted with information on the type of gaming video that was recorded, the number of reference videos, the number of different games, and the preset video encoding parameters (resolution, bitrate). The most common types of gaming videos are equally represented in the available datasets, as video gameplay was recorded for traditional gaming using desktop PC, mobile gaming, cloud gaming and game video streaming. In terms of featured games, most of the datasets are comprised of gameplay recordings from a diverse range of games from numerous distinctive game genres. With respect to the resolution at which videos were recorded, the majority of the datasets employed common HD video resolutions (720p and 1080p), while the most recently published datasets also include gameplay videos recorded using an ultra high-definition video resolution (4k) [11, 27] . The majority of the gameplay reference videos were captured at 30 frames per second (fps), with the dataset [26] being the only one with footage recorded at 60 fps.",
+                "cite_spans": [
+                    {
+                        "start": 1051,
+                        "end": 1055,
+                        "text": "[11,",
+                        "ref_id": "BIBREF10"
+                    },
+                    {
+                        "start": 1056,
+                        "end": 1059,
+                        "text": "27]",
+                        "ref_id": "BIBREF26"
+                    },
+                    {
+                        "start": 1170,
+                        "end": 1174,
+                        "text": "[26]",
+                        "ref_id": "BIBREF25"
+                    }
+                ],
+                "section": "RELATED WORK",
+                "sec_num": "2"
+            },
+            {
+                "text": "The CGD dataset presented in this paper contains cloud gaming gameplay videos recorded in a laboratory environment. To the best of our knowledge, this is the first cloud gaming dataset containing uncompressed gameplay video recordings of cloud gaming sessions streamed at several distinct resolutions (1080p and 720p), frame rates (60 and 30 fps) and bitrates (20 Mbps, 10 Mbps and 5 Mbps). Unlike previously published gaming video datasets, the proposed dataset also consists of captured network traffic recorded during cloud gaming sessions, alongside with user inputs and applicationlevel statistics logs. All of the acquired data may be utilized in a variety of ways to improve cloud gaming QoE, with some of the potential uses described in Section 5. ",
+                "cite_spans": [],
+                "section": "RELATED WORK",
+                "sec_num": "2"
+            },
+            {
+                "text": "Existing research [22, 26] has shown that games of different genres have varying QoE requirements, as they differ in camera perspective, graphics style and quality, gameplay pace, and the intensity of user interactions. Therefore, the gameplay data of 10 video games ",
+                "cite_spans": [
+                    {
+                        "start": 18,
+                        "end": 22,
+                        "text": "[22,",
+                        "ref_id": "BIBREF21"
+                    },
+                    {
+                        "start": 23,
+                        "end": 26,
+                        "text": "26]",
+                        "ref_id": "BIBREF25"
+                    }
+                ],
+                "section": "Description of the games",
+                "sec_num": null
+            },
+            {
+                "text": "Type of gaming",
+                "cite_spans": [],
+                "section": "Dataset",
+                "sec_num": null
+            },
+            {
+                "text": "Frame rate (fps)",
+                "cite_spans": [],
+                "section": "# Reference videos # Games Resolution",
+                "sec_num": null
+            },
+            {
+                "text": "GamingHDRVideoSET [11] Gaming video streaming 18 9 4k 30 TGV [24] Mobile gaming 150 17 1080p 30 Zhao dataset [27] PC gaming 10 3 4k, 720p -CGVDS [26] Cloud gaming 15 15 1080p 60 KUGVD [10] Gaming video streaming 6 6 1080p 30 GamingVideoSET [12] Gaming video streaming 24 12 1080p 30 GSET Somi [9] PC gaming 135 1 720p -Claypool dataset [13] Cloud gaming 29 29 SVGA 30 was collected (Table 2 ), selected so as to cover a wide range of game genres to maximize variety between collected video traces.",
+                "cite_spans": [
+                    {
+                        "start": 18,
+                        "end": 22,
+                        "text": "[11]",
+                        "ref_id": "BIBREF10"
+                    },
+                    {
+                        "start": 61,
+                        "end": 65,
+                        "text": "[24]",
+                        "ref_id": "BIBREF23"
+                    },
+                    {
+                        "start": 109,
+                        "end": 113,
+                        "text": "[27]",
+                        "ref_id": "BIBREF26"
+                    },
+                    {
+                        "start": 145,
+                        "end": 149,
+                        "text": "[26]",
+                        "ref_id": "BIBREF25"
+                    },
+                    {
+                        "start": 184,
+                        "end": 188,
+                        "text": "[10]",
+                        "ref_id": "BIBREF9"
+                    },
+                    {
+                        "start": 240,
+                        "end": 244,
+                        "text": "[12]",
+                        "ref_id": "BIBREF11"
+                    },
+                    {
+                        "start": 293,
+                        "end": 296,
+                        "text": "[9]",
+                        "ref_id": "BIBREF8"
+                    },
+                    {
+                        "start": 336,
+                        "end": 340,
+                        "text": "[13]",
+                        "ref_id": "BIBREF12"
+                    }
+                ],
+                "section": "# Reference videos # Games Resolution",
+                "sec_num": null
+            },
+            {
+                "text": "Finding the optimal video encoding configuration for game streaming with respect to varying network bandwidth conditions is one of the key challenges cloud gaming service providers are confronted with. As QoE requirements vary across different game genres, the effectiveness of QoE-aware service adaptation depends on appropriate selection of video encoding settings for the concrete game or game genre. Thus, for each of the selected games, we recorded gameplay video traces (played by an experienced gamer) with different video encoding parameter settings (resolution, frame rate and bitrate). Encoding settings used in data collection are summarized in Table 3 . The FRAPS 1 application (version 3.5.99) was used to losslessly record gameplay sessions that lasted exactly 30 seconds each. Each recorded video was saved in .avi format. Furthermore, for each combination of video encoding parameters we recorded 5 video traces in order to obtain a large enough sample of characteristic gameplay for each tested game. To summarize, we collected 600 gameplay video traces totalling more than 853 GB and corresponding to 5 hours of cloud gaming gameplay.",
+                "cite_spans": [],
+                "section": "Gameplay video recordings",
+                "sec_num": null
+            },
+            {
+                "text": "Alongside recording of gameplay videos, we captured the network traffic generated between the client and the server during gameplay for each gaming session. The traffic was captured using Wireshark 2 (version 3.6.2) on the client side. The captured traffic was saved and exported as a .pcap file. Based on captured network traffic, it can be observed that Steam Remote Play uses UDP for streaming video/audio and user inputs. Furthermore, the service employs a closed protocol which generates a negligible traffic size in comparison with the recorded video traffic size. Additionally, each .pcap file was converted to a .csv file, more suitable for data analysis. Overall, we gathered more than 20 GB of cloud gaming network traffic.",
+                "cite_spans": [],
+                "section": "Captured network traffic",
+                "sec_num": null
+            },
+            {
+                "text": "To record the intensity of user interaction while playing, we collected mouse and keyboard input during gameplay by using the ",
+                "cite_spans": [],
+                "section": "Mouse and keyboard input logs",
+                "sec_num": null
+            },
+            {
+                "text": "The final part of the presented cloud gaming dataset contains application-level logs in the form of Steam Remote Play summary statistics for every gaming session separately. These statistics were collected on the server side after each gaming session was finished, and the corresponding summary file was generated in the Steam folder. The summary includes, among other things, the following data: average values for client and server bitrates during the session, encoding and decoding durations (in milliseconds), network round-trip time, total time taken to stream a single frame, and their standard deviations. The overall dataset structure (including folder structure and file types) is shown in Figure 2 . Each folder corresponding to a game contains folders for each streaming configuration (bitrate, resolution, framerate). Each configuration folder includes 5 subdirectories corresponding to 5 sessions played under those configuration parameters. Each of the 5 folders contains the video recording, temporal and spatial information (details given in Section 4), and network traffic in .pcap and .csv format. The dataset is openly-available online4 .",
+                "cite_spans": [],
+                "section": "Streaming performance data logs",
+                "sec_num": null
+            },
+            {
+                "text": "One of the main advantages of the presented dataset is the diversity of collected data in terms of selected games and their characteristics. Therefore, the acquired data was analyzed to empirically assess and describe the similarities and differences between the content included in the dataset. In this paper we only focus on video and network traffic characterization, while user inputs and streaming performance logs are left for future analysis. ",
+                "cite_spans": [],
+                "section": "DATASET OVERVIEW",
+                "sec_num": "4"
+            },
+            {
+                "text": "To investigate the differences between the games featured in the dataset, both temporal and spatial characteristics of their video streams were analyzed. The metrics that we used in the analysis were extracted according to ITU-T Recommendation P.910 (4/2008): Spatial perceptual information (SI) and Temporal perceptual information (TI) [16] . SI is derived based on the Sobel filter which is used in image processing for edge detection [17] . The Sobel filter is used to identify the pixels that differ the most from surrounding pixels. The identified pixels represent the edges in the image. By detecting edges in an image, it is possible to reduce and filter out redundant information from the image, while still retaining substantial information. More details in the frame will then result in higher values of SI, and vice versa.",
+                "cite_spans": [
+                    {
+                        "start": 337,
+                        "end": 341,
+                        "text": "[16]",
+                        "ref_id": "BIBREF15"
+                    },
+                    {
+                        "start": 437,
+                        "end": 441,
+                        "text": "[17]",
+                        "ref_id": "BIBREF16"
+                    }
+                ],
+                "section": "Video characterization",
+                "sec_num": "4.1"
+            },
+            {
+                "text": "TI is based upon the motion difference feature which is the difference between the pixel values (of the luminance plane) at the same place in space but at successive times or frames. The measure of temporal information (TI) is computed as the maximum over time of the standard deviation over space of the motion difference feature for all pixel values. More motion in subsequent frames results in greater TI values.",
+                "cite_spans": [],
+                "section": "Video characterization",
+                "sec_num": "4.1"
+            },
+            {
+                "text": "TI and SI metrics were extracted through the command-linebased tool SITI 5 . The computed video metrics were plotted and are shown in Figure 3 . We selected four games from the dataset varying in terms of graphic details and gameplay pace (differences described in Table 2 ). Each dot represents a single recorded gaming session played at 60 fps with a bitrate of 20 Mbps. It can be observed that calculated objective video metrics vary from game to game, thus representing different ranges. Furthermore, it is clearly visible that video metrics of recordings for slow-paced games (Company of Heroes 2 and Ring of Pain) are clustered, whereas games with high gameplay pace (Dirt 5 and Doom) exhibit noticeable variations. Further, it can be observed that for higher resolution (1080), SI metric values are higher than in the case of lower resolution (720p), although TI metric values are nearly same. This demonstrates that comparing the data from multiple resolutions may result with misleading interpretations (e.g., when comparing collected data with the data from previously published datasets). Furthermore, it should be noted that plotted TI/SI scores represent maximum values of TI/SI values from the whole video trace, which may not be appropriate for gaming videos as a sudden change of scene will result in a high TI score, and the entire video trace will be classified with a high TI score, even if the rest of the gameplay is much slower paced. Therefore, we also calculated and plotted average TI/SI values, as shown in Figure 4 . It can be observed that the average TI/SI scores for the same game are more clustered as compared to the maximum TI/SI scores. Additionally, we advise researchers to compute alternative objective video metrics (such as PFIM and IBS [13] ) which may be useful in the process of choosing appropriate video encoding adaptation strategies [22] ).",
+                "cite_spans": [
+                    {
+                        "start": 1776,
+                        "end": 1780,
+                        "text": "[13]",
+                        "ref_id": "BIBREF12"
+                    },
+                    {
+                        "start": 1879,
+                        "end": 1883,
+                        "text": "[22]",
+                        "ref_id": "BIBREF21"
+                    }
+                ],
+                "section": "Video characterization",
+                "sec_num": "4.1"
+            },
+            {
+                "text": "Characterizing the behavior of aggregate network traffic can provide insights into how the network provider may adapt and optimize network utilization to meet the demands of cloud gaming users. In our analysis we focus on investigating the impact of game type and resolution on different network characteristics. Therefore, as shown in Figure 5 , we investigated the mean throughput of recorded network traces for the selected games. It can be observed that the downlink bandwidth usage (the video data delivered from the server to the client) varies between games, with fast-paced games using all available video bitrate. Slow paced games, on the other hand, have on average lower downlink throughput than fast paced games, since they contain more static, infrequently changing game scenes. However, the download bandwidth usage does not differ between gaming network traces of the same game streamed at different video resolutions, as video bitrate output size primarily depends on the scene complexity and the gameplay dynamics, not on the resolution. When we look at uplink bandwidth usage (the user input data delivered from the client to the server), it is substantially lower compared to the downlink bandwidth usage. Varying downlink bandwidth usage is evident for the selected games, while in the case of fast paced games (Dirt 5, Doom), we can also see a variation in mean throughput for network traces streamed at different resolutions. These findings suggest that the traffic throughput may be utilized to identify different game content for cloud gaming streams, however the results for different resolutions do not show clear differences in bandwidth usage. We further investigate the impact of different types of games on uplink packet interarrival times and throughput, with results shown in Figure 6 . We can observe that games with different game pace may have similar uplink packet interarrival times (e.g., Doom and Ring of Pain), and vice versa (e.g., Dirt 5 and Doom). A more in-depth analysis is necessary to explore additional network characteristics with the aim to derive a meaningful mapping between application-level parameters and observed traffic characteristics.",
+                "cite_spans": [],
+                "section": "Network characterization",
+                "sec_num": "4.2"
+            },
+            {
+                "text": "During the analysis of the collected dataset, we also noticed unusual service behavior. If the video encoder is set to encode video at 30 fps, the resulting encoded video has an average bitrate that is approximately half of the maximum available bitrate. We assume that the Steam Remote Play service detected frame rate reduction, and lowered video encoding bitrate.",
+                "cite_spans": [],
+                "section": "Network characterization",
+                "sec_num": "4.2"
+            },
+            {
+                "text": "The cloud gaming dataset presented in this paper contains files relevant to multiple stakeholders involved in the delivery of game streaming, as well as to the research community. In this section, we discuss some of the potential applications of the dataset.",
+                "cite_spans": [],
+                "section": "POSSIBLE APPLICATIONS OF THE DATASET",
+                "sec_num": "5"
+            },
+            {
+                "text": "Game classification. The collected data can be used for validating previously proposed game classifications based on game characteristics [22, 25] . Moreover, including additional input data that was collected in our dataset (network traffic statistics, user input) in the exploratory data analysis could possibly refine and improve the classification results.",
+                "cite_spans": [
+                    {
+                        "start": 138,
+                        "end": 142,
+                        "text": "[22,",
+                        "ref_id": "BIBREF21"
+                    },
+                    {
+                        "start": 143,
+                        "end": 146,
+                        "text": "25]",
+                        "ref_id": "BIBREF24"
+                    }
+                ],
+                "section": "POSSIBLE APPLICATIONS OF THE DATASET",
+                "sec_num": "5"
+            },
+            {
+                "text": "Passive subjective studies. Once the desired game classification is obtained (similar games are grouped in the same game categories), we can utilize the proposed dataset to conduct passive subjective studies [10] and to investigate how and to what extent different video encoding settings affect cloud gaming QoE. In such types of studies, the users evaluate the quality of differently-encoded recorded gameplay videos, which can possibly lead to deriving appropriate video encoding adaptation strategies that could be applied for games in different game categories.",
+                "cite_spans": [
+                    {
+                        "start": 208,
+                        "end": 212,
+                        "text": "[10]",
+                        "ref_id": "BIBREF9"
+                    }
+                ],
+                "section": "POSSIBLE APPLICATIONS OF THE DATASET",
+                "sec_num": "5"
+            },
+            {
+                "text": "Gaming video quality estimation. Besides conducting subjective studies and subjectively evaluating the gameplay video quality, it is possible to utilize the collected data to estimate gaming video quality and compare the results with existing QoE estimation models, similar to the research reported in [12, 26] . Furthermore, as our dataset contains additional data besides video traces, a novel QoE estimation model for cloud gaming based on objective video metrics, network traffic and/or user input could be proposed and its performance compared with existing cloud gaming QoE models.",
+                "cite_spans": [
+                    {
+                        "start": 302,
+                        "end": 306,
+                        "text": "[12,",
+                        "ref_id": "BIBREF11"
+                    },
+                    {
+                        "start": 307,
+                        "end": 310,
+                        "text": "26]",
+                        "ref_id": "BIBREF25"
+                    }
+                ],
+                "section": "POSSIBLE APPLICATIONS OF THE DATASET",
+                "sec_num": "5"
+            },
+            {
+                "text": "In-network QoE estimation for cloud gaming. Another possible application of the dataset could be the training of models for in-network QoE estimation for cloud gaming based on the the analysis of encrypted network traffic, similar to models trained for video streaming services (e.g., [19] ). Mapping cloud gaming network traffic characteristics to application-level parameters (resolution, frame rate or bitrate) can be exploited by network providers to estimate cloud gaming QoE and invoke appropriate QoE-aware network traffic management mechanisms for cloud gaming streams.",
+                "cite_spans": [
+                    {
+                        "start": 285,
+                        "end": 289,
+                        "text": "[19]",
+                        "ref_id": "BIBREF18"
+                    }
+                ],
+                "section": "POSSIBLE APPLICATIONS OF THE DATASET",
+                "sec_num": "5"
+            },
+            {
+                "text": "This paper presents CGD, our cloud gaming dataset that is composed of 600 gameplay videos of 10 different games belonging to a wide range of genres. Alongside raw video files, the dataset also consists of captured network traffic during these cloud gaming sessions, corresponding users input, and application-level statistic summaries of sessions. To the best of our knowledge, CGD dataset is the first cloud gaming dataset that includes captured network traffic and data on user interactivity alongside recorded gameplay videos, which makes it highly relevant for future work on automating the process of configuring video encoding settings and estimating video quality for cloud gaming.",
+                "cite_spans": [],
+                "section": "CONCLUSION",
+                "sec_num": "6"
+            },
+            {
+                "text": "MacroRecorder, https://www.macrorecorder.com/",
+                "cite_spans": [],
+                "section": "",
+                "sec_num": null
+            },
+            {
+                "text": "https://muexlab.fer.hr/muexlab/research/datasets",
+                "cite_spans": [],
+                "section": "",
+                "sec_num": null
+            },
+            {
+                "text": "SITI: Spatial Information / Temporal Information, https://github.com/slhck/siti",
+                "cite_spans": [],
+                "section": "",
+                "sec_num": null
+            }
+        ],
+        "bib_entries": {
+            "BIBREF1": {
+                "ref_id": "b1",
+                "title": "GeForce NOW",
+                "authors": [],
+                "dblp_id": null,
+                "year": 2022,
+                "venue": "",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "GeForce NOW. https://www.nvidia.com/en-eu/geforce-now/. [accessed 12.02.2022.].",
+                "links": null
+            },
+            "BIBREF2": {
+                "ref_id": "b2",
+                "title": "PlayStation NOW",
+                "authors": [],
+                "dblp_id": null,
+                "year": 2022,
+                "venue": "",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "PlayStation NOW. https://www.playstation.com/en-us/ps-now/. [accessed 12.02.2022.].",
+                "links": null
+            },
+            "BIBREF3": {
+                "ref_id": "b3",
+                "title": "PS Now Has a Respectable 3.2 Million Subscribers",
+                "authors": [],
+                "dblp_id": null,
+                "year": 2022,
+                "venue": "",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "PS Now Has a Respectable 3.2 Million Subscribers. https://www.pushsquare.com/ news/2021/05/ps_now_has_a_respectable_3_2_million_subscribers. [accessed 12.02.2022.].",
+                "links": null
+            },
+            "BIBREF4": {
+                "ref_id": "b4",
+                "title": "PS Remote Play",
+                "authors": [],
+                "dblp_id": null,
+                "year": 2022,
+                "venue": "",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "PS Remote Play. https://remoteplay.dl.playstation.net/remoteplay/lang/en/. [ac- cessed 12.02.2022.].",
+                "links": null
+            },
+            "BIBREF5": {
+                "ref_id": "b5",
+                "title": "Steam Remote Play",
+                "authors": [],
+                "dblp_id": null,
+                "year": 2022,
+                "venue": "",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Steam Remote Play. https://store.steampowered.com/remoteplay. [accessed 04.02.2022.].",
+                "links": null
+            },
+            "BIBREF6": {
+                "ref_id": "b6",
+                "title": "The OnLive Game Service",
+                "authors": [],
+                "dblp_id": null,
+                "year": 2022,
+                "venue": "",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "The OnLive Game Service. http://www.onlive.com/. [accessed 02.02.2022.].",
+                "links": null
+            },
+            "BIBREF7": {
+                "ref_id": "b7",
+                "title": "Xbox Cloud Gaming",
+                "authors": [],
+                "dblp_id": null,
+                "year": 2022,
+                "venue": "",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Xbox Cloud Gaming. https://www.xbox.com/en-US/xbox-game-pass/cloud- gaming. [accessed 12.02.2022.].",
+                "links": null
+            },
+            "BIBREF8": {
+                "ref_id": "b8",
+                "title": "Gset somi: a game-specific eye tracking dataset for somi",
+                "authors": [
+                    {
+                        "first": "H",
+                        "middle": [],
+                        "last": "Ahmadi",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "S",
+                        "middle": [
+                            "Z"
+                        ],
+                        "last": "Tootaghaj",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "S",
+                        "middle": [],
+                        "last": "Mowlaei",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "M",
+                        "middle": [
+                            "R"
+                        ],
+                        "last": "Hashemi",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "S",
+                        "middle": [],
+                        "last": "Shirmohammadi",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/mmsys/AhmadiTMHS16",
+                "year": 2016,
+                "venue": "Proceedings of the 7th International Conference on Multimedia Systems",
+                "volume": "",
+                "issue": "",
+                "pages": "1--6",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Ahmadi, H., Tootaghaj, S. Z., Mowlaei, S., Hashemi, M. R., and Shirmoham- madi, S. Gset somi: a game-specific eye tracking dataset for somi. In Proceedings of the 7th International Conference on Multimedia Systems (2016), pp. 1-6.",
+                "links": null
+            },
+            "BIBREF9": {
+                "ref_id": "b9",
+                "title": "No-reference video quality estimation based on machine learning for passive gaming video streaming applications",
+                "authors": [
+                    {
+                        "first": "N",
+                        "middle": [],
+                        "last": "Barman",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "E",
+                        "middle": [],
+                        "last": "Jammeh",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "S",
+                        "middle": [
+                            "A"
+                        ],
+                        "last": "Ghorashi",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "M",
+                        "middle": [
+                            "G"
+                        ],
+                        "last": "Martini",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2019,
+                "venue": "IEEE Access",
+                "volume": "7",
+                "issue": "",
+                "pages": "74511--74527",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Barman, N., Jammeh, E., Ghorashi, S. A., and Martini, M. G. No-reference video quality estimation based on machine learning for passive gaming video streaming applications. IEEE Access 7 (2019), 74511-74527.",
+                "links": null
+            },
+            "BIBREF10": {
+                "ref_id": "b10",
+                "title": "User generated hdr gaming video streaming: dataset, codec comparison and challenges",
+                "authors": [
+                    {
+                        "first": "N",
+                        "middle": [],
+                        "last": "Barman",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "M",
+                        "middle": [
+                            "G"
+                        ],
+                        "last": "Martini",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2021,
+                "venue": "IEEE Transactions on Circuits and Systems for Video Technology",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Barman, N., and Martini, M. G. User generated hdr gaming video streaming: dataset, codec comparison and challenges. IEEE Transactions on Circuits and Systems for Video Technology (2021).",
+                "links": null
+            },
+            "BIBREF11": {
+                "ref_id": "b11",
+                "title": "Gamingvideoset: a dataset for gaming video streaming applications",
+                "authors": [
+                    {
+                        "first": "N",
+                        "middle": [],
+                        "last": "Barman",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "S",
+                        "middle": [],
+                        "last": "Zadtootaghaj",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "S",
+                        "middle": [],
+                        "last": "Schmidt",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "M",
+                        "middle": [
+                            "G"
+                        ],
+                        "last": "Martini",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "S",
+                        "middle": [],
+                        "last": "M\u00f6ller",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/netgames/BarmanZ0MM18",
+                "year": 2018,
+                "venue": "2018 16th Annual Workshop on Network and Systems Support for Games (NetGames)",
+                "volume": "",
+                "issue": "",
+                "pages": "1--6",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Barman, N., Zadtootaghaj, S., Schmidt, S., Martini, M. G., and M\u00f6ller, S. Gamingvideoset: a dataset for gaming video streaming applications. In 2018 16th Annual Workshop on Network and Systems Support for Games (NetGames) (2018), IEEE, pp. 1-6.",
+                "links": null
+            },
+            "BIBREF12": {
+                "ref_id": "b12",
+                "title": "Motion and scene complexity for streaming video games",
+                "authors": [
+                    {
+                        "first": "M",
+                        "middle": [],
+                        "last": "Claypool",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/fdg/Claypool09",
+                "year": 2009,
+                "venue": "Proceedings of the 4th International Conference on Foundations of Digital Games",
+                "volume": "",
+                "issue": "",
+                "pages": "34--41",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Claypool, M. Motion and scene complexity for streaming video games. In Proceedings of the 4th International Conference on Foundations of Digital Games (2009), pp. 34-41.",
+                "links": null
+            },
+            "BIBREF13": {
+                "ref_id": "b13",
+                "title": "Automated genre classification for gaming videos",
+                "authors": [
+                    {
+                        "first": "S",
+                        "middle": [],
+                        "last": "G\u00f6ring",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "R",
+                        "middle": [],
+                        "last": "Steger",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "R",
+                        "middle": [
+                            "R R"
+                        ],
+                        "last": "Rao",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "A",
+                        "middle": [],
+                        "last": "Raake",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/mmsp/GoringSRR20",
+                "year": 2020,
+                "venue": "2020 IEEE 22nd International Workshop on Multimedia Signal Processing (MMSP)",
+                "volume": "",
+                "issue": "",
+                "pages": "1--6",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "G\u00f6ring, S., Steger, R., Rao, R. R. R., and Raake, A. Automated genre classifica- tion for gaming videos. In 2020 IEEE 22nd International Workshop on Multimedia Signal Processing (MMSP) (2020), IEEE, pp. 1-6.",
+                "links": null
+            },
+            "BIBREF15": {
+                "ref_id": "b15",
+                "title": "Subjective video quality assessment methods for multimedia applications",
+                "authors": [
+                    {
+                        "first": "P",
+                        "middle": [],
+                        "last": "",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": null,
+                "venue": "",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "ITU-T Recommendation, P. Subjective video quality assessment methods for multimedia applications.",
+                "links": null
+            },
+            "BIBREF16": {
+                "ref_id": "b16",
+                "title": "Design of an image edge detection filter using the sobel operator",
+                "authors": [
+                    {
+                        "first": "N",
+                        "middle": [],
+                        "last": "Kanopoulos",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "N",
+                        "middle": [],
+                        "last": "Vasanthavada",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "R",
+                        "middle": [
+                            "L"
+                        ],
+                        "last": "Baker",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 1988,
+                "venue": "IEEE Journal of solid-state circuits",
+                "volume": "23",
+                "issue": "2",
+                "pages": "358--367",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Kanopoulos, N., Vasanthavada, N., and Baker, R. L. Design of an image edge detection filter using the sobel operator. IEEE Journal of solid-state circuits 23, 2 (1988), 358-367.",
+                "links": null
+            },
+            "BIBREF18": {
+                "ref_id": "b18",
+                "title": "A machine learning approach to classifying youtube qoe based on encrypted network traffic",
+                "authors": [
+                    {
+                        "first": "I",
+                        "middle": [],
+                        "last": "Orsolic",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "D",
+                        "middle": [],
+                        "last": "Pevec",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "M",
+                        "middle": [],
+                        "last": "Suznjevic",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "L",
+                        "middle": [],
+                        "last": "Skorin-Kapov",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2017,
+                "venue": "Multimedia tools and applications",
+                "volume": "76",
+                "issue": "",
+                "pages": "22267--22301",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Orsolic, I., Pevec, D., Suznjevic, M., and Skorin-Kapov, L. A machine learn- ing approach to classifying youtube qoe based on encrypted network traffic. Multimedia tools and applications 76, 21 (2017), 22267-22301.",
+                "links": null
+            },
+            "BIBREF19": {
+                "ref_id": "b19",
+                "title": "A Framework for In-Network QoE Monitoring of Encrypted Video Streaming",
+                "authors": [
+                    {
+                        "first": "I",
+                        "middle": [],
+                        "last": "Orsolic",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "L",
+                        "middle": [],
+                        "last": "Skorin-Kapov",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2020,
+                "venue": "IEEE Access",
+                "volume": "8",
+                "issue": "",
+                "pages": "74691--74706",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Orsolic, I., and Skorin-Kapov, L. A Framework for In-Network QoE Monitoring of Encrypted Video Streaming. IEEE Access 8 (2020), 74691-74706.",
+                "links": null
+            },
+            "BIBREF20": {
+                "ref_id": "b20",
+                "title": "Cloud Gaming QoE Models for Deriving Video Encoding Adaptation Strategies",
+                "authors": [
+                    {
+                        "first": "I",
+                        "middle": [],
+                        "last": "Slivar",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "L",
+                        "middle": [],
+                        "last": "Skorin-Kapov",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "M",
+                        "middle": [],
+                        "last": "Suznjevic",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/mmsys/SlivarSS16",
+                "year": 2016,
+                "venue": "Proceedings of the 7th International Conference on Multimedia Systems",
+                "volume": "",
+                "issue": "",
+                "pages": "1--12",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Slivar, I., Skorin-Kapov, L., and Suznjevic, M. Cloud Gaming QoE Models for Deriving Video Encoding Adaptation Strategies. In Proceedings of the 7th International Conference on Multimedia Systems (2016), pp. 1-12.",
+                "links": null
+            },
+            "BIBREF21": {
+                "ref_id": "b21",
+                "title": "Game Categorization for Deriving QoE-driven Video Encoding Configuration Strategies for Cloud Gaming",
+                "authors": [
+                    {
+                        "first": "I",
+                        "middle": [],
+                        "last": "Slivar",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "M",
+                        "middle": [],
+                        "last": "Suznjevic",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "L",
+                        "middle": [],
+                        "last": "Skorin-Kapov",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2018,
+                "venue": "ACM Transactions on Multimedia Computing, Communications, and Applications (TOMM)",
+                "volume": "14",
+                "issue": "3s",
+                "pages": "1--24",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Slivar, I., Suznjevic, M., and Skorin-Kapov, L. Game Categorization for De- riving QoE-driven Video Encoding Configuration Strategies for Cloud Gaming. ACM Transactions on Multimedia Computing, Communications, and Applications (TOMM) 14, 3s (2018), 1-24.",
+                "links": null
+            },
+            "BIBREF22": {
+                "ref_id": "b22",
+                "title": "OnLive will shut down its cloud gaming services and sell assets to Sony",
+                "authors": [],
+                "dblp_id": null,
+                "year": 2015,
+                "venue": "",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "VentureBeat. OnLive will shut down its cloud gaming services and sell assets to Sony. https://venturebeat.com/2015/04/02/onlive-will-shut-cloud-gaming- services-and-sell-assets-to-sony/, April 2015. [accessed 02.02.2022.].",
+                "links": null
+            },
+            "BIBREF23": {
+                "ref_id": "b23",
+                "title": "Subjective and objective quality assessment of mobile gaming video",
+                "authors": [
+                    {
+                        "first": "S",
+                        "middle": [],
+                        "last": "Wen",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "S",
+                        "middle": [],
+                        "last": "Ling",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "J",
+                        "middle": [],
+                        "last": "Wang",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "X",
+                        "middle": [],
+                        "last": "Chen",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "L",
+                        "middle": [],
+                        "last": "Fang",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Y",
+                        "middle": [],
+                        "last": "Jing",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "P",
+                        "middle": [
+                            "L"
+                        ],
+                        "last": "Callet",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/icassp/WenLWCJC22",
+                "year": 2021,
+                "venue": "",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {
+                    "arXiv": [
+                        "arXiv:2103.05099"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Wen, S., Ling, S., Wang, J., Chen, X., Fang, L., Jing, Y., and Callet, P. L. Subjective and objective quality assessment of mobile gaming video. arXiv preprint arXiv:2103.05099 (2021).",
+                "links": null
+            },
+            "BIBREF24": {
+                "ref_id": "b24",
+                "title": "A classification of video games based on game characteristics linked to video coding complexity",
+                "authors": [
+                    {
+                        "first": "S",
+                        "middle": [],
+                        "last": "Zadtootaghaj",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "S",
+                        "middle": [],
+                        "last": "Schmidt",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "N",
+                        "middle": [],
+                        "last": "Barman",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "S",
+                        "middle": [],
+                        "last": "M\u00f6ller",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "M",
+                        "middle": [
+                            "G"
+                        ],
+                        "last": "Martini",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/netgames/Zadtootaghaj0BM18",
+                "year": 2018,
+                "venue": "2018 16th Annual Workshop on Network and Systems Support for Games (NetGames)",
+                "volume": "",
+                "issue": "",
+                "pages": "1--6",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Zadtootaghaj, S., Schmidt, S., Barman, N., M\u00f6ller, S., and Martini, M. G. A classification of video games based on game characteristics linked to video coding complexity. In 2018 16th Annual Workshop on Network and Systems Support for Games (NetGames) (2018), IEEE, pp. 1-6.",
+                "links": null
+            },
+            "BIBREF25": {
+                "ref_id": "b25",
+                "title": "Quality estimation models for gaming video streaming services using perceptual video quality dimensions",
+                "authors": [
+                    {
+                        "first": "S",
+                        "middle": [],
+                        "last": "Zadtootaghaj",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "S",
+                        "middle": [],
+                        "last": "Schmidt",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "S",
+                        "middle": [
+                            "S"
+                        ],
+                        "last": "Sabet",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "S",
+                        "middle": [],
+                        "last": "M\u00f6ller",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "C",
+                        "middle": [],
+                        "last": "Griwodz",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/mmsys/Zadtootaghaj0S020",
+                "year": 2020,
+                "venue": "Proceedings of the 11th ACM Multimedia Systems Conference",
+                "volume": "",
+                "issue": "",
+                "pages": "213--224",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Zadtootaghaj, S., Schmidt, S., Sabet, S. S., M\u00f6ller, S., and Griwodz, C. Quality estimation models for gaming video streaming services using perceptual video quality dimensions. In Proceedings of the 11th ACM Multimedia Systems Conference (2020), pp. 213-224.",
+                "links": null
+            },
+            "BIBREF26": {
+                "ref_id": "b26",
+                "title": "Video coding tool analysis and dataset for gaming content",
+                "authors": [
+                    {
+                        "first": "X",
+                        "middle": [],
+                        "last": "Zhao",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "S",
+                        "middle": [],
+                        "last": "Liu",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "X",
+                        "middle": [],
+                        "last": "Li",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "G",
+                        "middle": [],
+                        "last": "Li",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "X",
+                        "middle": [],
+                        "last": "Xu",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/pcs/000300LX21",
+                "year": 2021,
+                "venue": "2021 Picture Coding Symposium (PCS)",
+                "volume": "",
+                "issue": "",
+                "pages": "1--5",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Zhao, X., Liu, S., Li, X., Li, G., and Xu, X. Video coding tool analysis and dataset for gaming content. In 2021 Picture Coding Symposium (PCS) (2021), IEEE, pp. 1-5.",
+                "links": null
+            }
+        }
+    }
+}

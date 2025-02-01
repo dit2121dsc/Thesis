@@ -1,0 +1,483 @@
+{
+    "paper_id": "3495243",
+    "header": {
+        "generated_with": "S2ORC 1.0.0",
+        "date_generated": "2024-03-20T17:53:12.859811Z"
+    },
+    "title": "Demonstrating OmniCells: A Resilient Indoor Localization System to Devices' Diversity",
+    "authors": [
+        {
+            "first": "Hamada",
+            "middle": [],
+            "last": "Rizk",
+            "suffix": "",
+            "affiliation": {
+                "laboratory": "",
+                "institution": "Tanta University",
+                "location": {
+                    "country": "Egypt"
+                }
+            },
+            "email": "hamada_rizk@f-eng.tanta.edu.eg"
+        },
+        {
+            "first": "Tatsuya",
+            "middle": [],
+            "last": "Amano",
+            "suffix": "",
+            "affiliation": {
+                "laboratory": "",
+                "institution": "Tanta University",
+                "location": {
+                    "country": "Egypt"
+                }
+            },
+            "email": "tamano@ist.osaka-u.ac.jp"
+        },
+        {
+            "first": "Hirozumi",
+            "middle": [],
+            "last": "Yamaguchi",
+            "suffix": "",
+            "affiliation": {
+                "laboratory": "",
+                "institution": "Tanta University",
+                "location": {
+                    "country": "Egypt"
+                }
+            },
+            "email": ""
+        },
+        {
+            "first": "Moustafa",
+            "middle": [],
+            "last": "Youssef",
+            "suffix": "",
+            "affiliation": {
+                "laboratory": "",
+                "institution": "Tanta University",
+                "location": {
+                    "country": "Egypt"
+                }
+            },
+            "email": "moustafa-youssef@aucegypt.edu"
+        }
+    ],
+    "year": "",
+    "venue": null,
+    "identifiers": {},
+    "abstract": "In this paper, we demonstrate OmniCells: a cellular-based indoor localization system designed to combat the device heterogeneity problem. OmniCells is a deep learning-based system that leverages cellular measurements from one or more training devices to provide consistent performance across unseen tracking phones. In this demo, we show the effect of device heterogeneity on the received cellular signals and how this leads to performance deterioration of traditional localization systems. In particular, we show how OmniCells and its novel feature extraction methods enable learning a rich and device-invariant representation without making any assumptions about the source or target devices. The system also includes other modules to increase the deep model's generalization and resilience to unseen scenarios.",
+    "pdf_parse": {
+        "abstract": [
+            {
+                "text": "In this paper, we demonstrate OmniCells: a cellular-based indoor localization system designed to combat the device heterogeneity problem. OmniCells is a deep learning-based system that leverages cellular measurements from one or more training devices to provide consistent performance across unseen tracking phones. In this demo, we show the effect of device heterogeneity on the received cellular signals and how this leads to performance deterioration of traditional localization systems. In particular, we show how OmniCells and its novel feature extraction methods enable learning a rich and device-invariant representation without making any assumptions about the source or target devices. The system also includes other modules to increase the deep model's generalization and resilience to unseen scenarios.",
+                "cite_spans": [],
+                "section": "Abstract",
+                "sec_num": null
+            }
+        ],
+        "body_text": [
+            {
+                "text": "as well as rare changes in network configuration and infrastructure. These advantages suggest cellular as a pervasive and stable operating technology for localization that eliminates the need for time-consuming infrastructure setup.",
+                "cite_spans": [],
+                "section": "",
+                "sec_num": null
+            },
+            {
+                "text": "The basic idea of cellular-based indoor localization systems is to record the Received Signal Strength measurements (RSSI) by the user's phone from the covering base stations at certain reference locations in the area of interest. Then, these measurements (signatures) are stored in a fingerprint database to enable the training of a model for the positioning of the users [2, 4, [6] [7] [8] . Since the cell phone is used as the measurement unit, so the measured RSSIs are affected by the phone's model, form factors, and antenna characteristics. These factors usually lead to different distributions even when the user is stationary at the same location. In this vein, the quality of the localization models drops significantly in scenarios where the system is trained with a specific phone and tested with different types of phones, which is the typical real-world use case.",
+                "cite_spans": [
+                    {
+                        "start": 373,
+                        "end": 376,
+                        "text": "[2,",
+                        "ref_id": "BIBREF1"
+                    },
+                    {
+                        "start": 377,
+                        "end": 379,
+                        "text": "4,",
+                        "ref_id": "BIBREF3"
+                    },
+                    {
+                        "start": 380,
+                        "end": 383,
+                        "text": "[6]",
+                        "ref_id": "BIBREF5"
+                    },
+                    {
+                        "start": 384,
+                        "end": 387,
+                        "text": "[7]",
+                        "ref_id": "BIBREF6"
+                    },
+                    {
+                        "start": 388,
+                        "end": 391,
+                        "text": "[8]",
+                        "ref_id": "BIBREF7"
+                    }
+                ],
+                "section": "",
+                "sec_num": null
+            },
+            {
+                "text": "To solve this problem without compromising on accuracy, a localization model should be trained for every possible consumer phone. However, this solution is intrinsically impractical due to the huge number of phones available on the market and the requirement to collect sufficient amounts of data using each individual phone to train a corresponding model.",
+                "cite_spans": [],
+                "section": "",
+                "sec_num": null
+            },
+            {
+                "text": "To tackle the above problems, we proposed OmniCells [3] : a deep learning-based cellular localization system trained with data collected from only a single or a few phones. It is capable of providing stable and accurate positioning even when used by other unseen phones without requiring any information about the considered phones. This is made possible by extracting device invariant features, i.e., relative features from the data recorded by the calibration phone(s) during the offline phase. Towards this, we developed an enhanced version of an autoencoder network to transform the input distribution of the raw RSS space into a latent space where different phones' data are identically distributed. These features are then harnessed to train a deep neural network to map the transformed RSS data to the user's location. In the tracking phase, the transformed features will be extracted from the cell measurements reported by an unseen phone and then fed to the trained deep model to estimate the user location.",
+                "cite_spans": [
+                    {
+                        "start": 52,
+                        "end": 55,
+                        "text": "[3]",
+                        "ref_id": "BIBREF2"
+                    }
+                ],
+                "section": "RESEARCH CONTRIBUTION",
+                "sec_num": "1"
+            },
+            {
+                "text": "Figure 2 shows the system architecture which includes two phases offline and online. We start the offline phase by recording cellular information of the detectable base stations using a mobile application called \"fingerprint Collector\". This is done at pre-defined reference points in the environment of interest. The captured data is then forwarded to a service on the cloud for processing. The \"pre-processor\" service is mainly responsible for obtaining a fixedlength RSS vector where each entry corresponds to the received signal from the different detectable base stations. After that, the input RSS values are normalized to the range [0,1].",
+                "cite_spans": [],
+                "section": "THE SYSTEM ARCHITECTURE",
+                "sec_num": "2"
+            },
+            {
+                "text": "The feature extraction module is responsible for mapping the pre-processed RSS vector to get a consistent representation of the signals across different phones. This can be achieved through the use of a modified version of the autoencoder neural network (AE) [1] . In this work, however, we train the autoencoder using data collected by an arbitrary phone to reconstruct data collected at the same time and location by different phones (or a noisy version of the same phone). This forces the network to learn a latent representation that is generic (i.e., phone-invariant) and captures the common factors of the different phones. Therefore, OmniCells employs multi-task learning, which aims to optimize the encoderdecoder model with respect to multiple objectives. More specifically, we have multiple decoders stacked on top of a single encoder; where each target training device has its own decoder, as shown in Fig 3. This ensures the network learns a more general encoder (and, by extension, a more general latent representation) to accommodate diversity between different phones.",
+                "cite_spans": [
+                    {
+                        "start": 259,
+                        "end": 262,
+                        "text": "[1]",
+                        "ref_id": "BIBREF0"
+                    },
+                    {
+                        "start": 913,
+                        "end": 919,
+                        "text": "Fig 3.",
+                        "ref_id": null
+                    }
+                ],
+                "section": "THE SYSTEM ARCHITECTURE",
+                "sec_num": "2"
+            },
+            {
+                "text": "The localization model builder leverages the encoded features obtained from the encoder network to train a fully-connected neural network model. The trained model is used during the online phase to estimate the user location. The output layer consists of a number of neurons corresponding to the number of surveyed points at the data collection time. This network is trained to operate as a multi-class classifier by leveraging a softmax activation function in the output layer. This leads to a probability distribution over the reference fingerprint locations given an input feature vector.",
+                "cite_spans": [],
+                "section": "THE SYSTEM ARCHITECTURE",
+                "sec_num": "2"
+            },
+            {
+                "text": "The goal of the online phase is to locate the user in real-time using the received cell signals from the covering base stations. This can be done by processing the scanned cell information and extracting the corresponding feature vector described previously. This vector is then fed to the trained localization model to get a location estimate. However, to track the user in the continuous spatial space (i.e., anywhere, even on locations different from the reference points), OmniCells reports the spatial weighted average over the reference points, where the weights are chosen as their corresponding probabilities as output from the classifier network [6] .",
+                "cite_spans": [
+                    {
+                        "start": 655,
+                        "end": 658,
+                        "text": "[6]",
+                        "ref_id": "BIBREF5"
+                    }
+                ],
+                "section": "THE SYSTEM ARCHITECTURE",
+                "sec_num": "2"
+            },
+            {
+                "text": "Then, OmniCells visualizes the estimated location by showing the user trajectory on the floorplan of the area of interest. Additionally, it further applies map matching to ensure smooth trajectory estimation and a perfect user experience.",
+                "cite_spans": [],
+                "section": "THE SYSTEM ARCHITECTURE",
+                "sec_num": "2"
+            },
+            {
+                "text": "OmniCells project is based on fingerprinting. Thus, at the venue, we will either load pre-recorded data or collect data at a few reference points (if possible, using our technique proposed in [7] ). Different localization models trained with data captured by different sets of three phones will be loaded. In each case, the localization performance will be tested and demonstrated with data captured by unseen phones (i.e., different from the training ones). We will visualize the localization performance of the OmniCells system and compare it to the state-of-the-art systems that do not consider device heterogeneity as a design factor. In the demo, we will show real user trajectories side-by-side with a real scene captured by the mobile camera similar to what is depicted in Figure 1 . The demo will also focus on showing the design aspects that affect localization systems' performance in an interactive way.",
+                "cite_spans": [
+                    {
+                        "start": 192,
+                        "end": 195,
+                        "text": "[7]",
+                        "ref_id": "BIBREF6"
+                    }
+                ],
+                "section": "SETUP AND DEMO SCENARIO",
+                "sec_num": "3"
+            }
+        ],
+        "bib_entries": {
+            "BIBREF0": {
+                "ref_id": "b0",
+                "title": "Device-Invariant Cellular-Based Indoor Localization System Using Deep Learning",
+                "authors": [
+                    {
+                        "first": "Hamada",
+                        "middle": [],
+                        "last": "Rizk",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2019,
+                "venue": "MobiSys (RisingStarsForum'19)",
+                "volume": "",
+                "issue": "",
+                "pages": "19--23",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Hamada Rizk. 2019. Device-Invariant Cellular-Based Indoor Localization System Using Deep Learning. In MobiSys (RisingStarsForum'19). ACM, 19-23.",
+                "links": null
+            },
+            "BIBREF1": {
+                "ref_id": "b1",
+                "title": "Solocell: Efficient indoor localization based on limited cell network information and minimal fingerprinting",
+                "authors": [
+                    {
+                        "first": "Hamada",
+                        "middle": [],
+                        "last": "Rizk",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/gis/Rizk19",
+                "year": 2019,
+                "venue": "ACM SIGSPATIAL",
+                "volume": "",
+                "issue": "",
+                "pages": "604--605",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Hamada Rizk. 2019. Solocell: Efficient indoor localization based on limited cell network information and minimal fingerprinting. In ACM SIGSPATIAL. 604-605.",
+                "links": null
+            },
+            "BIBREF2": {
+                "ref_id": "b2",
+                "title": "OmniCells: Cross-Device Cellular-based Indoor Location Tracking Using Deep Neural Networks",
+                "authors": [
+                    {
+                        "first": "Hamada",
+                        "middle": [],
+                        "last": "Rizk",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Moustafa",
+                        "middle": [],
+                        "last": "Abbas",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Moustafa",
+                        "middle": [],
+                        "last": "Youssef",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/percom/RizkAY20",
+                "year": 2020,
+                "venue": "IEEE International Conference on Pervasive Computing and Communications (PerCom)",
+                "volume": "",
+                "issue": "",
+                "pages": "1--10",
+                "other_ids": {
+                    "DOI": [
+                        "10.1109/PerCom45495.2020.9127366"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Hamada Rizk, Moustafa Abbas, and Moustafa Youssef. 2020. OmniCells: Cross- Device Cellular-based Indoor Location Tracking Using Deep Neural Networks. In 2020 IEEE International Conference on Pervasive Computing and Communications (PerCom). 1-10. https://doi.org/10.1109/PerCom45495.2020.9127366",
+                "links": null
+            },
+            "BIBREF3": {
+                "ref_id": "b3",
+                "title": "A Robust and Accurate Indoor Localization Using Learning-Based Fusion of Wi-Fi RTT and RSSI",
+                "authors": [
+                    {
+                        "first": "Hamada",
+                        "middle": [],
+                        "last": "Rizk",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Ahmed",
+                        "middle": [],
+                        "last": "Elmogy",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Hirozumi",
+                        "middle": [],
+                        "last": "Yamaguchi",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "journals/sensors/RizkEY22",
+                "year": 2022,
+                "venue": "Sensors",
+                "volume": "22",
+                "issue": "",
+                "pages": "",
+                "other_ids": {
+                    "DOI": [
+                        "10.3390/s22072700"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Hamada Rizk, Ahmed Elmogy, and Hirozumi Yamaguchi. 2022. A Robust and Accurate Indoor Localization Using Learning-Based Fusion of Wi-Fi RTT and RSSI. Sensors 22, 7 (2022). https://doi.org/10.3390/s22072700",
+                "links": null
+            },
+            "BIBREF4": {
+                "ref_id": "b4",
+                "title": "Indoor Localization using Solar Cells",
+                "authors": [
+                    {
+                        "first": "Hamada",
+                        "middle": [],
+                        "last": "Rizk",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Dong",
+                        "middle": [],
+                        "last": "Ma",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Mahbub",
+                        "middle": [],
+                        "last": "Hassan",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Moustafa",
+                        "middle": [],
+                        "last": "Youssef",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/percom/RizkMHY22",
+                "year": 2022,
+                "venue": "2022 IEEE International Conference on Pervasive Computing and Communications Workshops and other Affiliated Events (PerCom Workshops)",
+                "volume": "",
+                "issue": "",
+                "pages": "38--41",
+                "other_ids": {
+                    "DOI": [
+                        "10.1109/PerComWorkshops53856.2022.9767256"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Hamada Rizk, Dong Ma, Mahbub Hassan, and Moustafa Youssef. 2022. Indoor Localization using Solar Cells. In 2022 IEEE International Conference on Pervasive Computing and Communications Workshops and other Affiliated Events (PerCom Workshops). 38-41. https://doi.org/10.1109/PerComWorkshops53856.2022.9767256",
+                "links": null
+            },
+            "BIBREF5": {
+                "ref_id": "b5",
+                "title": "CellinDeep: Robust and Accurate Cellular-based Indoor Localization via Deep Learning",
+                "authors": [
+                    {
+                        "first": "Hamada",
+                        "middle": [],
+                        "last": "Rizk",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Marwan",
+                        "middle": [],
+                        "last": "Torki",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Moustafa",
+                        "middle": [],
+                        "last": "Youssef",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2018,
+                "venue": "IEEE Sensors Journal",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Hamada Rizk, Marwan Torki, and Moustafa Youssef. 2018. CellinDeep: Robust and Accurate Cellular-based Indoor Localization via Deep Learning. IEEE Sensors Journal (2018).",
+                "links": null
+            },
+            "BIBREF6": {
+                "ref_id": "b6",
+                "title": "Laser Range Scanners for Enabling Zero-Overhead WiFi-Based Indoor Localization System",
+                "authors": [
+                    {
+                        "first": "Hamada",
+                        "middle": [],
+                        "last": "Rizk",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Hirozumi",
+                        "middle": [],
+                        "last": "Yamaguchi",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Moustafa",
+                        "middle": [],
+                        "last": "Youssef",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Teruo",
+                        "middle": [],
+                        "last": "Higashino",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2022,
+                "venue": "ACM Trans. Spatial Algorithms Syst",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Hamada Rizk, Hirozumi Yamaguchi, Moustafa Youssef, and Teruo Higashino. 2022. Laser Range Scanners for Enabling Zero-Overhead WiFi-Based Indoor Localization System. ACM Trans. Spatial Algorithms Syst. (2022).",
+                "links": null
+            },
+            "BIBREF7": {
+                "ref_id": "b7",
+                "title": "MonoDCell: A Ubiquitous and Low-Overhead Deep Learning-based Indoor Localization with Limited Cellular Information",
+                "authors": [
+                    {
+                        "first": "Hamada",
+                        "middle": [],
+                        "last": "Rizk",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Moustafa",
+                        "middle": [],
+                        "last": "Youssef",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/gis/RizkY19",
+                "year": 2019,
+                "venue": "Proceedings of the 27th ACM SIGSPATIAL",
+                "volume": "",
+                "issue": "",
+                "pages": "109--118",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Hamada Rizk and Moustafa Youssef. 2019. MonoDCell: A Ubiquitous and Low- Overhead Deep Learning-based Indoor Localization with Limited Cellular Infor- mation. In Proceedings of the 27th ACM SIGSPATIAL. ACM, 109-118.",
+                "links": null
+            }
+        }
+    }
+}

@@ -1,0 +1,3660 @@
+{
+    "paper_id": "3545008",
+    "header": {
+        "generated_with": "S2ORC 1.0.0",
+        "date_generated": "2024-03-20T17:53:02.787258Z"
+    },
+    "title": "BULB: Lightweight and Automated Load Balancing for Fast Datacenter Networks",
+    "authors": [
+        {
+            "first": "Yuan",
+            "middle": [],
+            "last": "Liu",
+            "suffix": "",
+            "affiliation": {},
+            "email": ""
+        },
+        {
+            "first": "Wenxin",
+            "middle": [],
+            "last": "Li",
+            "suffix": "",
+            "affiliation": {},
+            "email": "toliwenxin@tju.edu.cn"
+        },
+        {
+            "first": "Wenyu",
+            "middle": [],
+            "last": "Qu",
+            "suffix": "",
+            "affiliation": {},
+            "email": "wenyu.qu@tju.edu.cn"
+        },
+        {
+            "first": "Heng",
+            "middle": [],
+            "last": "Qi",
+            "suffix": "",
+            "affiliation": {},
+            "email": "hengqi@dlut.edu.cn"
+        }
+    ],
+    "year": "",
+    "venue": null,
+    "identifiers": {},
+    "abstract": "Load balancing is essential for datacenter networks. However, prior solutions have significant limitations: they either are oblivious to congestion or involve a daunting and time-consuming parametertunning task over their heuristics for achieving good performance. Thus, we ask: is it possible to learn to balance datacenter traffic? While deep reinforcement learning (DRL) sounds like a good answer, we observe that it is too heavyweight due to the long decisionmaking latency. Therefore, we introduce BULB, a lightweight and automated datacenter load balancer. BULB learns link weights to guide the end-hosts to spread traffic, so as to free the central agent from quick flow-level decision-making. BULB offline trains a DRL agent for optimizing link weights but employs an imitation learning based approach to faithfully translate this agent's DNN to a decision tree for online deployment. We implement a BULB prototype with a popular machine learning framework and evaluate it extensively in ns-3. The results show that BULB achieves up to 36.6%/56.4%, 19.9%/42.5%, 35.9%/54.8%, and 45.1%/67.7% better average/tail flow completion time than ECMP, CONGA, LetFlow, and Hermes, respectively. Moreover, BULB reduces the decision latency by 175 times while incurring only 2% performance loss after converting the DNN into a decision tree.",
+    "pdf_parse": {
+        "abstract": [
+            {
+                "text": "Load balancing is essential for datacenter networks. However, prior solutions have significant limitations: they either are oblivious to congestion or involve a daunting and time-consuming parametertunning task over their heuristics for achieving good performance. Thus, we ask: is it possible to learn to balance datacenter traffic? While deep reinforcement learning (DRL) sounds like a good answer, we observe that it is too heavyweight due to the long decisionmaking latency. Therefore, we introduce BULB, a lightweight and automated datacenter load balancer. BULB learns link weights to guide the end-hosts to spread traffic, so as to free the central agent from quick flow-level decision-making. BULB offline trains a DRL agent for optimizing link weights but employs an imitation learning based approach to faithfully translate this agent's DNN to a decision tree for online deployment. We implement a BULB prototype with a popular machine learning framework and evaluate it extensively in ns-3. The results show that BULB achieves up to 36.6%/56.4%, 19.9%/42.5%, 35.9%/54.8%, and 45.1%/67.7% better average/tail flow completion time than ECMP, CONGA, LetFlow, and Hermes, respectively. Moreover, BULB reduces the decision latency by 175 times while incurring only 2% performance loss after converting the DNN into a decision tree.",
+                "cite_spans": [],
+                "section": "Abstract",
+                "sec_num": null
+            }
+        ],
+        "body_text": [
+            {
+                "text": "Multi-rooted tree datacenter topology (e.g., Clos [21] , Fat-tree [1] ) has become a standard practice due to its ability to provide large bisection bandwidth via multiple paths between any pair of hosts [39] . Efficiently balancing traffic load across these paths has significant impact on application performance. In particular, if the traffic load is unevenly spread, some paths are congested while others being underutilized, adversely affecting the latency of network flows.",
+                "cite_spans": [
+                    {
+                        "start": 50,
+                        "end": 54,
+                        "text": "[21]",
+                        "ref_id": "BIBREF20"
+                    },
+                    {
+                        "start": 66,
+                        "end": 69,
+                        "text": "[1]",
+                        "ref_id": "BIBREF0"
+                    },
+                    {
+                        "start": 204,
+                        "end": 208,
+                        "text": "[39]",
+                        "ref_id": "BIBREF38"
+                    }
+                ],
+                "section": "INTRODUCTION",
+                "sec_num": "1"
+            },
+            {
+                "text": "The most commonly used load balancing scheme in today's datacenters, Equal Cost Multi-Path (ECMP) [23] , randomly spreads flows across available paths using a hash taken over some specific fields in packet headers. Unfortunately, ECMP balances traffic poorly because of some well-known performance issues it experienced, such as hash collisions and the inability to adapt to congestion. As a result, there has been tremendous research effort over the last decade on designing load balancing schemes to address the problems of ECMP.",
+                "cite_spans": [
+                    {
+                        "start": 98,
+                        "end": 102,
+                        "text": "[23]",
+                        "ref_id": "BIBREF22"
+                    }
+                ],
+                "section": "INTRODUCTION",
+                "sec_num": "1"
+            },
+            {
+                "text": "A representative line of work on addressing ECMP's shortcomings are proactive solutions, e.g., DRB [13] and Presto [22] , which blindly split traffic onto different paths at fixed granularity (e.g., packet or flowcell). Because of the proactive nature and stateless behavior, they are simple yet practical and can be implemented with commodity hardware. However, their static and blind traffic splitting strategies cannot adapt to traffic dynamics and network congestion, resulting in inferior performance on load balancing.",
+                "cite_spans": [
+                    {
+                        "start": 99,
+                        "end": 103,
+                        "text": "[13]",
+                        "ref_id": "BIBREF12"
+                    },
+                    {
+                        "start": 115,
+                        "end": 119,
+                        "text": "[22]",
+                        "ref_id": "BIBREF21"
+                    }
+                ],
+                "section": "INTRODUCTION",
+                "sec_num": "1"
+            },
+            {
+                "text": "Therefore, a recent line of work (e.g., Hedera [2] , CONGA [3] , FlowBender [27] , Hermes [47] ) explores a promising alternative, known as reactive load balancing. They use centralized controllers, switches, or end-hosts, to sense congestion first and then reroute packets, flows or flowlets.",
+                "cite_spans": [
+                    {
+                        "start": 47,
+                        "end": 50,
+                        "text": "[2]",
+                        "ref_id": "BIBREF1"
+                    },
+                    {
+                        "start": 59,
+                        "end": 62,
+                        "text": "[3]",
+                        "ref_id": "BIBREF2"
+                    },
+                    {
+                        "start": 76,
+                        "end": 80,
+                        "text": "[27]",
+                        "ref_id": "BIBREF26"
+                    },
+                    {
+                        "start": 90,
+                        "end": 94,
+                        "text": "[47]",
+                        "ref_id": "BIBREF46"
+                    }
+                ],
+                "section": "INTRODUCTION",
+                "sec_num": "1"
+            },
+            {
+                "text": "Despite being promising, reactive solutions only react to congestion after the fact that traffic collisions already occur. As a result, small flows may run behind long ones, and some links/paths may go underutilized, before the congestion is detected. Furthermore, they mostly require specialized switches or need changes to end-host network stacks [3, 27] , leaving a barrier to deployment.",
+                "cite_spans": [
+                    {
+                        "start": 349,
+                        "end": 352,
+                        "text": "[3,",
+                        "ref_id": "BIBREF2"
+                    },
+                    {
+                        "start": 353,
+                        "end": 356,
+                        "text": "27]",
+                        "ref_id": "BIBREF26"
+                    }
+                ],
+                "section": "INTRODUCTION",
+                "sec_num": "1"
+            },
+            {
+                "text": "Apart from the shortcomings above, reactive solutions rely on a daunting and time-consuming parameter-tuning task over their heuristics towards achieving good load balancing performance. For example, the operator needs to determine flowlet timeout \u25b3 to use LetFlow [44] and the congestion threshold T for FlowBender [27] . Some solutions have more parameters to be configured before putting into production, e.g., \u223c3 for CONGA [3] and \u223c14 for Hermes [47] . Finding suitable parameter settings for a given traffic workload is an expensive proposition, requiring considerable human efforts and expertise on application knowledge or traffic statistics.",
+                "cite_spans": [
+                    {
+                        "start": 265,
+                        "end": 269,
+                        "text": "[44]",
+                        "ref_id": "BIBREF43"
+                    },
+                    {
+                        "start": 316,
+                        "end": 320,
+                        "text": "[27]",
+                        "ref_id": "BIBREF26"
+                    },
+                    {
+                        "start": 427,
+                        "end": 430,
+                        "text": "[3]",
+                        "ref_id": "BIBREF2"
+                    },
+                    {
+                        "start": 450,
+                        "end": 454,
+                        "text": "[47]",
+                        "ref_id": "BIBREF46"
+                    }
+                ],
+                "section": "INTRODUCTION",
+                "sec_num": "1"
+            },
+            {
+                "text": "Rather than continue down the current path and address the parameter-tuning task, we ponder a fundamental question here: can we learn to spread traffic among available paths, to realize proactive load balancing while being able to adapt to dynamic traffic and network conditions?",
+                "cite_spans": [],
+                "section": "INTRODUCTION",
+                "sec_num": "1"
+            },
+            {
+                "text": "We attempt to answer this question in the affirmative by investigating the reinforcement learning (RL) technique [41] . RL is an area of machine learning concerned with decision making in a complex and uncertain environment to achieve pre-specified goals. In particular, it needs to observe previous environment states and rewards and takes actions to maximize discounted cumulative rewards. RL could be more powerful with the help of deep neural networks (DNNs), thus becoming deep reinforcement learning (DRL). In fact, DRL has been used for a wide range of applications, such as congestion control [26] , flow scheduling [14] , resource allocation [33] , etc.",
+                "cite_spans": [
+                    {
+                        "start": 113,
+                        "end": 117,
+                        "text": "[41]",
+                        "ref_id": "BIBREF40"
+                    },
+                    {
+                        "start": 601,
+                        "end": 605,
+                        "text": "[26]",
+                        "ref_id": "BIBREF25"
+                    },
+                    {
+                        "start": 624,
+                        "end": 628,
+                        "text": "[14]",
+                        "ref_id": "BIBREF13"
+                    },
+                    {
+                        "start": 651,
+                        "end": 655,
+                        "text": "[33]",
+                        "ref_id": "BIBREF32"
+                    }
+                ],
+                "section": "INTRODUCTION",
+                "sec_num": "1"
+            },
+            {
+                "text": "Intuitively, it may be a step towards the right direction to employ a DRL agent to learn per-flow routing decisions to balance the traffic load among multiple paths. For example, DeepRLB [38] and DRL-R [31] adopt DRL to directly decide the paths for network flows. However, such an approach inevitably introduces a long decision latency (see section 2.3). Since the majority of datacenter traffic is short flows [4, 21] , most flows will run out before their decisions arrive, and the decisions are thus useless. On the other hand, to acquire superior performance, the DRL agent may need to use a large DNN model with millions or even billions of parameters. It is indisputable that larger DNN model will make the matter worse and introduce even longer decision latency, due to the increased model inference time.",
+                "cite_spans": [
+                    {
+                        "start": 187,
+                        "end": 191,
+                        "text": "[38]",
+                        "ref_id": "BIBREF37"
+                    },
+                    {
+                        "start": 202,
+                        "end": 206,
+                        "text": "[31]",
+                        "ref_id": "BIBREF30"
+                    },
+                    {
+                        "start": 412,
+                        "end": 415,
+                        "text": "[4,",
+                        "ref_id": "BIBREF3"
+                    },
+                    {
+                        "start": 416,
+                        "end": 419,
+                        "text": "21]",
+                        "ref_id": "BIBREF20"
+                    }
+                ],
+                "section": "INTRODUCTION",
+                "sec_num": "1"
+            },
+            {
+                "text": "In this paper, we present BULB, a lightweight and automated datacenter load balancer. BULB's key idea is to use a decision tree to imitate the DRL for learning and controlling the link weights to achieve load balance.",
+                "cite_spans": [],
+                "section": "INTRODUCTION",
+                "sec_num": "1"
+            },
+            {
+                "text": "At the heart of BULB are a DRL-based link weight optimization mechanism and a decision tree generating design. For optimizing link weights, we propose to train a DRL agent embedded with a DNN. The agent makes link weight update decisions (i.e., actions) based on the state that can be readily obtained, i.e., the information about finished, newly arrived, and active flows, to maximize average throughput of flows. Since the link weights are continuous variables, we use the Deep Deterministic Policy Gradient (DDPG) algorithm [30] for training. The trained DRL agent will not be used for online deployment. Instead, we translate the DNN of the DRL agent into a decision tree. To overcome the challenging issues of faithfulness and efficiency encountered in converting DNN into decision trees, we adopt the idea of imitation learning [8, 25] . During the conversion, the decision tree acts like a student who learns state-action mappings from the DRL agent's DNN (teacher). The DNN will continuously correct the decision tree's actions via the data resampling technique. We deploy the trained decision tree on a central controller for learning link weights periodically. With the link weights, each end-host applies the weighted path selection1 to balance flows among available paths.",
+                "cite_spans": [
+                    {
+                        "start": 527,
+                        "end": 531,
+                        "text": "[30]",
+                        "ref_id": "BIBREF29"
+                    },
+                    {
+                        "start": 834,
+                        "end": 837,
+                        "text": "[8,",
+                        "ref_id": "BIBREF7"
+                    },
+                    {
+                        "start": 838,
+                        "end": 841,
+                        "text": "25]",
+                        "ref_id": "BIBREF24"
+                    }
+                ],
+                "section": "INTRODUCTION",
+                "sec_num": "1"
+            },
+            {
+                "text": "BULB's lightweightness lies in two aspects. First, each end-host can make per-flow routing decisions using weighted path selection with local information (i.e., link weights), while the link weights are still optimized by the central controller. In this way, the slow centralized processing can be detached from the quick decisionmaking. Second, BULB trains a DNN offline but deploys a decision tree online. Compared to DNN, the decision tree is lightweight and incurs a lower inference time, allowing the controller to inform end-hosts the updated link weights more quickly.",
+                "cite_spans": [],
+                "section": "INTRODUCTION",
+                "sec_num": "1"
+            },
+            {
+                "text": "We have implemented a prototype of our BULB using Keras [16] deep learning library with TensorFlow as the backend. We evaluate BULB through large-scale simulations in a simulated 10G network with the realistic web search [4] and memcached [5] workloads using ns-3. We have the following key findings: 1) compared to ECMP, CONGA [3] , LetFlow [44] and Hermes [47] , BULB reduce the overall average/tail FCT by up to 36.6%/56.4%, 19.9%/42.5%, 35.9%/54.8%, and 45.1%/67.7%, respectively; 2) for the average/tail FCT small flows, BULB also achieves up to 80.2%/96.9%, 75.7%/83.5%, 74.6%/92.7%, and 88.7%/97.1% better than the four existing solutions, respectively; 3) by converting the DNN into decision tree, BULB can shorten the decision latency by 175\u00d7, while incurring only 2% performance loss.",
+                "cite_spans": [
+                    {
+                        "start": 56,
+                        "end": 60,
+                        "text": "[16]",
+                        "ref_id": "BIBREF15"
+                    },
+                    {
+                        "start": 221,
+                        "end": 224,
+                        "text": "[4]",
+                        "ref_id": "BIBREF3"
+                    },
+                    {
+                        "start": 239,
+                        "end": 242,
+                        "text": "[5]",
+                        "ref_id": "BIBREF4"
+                    },
+                    {
+                        "start": 328,
+                        "end": 331,
+                        "text": "[3]",
+                        "ref_id": "BIBREF2"
+                    },
+                    {
+                        "start": 342,
+                        "end": 346,
+                        "text": "[44]",
+                        "ref_id": "BIBREF43"
+                    },
+                    {
+                        "start": 358,
+                        "end": 362,
+                        "text": "[47]",
+                        "ref_id": "BIBREF46"
+                    }
+                ],
+                "section": "INTRODUCTION",
+                "sec_num": "1"
+            },
+            {
+                "text": "In this section, we first show the background of DRL and then demonstrate a basic load balancing solution of applying DRL to learn per-flow routing. Finally, we show the problems of this basic solution using simulations, motivating BULB.",
+                "cite_spans": [],
+                "section": "BACKGROUND AND MOTIVATION",
+                "sec_num": "2"
+            },
+            {
+                "text": "RL is an area of machine learning that deals with sequential decisionmaking. It uses an agent that interacts with an environment repeatedly to learn how to pick actions to achieve a goal towards maximizing the rewards. To be clear, in a RL framework, time is divided into a number of discrete time steps. In each time step t, the agent observes the state s t of the environment, and then takes an action a t from a possible action set A. Once an action a t was taken, the state of the environment changes to s t +1 and the agent obtains a reward r t signifying how good or bad the action was. This process will continue until the agent reaches the final state or time limit. The goal of the agent is to maximize expected discounted cumulative rewards E[ \u221e t =0 \u03b3 t r t ] where \u03b3 \u2208 (0, 1] is a discounting factor used to prioritize more recent rewards.",
+                "cite_spans": [],
+                "section": "Deep reinforcement learning (DRL)",
+                "sec_num": "2.1"
+            },
+            {
+                "text": "The RL agent is usually guided by a policy, \u03c0 (a|s), that maps each state s t to an action a t to optimize the predefined discounted cumulative reward. Finding all possible state-action mapping is infeasible in most real-world problems, and the policy is usually represented by the function approximator \u03c0 (a|s, \u03b8 ) where \u03b8 denotes the set of parameters of the function. In deep reinforcement learning (DRL), a deep neural network (DNN) will be used as the function approximator. In this case, \u03b8 is the DNN parameters, and the agent's task is to learn the parameters of this DNN using the state s t , action a t , and reward r t in each time step t.",
+                "cite_spans": [],
+                "section": "Deep reinforcement learning (DRL)",
+                "sec_num": "2.1"
+            },
+            {
+                "text": "To train the DNN model, a basic policy gradient (PG) algorithm [42] will update the parameters \u03b8 for the policy \u03c0 (a|s, \u03b8 ) in each episode of length T as follows.",
+                "cite_spans": [
+                    {
+                        "start": 63,
+                        "end": 67,
+                        "text": "[42]",
+                        "ref_id": "BIBREF41"
+                    }
+                ],
+                "section": "Deep reinforcement learning (DRL)",
+                "sec_num": "2.1"
+            },
+            {
+                "text": "\u03b8 \u2190 \u03b8 + \u03b1 T t =1 \u2207 \u03b8 log \u03c0 (a t |s t , \u03b8 ) T t \u2032 =t \u03b3 t \u2032 -t r t -b t (1)",
+                "cite_spans": [],
+                "section": "Deep reinforcement learning (DRL)",
+                "sec_num": "2.1"
+            },
+            {
+                "text": "Here, \u03b1 is the learning rate and \u2207 \u03b8 log \u03c0 (a t |s t , \u03b8 ) represents the direction that \u03b8 should take to increase the probability of choosing action a t at state s t . b t is a baseline value used for reducing the variance of the gradient, which is often taken as the cumulative average of experienced rewards from time step t onwards. The term ( T t \u2032 =t r t -b t ) estimates how much better (or worse) the total reward is in a particular episode compared to the average case. As a result, this equation can increase the probability of choosing an action that leads to a better-than-average reward, thus maximizing the expected cumulative reward.",
+                "cite_spans": [],
+                "section": "Deep reinforcement learning (DRL)",
+                "sec_num": "2.1"
+            },
+            {
+                "text": "To balance the traffic load among multiple paths, a straightforward solution would be to learn per-flow routing decision using DRL, as stated and formulated in the following.",
+                "cite_spans": [],
+                "section": "A basic load balancing solution using DRL",
+                "sec_num": "2.2"
+            },
+            {
+                "text": "Per-flow routing problem: We consider a datacenter network with multiple servers. Flows are dynamically arrived and transmitted between different servers. When each flow arrives at the network, we need to decide which path this flow should take, such that the traffic load can be balanced. We assume that the available paths between each pair of servers are pre-installed using the same way in XPath [24] . We also consider that once the path of a flow has been determined, it will not be changed during the flow's lifetime.",
+                "cite_spans": [
+                    {
+                        "start": 400,
+                        "end": 404,
+                        "text": "[24]",
+                        "ref_id": "BIBREF23"
+                    }
+                ],
+                "section": "A basic load balancing solution using DRL",
+                "sec_num": "2.2"
+            },
+            {
+                "text": "DRL formulation: The per-flow routing problem above can be cast as a DRL task as follows.",
+                "cite_spans": [],
+                "section": "A basic load balancing solution using DRL",
+                "sec_num": "2.2"
+            },
+            {
+                "text": "State Space: The state contains the set of newly arrived flows (short for new flows) F t n , the set of active flows F t a , and the set of finished flows F t e , at current time step t. Each new flow is characterized by its 5-tuple: source and destination IPs and ports as well as the transport protocol. Each active flow has one additional attribute which is the number of bytes it has sent. Each finished flow has two additional attributes: FCT (flow completion time) and flow size. Action Space: A centralized agent will be responsible for computing the action at each time step. Specifically, the action provided by the agent at t is a set of computed paths, {p (2) where u t max denotes the maximum link utilization of the whole network at time step t. Intuitively, a lower u t max will result in a higher reward value, which means that the action just taken is good to minimizing the maximum link utilization ratio.",
+                "cite_spans": [],
+                "section": "A basic load balancing solution using DRL",
+                "sec_num": "2.2"
+            },
+            {
+                "text": "The agent includes a DNN, which takes the state as input and action as output. The agent updates the parameters of its DNN using the policy gradient algorithm specified by Eq. (1) . In this way, compared to poor routing decisions, good routing decisions could have higher probabilities to be output for similar states in the future. After the system converges, the agent can output a sufficient routing path for each flow.",
+                "cite_spans": [
+                    {
+                        "start": 176,
+                        "end": 179,
+                        "text": "(1)",
+                        "ref_id": "BIBREF0"
+                    }
+                ],
+                "section": "A basic load balancing solution using DRL",
+                "sec_num": "2.2"
+            },
+            {
+                "text": "We use the popular learning framework Keras/TensorFlow to implement the PG algorithm to solve the DRL problem above and set up the environment in ns-3 for simulation. We simulate two servers, one for the DRL agent and another one for generating traffic. The traffic server mainly sends flow information to the agent, which will then calculate and return actions. The link capacity between the two servers is set to 10Gbps. We record the decision latency as the time between finish sending the flow information and receiving the action. The decision latency consists of three components: 1) the inference time needed to go through the DNN model of the DRL agent; 2) the transmission time for sending flow information and receiving the action over the network; 3) the queuing time for waiting in the agent server for model inference scheduling. Fig. 1 (a) first shows the breakdown of the decision latency by using a one-hidden-layer DNN model for the DRL agent under varying flow sending rates. From this figure, we observe that the inference time is maintained around 20ms, irrespective of the change of the sending rates, as there is only one hidden layer. By contrast, the queuing and transmission time grows as the sending rate increases and reaches \u223c268ms for the rate of 5000fps. By fixing the flow sending rate to be 1000fps, Fig. 1(b ) further depicts the decision latency under different numbers of hidden layers. In this figure, the inference time increases as the number of hidden layers grows and can be up to \u223c90ms. The queuing and transmission time is negligible at the beginning. However, it grows to \u223c390ms when the DNN has 6 hidden layers. The reason is that a slower DRL inferencing process will lead to more flows accumulated and waited at the agent server for model inference scheduling.",
+                "cite_spans": [],
+                "section": "Limitations of the basic solution",
+                "sec_num": "2.3"
+            },
+            {
+                "text": "In summary, the decision latency of the basic load balancing solution developed in section 2.2 is between tens of milliseconds order and hundreds of milliseconds order, even in the case with only one traffic server. Such long latency poses significant barriers for large-scale deployments. The crux is that most flows (>95%) in realistic datacenter traffic workloads [4, 5, 21] are short and could run out before their routing decisions come. This motivates our design below. ",
+                "cite_spans": [
+                    {
+                        "start": 367,
+                        "end": 370,
+                        "text": "[4,",
+                        "ref_id": "BIBREF3"
+                    },
+                    {
+                        "start": 371,
+                        "end": 373,
+                        "text": "5,",
+                        "ref_id": "BIBREF4"
+                    },
+                    {
+                        "start": 374,
+                        "end": 377,
+                        "text": "21]",
+                        "ref_id": "BIBREF20"
+                    }
+                ],
+                "section": "Limitations of the basic solution",
+                "sec_num": "2.3"
+            },
+            {
+                "text": "BULB's goal is to design a lightweight and automated load balancing solution to pro-actively spread traffic load among available paths while being mindful of traffic dynamics.",
+                "cite_spans": [],
+                "section": "BULB OVERVIEW",
+                "sec_num": "3"
+            },
+            {
+                "text": "Fig. 2 presents an overview of BULB. At a high level, it contains an offline trainer that trains a DRL agent and generates a decision tree from the trained DNN, as well as an online enforcer that deploys a decision tree agent in the central controller to optimize the link weights for guiding the end-hosts spreading traffic in the network.",
+                "cite_spans": [],
+                "section": "BULB OVERVIEW",
+                "sec_num": "3"
+            },
+            {
+                "text": "The offline trainer leverages a virtual or simulation environment (e.g., ns-3) to train a DRL agent which interacts with the environment to determine the link weights to maximize the average throughput of flows. It adopts a Deep Deterministic Policy Gradient (DDPG) algorithm for training because the agent has continuous action space. After the DRL agent has been trained, it employs the imitation learning [25] technique to generate a decision tree agent (student) under the guidance of the fine-tuned DRL agent (teacher). To be particular, it first collects a set of (state, action) tuples from the DRL's DNN and trains a decision tree with the well-known Classification and Regression Tree (CART) algorithm [12] . It then uses a data resampling technique to continuously retrain the decision tree, so as to reduce the difference of the actions between the DNN and the decision tree. As a result, the trained decision tree can behave just like the DNN and output link weights.",
+                "cite_spans": [
+                    {
+                        "start": 408,
+                        "end": 412,
+                        "text": "[25]",
+                        "ref_id": "BIBREF24"
+                    },
+                    {
+                        "start": 711,
+                        "end": 715,
+                        "text": "[12]",
+                        "ref_id": "BIBREF11"
+                    }
+                ],
+                "section": "BULB OVERVIEW",
+                "sec_num": "3"
+            },
+            {
+                "text": "Once the decision tree is generated, the enforcer will deploy it on a central controller for online link weight optimization in a datacenter network. To this end, the controller will interact with the end-hosts periodically. On the one hand, it receives the information of new, active, and finished flows from end-hosts and feed them to the decision tree agent to make link weight decisions. For new flows, it only collects 5-tuple. Apart from 5-tuple, it also collects the number of bytes already sent for active flows and FCT/size for finished flows. On the other hand, it sends the updated link weights to end-hosts. Each end-host chooses the network path for each flow based on the weights2 of available paths between the flow's source and destination, where the weight of a path is the summation of the relevant link weights. After obtaining the path, we enforce the explicit routing path control using XPath [24] .",
+                "cite_spans": [
+                    {
+                        "start": 914,
+                        "end": 918,
+                        "text": "[24]",
+                        "ref_id": "BIBREF23"
+                    }
+                ],
+                "section": "BULB OVERVIEW",
+                "sec_num": "3"
+            },
+            {
+                "text": "BULB involves two key steps: optimizing link weights with DRL and generating decision tree; in what follows, we will present more details about them.",
+                "cite_spans": [],
+                "section": "BULB OVERVIEW",
+                "sec_num": "3"
+            },
+            {
+                "text": "The intuition behind learning link weights is that link weight is a good indicator of the network condition. Several routing and load balancing solutions (e.g., [18, 22, 44, 48] ) have demonstrated that optimizing the link (or path) weights can improve the performance. In our case, the link weights are used by the weighted path selection algorithm to compute flow routing decisions. A link with a higher weight will cause the algorithm to spread more flows on it. The link weights are required to be changed dynamically to match dynamic traffic and network conditions. In our paper, we attempt to optimize the link weights with DRL, as shown in the following. DRL for link weight optimization: We consider a datacenter network with multiple end-hosts and links. Each link l has a weight w l . Flow routing is computed by using these weights. To be clear, for each flow, the source end-host will calculate the weights of all the available paths for this flow based on the link weights. Each path's weight equals the sum of all its link weights. Then, the source endhost will sample a path for this flow from the available path. The probability that a path will be sampled for a flow is the ratio between the weight of this path and the sum of all available path weights of this flow. After obtaining the path for a flow, the source end-host uses XPath [24] to enforce all packets of this flow to follow this path in the network. Specifically, it will add an IP header to the packet and write the sampled path IP into the destination address field. By controlling each link's weight, we can have an opportunity to balance the traffic load among multiple paths, eventually reducing the average FCT of flows.",
+                "cite_spans": [
+                    {
+                        "start": 161,
+                        "end": 165,
+                        "text": "[18,",
+                        "ref_id": "BIBREF17"
+                    },
+                    {
+                        "start": 166,
+                        "end": 169,
+                        "text": "22,",
+                        "ref_id": "BIBREF21"
+                    },
+                    {
+                        "start": 170,
+                        "end": 173,
+                        "text": "44,",
+                        "ref_id": "BIBREF43"
+                    },
+                    {
+                        "start": 174,
+                        "end": 177,
+                        "text": "48]",
+                        "ref_id": "BIBREF47"
+                    },
+                    {
+                        "start": 1353,
+                        "end": 1357,
+                        "text": "[24]",
+                        "ref_id": "BIBREF23"
+                    }
+                ],
+                "section": "Optimizing link weights with DRL",
+                "sec_num": "4.1"
+            },
+            {
+                "text": "To optimize link weights, we employ a DRL approach. State space: Same as section 2.2, we represent the state s t at time step t as the set of new flows F t n , the set of active flows F t c , and the set of finished flows F t e . Except for the 5-tuple, each active flow has one additional attribute: the number of bytes it has sent; each finished flow has two additional attributes: FCT and flow size. Action space: At each time step t, the action a t calculated by the DRL agent is a set of link weights {w t l }. Rewards: Reward is essential to the DRL agent for judging how good its action is. We choose to compute the reward function with finished flows only. For each finished flow f , we calculate its throughput as d f \u03c4 f where d f and \u03c4 f represent flow f 's size and FCT, respectively. The reward at time step t is then modeled as",
+                "cite_spans": [],
+                "section": "Optimizing link weights with DRL",
+                "sec_num": "4.1"
+            },
+            {
+                "text": "r t = f \u2208 F t e d f \u03c4 f f \u2208 F t -1 e d f \u03c4 f (3)",
+                "cite_spans": [],
+                "section": "Optimizing link weights with DRL",
+                "sec_num": "4.1"
+            },
+            {
+                "text": "which is the ratio between the average throughput of two consecutive time steps. A reward larger than one means that the previous action results in a higher average throughput of the finished flows. By maximizing cumulative rewards, we can improve the average throughput of flows and also reduce the FCT. Note that different Algorithm 1 1-Step DDPG for Link Weight Optimization 1: Take an action a t in observed state s t based on \u03c0 \u03b8 \u03c0 (s t ) 2: Observe reward r t as well as new state s t +1 , and store (s t , a t , r t , s t +1 ) in a replay buffer 3: Select a mini-batch with N samples (s i , a i , r i , s i +1 ) from the buffer, and \u2200i, set",
+                "cite_spans": [],
+                "section": "Optimizing link weights with DRL",
+                "sec_num": "4.1"
+            },
+            {
+                "text": "EQUATION",
+                "cite_spans": [],
+                "section": "Optimizing link weights with DRL",
+                "sec_num": "4.1"
+            },
+            {
+                "text": "4: Update the critic network with",
+                "cite_spans": [],
+                "section": "Optimizing link weights with DRL",
+                "sec_num": "4.1"
+            },
+            {
+                "text": "\u03b8 Q \u2190 \u03b8 Q + \u03b1 Q \u2207 \u03b8 Q L (5)",
+                "cite_spans": [],
+                "section": "Optimizing link weights with DRL",
+                "sec_num": "4.1"
+            },
+            {
+                "text": "where \u03b1 Q is the learning rate of the critic network and",
+                "cite_spans": [],
+                "section": "Optimizing link weights with DRL",
+                "sec_num": "4.1"
+            },
+            {
+                "text": "EQUATION",
+                "cite_spans": [],
+                "section": "Optimizing link weights with DRL",
+                "sec_num": "4.1"
+            },
+            {
+                "text": "5: Update the actor network with",
+                "cite_spans": [],
+                "section": "Optimizing link weights with DRL",
+                "sec_num": "4.1"
+            },
+            {
+                "text": "\u03b8 \u03c0 \u2190 \u03b8 \u03c0 + \u03b1 \u03c0 \u2207 \u03b8 \u03c0 J (7)",
+                "cite_spans": [],
+                "section": "Optimizing link weights with DRL",
+                "sec_num": "4.1"
+            },
+            {
+                "text": "where \u03b1 \u03c0 is the learning rate of the actor network and",
+                "cite_spans": [],
+                "section": "Optimizing link weights with DRL",
+                "sec_num": "4.1"
+            },
+            {
+                "text": "EQUATION",
+                "cite_spans": [],
+                "section": "Optimizing link weights with DRL",
+                "sec_num": "4.1"
+            },
+            {
+                "text": "6: Update the target networks:",
+                "cite_spans": [],
+                "section": "Optimizing link weights with DRL",
+                "sec_num": "4.1"
+            },
+            {
+                "text": "EQUATION",
+                "cite_spans": [],
+                "section": "Optimizing link weights with DRL",
+                "sec_num": "4.1"
+            },
+            {
+                "text": "EQUATION",
+                "cite_spans": [],
+                "section": "Optimizing link weights with DRL",
+                "sec_num": "4.1"
+            },
+            {
+                "text": "where \u03f5 decides the learning rate of Q \u2032 and \u03c0 \u2032 from section 2.2, we do not choose the minus of the maximum link utilization as the reward, because our ultimate goal of balancing traffic load among multiple paths is to improve the throughput and reduce the FCT of network flows.",
+                "cite_spans": [],
+                "section": "Optimizing link weights with DRL",
+                "sec_num": "4.1"
+            },
+            {
+                "text": "Training the DRL agent for link weight optimization is in an offline virtual environment (e.g., ns-3 simulator). Since the PG algorithm in section 2.1 is only suited to stochastic policies where the action is chosen based on the probabilities of all possible actions, we do not use PG for training. We, therefore, choose DDPG algorithm [30] , one of the state-of-the-art DRL algorithms. DDPG is well-suited to train a policy that has a high-dimensional state space, as well as deterministic and continuous actions. It well matches the requirements of our DRL agent that needs to make continuous actions, e.g. continuous link weights.",
+                "cite_spans": [
+                    {
+                        "start": 336,
+                        "end": 340,
+                        "text": "[30]",
+                        "ref_id": "BIBREF29"
+                    }
+                ],
+                "section": "DRL training algorithm:",
+                "sec_num": null
+            },
+            {
+                "text": "To fit the DDPG algorithm, we maintain 4 DNNs: actor, target actor, critic, and target critic networks. Formally, we denote \u03c0 \u03b8 \u03c0 (s t ) as the policy that maps a state to a specific action. The \u03c0 \u03b8 \u03c0 (s t ) is also called as the actor-network in DDPG, which is implemented using a DNN and \u03b8 \u03c0 is the relevant parameter vector. We denote \u03c0 \u2032 \u03b8 \u03c0 \u2032 (s t ) as the target actor network, which has the same DNN structure but different parameters as the actor network \u03c0 \u03b8 \u03c0 (s t ). Further, we use two DNNs:",
+                "cite_spans": [],
+                "section": "DRL training algorithm:",
+                "sec_num": null
+            },
+            {
+                "text": "Q \u03b8 Q (s t , a t ) and Q \u2032 \u03b8 Q \u2032 (s t , a t )",
+                "cite_spans": [],
+                "section": "DRL training algorithm:",
+                "sec_num": null
+            },
+            {
+                "text": ", to represent the critic and the target critic networks, respectively. Similarly, these two DNNs have the same structure and different parameters.",
+                "cite_spans": [],
+                "section": "DRL training algorithm:",
+                "sec_num": null
+            },
+            {
+                "text": "Algorithm 1 presents one update step of DDPG training process for our link weight optimization problem. It first uses the actor network \u03c0 with the current state s t to output an action a t , which affects the environment and results in a new state s t +1 . Also, a reward r t will be received. The mapping (s t , a t , r t , s t +1 ) will then be stored in a replay buffer. The algorithm proceeds to select a random mini-batch of N samples from this buffer. For each sample i, it computes a target value y i with the help of the target critic network Q \u2032 and the target actor network \u03c0 \u2032 . Using y i with the critic network Q, the algorithm can then compute the gradients \u2207 \u03b8 Q L which is used to update the parameters \u03b8 Q of the critic network Q. The updated Q will be used with the actor network \u03c0 to compute \u2207 \u03b8 \u03c0 J to update the parameters \u03b8 \u03c0 of the actor network \u03c0 . Finally, the target critic network Q \u2032 and the target actor network \u03c0 \u2032 are updated for the next round of iteration.",
+                "cite_spans": [],
+                "section": "DRL training algorithm:",
+                "sec_num": null
+            },
+            {
+                "text": "BULB applies DDPG to train a DRL agent. However, the DNN (i.e., the actor network \u03c0 ) maintained by the agent is heavyweight for online deployment. We advocate translating the DNN into a lightweight decision tree, which will be deployed online for link weight optimization.",
+                "cite_spans": [],
+                "section": "Decision tree generation",
+                "sec_num": "4.2"
+            },
+            {
+                "text": "Design choice: The reasons that our BULB employs the decision tree model to translate the DNN of the DRL agent are two-fold. On the one hand, the decision tree is lightweight, which could lead to less latency in computing the link weights than the DNN. On the other hand, the decision tree has rich expressiveness and can faithfully mimic the behaviors of the DNN because it is non-parametric and can represent complex policies [10] . Note that there are other DNN translation methods, such as neural network compression [15, 29] and linear regression [32, 37] , which, however, have poor faithfulness on DRL-based systems.",
+                "cite_spans": [
+                    {
+                        "start": 428,
+                        "end": 432,
+                        "text": "[10]",
+                        "ref_id": "BIBREF9"
+                    },
+                    {
+                        "start": 521,
+                        "end": 525,
+                        "text": "[15,",
+                        "ref_id": "BIBREF14"
+                    },
+                    {
+                        "start": 526,
+                        "end": 529,
+                        "text": "29]",
+                        "ref_id": "BIBREF28"
+                    },
+                    {
+                        "start": 552,
+                        "end": 556,
+                        "text": "[32,",
+                        "ref_id": "BIBREF31"
+                    },
+                    {
+                        "start": 557,
+                        "end": 560,
+                        "text": "37]",
+                        "ref_id": "BIBREF36"
+                    }
+                ],
+                "section": "Decision tree generation",
+                "sec_num": "4.2"
+            },
+            {
+                "text": "Design challenges: Extracting a decision tree from the DRL agent's DNN is a supervised learning process that requires a large labeled dataset. Specifically, each data item may need to contain a state-action pair and a label indicating if the DNN policy \u03c0 can generate such state-action mapping. To acquire such dataset, a simple approach could do the following. It uniformly samples a large number of states, searches the action of each state, and marks a label of 1 to the state-action pair that can be output by the DNN policy \u03c0 and 0 otherwise. However, this approach is impractical and biased. Since the DRL agent has a high-dimension state space and continuous actions (i.e., link weights), enumerating all stateaction pairs is impossible. Further, the state may not be uniformly distributed in real-world environments.",
+                "cite_spans": [],
+                "section": "Decision tree generation",
+                "sec_num": "4.2"
+            },
+            {
+                "text": "Design details: In response to the challenges above, we advocate a re-sampling technique over a virtual environment with real traffic workload to collect unbiased dataset. The virtual environment is the same as that of training the DRL agent. With resampled dataset, we use imitation learning [8, 25] to faithfully translate the DNN of the DRL agent to a decision tree. The key idea is to continuously evaluate the performance of the trained decision tree in the virtual environment, re-sample data, and correct the errors made by the decision tree according to the original DNN policy \u03c0 . Algorithm 2 shows the procedure of extracting a decision tree from \u03c0 , which contains the following steps. 1) Initialization: The first step of the Algorithm 2 is to initialize a dataset for decision tree training. To this end, we maintain a virtual environment identical to that of training the DRL agent. For each leaf node n in \u03c0 , compute its Gini impurity gain \u2207 \u03a6n according to Eq. ( 12)",
+                "cite_spans": [
+                    {
+                        "start": 293,
+                        "end": 296,
+                        "text": "[8,",
+                        "ref_id": "BIBREF7"
+                    },
+                    {
+                        "start": 297,
+                        "end": 300,
+                        "text": "25]",
+                        "ref_id": "BIBREF24"
+                    }
+                ],
+                "section": "Decision tree generation",
+                "sec_num": "4.2"
+            },
+            {
+                "text": "Select a leaf node n = arg max n \u2207 \u03a6n",
+                "cite_spans": [],
+                "section": "4:",
+                "sec_num": null
+            },
+            {
+                "text": "Split the node n into n 1 and n 2 and update the tree \u03c0 6: end while 7: return \u03c0 This environment mainly receives actions from a specific decisionmaking agent, replays them with a real data-trace, and sends new states to the agent. The data-trace is also the same as that for DRL training. The initial dataset is generated by configuring the agent with the DNN policy \u03c0 and allowing this agent to interact with the virtual environment repeatedly to collect several trajectories. The state-action pairs in those trajectories are initialized as (S, A).",
+                "cite_spans": [],
+                "section": "5:",
+                "sec_num": null
+            },
+            {
+                "text": "2) Training: With the initial dataset, the Algorithm 2 then goes into the imitation learning process, which contains multiple iterations to learn a decision tree policy \u03c0 (student) guided by the DNN policy \u03c0 (teacher). Specifically, in each iteration, it first invokes Algorithm 3 to generate a decision tree with the dataset (S, A). Algorithm 3 is based on the well-known Classification and Regression Tree (CART) algorithm [12] , which greedily splits the samples into leaf nodes to minimize Gini impurity until pre-defined end conditions are met. To be clear, Algorithm 3 starts by initializing a single root tree with all samples in (S, A). It then goes into a loop, where it first computes the Gini impurity for each leaf node in the tree. For classification trees, the Gini impurity is usually defined with the help of the frequency of each action in each leaf node. However, the actions (i.e., link weights) of our DRL agent are continuous rather than discrete. Hence, we employ a regression tree, which first splits the state space into several parts, with each leaf node representing a part. Then, during the inference phase, it goes through conditional judgments of the internal nodes to search a leaf node and predicts the output value with the expectation of all samples in that leaf node. For training regression tree, we define the Gini impurity for a leaf node n as the square prediction error inside this node, as shown in the following",
+                "cite_spans": [
+                    {
+                        "start": 425,
+                        "end": 429,
+                        "text": "[12]",
+                        "ref_id": "BIBREF11"
+                    }
+                ],
+                "section": "5:",
+                "sec_num": null
+            },
+            {
+                "text": "EQUATION",
+                "cite_spans": [],
+                "section": "5:",
+                "sec_num": null
+            },
+            {
+                "text": "Here, N denotes the number of samples of node n. a i denotes the action value of i-th sample, which can be viewed as the value predicted by the DNN policy in state s i , i.e., a i = \u03c0 (s i ). a n can be viewed as the value predicted3 by the decision tree under state s i , i.e., a n = \u03c0 (s i ). \u03a6 n = 0 indicates that all samples on node n have the same action, while a high \u03a6 n indicates that samples in the current node have high variance. In this case, the samples on that node need further classification with node splitting. To this end, we first compute the Gini impurity gain for the leaf node n as",
+                "cite_spans": [],
+                "section": "5:",
+                "sec_num": null
+            },
+            {
+                "text": "EQUATION",
+                "cite_spans": [],
+                "section": "5:",
+                "sec_num": null
+            },
+            {
+                "text": ")",
+                "cite_spans": [],
+                "section": "5:",
+                "sec_num": null
+            },
+            {
+                "text": "where n 1 and n 2 are the child nodes of n according to the \u03bd -th split point associated with the \u00b5-th feature 4 . N 1 and N 2 represent the number of samples of n 1 and n 2 , respectively. Eq. ( 12) essentially calculates the Gini impurity gain of a node as the maximum gain across all possible split criterion. By splitting the leaf node with the maximum Gini impurity gain, we get a new tree for next round iteration. The loop continues until some conditions are satisfied, e.g., the number of the leaf nodes of the decision tree reaches a maximum threshold or all samples are completely separated (i.e., \u2200n, \u03a6 n = 0).",
+                "cite_spans": [],
+                "section": "5:",
+                "sec_num": null
+            },
+            {
+                "text": "3) Resampling: After Algorithm 3 generates a decision tree \u03c0 , the Algorithm 2 enters the data resampling phase. The key idea of this phase is to resample a dataset in which the states are experienced by the decision tree \u03c0 (student), whereas the actions are guided by the original DNN \u03c0 (teacher). Training on such a dataset can effectively reduce the student's loss in imitating the teacher's policy [8] . To acquire such a dataset, we first replay the decision tree \u03c0 in the virtual environment to collect a new collection of state-action pairs, (S \u2032 , A \u2032 ). The detailed collection process is identical to that of the initial dataset collection. Note that the actions in A \u2032 are output by \u03c0 , which may mismatch those output by the original \u03c0 . Therefore, we correct them with the help of \u03c0 . Specifically, we feed the states experienced by the decision tree \u03c0 to the DNN \u03c0 and get the actions A * = {a * i |\u2200s i \u2208 S \u2032 , a * i = \u03c0 (s i )}. By integrating the student's states with the teacher's actions, we obtain the resampled dataset (S \u2032 , A * ).",
+                "cite_spans": [
+                    {
+                        "start": 402,
+                        "end": 405,
+                        "text": "[8]",
+                        "ref_id": "BIBREF7"
+                    }
+                ],
+                "section": "5:",
+                "sec_num": null
+            },
+            {
+                "text": "Finally, the Algorithm 2 aggregates the resampled dataset (S \u2032 , A * ) with the current one (S, A), and starts the next iteration. So, by updating the dataset used for training the decision tree in each iteration, the Algorithm 2 will learn from the mistakes made by the previous iteration. We will implement and deploy the decision tree generated by the last iteration in the central controller to make link weight decisions periodically, so as to guide the end-hosts spreading traffic among available paths.",
+                "cite_spans": [],
+                "section": "5:",
+                "sec_num": null
+            },
+            {
+                "text": "In this section, we evaluate the effectiveness of BULB by implementing it in ns-3 discrete simulator and seek to answer the following questions:",
+                "cite_spans": [],
+                "section": "PERFORMANCE EVALUATION",
+                "sec_num": "5"
+            },
+            {
+                "text": "\u2022 How does BULB perform in reducing FCT? Compared to ECMP, CONGA, LetFlow, and Hermes, BULB is up to The average performance degradation caused by BULB is only 2% for converting DNN into decision tree.",
+                "cite_spans": [],
+                "section": "PERFORMANCE EVALUATION",
+                "sec_num": "5"
+            },
+            {
+                "text": "Topology: We simulate a 2-tier Leaf-Spine topology, with 8 leaf switches, 8 spine switches. Each leaf switch has 4 end-hosts, and hence there are 32 end-hosts in total. Both host-leaf and leaf-spine links operate at 10 Gbps. This is a symmetric topology. In certain experiments, we also consider asymmetric topology, where 20% of randomly selected leaf-spine links have a capacity of 2Gbps.",
+                "cite_spans": [],
+                "section": "Methodology",
+                "sec_num": "5.1"
+            },
+            {
+                "text": "Workload: We use a web search [4] and a memcached workload [5] from production datacenters. Their flow size distributions are shown in Fig. 3 . The memcached workload is more sensitive to latency than the web search workload, because more than 90% of flows in the memcached workload are less than 1000 Bytes.",
+                "cite_spans": [
+                    {
+                        "start": 30,
+                        "end": 33,
+                        "text": "[4]",
+                        "ref_id": "BIBREF3"
+                    },
+                    {
+                        "start": 59,
+                        "end": 62,
+                        "text": "[5]",
+                        "ref_id": "BIBREF4"
+                    }
+                ],
+                "section": "Methodology",
+                "sec_num": "5.1"
+            },
+            {
+                "text": "We use the traffic generator [6, 47] to generate flows between random senders and receivers by assuming that the flow arrival pattern follows the Poisson process, and the mean inter-arrival time is set to make the network running at 0.9 load. Compared solutions: We compare our BULB with the following load balancing solutions:",
+                "cite_spans": [
+                    {
+                        "start": 29,
+                        "end": 32,
+                        "text": "[6,",
+                        "ref_id": "BIBREF5"
+                    },
+                    {
+                        "start": 33,
+                        "end": 36,
+                        "text": "47]",
+                        "ref_id": "BIBREF46"
+                    }
+                ],
+                "section": "Methodology",
+                "sec_num": "5.1"
+            },
+            {
+                "text": "\u2022 ECMP: ECMP randomly selects a flow's next hop by taking a hash of the flow's 5-tuple. \u2022 CONGA: CONGA [3] senses per-path congestion information with specialized switches first and then shifts traffic to less-congested paths via per-flowlet rerouting. \u2022 LetFlow: LetFlow [44] selects a random path for each flowlet, and leverages the elasticity nature of flowlets to automatically balance the traffic among parallel paths. \u2022 Hermes: Hermes [47] is an edge-based solution which detects path conditions via endhost's hypervisor and performs cautious per-packet rerouting to balance traffic.",
+                "cite_spans": [
+                    {
+                        "start": 103,
+                        "end": 106,
+                        "text": "[3]",
+                        "ref_id": "BIBREF2"
+                    },
+                    {
+                        "start": 272,
+                        "end": 276,
+                        "text": "[44]",
+                        "ref_id": "BIBREF43"
+                    },
+                    {
+                        "start": 441,
+                        "end": 445,
+                        "text": "[47]",
+                        "ref_id": "BIBREF46"
+                    }
+                ],
+                "section": "Methodology",
+                "sec_num": "5.1"
+            },
+            {
+                "text": "Implementation: We implement the weighted path selection logic of BULB in ns-3, where we add \u223c1000 lines of code. The algorithms for training DRL and decision tree agents in BULB are implemented in python with Keras/TensorFlow [16] . We use the ns3gym [19] framework for integrating the agents into ns3. In DRL training, we merge 10 new flows (each with 5 attributes), 10 active flows (each with 6 attributes), and 100 finished flows (each with 7 attributes) into a list, which is an observation of the environment (i.e., a state). The actor and critic DNNs maintained in the DDPG algorithm are as follows:",
+                "cite_spans": [
+                    {
+                        "start": 227,
+                        "end": 231,
+                        "text": "[16]",
+                        "ref_id": "BIBREF15"
+                    },
+                    {
+                        "start": 252,
+                        "end": 256,
+                        "text": "[19]",
+                        "ref_id": "BIBREF18"
+                    }
+                ],
+                "section": "Methodology",
+                "sec_num": "5.1"
+            },
+            {
+                "text": "Actor: The actor network has two fully-connected layers. Each layer has 500 neurons. The output layer has 128 units, with one for each link weight. The input layer has 810 units as the state has 810 features.",
+                "cite_spans": [],
+                "section": "Methodology",
+                "sec_num": "5.1"
+            },
+            {
+                "text": "Critic: The critic has the same two hidden layers as the actor. Besides, it has a second hidden layer, which takes action as input. The second hidden layer's output will be concatenated with that of the first two hidden layers, resulting in one additional hidden layer. This hidden layer eventually is fed into the output layer consisting of one output unit -approximated value for the observed/received state.",
+                "cite_spans": [],
+                "section": "Methodology",
+                "sec_num": "5.1"
+            },
+            {
+                "text": "The decision tree we trained contains 100 leaf nodes. In certain experiments, we also trained the decision trees with 200 leaf nodes. The comparison solutions above are all implemented and evaluated with the code provided by [40, 47] .",
+                "cite_spans": [
+                    {
+                        "start": 225,
+                        "end": 229,
+                        "text": "[40,",
+                        "ref_id": "BIBREF39"
+                    },
+                    {
+                        "start": 230,
+                        "end": 233,
+                        "text": "47]",
+                        "ref_id": "BIBREF46"
+                    }
+                ],
+                "section": "Methodology",
+                "sec_num": "5.1"
+            },
+            {
+                "text": "Setup: We use TCP New Reno as the transport protocol. Both initial and minimum value of TCP RTO are set to 10ms. For each comparison solution, the relevant parameters are set with their recommended configuration options. We generate 10K flows for each run of the simulation. The link weights are initialized as the link capacities, and are updated every 1ms in our experiments. All training is done on a server with 8core Intel(R) Xeon(R) Silver 4114 2.20GHz CPU, 32G memory, and NVIDIA Tesla V100 GPU. The testing is done in a PC with 8-core Intel i7-8550U 1.80GHz CPU and 16G memory.",
+                "cite_spans": [],
+                "section": "Methodology",
+                "sec_num": "5.1"
+            },
+            {
+                "text": "We mainly investigate the FCT performance of BULB under the following two cases: The symmetric case: Fig. 4 first shows the average and the tail (i.e., 95th percentile) FCTs achieved by different load balancing solutions across different flow bins 5 for both the web search and memcached workloads in the symmetric case. We make the following observations from this figure. First, for the web search workload, BULB achieves the best performance in both the average and tail FCTs of small flows, medium flows and all flows. Compared to the four existing solutions, BULB reduces the average/tail of all flows, small flows and medium flows by 14.3%\u223c16.7%/5.7%\u223c9.2%, 73.8%\u223c80.2%/58.7%\u223c87.8%, 16.5%\u223c20.3%/13.9%\u223c16.2%, respectively. Second, for the web search workload, BULB performs worse than the existing solutions, but note that this would not affect the overall average FCT. Third, for the memcached workload, BULB has significant improvement over Hermes in the tail FCTs across all flow bins but only shows single-digit percent improvement over ECMP, CONGA and LetFlow. We believe that this is due to the symmetric topology and the less bursty nature of the memcached workload where most of the flows are less than 1000 bytes. Finally, for the web search workload, BULB shows relatively worse performance for large flows. We believe that the reason is the setting of reward, which is the average throughput of finished flows. As we know, most of the DCN traffic are small flows, and the finished flows are all small flows in most periods. Therefore, large flows are often overlooked.",
+                "cite_spans": [],
+                "section": "Performance of BULB",
+                "sec_num": "5.2"
+            },
+            {
+                "text": "The asymmetric case: Fig. 5 further depicts the FCT statistics in the asymmetric case. We have the following observations. First, for the memcached workload, BULB performs best in both the average and tail FCTs across all flow bins. Specifically, compared to Hermes, BULB reduces the average/tail FCTs for all flows and (0, 1000B] flows by 36.7%/67.7% and 36.5%/67.7%, respectively. Second, for the web search workload, BULB outperforms ECMP and Hermes in the average/tail FCT across all flows, small flows, medium flows and large flows. Compared to Hermes, BULB reduces the average/tail FCT of all flows and small flows by45.1%/35.3% and 88.7%/97.1%, respectively. Further, for large flows in the web search workload, BULB does not show improvement in the average FCT, but it also significantly outperforms ECMP and Hermes in the tail FCT. Third, compared to CONGA and LetFlow, BULB performs slightly worse in overall performance, but it can reduce the average/tail FCT for small flows by 66.4%/83.5% and 74.7%/92.7%, respectively.",
+                "cite_spans": [],
+                "section": "Performance of BULB",
+                "sec_num": "5.2"
+            },
+            {
+                "text": "We conduct a series of experiments to investigate the decision latency and faithfulness of BULB. Note that this part of experiment results are all based on the web search workload and we omit the results for memcached workload whose performance is qualitatively similar.",
+                "cite_spans": [],
+                "section": "BULB deep dive",
+                "sec_num": "5.3"
+            },
+            {
+                "text": "Decision latency: The decision latency is measured as the difference between the time end-hosts send states to the controller and the time the last end-host receives the action. In our simulation, the time taken to transmit state and action over the network is maintained around 91\u00b5s. The dominant overhead during the entire decision-making process is model inference. As shown in Fig. 6 , we evaluate the inference time of the decision tree agent under a different number of leaf nodes, as well as the inference time of the original DRL agent. We can clearly observe that the inference time of the decision tree agent is \u223c200\u00b5s, while the inference time incurred by the original DRL agent can be \u223c50701\u00b5s. Fig. 7 further depicts the CDF of inference time for 1000 decisions. We find that the per decision inference time is at most 285\u00b5s (282\u00b5s) for the decision tree N100 (N200), while the longest inference time for making a decision under the DNN could be 55800\u00b5s. Such a high latency of the DNN agent will make the updated link weights become outdated and useless for most (short) flows in datacenter networks. Therefore, we are motivated to translate it into a lightweight decision tree. One may question why the inference time under N100 and N200 are almost the same. The reason may be that inferencing over a decision tree only needs to go through several conditional judgments of the internal nodes and the depth of the N100 and N200 trees is not much different. In short, with the results above, we can conclude that by converting the DNN into a decision tree, our BULB can shorten the decision latency by 175\u00d7 (\u2248 50701+91 200+91 ). Faithfulness: We now study if BULB can convert the DNN into a decision tree faithfully. We first record the mean-square-error (MSE) at each iteration when using Algorithm 2 to extract decision trees from the DNN. To be clear, at each iteration, we use 80% of the dataset (S, A) for training the decision tree, and the remaining 20% is for testing. During the testing, we measure the MSE of the actions between the decision tree and the DNN.",
+                "cite_spans": [],
+                "section": "BULB deep dive",
+                "sec_num": "5.3"
+            },
+            {
+                "text": "Fig. 8 shows the MSEs at different iterations for both the N100 and N200 decision trees. From this figure, we can observe that the MSE curves of both N100 and N200 go up with the increase of the number of iterations. The reason is that the dataset (S, A) used for training the decision tree lacks samples in the first several iterations. As the number of iterations increases, more samples experienced by the DNN will be added to the dataset (S, A) to train the decision tree. As a result, both decision trees will converge with sufficient iterations. We further observe that the N200 decision tree shows a slower convergence speed than the N100. The crux is that N200 has more leaf nodes than N100, making it more likely to become overfitted.",
+                "cite_spans": [],
+                "section": "BULB deep dive",
+                "sec_num": "5.3"
+            },
+            {
+                "text": "Next, we investigate whether the trained decision trees can faithfully behavior like the DNN in making link weight update decisions to balance the traffic load. Specifically, we measure the FCT statics achieved by decision trees as well as the original DNN. The results are shown in Fig. 9 . We can see that compared to the DNN, the decision trees incur little performance loss in average FCT of all flows, i.e., 2% for N100 and 8% for N200. Moreover, both N100 and N200 have no loss in the 95th percentile FCT. In some cases (e.g., for large flows), the decision tree N200 even shows a lower average (95th percentile) FCT than the original DNN. These results directly verify that our BULB algorithm can faithfully translate the DNN into a decision tree. One may further wonder at this point that why N200 incurs more performance loss than N100, as compared to the DNN. The reason is still that more leaf nodes could make the decision tree become overfitted, thus making lower quality decisions. In light of this reason, we use the N100 decision tree for online deployment.",
+                "cite_spans": [],
+                "section": "BULB deep dive",
+                "sec_num": "5.3"
+            },
+            {
+                "text": "Load balancing in datacenters: Load balancing has always been a research hotspot in datacenters, and there is a plethora of work in this area. While it is beyond the scope of this paper to cover all of them in detail, we present a brief summary of them. In short, existing work is either proactive or reactive. Proactive solutions mainly perform per-packet (e.g., DRB [13] ), per-flowcell (e.g., Presto [22] ), or per-flow (e.g., ECMP [23] ) routing by random hashing or by round-robin. However, they are oblivious to congestion and cannot effectively balance the traffic. Reactive solutions, by contrast, are designed to be congestion-aware. They first detect congestion in the network using centralized controllers (e.g., Hedera [2] and MicroTE [9] ), switches (e.g. CONGA [3] , Expeditus [45] and DRILL [20] ), end-hosts (e.g., FlowBender [27] , CLOVE-ECN [28] and Hermes [47] ), or even the elasticity property of flowlets (e.g. LetFlow [44] ). Then, they shift traffic to less-congested paths by rerouting packets, flowlets, or flows. Despite being more effective than proactive solutions, reactive solutions only reroute traffic after congestion has formed, thus hurting FCT of flows. Relative to them, our BULB can spread traffic among available paths proactively while being aware of congestion, by learning to update the link weights periodically. RL-based load balancing in the Internet: Q-routing [11] is perhaps the first work that adopts the RL technique for routing and load balancing in the Internet. After that, several follow-up works emerge, e.g., [17, 36] . However, they rely on modifying switches or routers and are difficult to be implemented in datacenter-scale networks. Some other works focus on balancing traffic load in the network with the powerful DRL technique, e.g., [43, 46] . Unfortunately, they suffer from practical issues as they take the input as the traffic matrix or throughput of all demands, which is difficult to be obtained timely. Further, they use the heavyweight DNN for predicting routing decisions, thus resulting in long decision latency. By contrast, our BULB uses DRL for learning link weights and converts the DNN into a lightweight decision tree.",
+                "cite_spans": [
+                    {
+                        "start": 368,
+                        "end": 372,
+                        "text": "[13]",
+                        "ref_id": "BIBREF12"
+                    },
+                    {
+                        "start": 403,
+                        "end": 407,
+                        "text": "[22]",
+                        "ref_id": "BIBREF21"
+                    },
+                    {
+                        "start": 435,
+                        "end": 439,
+                        "text": "[23]",
+                        "ref_id": "BIBREF22"
+                    },
+                    {
+                        "start": 731,
+                        "end": 734,
+                        "text": "[2]",
+                        "ref_id": "BIBREF1"
+                    },
+                    {
+                        "start": 747,
+                        "end": 750,
+                        "text": "[9]",
+                        "ref_id": "BIBREF8"
+                    },
+                    {
+                        "start": 775,
+                        "end": 778,
+                        "text": "[3]",
+                        "ref_id": "BIBREF2"
+                    },
+                    {
+                        "start": 791,
+                        "end": 795,
+                        "text": "[45]",
+                        "ref_id": "BIBREF44"
+                    },
+                    {
+                        "start": 806,
+                        "end": 810,
+                        "text": "[20]",
+                        "ref_id": "BIBREF19"
+                    },
+                    {
+                        "start": 842,
+                        "end": 846,
+                        "text": "[27]",
+                        "ref_id": "BIBREF26"
+                    },
+                    {
+                        "start": 859,
+                        "end": 863,
+                        "text": "[28]",
+                        "ref_id": "BIBREF27"
+                    },
+                    {
+                        "start": 875,
+                        "end": 879,
+                        "text": "[47]",
+                        "ref_id": "BIBREF46"
+                    },
+                    {
+                        "start": 941,
+                        "end": 945,
+                        "text": "[44]",
+                        "ref_id": "BIBREF43"
+                    },
+                    {
+                        "start": 1408,
+                        "end": 1412,
+                        "text": "[11]",
+                        "ref_id": "BIBREF10"
+                    },
+                    {
+                        "start": 1566,
+                        "end": 1570,
+                        "text": "[17,",
+                        "ref_id": "BIBREF16"
+                    },
+                    {
+                        "start": 1571,
+                        "end": 1574,
+                        "text": "36]",
+                        "ref_id": "BIBREF35"
+                    },
+                    {
+                        "start": 1798,
+                        "end": 1802,
+                        "text": "[43,",
+                        "ref_id": "BIBREF42"
+                    },
+                    {
+                        "start": 1803,
+                        "end": 1806,
+                        "text": "46]",
+                        "ref_id": "BIBREF45"
+                    }
+                ],
+                "section": "RELATED WORK",
+                "sec_num": "6"
+            },
+            {
+                "text": "Optimizing link/path weights for load balancing: Optimizing and controlling the link or path weights has always been an efficient tool towards efficient routing and load balancing. For example, Presto [22] and WCMP [48] try to balance traffic among parallel paths by computing path weights based on the topology, whereas the weights are static. CLOVE-ECN [28] leverages ECN signals to compute path weights dynamically. Fortz et al. [18] adopt a modelbased approach to optimize link weights for OSPF routing. Unlike them, our BULB optimizes link weights using a learning-based approach.",
+                "cite_spans": [
+                    {
+                        "start": 201,
+                        "end": 205,
+                        "text": "[22]",
+                        "ref_id": "BIBREF21"
+                    },
+                    {
+                        "start": 215,
+                        "end": 219,
+                        "text": "[48]",
+                        "ref_id": "BIBREF47"
+                    },
+                    {
+                        "start": 355,
+                        "end": 359,
+                        "text": "[28]",
+                        "ref_id": "BIBREF27"
+                    },
+                    {
+                        "start": 432,
+                        "end": 436,
+                        "text": "[18]",
+                        "ref_id": "BIBREF17"
+                    }
+                ],
+                "section": "RELATED WORK",
+                "sec_num": "6"
+            },
+            {
+                "text": "DRL in other areas: Besides load balancing, RL or DRL has been applied to various areas including congestion control [26] , flow scheduling [14] , resource allocation [33, 35] , video streaming [34] , etc. We explore the potential of DRL for datacenter load balancing and translate the DRL agent into a lightweight decision tree agent.",
+                "cite_spans": [
+                    {
+                        "start": 117,
+                        "end": 121,
+                        "text": "[26]",
+                        "ref_id": "BIBREF25"
+                    },
+                    {
+                        "start": 140,
+                        "end": 144,
+                        "text": "[14]",
+                        "ref_id": "BIBREF13"
+                    },
+                    {
+                        "start": 167,
+                        "end": 171,
+                        "text": "[33,",
+                        "ref_id": "BIBREF32"
+                    },
+                    {
+                        "start": 172,
+                        "end": 175,
+                        "text": "35]",
+                        "ref_id": "BIBREF34"
+                    },
+                    {
+                        "start": 194,
+                        "end": 198,
+                        "text": "[34]",
+                        "ref_id": "BIBREF33"
+                    }
+                ],
+                "section": "RELATED WORK",
+                "sec_num": "6"
+            },
+            {
+                "text": "In this paper, we have presented BULB, a lightweight and automated datacenter load balancer that can proactively balance traffic among available paths while being mindful of traffic dynamics. BULB decouples the slow central controller from quick flow-level decisionmaking by learning to optimize the link weights with which the end-hosts can perform weighted path selection to balance traffic.",
+                "cite_spans": [],
+                "section": "CONCLUSION",
+                "sec_num": "7"
+            },
+            {
+                "text": "To learn link weights, BULB offline trains a DRL agent, but employs imitation learning to faithfully translate the DRL agent's DNN into a lightweight decision tree for online deployment. As a result, the end-hosts can receive link weights from the central controller more quickly. We have implemented a BULB prototype using popular machine learning framework and evaluated it through large-scale packet-level ns-3 simulations. The results have demonstrated that BULB shows a significant lower FCT than existing load balancing solutions. Further, it can achieve low decision latency while incurring negligible performance loss, by translating the DNN into a decision tree.",
+                "cite_spans": [],
+                "section": "CONCLUSION",
+                "sec_num": "7"
+            },
+            {
+                "text": "The weighted path selection we used in our paper is similar to the edge-based WCMP load balancing[7,",
+                "cite_spans": [],
+                "section": "",
+                "sec_num": null
+            },
+            {
+                "text": "22].",
+                "cite_spans": [],
+                "section": "",
+                "sec_num": null
+            },
+            {
+                "text": "Note that each end-host will keep a copy of link weights locally and always use the latest copy for computing flow routing decisions.4 BULB DESIGNIn this section, we first formulate the problem of optimizing link weights in datacenter networks as a DRL problem and develop a DDPG algorithm for training the DRL agent. We then present imitation learning based algorithm for translating the DRL agent's DNN into a lightweight decision tree model.",
+                "cite_spans": [],
+                "section": "",
+                "sec_num": null
+            },
+            {
+                "text": "The prediction value of a leaf node in the regression tree is usually taken as the mean value of the actions over all samples in this node.",
+                "cite_spans": [],
+                "section": "",
+                "sec_num": null
+            },
+            {
+                "text": "Each feature corresponds to the weight of a specific link.",
+                "cite_spans": [],
+                "section": "",
+                "sec_num": null
+            },
+            {
+                "text": "For the websearch/memcached workload, the (0, 100KB]/(0, 1000B]flows, (100KB, 10MB)/(1000B, 10KB] flows, and (10MB, \u221e)/(10KB, \u221e) flows are considered to be small, medium and large flows, respectively.",
+                "cite_spans": [],
+                "section": "",
+                "sec_num": null
+            }
+        ],
+        "bib_entries": {
+            "BIBREF0": {
+                "ref_id": "b0",
+                "title": "A scalable, commodity data center network architecture",
+                "authors": [
+                    {
+                        "first": "Mohammad",
+                        "middle": [],
+                        "last": "Al-Fares",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Alexander",
+                        "middle": [],
+                        "last": "Loukissas",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Amin",
+                        "middle": [],
+                        "last": "Vahdat",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/sigcomm/Al-FaresLV08",
+                "year": 2008,
+                "venue": "ACM SIGCOMM Computer Communication Review",
+                "volume": "38",
+                "issue": "4",
+                "pages": "63--74",
+                "other_ids": {
+                    "DOI": [
+                        "10.1145/1402946.1402967"
+                    ],
+                    "ISSN": [
+                        "0146-4833"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Mohammad Al-Fares, Alexander Loukissas, and Amin Vahdat. 2008. A scal- able, commodity data center network architecture. ACM SIGCOMM computer communication review 38, 4 (2008), 63-74.",
+                "links": null
+            },
+            "BIBREF1": {
+                "ref_id": "b1",
+                "title": "Hedera: dynamic flow scheduling for data center networks",
+                "authors": [
+                    {
+                        "first": "Mohammad",
+                        "middle": [],
+                        "last": "Al-Fares",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Sivasankar",
+                        "middle": [],
+                        "last": "Radhakrishnan",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Barath",
+                        "middle": [],
+                        "last": "Raghavan",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Nelson",
+                        "middle": [],
+                        "last": "Huang",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Amin",
+                        "middle": [],
+                        "last": "Vahdat",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/nsdi/Al-FaresRRHV10",
+                "year": 2010,
+                "venue": "Nsdi",
+                "volume": "10",
+                "issue": "",
+                "pages": "89--92",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Mohammad Al-Fares, Sivasankar Radhakrishnan, Barath Raghavan, Nelson Huang, Amin Vahdat, et al. 2010. Hedera: dynamic flow scheduling for data center networks.. In Nsdi, Vol. 10. San Jose, USA, 89-92.",
+                "links": null
+            },
+            "BIBREF2": {
+                "ref_id": "b2",
+                "title": "CONGA",
+                "authors": [
+                    {
+                        "first": "Mohammad",
+                        "middle": [],
+                        "last": "Alizadeh",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Tom",
+                        "middle": [],
+                        "last": "Edsall",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Sarang",
+                        "middle": [],
+                        "last": "Dharmapurikar",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Ramanan",
+                        "middle": [],
+                        "last": "Vaidyanathan",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Kevin",
+                        "middle": [],
+                        "last": "Chu",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Andy",
+                        "middle": [],
+                        "last": "Fingerhut",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Vinh",
+                        "middle": [
+                            "The"
+                        ],
+                        "last": "Lam",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Francis",
+                        "middle": [],
+                        "last": "Matus",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Rong",
+                        "middle": [],
+                        "last": "Pan",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Navindra",
+                        "middle": [],
+                        "last": "Yadav",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "George",
+                        "middle": [],
+                        "last": "Varghese",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/sigcomm/AlizadehEDVCFLMPYV14",
+                "year": 2014,
+                "venue": "Proceedings of the 2014 ACM conference on SIGCOMM",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {
+                    "DOI": [
+                        "10.1145/2619239.2626316"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Mohammad Alizadeh, Tom Edsall, Sarang Dharmapurikar, Ramanan Vaidyanathan, Kevin Chu, Andy Fingerhut, Vinh The Lam, Francis Matus, Rong Pan, Navindra Yadav, et al. 2014. CONGA: Distributed congestion-aware load balancing for datacenters. In Proc. of 2014 ACM SIGCOMM.",
+                "links": null
+            },
+            "BIBREF3": {
+                "ref_id": "b3",
+                "title": "Data center TCP (DCTCP)",
+                "authors": [
+                    {
+                        "first": "Mohammad",
+                        "middle": [],
+                        "last": "Alizadeh",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Albert",
+                        "middle": [],
+                        "last": "Greenberg",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "David",
+                        "middle": [
+                            "A"
+                        ],
+                        "last": "Maltz",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Jitendra",
+                        "middle": [],
+                        "last": "Padhye",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Parveen",
+                        "middle": [],
+                        "last": "Patel",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Balaji",
+                        "middle": [],
+                        "last": "Prabhakar",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Sudipta",
+                        "middle": [],
+                        "last": "Sengupta",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Murari",
+                        "middle": [],
+                        "last": "Sridharan",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/sigcomm/AlizadehGMPPPSS10",
+                "year": 2010,
+                "venue": "Proceedings of the ACM SIGCOMM 2010 conference",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {
+                    "DOI": [
+                        "10.1145/1851182.1851192"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Mohammad Alizadeh, Albert Greenberg, David A Maltz, Jitendra Padhye, Parveen Patel, Balaji Prabhakar, Sudipta Sengupta, and Murari Sridharan. 2010. Data center tcp (dctcp). In Proc. of ACM SIGCOMM.",
+                "links": null
+            },
+            "BIBREF4": {
+                "ref_id": "b4",
+                "title": "Workload analysis of a large-scale key-value store",
+                "authors": [
+                    {
+                        "first": "Berk",
+                        "middle": [],
+                        "last": "Atikoglu",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Yuehai",
+                        "middle": [],
+                        "last": "Xu",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Eitan",
+                        "middle": [],
+                        "last": "Frachtenberg",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Song",
+                        "middle": [],
+                        "last": "Jiang",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Mike",
+                        "middle": [],
+                        "last": "Paleczny",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/sigmetrics/AtikogluXFJP12",
+                "year": 2012,
+                "venue": "ACM SIGMETRICS Performance Evaluation Review",
+                "volume": "40",
+                "issue": "1",
+                "pages": "53--64",
+                "other_ids": {
+                    "DOI": [
+                        "10.1145/2318857.2254766"
+                    ],
+                    "ISSN": [
+                        "0163-5999"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Berk Atikoglu, Yuehai Xu, Eitan Frachtenberg, Song Jiang, and Mike Paleczny. 2012. Workload analysis of a large-scale key-value store. In Proc. of ACM SIG- METRICS.",
+                "links": null
+            },
+            "BIBREF5": {
+                "ref_id": "b5",
+                "title": "Enabling ECN in multi-service multi-queue data centers",
+                "authors": [
+                    {
+                        "first": "Wei",
+                        "middle": [],
+                        "last": "Bai",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Li",
+                        "middle": [],
+                        "last": "Chen",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Kai",
+                        "middle": [],
+                        "last": "Chen",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Haitao",
+                        "middle": [],
+                        "last": "Wu",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/nsdi/0001C0W16",
+                "year": 2016,
+                "venue": "Proc. of USENIX NSDI",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Wei Bai, Li Chen, Kai Chen, and Haitao Wu. 2016. Enabling ECN in multi-service multi-queue data centers. In Proc. of USENIX NSDI.",
+                "links": null
+            },
+            "BIBREF6": {
+                "ref_id": "b6",
+                "title": "Enabling End-Host Network Functions",
+                "authors": [
+                    {
+                        "first": "Hitesh",
+                        "middle": [],
+                        "last": "Ballani",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Paolo",
+                        "middle": [],
+                        "last": "Costa",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Christos",
+                        "middle": [],
+                        "last": "Gkantsidis",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Matthew",
+                        "middle": [
+                            "P"
+                        ],
+                        "last": "Grosvenor",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Thomas",
+                        "middle": [],
+                        "last": "Karagiannis",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Lazaros",
+                        "middle": [],
+                        "last": "Koromilas",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Greg",
+                        "middle": [],
+                        "last": "O'shea",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/sigcomm/BallaniCGGKKO15",
+                "year": 2015,
+                "venue": "ACM SIGCOMM Computer Communication Review",
+                "volume": "45",
+                "issue": "4",
+                "pages": "493--507",
+                "other_ids": {
+                    "DOI": [
+                        "10.1145/2829988.2787493"
+                    ],
+                    "ISSN": [
+                        "0146-4833"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Hitesh Ballani, Paolo Costa, Christos Gkantsidis, Matthew P Grosvenor, Thomas Karagiannis, Lazaros Koromilas, and Greg O'Shea. 2015. Enabling end-host network functions. ACM SIGCOMM Computer Communication Review 45, 4 (2015), 493-507.",
+                "links": null
+            },
+            "BIBREF7": {
+                "ref_id": "b7",
+                "title": "Interpretable, Verifiable, and Robust Reinforcement Learning via Program Synthesis",
+                "authors": [
+                    {
+                        "first": "Osbert",
+                        "middle": [],
+                        "last": "Bastani",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Jeevana",
+                        "middle": [
+                            "Priya"
+                        ],
+                        "last": "Inala",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Armando",
+                        "middle": [],
+                        "last": "Solar-Lezama",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/icml/BastaniIS20",
+                "year": 2018,
+                "venue": "xxAI - Beyond Explainable AI",
+                "volume": "",
+                "issue": "",
+                "pages": "207--228",
+                "other_ids": {
+                    "DOI": [
+                        "10.1007/978-3-031-04083-2_11"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Osbert Bastani, Yewen Pu, and Armando Solar-Lezama. 2018. Verifiable rein- forcement learning via policy extraction. In Proc. of NIPS.",
+                "links": null
+            },
+            "BIBREF8": {
+                "ref_id": "b8",
+                "title": "MicroTE",
+                "authors": [
+                    {
+                        "first": "Theophilus",
+                        "middle": [],
+                        "last": "Benson",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Ashok",
+                        "middle": [],
+                        "last": "Anand",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Aditya",
+                        "middle": [],
+                        "last": "Akella",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Ming",
+                        "middle": [],
+                        "last": "Zhang",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/conext/BensonAAZ11",
+                "year": 2011,
+                "venue": "Proceedings of the Seventh COnference on emerging Networking EXperiments and Technologies",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {
+                    "DOI": [
+                        "10.1145/2079296.2079304"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Theophilus Benson, Ashok Anand, Aditya Akella, and Ming Zhang. 2011. Mi- croTE: Fine grained traffic engineering for data centers. In Proc. of ACM CoNext.",
+                "links": null
+            },
+            "BIBREF9": {
+                "ref_id": "b9",
+                "title": "Top-down induction of first-order logical decision trees",
+                "authors": [
+                    {
+                        "first": "Hendrik",
+                        "middle": [],
+                        "last": "Blockeel",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Luc",
+                        "middle": [],
+                        "last": "De Raedt",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 1998,
+                "venue": "Artificial Intelligence",
+                "volume": "101",
+                "issue": "1-2",
+                "pages": "285--297",
+                "other_ids": {
+                    "DOI": [
+                        "10.1016/s0004-3702(98)00034-4"
+                    ],
+                    "ISSN": [
+                        "0004-3702"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Hendrik Blockeel and Luc De Raedt. 1998. Top-down induction of first-order logical decision trees. Artificial intelligence 101, 1-2 (1998), 285-297.",
+                "links": null
+            },
+            "BIBREF10": {
+                "ref_id": "b10",
+                "title": "Packet routing in dynamically changing networks: A reinforcement learning approach",
+                "authors": [
+                    {
+                        "first": "Justin",
+                        "middle": [
+                            "A"
+                        ],
+                        "last": "Boyan",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "",
+                        "middle": [],
+                        "last": "Michael L Littman",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/nips/BoyanL93",
+                "year": 1994,
+                "venue": "Proc. of NIPS",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Justin A Boyan and Michael L Littman. 1994. Packet routing in dynamically changing networks: A reinforcement learning approach. In Proc. of NIPS.",
+                "links": null
+            },
+            "BIBREF11": {
+                "ref_id": "b11",
+                "title": "Classification and regression trees",
+                "authors": [
+                    {
+                        "first": "Leo",
+                        "middle": [],
+                        "last": "Breiman",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Jerome",
+                        "middle": [],
+                        "last": "Friedman",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Charles",
+                        "middle": [
+                            "J"
+                        ],
+                        "last": "Stone",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Richard",
+                        "middle": [
+                            "A"
+                        ],
+                        "last": "Olshen",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 1984,
+                "venue": "",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Leo Breiman, Jerome Friedman, Charles J Stone, and Richard A Olshen. 1984. Classification and regression trees. CRC press.",
+                "links": null
+            },
+            "BIBREF12": {
+                "ref_id": "b12",
+                "title": "Per-packet load-balanced, low-latency routing for clos-based data center networks",
+                "authors": [
+                    {
+                        "first": "Jiaxin",
+                        "middle": [],
+                        "last": "Cao",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Rui",
+                        "middle": [],
+                        "last": "Xia",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Pengkun",
+                        "middle": [],
+                        "last": "Yang",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Chuanxiong",
+                        "middle": [],
+                        "last": "Guo",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Guohan",
+                        "middle": [],
+                        "last": "Lu",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Lihua",
+                        "middle": [],
+                        "last": "Yuan",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Yixin",
+                        "middle": [],
+                        "last": "Zheng",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Haitao",
+                        "middle": [],
+                        "last": "Wu",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Yongqiang",
+                        "middle": [],
+                        "last": "Xiong",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Dave",
+                        "middle": [],
+                        "last": "Maltz",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/conext/CaoXYGLYZWXM13",
+                "year": 2013,
+                "venue": "Proceedings of the ninth ACM conference on Emerging networking experiments and technologies",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {
+                    "DOI": [
+                        "10.1145/2535372.2535375"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Jiaxin Cao, Rui Xia, Pengkun Yang, Chuanxiong Guo, Guohan Lu, Lihua Yuan, Yixin Zheng, Haitao Wu, Yongqiang Xiong, and Dave Maltz. 2013. Per-packet load-balanced, low-latency routing for clos-based data center networks. In Proc. of ACM CoNext.",
+                "links": null
+            },
+            "BIBREF13": {
+                "ref_id": "b13",
+                "title": "AuTO",
+                "authors": [
+                    {
+                        "first": "Li",
+                        "middle": [],
+                        "last": "Chen",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Justinas",
+                        "middle": [],
+                        "last": "Lingys",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Kai",
+                        "middle": [],
+                        "last": "Chen",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Feng",
+                        "middle": [],
+                        "last": "Liu",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/sigcomm/ChenL0L18",
+                "year": 2018,
+                "venue": "Proceedings of the 2018 Conference of the ACM Special Interest Group on Data Communication",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {
+                    "DOI": [
+                        "10.1145/3230543.3230551"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Li Chen, Justinas Lingys, Kai Chen, and Feng Liu. 2018. Auto: Scaling deep reinforcement learning for datacenter-scale automatic traffic optimization. In Proc. of ACM SIGCOMM.",
+                "links": null
+            },
+            "BIBREF14": {
+                "ref_id": "b14",
+                "title": "Compressing Convolutional Neural Networks in the Frequency Domain",
+                "authors": [
+                    {
+                        "first": "Wenlin",
+                        "middle": [],
+                        "last": "Chen",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "James",
+                        "middle": [],
+                        "last": "Wilson",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Stephen",
+                        "middle": [],
+                        "last": "Tyree",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Kilian",
+                        "middle": [
+                            "Q"
+                        ],
+                        "last": "Weinberger",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Yixin",
+                        "middle": [],
+                        "last": "Chen",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/kdd/ChenWTWC16",
+                "year": 2015,
+                "venue": "Proceedings of the 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {
+                    "DOI": [
+                        "10.1145/2939672.2939839"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Wenlin Chen, James Wilson, Stephen Tyree, Kilian Weinberger, and Yixin Chen. 2015. Compressing neural networks with the hashing trick. In Proc. of ICML.",
+                "links": null
+            },
+            "BIBREF15": {
+                "ref_id": "b15",
+                "title": "Keras",
+                "authors": [
+                    {
+                        "first": "Francois",
+                        "middle": [],
+                        "last": "Chollet",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": null,
+                "venue": "",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {
+                    "DOI": [
+                        "10.1163/2214-8647_dnp_e612900"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Francois Chollet. [n.d.]. Keras Documentation. https://keras.io/",
+                "links": null
+            },
+            "BIBREF16": {
+                "ref_id": "b16",
+                "title": "RLTE: Reinforcement Learning for Traffic-Engineering",
+                "authors": [
+                    {
+                        "first": "Erik",
+                        "middle": [],
+                        "last": "Einhorn",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Andreas",
+                        "middle": [],
+                        "last": "Mitschele-Thiel",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/aims/EinhornM08",
+                "year": 2008,
+                "venue": "Lecture Notes in Computer Science",
+                "volume": "",
+                "issue": "",
+                "pages": "120--133",
+                "other_ids": {
+                    "DOI": [
+                        "10.1007/978-3-540-70587-1_10"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Erik Einhorn and Andreas Mitschele-Thiel. 2008. RLTE: reinforcement learning for traffic-engineering. In Proc. of Springer IFIP.",
+                "links": null
+            },
+            "BIBREF17": {
+                "ref_id": "b17",
+                "title": "Internet traffic engineering by optimizing OSPF weights",
+                "authors": [
+                    {
+                        "first": "Bernard",
+                        "middle": [],
+                        "last": "Fortz",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Mikkel",
+                        "middle": [],
+                        "last": "Thorup",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/infocom/FortzT00",
+                "year": 2000,
+                "venue": "Proceedings IEEE INFOCOM 2000. Conference on Computer Communications. Nineteenth Annual Joint Conference of the IEEE Computer and Communications Societies (Cat. No.00CH37064)",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {
+                    "DOI": [
+                        "10.1109/infcom.2000.832225"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Bernard Fortz and Mikkel Thorup. 2000. Internet traffic engineering by optimizing OSPF weights. In Proc. of IEEE INFOCOM.",
+                "links": null
+            },
+            "BIBREF18": {
+                "ref_id": "b18",
+                "title": "ns-3 meets OpenAI Gym",
+                "authors": [
+                    {
+                        "first": "Piotr",
+                        "middle": [],
+                        "last": "Gaw\u0142owicz",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Anatolij",
+                        "middle": [],
+                        "last": "Zubow",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2018,
+                "venue": "Proceedings of the 22nd International ACM Conference on Modeling, Analysis and Simulation of Wireless and Mobile Systems",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {
+                    "DOI": [
+                        "10.1145/3345768.3355908"
+                    ],
+                    "arXiv": [
+                        "arXiv:1810.03943"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Piotr Gaw\u0142owicz and Anatolij Zubow. 2018. ns3-gym: Extending openai gym for networking research. arXiv preprint arXiv:1810.03943 (2018).",
+                "links": null
+            },
+            "BIBREF19": {
+                "ref_id": "b19",
+                "title": "Micro Load Balancing in Data Centers with DRILL",
+                "authors": [
+                    {
+                        "first": "Soudeh",
+                        "middle": [],
+                        "last": "Ghorbani",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Brighten",
+                        "middle": [],
+                        "last": "Godfrey",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Yashar",
+                        "middle": [],
+                        "last": "Ganjali",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Amin",
+                        "middle": [],
+                        "last": "Firoozshahian",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/hotnets/GhorbaniGGF15",
+                "year": 2015,
+                "venue": "Proceedings of the 14th ACM Workshop on Hot Topics in Networks",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {
+                    "DOI": [
+                        "10.1145/2834050.2834107"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Soudeh Ghorbani, Brighten Godfrey, Yashar Ganjali, and Amin Firoozshahian. 2015. Micro load balancing in data centers with DRILL. In Proc. of ACM HotNets.",
+                "links": null
+            },
+            "BIBREF20": {
+                "ref_id": "b20",
+                "title": "VL2",
+                "authors": [
+                    {
+                        "first": "Albert",
+                        "middle": [],
+                        "last": "Greenberg",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "James",
+                        "middle": [
+                            "R"
+                        ],
+                        "last": "Hamilton",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Navendu",
+                        "middle": [],
+                        "last": "Jain",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Srikanth",
+                        "middle": [],
+                        "last": "Kandula",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Changhoon",
+                        "middle": [],
+                        "last": "Kim",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Parantap",
+                        "middle": [],
+                        "last": "Lahiri",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "David",
+                        "middle": [
+                            "A"
+                        ],
+                        "last": "Maltz",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Parveen",
+                        "middle": [],
+                        "last": "Patel",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Sudipta",
+                        "middle": [],
+                        "last": "Sengupta",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/sigcomm/GreenbergHJKKLMPS09",
+                "year": 2009,
+                "venue": "Proceedings of the ACM SIGCOMM 2009 conference on Data communication",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {
+                    "DOI": [
+                        "10.1145/1592568.1592576"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Albert Greenberg, James R Hamilton, Navendu Jain, Srikanth Kandula, Changhoon Kim, Parantap Lahiri, David A Maltz, Parveen Patel, and Sudipta Sengupta. 2009. VL2: a scalable and flexible data center network. In Proc. of ACM SIGCOMM.",
+                "links": null
+            },
+            "BIBREF21": {
+                "ref_id": "b21",
+                "title": "Presto",
+                "authors": [
+                    {
+                        "first": "Keqiang",
+                        "middle": [],
+                        "last": "He",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Eric",
+                        "middle": [],
+                        "last": "Rozner",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Kanak",
+                        "middle": [],
+                        "last": "Agarwal",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Wes",
+                        "middle": [],
+                        "last": "Felter",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "John",
+                        "middle": [],
+                        "last": "Carter",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Aditya",
+                        "middle": [],
+                        "last": "Akella",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2015,
+                "venue": "ACM SIGCOMM Computer Communication Review",
+                "volume": "45",
+                "issue": "4",
+                "pages": "465--478",
+                "other_ids": {
+                    "DOI": [
+                        "10.1145/2829988.2787507"
+                    ],
+                    "ISSN": [
+                        "0146-4833"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Keqiang He, Eric Rozner, Kanak Agarwal, Wes Felter, John Carter, and Aditya Akella. 2015. Presto: Edge-based load balancing for fast datacenter networks. In Proc. of ACM SIGCOMM.",
+                "links": null
+            },
+            "BIBREF22": {
+                "ref_id": "b22",
+                "title": "Analysis of an Equal-Cost Multi-Path Algorithm",
+                "authors": [
+                    {
+                        "first": "Christian",
+                        "middle": [],
+                        "last": "Hopps",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "journals/rfc/rfc2992",
+                "year": 2000,
+                "venue": "",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {
+                    "DOI": [
+                        "10.17487/rfc2992"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Christian Hopps et al. 2000. Analysis of an equal-cost multi-path algorithm. Technical Report. RFC 2992, November.",
+                "links": null
+            },
+            "BIBREF23": {
+                "ref_id": "b23",
+                "title": "Explicit Path Control in Commodity Data Centers: Design and Applications",
+                "authors": [
+                    {
+                        "first": "Shuihai",
+                        "middle": [],
+                        "last": "Hu",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Kai",
+                        "middle": [],
+                        "last": "Chen",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Haitao",
+                        "middle": [],
+                        "last": "Wu",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Wei",
+                        "middle": [],
+                        "last": "Bai",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Chang",
+                        "middle": [],
+                        "last": "Lan",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Hao",
+                        "middle": [],
+                        "last": "Wang",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Hongze",
+                        "middle": [],
+                        "last": "Zhao",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Chuanxiong",
+                        "middle": [],
+                        "last": "Guo",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/nsdi/Hu0WBLWZG15",
+                "year": 2015,
+                "venue": "IEEE/ACM Transactions on Networking",
+                "volume": "24",
+                "issue": "5",
+                "pages": "2768--2781",
+                "other_ids": {
+                    "DOI": [
+                        "10.1109/tnet.2015.2482988"
+                    ],
+                    "ISSN": [
+                        "1063-6692"
+                    ],
+                    "ISSNe": [
+                        "1558-2566"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Shuihai Hu, Kai Chen, Haitao Wu, Wei Bai, Chang Lan, Hao Wang, Hongze Zhao, and Chuanxiong Guo. 2015. Explicit path control in commodity data centers: Design and applications. In Proc. of USENIX NSDI.",
+                "links": null
+            },
+            "BIBREF24": {
+                "ref_id": "b24",
+                "title": "Imitation Learning",
+                "authors": [
+                    {
+                        "first": "Ahmed",
+                        "middle": [],
+                        "last": "Hussein",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Mohamed",
+                        "middle": [
+                            "Medhat"
+                        ],
+                        "last": "Gaber",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Eyad",
+                        "middle": [],
+                        "last": "Elyan",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Chrisina",
+                        "middle": [],
+                        "last": "Jayne",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2017,
+                "venue": "ACM Computing Surveys",
+                "volume": "50",
+                "issue": "2",
+                "pages": "1--35",
+                "other_ids": {
+                    "ORCID": [
+                        "0000-0001-5227-9929"
+                    ],
+                    "DOI": [
+                        "10.1145/3054912"
+                    ],
+                    "ISSN": [
+                        "0360-0300"
+                    ],
+                    "ISSNe": [
+                        "1557-7341"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Ahmed Hussein, Mohamed Medhat Gaber, Eyad Elyan, and Chrisina Jayne. 2017. Imitation learning: A survey of learning methods. ACM Computing Surveys (CSUR) 50, 2 (2017), 1-35.",
+                "links": null
+            },
+            "BIBREF25": {
+                "ref_id": "b25",
+                "title": "Internet congestion control via deep reinforcement learning",
+                "authors": [
+                    {
+                        "first": "Nathan",
+                        "middle": [],
+                        "last": "Jay",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "P",
+                        "middle": [],
+                        "last": "Noga H Rotman",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Michael",
+                        "middle": [],
+                        "last": "Godfrey",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Aviv",
+                        "middle": [],
+                        "last": "Schapira",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "",
+                        "middle": [],
+                        "last": "Tamar",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2018,
+                "venue": "",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {
+                    "arXiv": [
+                        "arXiv:1810.03259"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Nathan Jay, Noga H Rotman, P Godfrey, Michael Schapira, and Aviv Tamar. 2018. Internet congestion control via deep reinforcement learning. arXiv preprint arXiv:1810.03259 (2018).",
+                "links": null
+            },
+            "BIBREF26": {
+                "ref_id": "b26",
+                "title": "FlowBender",
+                "authors": [
+                    {
+                        "first": "Abdul",
+                        "middle": [],
+                        "last": "Kabbani",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Balajee",
+                        "middle": [],
+                        "last": "Vamanan",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Jahangir",
+                        "middle": [],
+                        "last": "Hasan",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Fabien",
+                        "middle": [],
+                        "last": "Duchene",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/conext/KabbaniVHD14",
+                "year": 2014,
+                "venue": "Proceedings of the 10th ACM International on Conference on emerging Networking Experiments and Technologies",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {
+                    "DOI": [
+                        "10.1145/2674005.2674985"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Abdul Kabbani, Balajee Vamanan, Jahangir Hasan, and Fabien Duchene. 2014. Flowbender: Flow-level adaptive routing for improved latency and throughput in datacenter networks. In Proc of ACM CoNext.",
+                "links": null
+            },
+            "BIBREF27": {
+                "ref_id": "b27",
+                "title": "CLOVE",
+                "authors": [
+                    {
+                        "first": "Naga",
+                        "middle": [],
+                        "last": "Katta",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Mukesh",
+                        "middle": [],
+                        "last": "Hira",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Aditi",
+                        "middle": [],
+                        "last": "Ghag",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Changhoon",
+                        "middle": [],
+                        "last": "Kim",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Isaac",
+                        "middle": [],
+                        "last": "Keslassy",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Jennifer",
+                        "middle": [],
+                        "last": "Rexford",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/hotnets/KattaHGKKR16",
+                "year": 2016,
+                "venue": "Proceedings of the 15th ACM Workshop on Hot Topics in Networks",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {
+                    "DOI": [
+                        "10.1145/3005745.3005751"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Naga Katta, Mukesh Hira, Aditi Ghag, Changhoon Kim, Isaac Keslassy, and Jennifer Rexford. 2016. CLOVE: How I learned to stop worrying about the core and love the edge. In Proc. of ACM HotNets.",
+                "links": null
+            },
+            "BIBREF28": {
+                "ref_id": "b28",
+                "title": "Pruning filters for efficient convnets",
+                "authors": [
+                    {
+                        "first": "Hao",
+                        "middle": [],
+                        "last": "Li",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Asim",
+                        "middle": [],
+                        "last": "Kadav",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Igor",
+                        "middle": [],
+                        "last": "Durdanovic",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Hanan",
+                        "middle": [],
+                        "last": "Samet",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Hans",
+                        "middle": [
+                            "Peter"
+                        ],
+                        "last": "Graf",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/iclr/0022KDSG17",
+                "year": 2017,
+                "venue": "Proc. of ICLR",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Hao Li, Asim Kadav, Igor Durdanovic, Hanan Samet, and Hans Peter Graf. 2017. Pruning filters for efficient convnets. In Proc. of ICLR.",
+                "links": null
+            },
+            "BIBREF29": {
+                "ref_id": "b29",
+                "title": "Continuous control with deep reinforcement learning",
+                "authors": [
+                    {
+                        "first": "Jonathan",
+                        "middle": [
+                            "J"
+                        ],
+                        "last": "Timothy P Lillicrap",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Alexander",
+                        "middle": [],
+                        "last": "Hunt",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Nicolas",
+                        "middle": [],
+                        "last": "Pritzel",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Tom",
+                        "middle": [],
+                        "last": "Heess",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Yuval",
+                        "middle": [],
+                        "last": "Erez",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "David",
+                        "middle": [],
+                        "last": "Tassa",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Daan",
+                        "middle": [],
+                        "last": "Silver",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "",
+                        "middle": [],
+                        "last": "Wierstra",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "journals/corr/LillicrapHPHETS15",
+                "year": 2015,
+                "venue": "",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {
+                    "arXiv": [
+                        "arXiv:1509.02971"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Timothy P Lillicrap, Jonathan J Hunt, Alexander Pritzel, Nicolas Heess, Tom Erez, Yuval Tassa, David Silver, and Daan Wierstra. 2015. Continuous control with deep reinforcement learning. arXiv preprint arXiv:1509.02971 (2015).",
+                "links": null
+            },
+            "BIBREF30": {
+                "ref_id": "b30",
+                "title": "DRL-R: Deep reinforcement learning approach for intelligent routing in software-defined data-center networks",
+                "authors": [
+                    {
+                        "first": "Wai-Xi",
+                        "middle": [],
+                        "last": "Liu",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Jun",
+                        "middle": [],
+                        "last": "Cai",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Qing",
+                        "middle": [
+                            "Chun"
+                        ],
+                        "last": "Chen",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Yu",
+                        "middle": [],
+                        "last": "Wang",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2020,
+                "venue": "Journal of Network and Computer Applications",
+                "volume": "177",
+                "issue": "",
+                "pages": "",
+                "other_ids": {
+                    "DOI": [
+                        "10.1016/j.jnca.2020.102865"
+                    ],
+                    "ISSN": [
+                        "1084-8045"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "W. Liu, J. Cai, Q. C. Chen, and Y. Wang. 2020. DRL-R: Deep reinforcement learn- ing approach for intelligent routing in software-defined data-center networks. Journal of Network and Computer Applications (2020), 102865.",
+                "links": null
+            },
+            "BIBREF31": {
+                "ref_id": "b31",
+                "title": "Unified Deep Learning Model for Multitask Reaction Predictions with Explanation",
+                "authors": [
+                    {
+                        "first": "M",
+                        "middle": [],
+                        "last": "Scott",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Su-In",
+                        "middle": [],
+                        "last": "Lundberg",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "",
+                        "middle": [],
+                        "last": "Lee",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2017,
+                "venue": "Proc. of NIPS",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {
+                    "DOI": [
+                        "10.1021/acs.jcim.1c01467.s001"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Scott M Lundberg and Su-In Lee. 2017. A unified approach to interpreting model predictions. In Proc. of NIPS.",
+                "links": null
+            },
+            "BIBREF32": {
+                "ref_id": "b32",
+                "title": "Resource Management with Deep Reinforcement Learning",
+                "authors": [
+                    {
+                        "first": "Hongzi",
+                        "middle": [],
+                        "last": "Mao",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Mohammad",
+                        "middle": [],
+                        "last": "Alizadeh",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Ishai",
+                        "middle": [],
+                        "last": "Menache",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Srikanth",
+                        "middle": [],
+                        "last": "Kandula",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/hotnets/MaoAMK16",
+                "year": 2016,
+                "venue": "Proceedings of the 15th ACM Workshop on Hot Topics in Networks",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {
+                    "DOI": [
+                        "10.1145/3005745.3005750"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Hongzi Mao, Mohammad Alizadeh, Ishai Menache, and Srikanth Kandula. 2016. Resource management with deep reinforcement learning. In Proc of ACM AC HotNet.",
+                "links": null
+            },
+            "BIBREF33": {
+                "ref_id": "b33",
+                "title": "Neural Adaptive Video Streaming with Pensieve",
+                "authors": [
+                    {
+                        "first": "Hongzi",
+                        "middle": [],
+                        "last": "Mao",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Ravi",
+                        "middle": [],
+                        "last": "Netravali",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Mohammad",
+                        "middle": [],
+                        "last": "Alizadeh",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/sigcomm/MaoNA17",
+                "year": 2017,
+                "venue": "Proceedings of the Conference of the ACM Special Interest Group on Data Communication",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {
+                    "DOI": [
+                        "10.1145/3098822.3098843"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Hongzi Mao, Ravi Netravali, and Mohammad Alizadeh. 2017. Neural adaptive video streaming with pensieve. In Proc. of ACM SIGCOMM.",
+                "links": null
+            },
+            "BIBREF34": {
+                "ref_id": "b34",
+                "title": "Learning scheduling algorithms for data processing clusters",
+                "authors": [
+                    {
+                        "first": "Hongzi",
+                        "middle": [],
+                        "last": "Mao",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Malte",
+                        "middle": [],
+                        "last": "Schwarzkopf",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Shaileshh",
+                        "middle": [
+                            "Bojja"
+                        ],
+                        "last": "Venkatakrishnan",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Zili",
+                        "middle": [],
+                        "last": "Meng",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Mohammad",
+                        "middle": [],
+                        "last": "Alizadeh",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/sigcomm/MaoSVMA19",
+                "year": 2019,
+                "venue": "Proceedings of the ACM Special Interest Group on Data Communication",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {
+                    "DOI": [
+                        "10.1145/3341302.3342080"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Hongzi Mao, Matle Schwardzkopf, Shaileshh Bojja Venkatakrishnan, Zili Meng, and Mohammad Alizadeh. 2019. Learning Scheduling Algorithms for Data Pro- cessing Clusters. In Proc. of ACM SIGCOMM.",
+                "links": null
+            },
+            "BIBREF35": {
+                "ref_id": "b35",
+                "title": "Reinforcement learning for adaptive routing",
+                "authors": [
+                    {
+                        "first": "Leonid",
+                        "middle": [],
+                        "last": "Peshkin",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Virginia",
+                        "middle": [],
+                        "last": "Savova",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2002,
+                "venue": "Proceedings of the 2002 International Joint Conference on Neural Networks. IJCNN'02 (Cat. No.02CH37290)",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {
+                    "DOI": [
+                        "10.1109/ijcnn.2002.1007796"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Leonid Peshkin and Virginia Savova. 2002. Reinforcement learning for adaptive routing. In Proc. of IEEE IJCNN.",
+                "links": null
+            },
+            "BIBREF36": {
+                "ref_id": "b36",
+                "title": "Why should I trust you? Explaining the predictions of any classifier",
+                "authors": [
+                    {
+                        "first": "Marco",
+                        "middle": [],
+                        "last": "Tulio Ribeiro",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Sameer",
+                        "middle": [],
+                        "last": "Singh",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Carlos",
+                        "middle": [],
+                        "last": "Guestrin",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/naacl/Ribeiro0G16",
+                "year": 2016,
+                "venue": "Proc. of ACM SIGKDD",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Marco Tulio Ribeiro, Sameer Singh, and Carlos Guestrin. 2016. Why should I trust you? Explaining the predictions of any classifier. In Proc. of ACM SIGKDD.",
+                "links": null
+            },
+            "BIBREF37": {
+                "ref_id": "b37",
+                "title": "DeepRLB: A deep reinforcement learning\u2010based load balancing in data center networks",
+                "authors": [
+                    {
+                        "first": "Negar",
+                        "middle": [],
+                        "last": "Rikhtegar",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Omid",
+                        "middle": [],
+                        "last": "Bushehrian",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Manijeh",
+                        "middle": [],
+                        "last": "Keshtgari",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2021,
+                "venue": "International Journal of Communication Systems",
+                "volume": "34",
+                "issue": "15",
+                "pages": "",
+                "other_ids": {
+                    "ORCID": [
+                        "0000-0001-9912-4326"
+                    ],
+                    "DOI": [
+                        "10.1002/dac.4912"
+                    ],
+                    "ISSN": [
+                        "1074-5351"
+                    ],
+                    "ISSNe": [
+                        "1099-1131"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Negar Rikhtegar, Omid Bushehrian, and Manijeh Keshtgari. 2021. DeepRLB: A deep reinforcement learning-based load balancing in data center networks. International Journal of Communication Systems 34, 15 (2021).",
+                "links": null
+            },
+            "BIBREF38": {
+                "ref_id": "b38",
+                "title": "Jupiter Rising",
+                "authors": [
+                    {
+                        "first": "Arjun",
+                        "middle": [],
+                        "last": "Singh",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Joon",
+                        "middle": [],
+                        "last": "Ong",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Amit",
+                        "middle": [],
+                        "last": "Agarwal",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Glen",
+                        "middle": [],
+                        "last": "Anderson",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Ashby",
+                        "middle": [],
+                        "last": "Armistead",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Roy",
+                        "middle": [],
+                        "last": "Bannon",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Seb",
+                        "middle": [],
+                        "last": "Boving",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Gaurav",
+                        "middle": [],
+                        "last": "Desai",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Bob",
+                        "middle": [],
+                        "last": "Felderman",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Paulie",
+                        "middle": [],
+                        "last": "Germano",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Anand",
+                        "middle": [],
+                        "last": "Kanagala",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Jeff",
+                        "middle": [],
+                        "last": "Provost",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Jason",
+                        "middle": [],
+                        "last": "Simmons",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Eiichi",
+                        "middle": [],
+                        "last": "Tanda",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Jim",
+                        "middle": [],
+                        "last": "Wanderer",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Urs",
+                        "middle": [],
+                        "last": "H\u00f6lzle",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Stephen",
+                        "middle": [],
+                        "last": "Stuart",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Amin",
+                        "middle": [],
+                        "last": "Vahdat",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 2015,
+                "venue": "ACM SIGCOMM Computer Communication Review",
+                "volume": "45",
+                "issue": "4",
+                "pages": "183--197",
+                "other_ids": {
+                    "DOI": [
+                        "10.1145/2829988.2787508"
+                    ],
+                    "ISSN": [
+                        "0146-4833"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Arjun Singh, Joon Ong, Amit Agarwal, Glen Anderson, Ashby Armistead, Roy Bannon, Seb Boving, Gaurav Desai, Bob Felderman, Paulie Germano, et al. 2015. Jupiter rising: A decade of clos topologies and centralized control in google's datacenter network. In Proc. of ACM SIGCOMM.",
+                "links": null
+            },
+            "BIBREF39": {
+                "ref_id": "b39",
+                "title": "Load balance in overlay multicast",
+                "authors": [
+                    {
+                        "first": "Jun",
+                        "middle": [],
+                        "last": "Miao",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": null,
+                "venue": "ns3-load-balance",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {
+                    "DOI": [
+                        "10.14711/thesis-b837452"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "snowzjx. [n.d.]. ns3-load-balance. https://github.com/snowzjx/ns3-load-balance",
+                "links": null
+            },
+            "BIBREF40": {
+                "ref_id": "b40",
+                "title": "Introduction to reinforcement learning",
+                "authors": [
+                    {
+                        "first": "Andrew",
+                        "middle": [
+                            "G"
+                        ],
+                        "last": "Richard S Sutton",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "",
+                        "middle": [],
+                        "last": "Barto",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": null,
+                "year": 1998,
+                "venue": "",
+                "volume": "135",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Richard S Sutton, Andrew G Barto, et al. 1998. Introduction to reinforcement learning. Vol. 135. MIT press Cambridge.",
+                "links": null
+            },
+            "BIBREF41": {
+                "ref_id": "b41",
+                "title": "Policy gradient methods for reinforcement learning with function approximation",
+                "authors": [
+                    {
+                        "first": "David",
+                        "middle": [
+                            "A"
+                        ],
+                        "last": "Richard S Sutton",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "",
+                        "middle": [],
+                        "last": "Mcallester",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "P",
+                        "middle": [],
+                        "last": "Satinder",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Yishay",
+                        "middle": [],
+                        "last": "Singh",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "",
+                        "middle": [],
+                        "last": "Mansour",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/nips/SuttonMSM99",
+                "year": 2000,
+                "venue": "Advances in neural information processing systems",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Richard S Sutton, David A McAllester, Satinder P Singh, and Yishay Mansour. 2000. Policy gradient methods for reinforcement learning with function approximation. In Advances in neural information processing systems.",
+                "links": null
+            },
+            "BIBREF42": {
+                "ref_id": "b42",
+                "title": "Learning to Route",
+                "authors": [
+                    {
+                        "first": "Asaf",
+                        "middle": [],
+                        "last": "Valadarsky",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Michael",
+                        "middle": [],
+                        "last": "Schapira",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Dafna",
+                        "middle": [],
+                        "last": "Shahaf",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Aviv",
+                        "middle": [],
+                        "last": "Tamar",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/hotnets/ValadarskySST17",
+                "year": 2017,
+                "venue": "Proceedings of the 16th ACM Workshop on Hot Topics in Networks",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {
+                    "DOI": [
+                        "10.1145/3152434.3152441"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Asaf Valadarsky, Michael Schapira, Dafna Shahaf, and Aviv Tamar. 2017. Learning to route with deep rl. In Proc. of NIPS.",
+                "links": null
+            },
+            "BIBREF43": {
+                "ref_id": "b43",
+                "title": "Let it flow: Resilient asymmetric load balancing with flowlet switching",
+                "authors": [
+                    {
+                        "first": "Erico",
+                        "middle": [],
+                        "last": "Vanini",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Rong",
+                        "middle": [],
+                        "last": "Pan",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Mohammad",
+                        "middle": [],
+                        "last": "Alizadeh",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Parvin",
+                        "middle": [],
+                        "last": "Taheri",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Tom",
+                        "middle": [],
+                        "last": "Edsall",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/nsdi/VaniniPATE17",
+                "year": 2017,
+                "venue": "Proc. of USENIX NSDI",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {},
+                "num": null,
+                "urls": [],
+                "raw_text": "Erico Vanini, Rong Pan, Mohammad Alizadeh, Parvin Taheri, and Tom Edsall. 2017. Let it flow: Resilient asymmetric load balancing with flowlet switching. In Proc. of USENIX NSDI.",
+                "links": null
+            },
+            "BIBREF44": {
+                "ref_id": "b44",
+                "title": "Expeditus",
+                "authors": [
+                    {
+                        "first": "Peng",
+                        "middle": [],
+                        "last": "Wang",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Hong",
+                        "middle": [],
+                        "last": "Xu",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Zhixiong",
+                        "middle": [],
+                        "last": "Niu",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Dongsu",
+                        "middle": [],
+                        "last": "Han",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Yongqiang",
+                        "middle": [],
+                        "last": "Xiong",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/cloud/WangXNHX16",
+                "year": 2016,
+                "venue": "Proceedings of the Seventh ACM Symposium on Cloud Computing",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {
+                    "DOI": [
+                        "10.1145/2987550.2987560"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Peng Wang, Hong Xu, Zhixiong Niu, Dongsu Han, and Yongqiang Xiong. 2016. Expeditus: Congestion-aware load balancing in clos data center networks. In Proc. of ACM SoCC.",
+                "links": null
+            },
+            "BIBREF45": {
+                "ref_id": "b45",
+                "title": "Experience-driven Networking: A Deep Reinforcement Learning based Approach",
+                "authors": [
+                    {
+                        "first": "Zhiyuan",
+                        "middle": [],
+                        "last": "Xu",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Jian",
+                        "middle": [],
+                        "last": "Tang",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Jingsong",
+                        "middle": [],
+                        "last": "Meng",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Weiyi",
+                        "middle": [],
+                        "last": "Zhang",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Yanzhi",
+                        "middle": [],
+                        "last": "Wang",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Chi",
+                        "middle": [
+                            "Harold"
+                        ],
+                        "last": "Liu",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Dejun",
+                        "middle": [],
+                        "last": "Yang",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/infocom/XuTMZWLY18",
+                "year": 2018,
+                "venue": "IEEE INFOCOM 2018 - IEEE Conference on Computer Communications",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {
+                    "DOI": [
+                        "10.1109/infocom.2018.8485853"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Zhiyuan Xu, Jian Tang, Jingsong Meng, Weiyi Zhang, Yanzhi Wang, Chi Harold Liu, and Dejun Yang. 2018. Experience-driven networking: A deep reinforcement learning based approach. In Proc. of IEEE INFOCOM.",
+                "links": null
+            },
+            "BIBREF46": {
+                "ref_id": "b46",
+                "title": "Resilient Datacenter Load Balancing in the Wild",
+                "authors": [
+                    {
+                        "first": "Hong",
+                        "middle": [],
+                        "last": "Zhang",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Junxue",
+                        "middle": [],
+                        "last": "Zhang",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Wei",
+                        "middle": [],
+                        "last": "Bai",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Kai",
+                        "middle": [],
+                        "last": "Chen",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Mosharaf",
+                        "middle": [],
+                        "last": "Chowdhury",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/sigcomm/ZhangZB0C17",
+                "year": 2017,
+                "venue": "Proceedings of the Conference of the ACM Special Interest Group on Data Communication",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {
+                    "DOI": [
+                        "10.1145/3098822.3098841"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Hong Zhang, Junxue Zhang, Wei Bai, Kai Chen, and Mosharaf Chowdhury. 2017. Resilient datacenter load balancing in the wild. In Proc. of ACM SIGCOMM.",
+                "links": null
+            },
+            "BIBREF47": {
+                "ref_id": "b47",
+                "title": "WCMP",
+                "authors": [
+                    {
+                        "first": "Junlan",
+                        "middle": [],
+                        "last": "Zhou",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Malveeka",
+                        "middle": [],
+                        "last": "Tewari",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Min",
+                        "middle": [],
+                        "last": "Zhu",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Abdul",
+                        "middle": [],
+                        "last": "Kabbani",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Leon",
+                        "middle": [],
+                        "last": "Poutievski",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Arjun",
+                        "middle": [],
+                        "last": "Singh",
+                        "suffix": ""
+                    },
+                    {
+                        "first": "Amin",
+                        "middle": [],
+                        "last": "Vahdat",
+                        "suffix": ""
+                    }
+                ],
+                "dblp_id": "conf/eurosys/ZhouTZKPSV14",
+                "year": 2014,
+                "venue": "Proceedings of the Ninth European Conference on Computer Systems",
+                "volume": "",
+                "issue": "",
+                "pages": "",
+                "other_ids": {
+                    "DOI": [
+                        "10.1145/2592798.2592803"
+                    ]
+                },
+                "num": null,
+                "urls": [],
+                "raw_text": "Junlan Zhou, Malveeka Tewari, Min Zhu, Abdul Kabbani, Leon Poutievski, Arjun Singh, and Amin Vahdat. 2014. WCMP: Weighted cost multipathing for improved fairness in data centers. In Proc of EuroSys.",
+                "links": null
+            }
+        }
+    }
+}
