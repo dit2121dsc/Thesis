@@ -1,1 +1,1 @@
-New Code about the Named Entity Recognition in Scientific Text
+The Named Entity Recognition in Scientific Text project
