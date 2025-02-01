@@ -1,0 +1,61 @@
+{
+    "syntactic": [
+        "micro-blog",
+        "data privacy",
+        "data mining",
+        "privacy",
+        "online social networks",
+        "real-world networks",
+        "anonymization",
+        "network topology",
+        "anonymity",
+        "sensitive informations",
+        "graph theory",
+        "social networks",
+        "twitter"
+    ],
+    "semantic": [
+        "micro-blog",
+        "data privacy",
+        "data mining",
+        "privacy",
+        "online social networks",
+        "anonymization",
+        "network topology",
+        "anonymity",
+        "topology",
+        "graph theory",
+        "social networks",
+        "twitter"
+    ],
+    "union": [
+        "micro-blog",
+        "data privacy",
+        "data mining",
+        "privacy",
+        "online social networks",
+        "real-world networks",
+        "anonymization",
+        "network topology",
+        "anonymity",
+        "sensitive informations",
+        "topology",
+        "graph theory",
+        "social networks",
+        "twitter"
+    ],
+    "enhanced": [
+        "computer science",
+        "computer security",
+        "online systems",
+        "complex networks",
+        "privacy preserving",
+        "computer networks",
+        "authentication",
+        "network security",
+        "access control",
+        "theoretical computer science",
+        "world wide web",
+        "social media"
+    ]
+}
